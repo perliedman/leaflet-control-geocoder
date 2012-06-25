@@ -3,12 +3,12 @@
 <head>
 	<title>Leaflet debug page</title>
 
-	<link rel="stylesheet" href="https://raw.github.com/CloudMade/Leaflet/9cec6643f114b54b6327c6d45b632785a6b77744/dist/leaflet.css" />
-	<link rel="stylesheet" href="Control.BingGeocoder.css" />
-	<!--[if lte IE 8]><link rel="stylesheet" href="https://raw.github.com/CloudMade/Leaflet/44773a998cee8f3c898f737431a8bb8abbecd56e/dist/leaflet.ie.css" /><![endif]-->
+	<link rel="stylesheet" href="leaflet.css" />
+	<link rel="stylesheet" href="../Control.BingGeocoder.css" />
+	<!--[if lte IE 8]><link rel="stylesheet" href="leaflet.ie.css" /><![endif]-->
 
-	<script src="https://raw.github.com/CloudMade/Leaflet/master/dist/leaflet.js"></script>
-	<script src="Control.BingGeocoder.js"></script>
+	<script src="leaflet.js"></script>
+	<script src="../Control.BingGeocoder.js"></script>
 	<style type="text/css">
 	#map {
 		width: 800px;
@@ -18,7 +18,6 @@
 	</style>
 </head>
 <body>
-
 	<div id="map"></div>
 
 	<script type="text/javascript">
@@ -29,7 +28,7 @@
 
 		var bingGeocoder = new L.Control.BingGeocoder('AsaKzgbo2GW8wrcv0mLCyVvEx2Q8V1N54Gpmizw-fzHIKOAjAMMy4TdNfKdS71vs');
 
-		map.addControl(new L.Control.Scale());
+		map.addControl(bingGeocoder);
 	</script>
 </body>
 </html>
