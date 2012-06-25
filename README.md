@@ -1,0 +1,2 @@
+leaflet-bing-geocoder
+=====================
