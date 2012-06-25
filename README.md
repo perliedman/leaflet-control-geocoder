@@ -4,14 +4,14 @@ Leaflet Control Bing Geocoder
 # What is it ?
 A simple geocoder that uses Bing to locate places.
 
-# How to use ?
+# How to use it ?
 ```javascript
 var cloudmadeAttribution = 'Map data &copy; 2011 OpenStreetMap contributors, Imagery &copy; 2011 CloudMade',
     cloudmade = new L.TileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', {attribution: cloudmadeAttribution});
 
 var map = new L.Map('map').addLayer(cloudmade).setView(new L.LatLng(48.5, 2.5), 15);
 
-var bingGeocoder = new L.Control.BingGeocoder('AsaKzgbo2GW8wrcv0mLCyVvEx2Q8V1N54Gpmizw-fzHIKOAjAMMy4TdNfKdS71vs');
+var bingGeocoder = new L.Control.BingGeocoder('your-api-key');
 
 map.addControl(bingGeocoder);
 ```
