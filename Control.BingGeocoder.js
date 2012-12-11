@@ -1,4 +1,3 @@
-
 L.Control.BingGeocoder = L.Control.extend({
 	options: {
 		collapsed: true,
@@ -25,11 +24,7 @@ L.Control.BingGeocoder = L.Control.extend({
 		var className = 'leaflet-control-geocoder',
 			container = this._container = L.DomUtil.create('div', className);
 
-		if (!L.Browser.touch) {
-			L.DomEvent.disableClickPropagation(container);
-		} else {
-			L.DomEvent.addListener(container, 'click', L.DomEvent.stopPropagation);
-		}
+		L.DomEvent.disableClickPropagation(container);
 
 		var form = this._form = L.DomUtil.create('form', className + '-form');
 
