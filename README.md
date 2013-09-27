@@ -2,6 +2,9 @@ Leaflet Control Geocoder
 =============================
 
 # What is it ?
+
+See the [Leaflet Control Geocoder Demo](http://perliedman.github.com/leaflet-control-geocoder/).
+
 A simple geocoder that by default uses [OSM](http://www.openstreetmap.org/)/[Nominatim](http://wiki.openstreetmap.org/wiki/Nominatim) to locate places, but also supports [Bing Locations API](http://msdn.microsoft.com/en-us/library/ff701715.aspx) and can easily be extended to support other providers.
 
 # How to use it ?
