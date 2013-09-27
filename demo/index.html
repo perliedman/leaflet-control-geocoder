@@ -29,9 +29,9 @@
 
 		var map = new L.Map('map').addLayer(cloudmade).setView(new L.LatLng(48.5, 2.5), 15);
 
-		var bingGeocoder = new L.Control.BingGeocoder('your-api-key');
+		var geocoder = new L.Control.Geocoder('your-api-key');
 
-		map.addControl(bingGeocoder);
+		map.addControl(geocoder);
 	</script>
 </body>
 </html>
