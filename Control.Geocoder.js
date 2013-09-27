@@ -46,7 +46,7 @@ L.Control.Geocoder = L.Control.extend({
 		submit.innerHTML = this.options.text;
 
 		this._errorElement = document.createElement('div');
-		this._errorElement.className = "leaflet-control-geocoder-form-no-error"
+		this._errorElement.className = className + "-form-no-error"
 		this._errorElement.innerHTML = this.options.errorMessage;
 
 		form.appendChild(input);
