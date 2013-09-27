@@ -1,7 +1,8 @@
-L.Control.BingGeocoder = L.Control.extend({
+L.Control.Geocoder = L.Control.extend({
 	options: {
 		collapsed: true,
 		position: 'topright',
+		placeholder: 'Search...',
 		text: 'Locate',
 		callback: function (results) {
 			var bbox = results.resourceSets[0].resources[0].bbox,
@@ -30,6 +31,7 @@ L.Control.BingGeocoder = L.Control.extend({
 
 		var input = this._input = document.createElement('input');
 		input.type = "text";
+		input.placeholder = this.options.placeholder;
 
 		var submit = document.createElement('button');
 		submit.type = "submit";
@@ -46,7 +48,7 @@ L.Control.BingGeocoder = L.Control.extend({
 
 			var link = this._layersLink = L.DomUtil.create('a', className + '-toggle', container);
 			link.href = '#';
-			link.title = 'Bing Geocoder';
+			link.title = 'Geocoder';
 
 			L.DomEvent.addListener(link, L.Browser.touch ? 'click' : 'focus', this._expand, this);
 

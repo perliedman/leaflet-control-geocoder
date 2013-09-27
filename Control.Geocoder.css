@@ -36,3 +36,12 @@
 .leaflet-control-geocoder-expanded .leaflet-control-geocoder-form {
 	padding: 5px;
 }
+
+.leaflet-control-geocoder-form input {
+	border: 0;
+	background: #f8f8f9;
+}
+
+.leaflet-control-geocoder-form button {
+	display: none;
+}
