@@ -45,3 +45,11 @@
 .leaflet-control-geocoder-form button {
 	display: none;
 }
+
+.leaflet-control-geocoder-form-no-error {
+	display: none;
+}
+
+.leaflet-control-geocoder-error {
+	display: block;
+}

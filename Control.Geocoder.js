@@ -4,12 +4,17 @@ L.Control.Geocoder = L.Control.extend({
 		position: 'topright',
 		placeholder: 'Search...',
 		text: 'Locate',
+		errorMessage: 'Nothing found.',
 		callback: function (results) {
-			var bbox = results.resourceSets[0].resources[0].bbox,
-				first = new L.LatLng(bbox[0], bbox[1]),
-				second = new L.LatLng(bbox[2], bbox[3]),
-				bounds = new L.LatLngBounds([first, second]);
-			this._map.fitBounds(bounds);
+			if (results.resourceSets.length > 0) {
+				var bbox = results.resourceSets[0].resources[0].bbox,
+					first = new L.LatLng(bbox[0], bbox[1]),
+					second = new L.LatLng(bbox[2], bbox[3]),
+					bounds = new L.LatLngBounds([first, second]);
+				this._map.fitBounds(bounds);
+			} else {
+				L.DomUtil.addClass(this._errorElement, 'leaflet-control-geocoder-error')
+			}
 		}
 	},
 
@@ -32,13 +37,21 @@ L.Control.Geocoder = L.Control.extend({
 		var input = this._input = document.createElement('input');
 		input.type = "text";
 		input.placeholder = this.options.placeholder;
+		L.DomEvent.addListener(input, 'onkeydown', this._hideError, this);
+		L.DomEvent.addListener(input, 'onpaste', this._hideError, this);
+		L.DomEvent.addListener(input, 'oninput', this._hideError, this);
 
 		var submit = document.createElement('button');
 		submit.type = "submit";
 		submit.innerHTML = this.options.text;
 
+		this._errorElement = document.createElement('div');
+		this._errorElement.className = "leaflet-control-geocoder-form-no-error"
+		this._errorElement.innerHTML = this.options.errorMessage;
+
 		form.appendChild(input);
 		form.appendChild(submit);
+		form.appendChild(this._errorElement);
 
 		L.DomEvent.addListener(form, 'submit', this._geocode, this);
 
@@ -63,6 +76,7 @@ L.Control.Geocoder = L.Control.extend({
 	},
 
 	_geocode : function (event) {
+		this._hideError();
 		L.DomEvent.preventDefault(event);
 		this._callbackId = "_l_binggeocoder_" + (this._callbackId++);
 		window[this._callbackId] = L.Util.bind(this.options.callback, this);
@@ -87,5 +101,9 @@ L.Control.Geocoder = L.Control.extend({
 
 	_collapse: function () {
 		this._container.className = this._container.className.replace(' leaflet-control-geocoder-expanded', '');
+	},
+
+	_hideError: function () {
+		L.DomUtil.removeClass(this._errorElement, 'leaflet-control-geocoder-error');
 	}
 });
