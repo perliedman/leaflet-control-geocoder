@@ -6,8 +6,8 @@ L.Control.Geocoder = L.Control.extend({
 		text: 'Locate',
 		errorMessage: 'Nothing found.',
 		callback: function (results) {
-			if (results.resourceSets.length > 0) {
-				var bbox = results.resourceSets[0].resources[0].bbox,
+			if (results.length > 0) {
+				var bbox = results[0].bbox,
 					first = new L.LatLng(bbox[0], bbox[1]),
 					second = new L.LatLng(bbox[2], bbox[3]),
 					bounds = new L.LatLngBounds([first, second]);
@@ -75,24 +75,38 @@ L.Control.Geocoder = L.Control.extend({
 		return container;
 	},
 
-	_geocode : function (event) {
+	jsonp: function(url, params, callback, context, jsonpParam) {		
+		var callbackId = "_l_geocoder_" + (this._callbackId++);
+		params[jsonpParam || "callback"] = callbackId
+		window[callbackId] = L.Util.bind(callback, context || this);
+		script = document.createElement("script");
+		script.type = "text/javascript";
+		script.src = url + L.Util.getParamString(params);
+		script.id = callbackId;
+		document.getElementsByTagName("head")[0].appendChild(script);
+	},
+
+	_geocode: function(event) {
 		this._hideError();
 		L.DomEvent.preventDefault(event);
-		this._callbackId = "_l_binggeocoder_" + (this._callbackId++);
-		window[this._callbackId] = L.Util.bind(this.options.callback, this);
+		this.geocode(this._input.value);
+	},
 
-		var params = {
-			query: this._input.value,
-			key : this.key,
-			jsonp : this._callbackId
-		},
-		url = "http://dev.virtualearth.net/REST/v1/Locations" + L.Util.getParamString(params),
-		script = document.createElement("script");
-
-		script.type = "text/javascript";
-		script.src = url;
-		script.id = this._callbackId;
-		document.getElementsByTagName("head")[0].appendChild(script);
+	geocode: function(query) {
+		this.jsonp("http://nominatim.openstreetmap.org/search/", {
+			q: query,
+			format: "json"
+		}, function(data) {
+			var results = [];
+			for (var i = data.length - 1; i >= 0; i--) {
+				var bbox = data[i].boundingbox;
+				results[i] = {
+					name: data[i].display_name, 
+					bbox: [bbox[0], bbox[2], bbox[1], bbox[3]]
+				};
+			};
+			this.options.callback.call(this, results);
+		}, this, "json_callback")
 	},
 
 	_expand: function () {
@@ -107,3 +121,15 @@ L.Control.Geocoder = L.Control.extend({
 		L.DomUtil.removeClass(this._errorElement, 'leaflet-control-geocoder-error');
 	}
 });
+
+L.Control.Geocoder.Bing = L.Control.Geocoder.extend({
+	geocode : function (query) {
+		var params = {
+			query: query,
+			key : this.key,
+		};
+
+		this.jsonp("http://dev.virtualearth.net/REST/v1/Locations", 
+			params, this.options.callback, this, 'jsonp')
+	},
+})
