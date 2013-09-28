@@ -5,7 +5,7 @@
 	        border-radius: 5px;
 }
 
-.leaflet-control-geocoder a {
+a.leaflet-control-geocoder-toggle {
 	float:right;
 	background-position: 50% 50%;
 	background-repeat: no-repeat;
@@ -58,4 +58,22 @@
 	display: block;
 	font-size: 14px;
 	color: #444;
+}
+
+table.leaflet-control-geocoder-alternatives {
+	padding: 8px;
+}
+
+.leaflet-control-geocoder-alternatives td {
+	max-width: 200px;
+	overflow: hidden; 
+  	text-overflow: ellipsis;
+  	white-space: nowrap;
+}
+
+table.leaflet-control-geocoder-alternatives a {
+	text-decoration: none;
+	color: black;
+	padding: 4px 0 4px 0;
+	font-size: 14px;
 }

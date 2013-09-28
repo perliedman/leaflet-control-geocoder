@@ -6,19 +6,39 @@ L.Control.Geocoder = L.Control.extend({
 		text: 'Locate',
 		errorMessage: 'Nothing found.',
 		onGeocodeResult: function (results) {
-			if (results.length > 0) {
-				var bbox = results[0].bbox,
-					first = new L.LatLng(bbox[0], bbox[1]),
-					second = new L.LatLng(bbox[2], bbox[3]),
-					bounds = new L.LatLngBounds([first, second]);
-				this._map.fitBounds(bounds);
-				new L.Marker(results[0].center)
-					.bindPopup(results[0].name)
-					.addTo(this._map)
-					.openPopup();
+			var _this = this;
+
+			if (results.length == 1) {
+				this.options.markGeocode(results[0]);
+			} else if (results.length > 0) {
+				this._results = results;
+				for (var i = 0; i < results.length; i++) {
+					var tr = document.createElement('tr');
+					tr.innerHTML = '<td><a href="#" data-result-index=' + i + '>'
+						+ results[i].name + '</td>';
+					tr.onclick = function(i) { return function() { 
+						_this.options.markGeocode.call(_this, results[i]);
+					};}(i);
+					this._alts.appendChild(tr);
+				};
 			} else {
 				L.DomUtil.addClass(this._errorElement, 'leaflet-control-geocoder-error')
 			}
+		},
+		markGeocode: function(result) {
+				var bbox = result.bbox,
+					sw = [bbox[0], bbox[1]],
+					ne = [bbox[2], bbox[3]];
+				this._map.fitBounds([sw, ne]);
+
+				if (this._geocodeMarker) {
+					this._map.removeLayer(this._geocodeMarker);
+				}
+
+				this._geocodeMarker = new L.Marker(result.center)
+					.bindPopup(result.name)
+					.addTo(this._map)
+					.openPopup();
 		}
 	},
 
@@ -41,9 +61,9 @@ L.Control.Geocoder = L.Control.extend({
 		var input = this._input = document.createElement('input');
 		input.type = "text";
 		input.placeholder = this.options.placeholder;
-		L.DomEvent.addListener(input, 'onkeydown', this._hideError, this);
-		L.DomEvent.addListener(input, 'onpaste', this._hideError, this);
-		L.DomEvent.addListener(input, 'oninput', this._hideError, this);
+		L.DomEvent.addListener(input, 'onkeydown', this._clearResults, this);
+		L.DomEvent.addListener(input, 'onpaste', this._clearResults, this);
+		L.DomEvent.addListener(input, 'oninput', this._clearResults, this);
 
 		var submit = document.createElement('button');
 		submit.type = "submit";
@@ -53,9 +73,14 @@ L.Control.Geocoder = L.Control.extend({
 		this._errorElement.className = className + "-form-no-error"
 		this._errorElement.innerHTML = this.options.errorMessage;
 
+		var altsTable = L.DomUtil.create('table', className + '-alternatives');
+		this._alts = document.createElement('tbody');
+		altsTable.appendChild(this._alts);
+
 		form.appendChild(input);
 		form.appendChild(submit);
 		form.appendChild(this._errorElement);
+		form.appendChild(altsTable);
 
 		L.DomEvent.addListener(form, 'submit', this._geocode, this);
 
@@ -91,7 +116,7 @@ L.Control.Geocoder = L.Control.extend({
 	},
 
 	_geocode: function(event) {
-		this._hideError();
+		this._clearResults();
 		L.DomEvent.preventDefault(event);
 		this.geocode(this._input.value);
 	},
@@ -99,6 +124,7 @@ L.Control.Geocoder = L.Control.extend({
 	geocode: function(query) {
 		this.jsonp("http://nominatim.openstreetmap.org/search/", {
 			q: query,
+			limit: 5,
 			format: "json"
 		}, function(data) {
 			var results = [];
@@ -123,7 +149,8 @@ L.Control.Geocoder = L.Control.extend({
 		this._container.className = this._container.className.replace(' leaflet-control-geocoder-expanded', '');
 	},
 
-	_hideError: function () {
+	_clearResults: function () {
+		this._alts.innerHTML = "";
 		L.DomUtil.removeClass(this._errorElement, 'leaflet-control-geocoder-error');
 	}
 });
