@@ -5,13 +5,17 @@ L.Control.Geocoder = L.Control.extend({
 		placeholder: 'Search...',
 		text: 'Locate',
 		errorMessage: 'Nothing found.',
-		callback: function (results) {
+		onGeocodeResult: function (results) {
 			if (results.length > 0) {
 				var bbox = results[0].bbox,
 					first = new L.LatLng(bbox[0], bbox[1]),
 					second = new L.LatLng(bbox[2], bbox[3]),
 					bounds = new L.LatLngBounds([first, second]);
 				this._map.fitBounds(bounds);
+				new L.Marker(results[0].center)
+					.bindPopup(results[0].name)
+					.addTo(this._map)
+					.openPopup();
 			} else {
 				L.DomUtil.addClass(this._errorElement, 'leaflet-control-geocoder-error')
 			}
@@ -100,12 +104,14 @@ L.Control.Geocoder = L.Control.extend({
 			var results = [];
 			for (var i = data.length - 1; i >= 0; i--) {
 				var bbox = data[i].boundingbox;
+				for (var j = 0; j < 4; j++) bbox[j] = parseFloat(bbox[j]);
 				results[i] = {
 					name: data[i].display_name, 
-					bbox: [bbox[0], bbox[2], bbox[1], bbox[3]]
+					bbox: [bbox[0], bbox[2], bbox[1], bbox[3]],
+					center: [(bbox[0] + bbox[1]) / 2, (bbox[2] + bbox[3]) / 2]
 				};
 			};
-			this.options.callback.call(this, results);
+			this.options.onGeocodeResult.call(this, results);
 		}, this, "json_callback")
 	},
 
@@ -124,12 +130,20 @@ L.Control.Geocoder = L.Control.extend({
 
 L.Control.Geocoder.Bing = L.Control.Geocoder.extend({
 	geocode : function (query) {
-		var params = {
+		this.jsonp("http://dev.virtualearth.net/REST/v1/Locations", {
 			query: query,
 			key : this.key,
-		};
-
-		this.jsonp("http://dev.virtualearth.net/REST/v1/Locations", 
-			params, this.options.callback, this, 'jsonp')
+		}, function(data) {
+			var results = [];
+			for (var i = data.resourceSets.resources.length - 1; i >= 0; i--) {
+				var resource = data.resourceSets.resources[i];
+				results[i] = {
+					name: resource.name, 
+					bbox: resouce.bbox,
+					center: resource.point.coordinates
+				};
+			};
+			this.options.onGeocodeResult.call(this, results);
+		}, this, 'jsonp')
 	},
 })
