@@ -4,42 +4,7 @@ L.Control.Geocoder = L.Control.extend({
 		position: 'topright',
 		placeholder: 'Search...',
 		text: 'Locate',
-		errorMessage: 'Nothing found.',
-		onGeocodeResult: function (results) {
-			var _this = this;
-
-			if (results.length == 1) {
-				this.options.markGeocode(results[0]);
-			} else if (results.length > 0) {
-				this._results = results;
-				for (var i = 0; i < results.length; i++) {
-					var tr = document.createElement('tr');
-					tr.innerHTML = '<td><a href="#" data-result-index=' + i + '>'
-						+ results[i].name + '</td>';
-					tr.onclick = function(i) { return function() { 
-						_this.options.markGeocode.call(_this, results[i]);
-					};}(i);
-					this._alts.appendChild(tr);
-				};
-			} else {
-				L.DomUtil.addClass(this._errorElement, 'leaflet-control-geocoder-error')
-			}
-		},
-		markGeocode: function(result) {
-				var bbox = result.bbox,
-					sw = [bbox[0], bbox[1]],
-					ne = [bbox[2], bbox[3]];
-				this._map.fitBounds([sw, ne]);
-
-				if (this._geocodeMarker) {
-					this._map.removeLayer(this._geocodeMarker);
-				}
-
-				this._geocodeMarker = new L.Marker(result.center)
-					.bindPopup(result.name)
-					.addTo(this._map)
-					.openPopup();
-		}
+		errorMessage: 'Nothing found.'
 	},
 
 	_callbackId: 0,
@@ -104,6 +69,35 @@ L.Control.Geocoder = L.Control.extend({
 		return container;
 	},
 
+	_geocodeResult: function (results) {
+		if (results.length == 1) {
+			this.options.markGeocode(results[0]);
+		} else if (results.length > 0) {
+			this._results = results;
+			for (var i = 0; i < results.length; i++) {
+				this._alts.appendChild(this._createAltRow(results[i]));
+			};
+		} else {
+			L.DomUtil.addClass(this._errorElement, 'leaflet-control-geocoder-error')
+		}
+	},
+
+	markGeocode: function(result) {
+			var bbox = result.bbox,
+				sw = [bbox[0], bbox[1]],
+				ne = [bbox[2], bbox[3]];
+			this._map.fitBounds([sw, ne]);
+
+			if (this._geocodeMarker) {
+				this._map.removeLayer(this._geocodeMarker);
+			}
+
+			this._geocodeMarker = new L.Marker(result.center)
+				.bindPopup(result.name)
+				.addTo(this._map)
+				.openPopup();
+	},
+
 	jsonp: function(url, params, callback, context, jsonpParam) {		
 		var callbackId = "_l_geocoder_" + (this._callbackId++);
 		params[jsonpParam || "callback"] = callbackId
@@ -137,7 +131,7 @@ L.Control.Geocoder = L.Control.extend({
 					center: [(bbox[0] + bbox[1]) / 2, (bbox[2] + bbox[3]) / 2]
 				};
 			};
-			this.options.onGeocodeResult.call(this, results);
+			this._geocodeResult.call(this, results);
 		}, this, "json_callback")
 	},
 
@@ -152,6 +146,17 @@ L.Control.Geocoder = L.Control.extend({
 	_clearResults: function () {
 		this._alts.innerHTML = "";
 		L.DomUtil.removeClass(this._errorElement, 'leaflet-control-geocoder-error');
+	},
+
+	_createAltRow: function(result) {
+		var _this = this,
+			tr = document.createElement('tr');
+		tr.innerHTML = '<td><a href="#">' + result.name + '</a></td>';
+		tr.onclick = function() { 
+			_this.markGeocode.call(_this, result);
+		};
+
+		return tr;
 	}
 });
 
@@ -170,7 +175,7 @@ L.Control.Geocoder.Bing = L.Control.Geocoder.extend({
 					center: resource.point.coordinates
 				};
 			};
-			this.options.onGeocodeResult.call(this, results);
+			this._geocodeResult.call(this, results);
 		}, this, 'jsonp')
 	},
 })

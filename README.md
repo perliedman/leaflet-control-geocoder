@@ -5,7 +5,7 @@ Leaflet Control Geocoder
 
 See the [Leaflet Control Geocoder Demo](http://perliedman.github.com/leaflet-control-geocoder/).
 
-A simple geocoder that by default uses [OSM](http://www.openstreetmap.org/)/[Nominatim](http://wiki.openstreetmap.org/wiki/Nominatim) to locate places, but also supports [Bing Locations API](http://msdn.microsoft.com/en-us/library/ff701715.aspx) and can easily be extended to support other providers.
+A simple geocoder for [Leaflet](http://leafletjs.com/) that by default uses [OSM](http://www.openstreetmap.org/)/[Nominatim](http://wiki.openstreetmap.org/wiki/Nominatim) to locate places, but also supports [Bing Locations API](http://msdn.microsoft.com/en-us/library/ff701715.aspx) and can easily be extended to support other providers.
 
 # How to use it ?
 ```javascript
@@ -24,13 +24,6 @@ var options = {
     position: 'topright', /* The position of the control */
     text: 'Locate', /* The text of the submit button */
     placeholder: 'Search...', /* The placeholder text in the search field */
-    errorMessage: 'Nothing found.', /* Text to display when no matches are found. */
-    callback: function (results) {
-        var bbox = results.resourceSets[0].resources[0].bbox,
-            first = new L.LatLng(bbox[0], bbox[1]),
-            second = new L.LatLng(bbox[2], bbox[3]),
-            bounds = new L.LatLngBounds([first, second]);
-        this._map.fitBounds(bounds);
-    }
+    errorMessage: 'Nothing found.' /* Text to display when no matches are found. */
 };
 ```
