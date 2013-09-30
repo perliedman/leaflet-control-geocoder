@@ -73,7 +73,7 @@ L.Control.Geocoder = L.Control.extend({
 		var toggle = document.getElementsByClassName('leaflet-control-geocoder-toggle')[0];
 		toggle.className = toggle.className.replace(' leaflet-control-geocoder-throbber', '')
 		if (results.length == 1) {
-			this.options.markGeocode(results[0]);
+			this.markGeocode(results[0]);
 		} else if (results.length > 0) {
 			this._results = results;
 			for (var i = 0; i < results.length; i++) {
