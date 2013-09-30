@@ -70,6 +70,8 @@ L.Control.Geocoder = L.Control.extend({
 	},
 
 	_geocodeResult: function (results) {
+		var toggle = document.getElementsByClassName('leaflet-control-geocoder-toggle')[0];
+		toggle.className = toggle.className.replace(' leaflet-control-geocoder-throbber', '')
 		if (results.length == 1) {
 			this.options.markGeocode(results[0]);
 		} else if (results.length > 0) {
@@ -110,6 +112,8 @@ L.Control.Geocoder = L.Control.extend({
 	},
 
 	_geocode: function(event) {
+		var toggle = document.getElementsByClassName('leaflet-control-geocoder-toggle')[0];
+		toggle.className += ' leaflet-control-geocoder-throbber';
 		this._clearResults();
 		L.DomEvent.preventDefault(event);
 		this.geocode(this._input.value);
