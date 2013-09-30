@@ -15,6 +15,10 @@ a.leaflet-control-geocoder-toggle {
 	height: 36px;
 }
 
+a.leaflet-control-geocoder-throbber {
+	background-image: url(images/throbber.gif);
+}
+
 .leaflet-touch .leaflet-control-geocoder a {
 	width: 44px;
 	height: 44px;
