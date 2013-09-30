@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Leaflet debug page</title>
+	<title>Leaflet Control Geocoder</title>
 
 	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
 	<!--[if lte IE 8]><link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" /><![endif]-->
@@ -25,8 +25,8 @@
 	<a href="https://github.com/perliedman/leaflet-control-geocoder"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
 	<script type="text/javascript">
 		var map = L.map('map').setView([0, 0], 2);
-		L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-		    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+		L.tileLayer('http://api.tiles.mapbox.com/v3/liedman.map-5qqfez0n/{z}/{x}/{y}.png', {
+		    attribution: '<a href="http://osm.org/copyright">Terms & Feedback</a>'
 		}).addTo(map);
 		new L.Control.Geocoder().addTo(map);
 	</script>
