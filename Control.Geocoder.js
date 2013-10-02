@@ -12,6 +12,9 @@ L.Control.Geocoder = L.Control.extend({
 	initialize: function (key, options) {
 		this.key = key;
 		L.Util.setOptions(this, options);
+		if (!this.options.geocoder) {
+			this.options.geocoder = new L.Control.Geocoder.Nominatim();
+		}
 	},
 
 	onAdd: function (map) {
@@ -100,43 +103,12 @@ L.Control.Geocoder = L.Control.extend({
 				.openPopup();
 	},
 
-	jsonp: function(url, params, callback, context, jsonpParam) {		
-		var callbackId = "_l_geocoder_" + (this._callbackId++);
-		params[jsonpParam || "callback"] = callbackId
-		window[callbackId] = L.Util.bind(callback, context || this);
-		script = document.createElement("script");
-		script.type = "text/javascript";
-		script.src = url + L.Util.getParamString(params);
-		script.id = callbackId;
-		document.getElementsByTagName("head")[0].appendChild(script);
-	},
-
 	_geocode: function(event) {
 		var toggle = document.getElementsByClassName('leaflet-control-geocoder-toggle')[0];
 		toggle.className += ' leaflet-control-geocoder-throbber';
 		this._clearResults();
 		L.DomEvent.preventDefault(event);
-		this.geocode(this._input.value);
-	},
-
-	geocode: function(query) {
-		this.jsonp("http://nominatim.openstreetmap.org/search/", {
-			q: query,
-			limit: 5,
-			format: "json"
-		}, function(data) {
-			var results = [];
-			for (var i = data.length - 1; i >= 0; i--) {
-				var bbox = data[i].boundingbox;
-				for (var j = 0; j < 4; j++) bbox[j] = parseFloat(bbox[j]);
-				results[i] = {
-					name: data[i].display_name, 
-					bbox: [bbox[0], bbox[2], bbox[1], bbox[3]],
-					center: [(bbox[0] + bbox[1]) / 2, (bbox[2] + bbox[3]) / 2]
-				};
-			};
-			this._geocodeResult.call(this, results);
-		}, this, "json_callback")
+		this.options.geocoder.geocode(this._input.value, this._geocodeResult, this);
 	},
 
 	_expand: function () {
@@ -164,9 +136,51 @@ L.Control.Geocoder = L.Control.extend({
 	}
 });
 
-L.Control.Geocoder.Bing = L.Control.Geocoder.extend({
-	geocode : function (query) {
-		this.jsonp("http://dev.virtualearth.net/REST/v1/Locations", {
+L.Control.Geocoder.callbackId = 0;
+L.Control.Geocoder.jsonp = function(url, params, callback, context, jsonpParam) {		
+	var callbackId = "_l_geocoder_" + (L.Control.Geocoder.callbackId++);
+	params[jsonpParam || "callback"] = callbackId
+	window[callbackId] = L.Util.bind(callback, context);
+	script = document.createElement("script");
+	script.type = "text/javascript";
+	script.src = url + L.Util.getParamString(params);
+	script.id = callbackId;
+	document.getElementsByTagName("head")[0].appendChild(script);
+};
+
+L.Control.Geocoder.Nominatim = L.Class.extend({
+	options: {
+		serviceUrl: "http://nominatim.openstreetmap.org/search/"
+	}
+
+	initialize: function(options) {
+		L.Util.setOptions(this, options);
+	}
+
+	geocode: function(query, cb, context) {
+		L.Control.Geocoder.jsonp("http://nominatim.openstreetmap.org/search/", {
+			q: query,
+			limit: 5,
+			format: "json"
+		}, function(data) {
+			var results = [];
+			for (var i = data.length - 1; i >= 0; i--) {
+				var bbox = data[i].boundingbox;
+				for (var j = 0; j < 4; j++) bbox[j] = parseFloat(bbox[j]);
+				results[i] = {
+					name: data[i].display_name, 
+					bbox: [bbox[0], bbox[2], bbox[1], bbox[3]],
+					center: [(bbox[0] + bbox[1]) / 2, (bbox[2] + bbox[3]) / 2]
+				};
+			};
+			cb.call(context, results);
+		}, this, "json_callback")
+	},
+});
+
+L.Control.Geocoder.Bing = L.Class.extend({
+	geocode : function (query, cb, context) {
+		L.Control.Geocoder.jsonp("http://dev.virtualearth.net/REST/v1/Locations", {
 			query: query,
 			key : this.key,
 		}, function(data) {
@@ -179,7 +193,7 @@ L.Control.Geocoder.Bing = L.Control.Geocoder.extend({
 					center: resource.point.coordinates
 				};
 			};
-			this._geocodeResult.call(this, results);
+			cb.call(context, results);
 		}, this, 'jsonp')
 	},
 })

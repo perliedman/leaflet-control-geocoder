@@ -19,11 +19,10 @@ new L.Control.Geocoder().addTo(map);
 # What are the options ?
 You can specify an options object as a second argument of L.Control.Geocoder.
 ```javascript
-var options = {
     collapsed: true, /* Whether its collapsed or not */
     position: 'topright', /* The position of the control */
     text: 'Locate', /* The text of the submit button */
     placeholder: 'Search...', /* The placeholder text in the search field */
     errorMessage: 'Nothing found.' /* Text to display when no matches are found. */
-};
+    geocoder: new L.Control.Geocoder.Nominatim() /* Object that responds to the geocoding queries */
 ```
