@@ -22,7 +22,9 @@ This is the geocoder control. It works like any other Leaflet control, and is ad
 
 ### Constructor
 
-```L.Control.Geocoder(options)```
+```js
+L.Control.Geocoder(options)
+```
 
 ### Options
 
@@ -49,7 +51,9 @@ Unless using your own Nominatim installation, please refer to the [Nominatim usa
 
 ### Constructor
 
-```L.Control.Geocoder.Nominatim(options)```
+```js
+L.Control.Geocoder.Nominatim(options)
+```
 
 ## Options
 
@@ -65,7 +69,9 @@ Note that you need an API key to use this service.
 
 ### Constructor
 
-```L.Control.Geocoder.Bing(<String> key)```
+```
+L.Control.Geocoder.Bing(<String> key)
+```
 
 ## IGeocoder
 
