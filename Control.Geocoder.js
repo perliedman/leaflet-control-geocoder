@@ -136,6 +136,10 @@ L.Control.Geocoder = L.Control.extend({
 	}
 });
 
+L.Control.geocoder = function(id, options) {
+	return new L.Control.Geocoder(id, options);
+}
+
 L.Control.Geocoder.callbackId = 0;
 L.Control.Geocoder.jsonp = function(url, params, callback, context, jsonpParam) {		
 	var callbackId = "_l_geocoder_" + (L.Control.Geocoder.callbackId++);
@@ -178,6 +182,10 @@ L.Control.Geocoder.Nominatim = L.Class.extend({
 	},
 });
 
+L.Control.Geocoder.nominatim = function(options) {
+	return new L.Control.Geocoder.Nominatim(options);
+}
+
 L.Control.Geocoder.Bing = L.Class.extend({
 	geocode : function (query, cb, context) {
 		L.Control.Geocoder.jsonp("http://dev.virtualearth.net/REST/v1/Locations", {
@@ -196,4 +204,8 @@ L.Control.Geocoder.Bing = L.Class.extend({
 			cb.call(context, results);
 		}, this, 'jsonp')
 	},
-})
+});
+
+L.Control.Geocoder.bing = function() {
+	return new L.Control.Geocoder.Bing();
+}
