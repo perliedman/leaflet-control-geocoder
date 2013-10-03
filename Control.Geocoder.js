@@ -3,7 +3,6 @@ L.Control.Geocoder = L.Control.extend({
 		collapsed: true,
 		position: 'topright',
 		placeholder: 'Search...',
-		text: 'Locate',
 		errorMessage: 'Nothing found.'
 	},
 
@@ -33,10 +32,6 @@ L.Control.Geocoder = L.Control.extend({
 		L.DomEvent.addListener(input, 'onpaste', this._clearResults, this);
 		L.DomEvent.addListener(input, 'oninput', this._clearResults, this);
 
-		var submit = document.createElement('button');
-		submit.type = "submit";
-		submit.innerHTML = this.options.text;
-
 		this._errorElement = document.createElement('div');
 		this._errorElement.className = className + "-form-no-error"
 		this._errorElement.innerHTML = this.options.errorMessage;
@@ -46,7 +41,6 @@ L.Control.Geocoder = L.Control.extend({
 		altsTable.appendChild(this._alts);
 
 		form.appendChild(input);
-		form.appendChild(submit);
 		form.appendChild(this._errorElement);
 		form.appendChild(altsTable);
 
@@ -88,10 +82,7 @@ L.Control.Geocoder = L.Control.extend({
 	},
 
 	markGeocode: function(result) {
-			var bbox = result.bbox,
-				sw = [bbox[0], bbox[1]],
-				ne = [bbox[2], bbox[3]];
-			this._map.fitBounds([sw, ne]);
+			this._map.fitBounds(result.bbox);
 
 			if (this._geocodeMarker) {
 				this._map.removeLayer(this._geocodeMarker);
@@ -101,6 +92,8 @@ L.Control.Geocoder = L.Control.extend({
 				.bindPopup(result.name)
 				.addTo(this._map)
 				.openPopup();
+
+			return this;
 	},
 
 	_geocode: function(event) {
@@ -155,14 +148,14 @@ L.Control.Geocoder.jsonp = function(url, params, callback, context, jsonpParam) 
 L.Control.Geocoder.Nominatim = L.Class.extend({
 	options: {
 		serviceUrl: "http://nominatim.openstreetmap.org/search/"
-	}
+	},
 
 	initialize: function(options) {
 		L.Util.setOptions(this, options);
-	}
+	},
 
 	geocode: function(query, cb, context) {
-		L.Control.Geocoder.jsonp("http://nominatim.openstreetmap.org/search/", {
+		L.Control.Geocoder.jsonp(this.options.serviceUrl, {
 			q: query,
 			limit: 5,
 			format: "json"
@@ -173,8 +166,8 @@ L.Control.Geocoder.Nominatim = L.Class.extend({
 				for (var j = 0; j < 4; j++) bbox[j] = parseFloat(bbox[j]);
 				results[i] = {
 					name: data[i].display_name, 
-					bbox: [bbox[0], bbox[2], bbox[1], bbox[3]],
-					center: [(bbox[0] + bbox[1]) / 2, (bbox[2] + bbox[3]) / 2]
+					bbox: L.latLngBounds([bbox[0], bbox[2]], [bbox[1], bbox[3]]),
+					center: L.latLng((bbox[0] + bbox[1]) / 2, (bbox[2] + bbox[3]) / 2)
 				};
 			};
 			cb.call(context, results);
@@ -187,6 +180,10 @@ L.Control.Geocoder.nominatim = function(options) {
 }
 
 L.Control.Geocoder.Bing = L.Class.extend({
+	initialize: function(key) {
+		this.key = key;
+	},
+
 	geocode : function (query, cb, context) {
 		L.Control.Geocoder.jsonp("http://dev.virtualearth.net/REST/v1/Locations", {
 			query: query,
@@ -197,8 +194,8 @@ L.Control.Geocoder.Bing = L.Class.extend({
 				var resource = data.resourceSets.resources[i];
 				results[i] = {
 					name: resource.name, 
-					bbox: resouce.bbox,
-					center: resource.point.coordinates
+					bbox: L.latLngBounds(resource.bbox),
+					center: L.latLng(resource.point.coordinates)
 				};
 			};
 			cb.call(context, results);
