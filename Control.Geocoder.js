@@ -1,3 +1,20 @@
+(function (factory) {
+	// Packaging/modules magic dance
+	var L;
+	if (typeof define === 'function' && define.amd) {
+		// AMD
+		define(['leaflet'], factory);
+	} else if (typeof module !== 'undefined') {
+		// Node/CommonJS
+		L = require('leaflet');
+		module.exports = factory(L);
+	} else {
+		// Browser globals
+		if (typeof window.L === 'undefined')
+			throw "Leaflet must be loaded first";
+		factory(window.L);
+	}
+}(function (L) {
 L.Control.Geocoder = L.Control.extend({
 	options: {
 		collapsed: true,
@@ -206,3 +223,7 @@ L.Control.Geocoder.Bing = L.Class.extend({
 L.Control.Geocoder.bing = function() {
 	return new L.Control.Geocoder.Bing();
 }
+
+return L.Control.Geocoder;
+
+}));

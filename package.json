@@ -1,0 +1,26 @@
+{
+  "name": "leaflet-control-geocoder",
+  "version": "0.0.1",
+  "description": "Extendable geocoder with builtin OSM/Nominatim support",
+  "main": "Control.Geocoder.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/perliedman/leaflet-control-geocoder.git"
+  },
+  "keywords": [
+    "leaflet",
+    "geocoder",
+    "nominatim"
+  ],
+  "author": "Per Liedman <per.liedman@kartena.se>",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/perliedman/leaflet-control-geocoder/issues"
+  },
+  "dependencies": {
+    "leaflet": "~0.6.4"
+  }
+}
