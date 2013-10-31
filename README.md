@@ -1,4 +1,4 @@
-Leaflet Control Geocoder
+Leaflet Control Geocoder [![NPM version](https://badge.fury.io/js/leaflet-control-geocoder.png)](http://badge.fury.io/js/leaflet-control-geocoder)
 =============================
 
 A simple geocoder for [Leaflet](http://leafletjs.com/) that by default uses [OSM](http://www.openstreetmap.org/)/[Nominatim](http://wiki.openstreetmap.org/wiki/Nominatim) to locate places, but also supports [Bing Locations API](http://msdn.microsoft.com/en-us/library/ff701715.aspx) and can easily be extended to support other providers.
