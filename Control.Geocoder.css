@@ -5,7 +5,7 @@
 	        border-radius: 5px;
 }
 
-a.leaflet-control-geocoder-toggle {
+.leaflet-control-geocoder-toggle {
 	float:right;
 	background-position: 50% 50%;
 	background-repeat: no-repeat;
@@ -15,7 +15,7 @@ a.leaflet-control-geocoder-toggle {
 	height: 36px;
 }
 
-a.leaflet-control-geocoder-throbber {
+.leaflet-control-geocoder-throbber {
 	background-image: url(images/throbber.gif);
 }
 
@@ -44,9 +44,12 @@ a.leaflet-control-geocoder-throbber {
 .leaflet-control-geocoder-form input {
 	padding: 8px;
 	border: 0;
-	outline: none;
 	background: #f8f8f9;
 	font-size: 14px;
+}
+
+.leaflet-control-geocoder-form input:focus {
+	outline: none;
 }
 
 .leaflet-control-geocoder-form button {
@@ -70,7 +73,7 @@ table.leaflet-control-geocoder-alternatives {
 
 .leaflet-control-geocoder-alternatives td {
 	max-width: 200px;
-	overflow: hidden; 
+	overflow: hidden;
   	text-overflow: ellipsis;
   	white-space: nowrap;
 }
