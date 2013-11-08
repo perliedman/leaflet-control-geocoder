@@ -76,7 +76,7 @@
 		},
 
 		_geocodeResult: function (results) {
-			this._input.className = this._input.className.replace(' leaflet-control-geocoder-throbber', '');
+			this._form.className = this._form.className.replace(' leaflet-control-geocoder-throbber', '');
 			if (results.length === 1) {
 				this.markGeocode(results[0]);
 			} else if (results.length > 0) {
@@ -108,7 +108,7 @@
 		_geocode: function(event) {
 			L.DomEvent.preventDefault(event);
 
-			this._input.className += ' leaflet-control-geocoder-throbber';
+			this._form.className += ' leaflet-control-geocoder-throbber';
 			this._clearResults();
 			this.options.geocoder.geocode(this._input.value, this._geocodeResult, this);
 
