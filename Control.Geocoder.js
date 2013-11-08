@@ -19,6 +19,7 @@
 	L.Control.Geocoder = L.Control.extend({
 		options: {
 			collapsed: true,
+			expand: 'click',
 			position: 'topright',
 			placeholder: 'Search...',
 			errorMessage: 'Nothing found.'
@@ -60,10 +61,13 @@
 			L.DomEvent.addListener(form, 'submit', this._geocode, this);
 
 			if (this.options.collapsed) {
-				L.DomEvent.addListener(input, 'mouseover', this._expand, this);
-				L.DomEvent.addListener(input, 'mouseout', this._collapse, this);
-
-				this._map.on('movestart', this._collapse, this);
+				if (this.options.expand === 'click') {
+					L.DomEvent.addListener(input, 'click', this._toggle, this);
+				} else {
+					L.DomEvent.addListener(input, 'mouseover', this._expand, this);
+					L.DomEvent.addListener(input, 'mouseout', this._collapse, this);
+					this._map.on('movestart', this._collapse, this);
+				}
 			} else {
 				this._expand();
 			}
@@ -111,12 +115,21 @@
 			return false;
 		},
 
+		_toggle: function() {
+			if (this._container.className.indexOf('leaflet-control-geocoder-expanded') >= 0) {
+				this._collapse();
+			} else {
+				this._expand();
+			}
+		},
+
 		_expand: function () {
 			L.DomUtil.addClass(this._container, 'leaflet-control-geocoder-expanded');
 		},
 
 		_collapse: function () {
 			this._container.className = this._container.className.replace(' leaflet-control-geocoder-expanded', '');
+			this._alts.style.display = 'none';
 		},
 
 		_clearResults: function () {
