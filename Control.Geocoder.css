@@ -1,51 +1,33 @@
-.leaflet-control-geocoder {
+.leaflet-control-geocoder-form input, .leaflet-control-geocoder-form ul, .leaflet-control-geocoder-error {
+	float: right;
+	clear: both;
 	box-shadow: 0 1px 7px rgba(0,0,0,0.4);
 	background: #f8f8f9;
 	-webkit-border-radius: 5px;
 	        border-radius: 5px;
-}
-
-.leaflet-control-geocoder-toggle {
-	float:right;
-	background-position: 50% 50%;
-	background-repeat: no-repeat;
-	display: block;
-	background-image: url(images/geocoder.png);
-	width: 36px;
-	height: 36px;
-}
-
-.leaflet-control-geocoder-throbber {
-	background-image: url(images/throbber.gif);
-}
-
-.leaflet-touch .leaflet-control-geocoder a {
-	width: 44px;
-	height: 44px;
-}
-
-.leaflet-control-geocoder .leaflet-control-geocoder-form {
-	display: none;
-}
-
-.leaflet-control-geocoder-expanded .leaflet-control-geocoder-form {
-	display: inline;
-	position: relative;
-}
-
-.leaflet-control-geocoder-expanded .leaflet-control-geocoder-form {
-	height: 36px;
-}
-
-.leaflet-touch .leaflet-control-geocoder-expanded .leaflet-control-geocoder-form  a {
-	height: 44px;
+	border: 0;
+	color: transparent;
 }
 
 .leaflet-control-geocoder-form input {
-	padding: 8px;
-	border: 0;
-	background: #f8f8f9;
+	background-image: url(images/geocoder.png);
+	background-repeat: no-repeat;
+	background-position: right;
 	font-size: 14px;
+	width: 26px;
+	height: 26px;
+	transition: all 0.125s ease-in;
+}
+
+.leaflet-control-geocoder-throbber input {
+	background-image: url(images/throbber.gif);
+}
+
+.leaflet-control-geocoder-expanded input, .leaflet-control-geocoder-error {
+	width: 200px;
+	padding-left: 8px;
+	padding-right: 26px;
+	color: #000;
 }
 
 .leaflet-control-geocoder-form input:focus {
@@ -61,24 +43,27 @@
 }
 
 .leaflet-control-geocoder-error {
-	padding: 8px;
+	margin-top: 8px;
 	display: block;
-	font-size: 14px;
 	color: #444;
 }
 
-table.leaflet-control-geocoder-alternatives {
-	padding: 8px;
-}
-
-.leaflet-control-geocoder-alternatives td {
-	max-width: 200px;
+ul.leaflet-control-geocoder-alternatives {
+	width: 218px;
 	overflow: hidden;
   	text-overflow: ellipsis;
   	white-space: nowrap;
+  	list-style: none;
+  	padding: 4px 8px 4px 8px;
 }
 
-table.leaflet-control-geocoder-alternatives a {
+.leaflet-control-geocoder-alternatives li {
+	width: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.leaflet-control-geocoder-alternatives a {
 	text-decoration: none;
 	color: black;
 	padding: 4px 0 4px 0;

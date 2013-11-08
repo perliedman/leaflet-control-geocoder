@@ -35,16 +35,13 @@
 
 		onAdd: function (map) {
 			this._map = map;
-			var className = 'leaflet-control-geocoder',
-				container = this._container = L.DomUtil.create('div', className);
-
-			L.DomEvent.disableClickPropagation(container);
+			var className = 'leaflet-control-geocoder';
 
 			var form = this._form = L.DomUtil.create('form', className + '-form');
 
 			var input = this._input = document.createElement('input');
 			input.type = 'text';
-			input.placeholder = this.options.placeholder;
+			//input.placeholder = this.options.placeholder;
 			L.DomEvent.addListener(input, 'onkeydown', this._clearResults, this);
 			L.DomEvent.addListener(input, 'onpaste', this._clearResults, this);
 			L.DomEvent.addListener(input, 'oninput', this._clearResults, this);
@@ -53,45 +50,36 @@
 			this._errorElement.className = className + '-form-no-error';
 			this._errorElement.innerHTML = this.options.errorMessage;
 
-			var altsTable = L.DomUtil.create('table', className + '-alternatives');
-			this._alts = document.createElement('tbody');
-			altsTable.appendChild(this._alts);
+			this._alts = L.DomUtil.create('ul', className + '-alternatives');
+			this._alts.style.display = 'none';
 
 			form.appendChild(input);
 			form.appendChild(this._errorElement);
-			form.appendChild(altsTable);
+			form.appendChild(this._alts);
 
 			L.DomEvent.addListener(form, 'submit', this._geocode, this);
 
 			if (this.options.collapsed) {
-				L.DomEvent.addListener(container, 'mouseover', this._expand, this);
-				L.DomEvent.addListener(container, 'mouseout', this._collapse, this);
-
-				var link = this._layersLink = L.DomUtil.create('a', className + '-toggle', container);
-				link.href = '#';
-				link.title = 'Geocoder';
-
-				L.DomEvent.addListener(link, L.Browser.touch ? 'click' : 'focus', this._expand, this);
+				L.DomEvent.addListener(input, 'mouseover', this._expand, this);
+				L.DomEvent.addListener(input, 'mouseout', this._collapse, this);
 
 				this._map.on('movestart', this._collapse, this);
 			} else {
 				this._expand();
 			}
 
-			container.appendChild(form);
-
-			return container;
+			return form;
 		},
 
 		_geocodeResult: function (results) {
-			var toggle = document.getElementsByClassName('leaflet-control-geocoder-toggle')[0];
-			toggle.className = toggle.className.replace(' leaflet-control-geocoder-throbber', '');
+			this._input.className = this._input.className.replace(' leaflet-control-geocoder-throbber', '');
 			if (results.length === 1) {
 				this.markGeocode(results[0]);
 			} else if (results.length > 0) {
 				this._results = results;
+				this._alts.style.display = 'block';
 				for (var i = 0; i < results.length; i++) {
-					this._alts.appendChild(this._createAltRow(results[i]));
+					this._alts.appendChild(this._createAlt(results[i]));
 				}
 			} else {
 				L.DomUtil.addClass(this._errorElement, 'leaflet-control-geocoder-error');
@@ -114,11 +102,13 @@
 		},
 
 		_geocode: function(event) {
-			var toggle = document.getElementsByClassName('leaflet-control-geocoder-toggle')[0];
-			toggle.className += ' leaflet-control-geocoder-throbber';
-			this._clearResults();
 			L.DomEvent.preventDefault(event);
+
+			this._input.className += ' leaflet-control-geocoder-throbber';
+			this._clearResults();
 			this.options.geocoder.geocode(this._input.value, this._geocodeResult, this);
+
+			return false;
 		},
 
 		_expand: function () {
@@ -130,19 +120,20 @@
 		},
 
 		_clearResults: function () {
+			this._alts.style.display = 'none';
 			this._alts.innerHTML = '';
 			L.DomUtil.removeClass(this._errorElement, 'leaflet-control-geocoder-error');
 		},
 
-		_createAltRow: function(result) {
+		_createAlt: function(result) {
 			var _this = this,
-				tr = document.createElement('tr');
-			tr.innerHTML = '<td><a href="#">' + result.name + '</a></td>';
-			tr.onclick = function() {
+				li = document.createElement('li');
+			li.innerHTML = '<a href="#">' + result.name + '</a>';
+			li.onclick = function() {
 				_this.markGeocode.call(_this, result);
 			};
 
-			return tr;
+			return li;
 		}
 	});
 
