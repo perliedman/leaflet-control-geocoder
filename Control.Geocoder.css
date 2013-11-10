@@ -49,23 +49,34 @@
 }
 
 ul.leaflet-control-geocoder-alternatives {
-	width: 218px;
+	width: 234px;
 	overflow: hidden;
   	text-overflow: ellipsis;
   	white-space: nowrap;
   	list-style: none;
-  	padding: 4px 8px 4px 8px;
+  	padding: 0;
 }
 
 .leaflet-control-geocoder-alternatives li {
 	width: 100%;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	border-bottom: 1px solid #eee;
+	padding: 0;
+}
+
+.leaflet-control-geocoder-alternatives li:last-child {
+	border-bottom: none;
 }
 
 .leaflet-control-geocoder-alternatives a {
+	display: block;
 	text-decoration: none;
 	color: black;
-	padding: 4px 0 4px 0;
+	padding: 6px 8px 16px 6px;
 	font-size: 14px;
+}
+
+.leaflet-control-geocoder-alternatives a:hover {
+	background-color: #0078A8;
 }
