@@ -42,10 +42,10 @@
 
 			var input = this._input = document.createElement('input');
 			input.type = 'text';
-			//input.placeholder = this.options.placeholder;
-			L.DomEvent.addListener(input, 'onkeydown', this._clearResults, this);
-			L.DomEvent.addListener(input, 'onpaste', this._clearResults, this);
-			L.DomEvent.addListener(input, 'oninput', this._clearResults, this);
+
+			L.DomEvent.addListener(input, 'keydown', this._keydown, this);
+			//L.DomEvent.addListener(input, 'onpaste', this._clearResults, this);
+			//L.DomEvent.addListener(input, 'oninput', this._clearResults, this);
 
 			this._errorElement = document.createElement('div');
 			this._errorElement.className = className + '-form-no-error';
@@ -83,7 +83,7 @@
 				this._results = results;
 				this._alts.style.display = 'block';
 				for (var i = 0; i < results.length; i++) {
-					this._alts.appendChild(this._createAlt(results[i]));
+					this._alts.appendChild(this._createAlt(results[i], i));
 				}
 			} else {
 				L.DomUtil.addClass(this._errorElement, 'leaflet-control-geocoder-error');
@@ -135,18 +135,56 @@
 		_clearResults: function () {
 			this._alts.style.display = 'none';
 			this._alts.innerHTML = '';
+			this._selection = null;
 			L.DomUtil.removeClass(this._errorElement, 'leaflet-control-geocoder-error');
 		},
 
-		_createAlt: function(result) {
-			var _this = this,
-				li = document.createElement('li');
-			li.innerHTML = '<a href="#">' + result.name + '</a>';
-			li.onclick = function() {
-				_this.markGeocode.call(_this, result);
-			};
+		_createAlt: function(result, index) {
+			var li = document.createElement('li');
+			li.innerHTML = '<a href="#" data-result-index="' + index + '">' + result.name + '</a>';
+			L.DomEvent.addListener(li, 'click', function clickHandler() {
+				this.markGeocode(result);
+			}, this);
 
 			return li;
+		},
+
+		_keydown: function(e) {
+			var _this = this,
+				select = function select(dir) {
+					if (_this._selection) {
+						L.DomUtil.removeClass(_this._selection.firstChild, 'leaflet-control-geocoder-selected');
+						_this._selection = _this._selection[dir > 0 ? 'nextSibling' : 'previousSibling'];
+					}
+					if (!_this._selection) {
+						_this._selection = _this._alts[dir > 0 ? 'firstChild' : 'lastChild'];
+					}
+
+					if (_this._selection) {
+						L.DomUtil.addClass(_this._selection.firstChild, 'leaflet-control-geocoder-selected');
+					}
+				};
+
+			switch (e.keyCode) {
+			// Up
+			case 38:
+				select(-1);
+				L.DomEvent.preventDefault(e);
+				break;
+			// Up
+			case 40:
+				select(1);
+				L.DomEvent.preventDefault(e);
+				break;
+			// Enter
+			case 13:
+				if (this._selection) {
+					var index = parseInt(this._selection.firstChild.getAttribute('data-result-index'), 10);
+					this.markGeocode(this._results[index]);
+					L.DomEvent.preventDefault(e);
+				}
+			}
+			return true;
 		}
 	});
 

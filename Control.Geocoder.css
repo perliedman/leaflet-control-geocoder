@@ -77,6 +77,6 @@ ul.leaflet-control-geocoder-alternatives {
 	font-size: 14px;
 }
 
-.leaflet-control-geocoder-alternatives a:hover {
+.leaflet-control-geocoder-alternatives a:hover, .leaflet-control-geocoder-selected {
 	background-color: #0078A8;
 }
