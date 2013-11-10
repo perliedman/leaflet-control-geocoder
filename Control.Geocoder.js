@@ -181,6 +181,7 @@
 				if (this._selection) {
 					var index = parseInt(this._selection.firstChild.getAttribute('data-result-index'), 10);
 					this.markGeocode(this._results[index]);
+					this._clearResults();
 					L.DomEvent.preventDefault(e);
 				}
 			}
