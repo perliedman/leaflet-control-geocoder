@@ -18,17 +18,23 @@
 			width: 100%;
 			height: 100%;
 		}
+
+		#geocode-selector {
+			position: absolute;
+			left: 10px;
+			bottom: 10px;
+		}
+
+		#geocode-selector .selected {
+			background-color: #0078A8;
+		}
 	</style>
 </head>
 <body>
 	<div id="map"></div>
+	<div id="geocode-selector"></div>
 	<a href="https://github.com/perliedman/leaflet-control-geocoder"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
-	<script type="text/javascript">
-		var map = L.map('map').setView([0, 0], 2);
-		L.tileLayer('http://api.tiles.mapbox.com/v3/liedman.map-5qqfez0n/{z}/{x}/{y}.png', {
-		    attribution: '<a href="http://osm.org/copyright">Terms & Feedback</a>'
-		}).addTo(map);
-		new L.Control.Geocoder().addTo(map);
+	<script src="index.js">
 	</script>
 </body>
 </html>
