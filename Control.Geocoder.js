@@ -281,13 +281,18 @@
 		},
 
 		jsonp: function(params, callback, context) {
-			var callbackId = '_l_geocoder_' + (L.Control.Geocoder.callbackId++);
+			var callbackId = '_l_geocoder_' + (L.Control.Geocoder.callbackId++),
+				paramParts = [];
 			params.prepend = callbackId + '(';
 			params.append = ')';
+			for (var p in params) {
+				paramParts.push(p + '=' + escape(params[p]));
+			}
+
 			window[callbackId] = L.Util.bind(callback, context);
 			var script = document.createElement('script');
 			script.type = 'text/javascript';
-			script.src = this._serviceUrl + '?' + L.Util.getParamString(params);
+			script.src = this._serviceUrl + '?' + paramParts.join('&');
 			script.id = callbackId;
 			document.getElementsByTagName('head')[0].appendChild(script);
 		},
