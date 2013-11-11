@@ -62,7 +62,12 @@
 
 			if (this.options.collapsed) {
 				if (this.options.expand === 'click') {
-					L.DomEvent.addListener(input, 'click', this._toggle, this);
+					L.DomEvent.addListener(input, 'click', function(e) {
+						// TODO: touch
+						if (e.button === 0 && e.detail === 1) {
+							this._toggle();
+						}
+					}, this);
 				} else {
 					L.DomEvent.addListener(input, 'mouseover', this._expand, this);
 					L.DomEvent.addListener(input, 'mouseout', this._collapse, this);
