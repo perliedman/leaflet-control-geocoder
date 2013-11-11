@@ -255,11 +255,12 @@
 				key : this.key
 			}, function(data) {
 				var results = [];
-				for (var i = data.resourceSets.resources.length - 1; i >= 0; i--) {
-					var resource = data.resourceSets.resources[i];
+				for (var i = data.resourceSets[0].resources.length - 1; i >= 0; i--) {
+					var resource = data.resourceSets[0].resources[i],
+						bbox = resource.bbox;
 					results[i] = {
 						name: resource.name,
-						bbox: L.latLngBounds(resource.bbox),
+						bbox: L.latLngBounds([bbox[0], bbox[1]], [bbox[2], bbox[3]]),
 						center: L.latLng(resource.point.coordinates)
 					};
 				}
@@ -268,8 +269,8 @@
 		},
 	});
 
-	L.Control.Geocoder.bing = function() {
-		return new L.Control.Geocoder.Bing();
+	L.Control.Geocoder.bing = function(key) {
+		return new L.Control.Geocoder.Bing(key);
 	};
 
 	L.Control.Geocoder.RaveGeo = L.Class.extend({
@@ -320,6 +321,11 @@
 			}, this);
 		}
 	});
+
+	L.Control.Geocoder.raveGeo = function(serviceUrl, scheme, options) {
+		return new L.Control.Geocoder.RaveGeo(serviceUrl, scheme, options);
+	};
+
 
 	return L.Control.Geocoder;
 }));
