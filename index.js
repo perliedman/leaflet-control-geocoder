@@ -2,8 +2,8 @@
     var map = L.map('map').setView([0, 0], 2),
         geocoders = {
             'Nominatim': L.Control.Geocoder.nominatim(),
-            'Bing': L.Control.Geocoder.bing('AoArA0sD6eBGZyt5PluxhuN7N7X1vloSEIhzaKVkBBGL37akEVbrr0wn17hoYAMy')/*,
-            'RaveGeo': L.Control.Geocoder.raveGeo('http://services.geosition.com/ravegeo3/geocode2/Geocode', 'Teleatlas_Demo')*/
+            'Bing': L.Control.Geocoder.bing('AoArA0sD6eBGZyt5PluxhuN7N7X1vloSEIhzaKVkBBGL37akEVbrr0wn17hoYAMy'),
+            /*'RaveGeo': L.Control.Geocoder.raveGeo('http://services.geosition.com/ravegeo3/geocode2/Geocode', 'Teleatlas_Demo')*/
         },
         selector = L.DomUtil.get('geocode-selector'),
         control = new L.Control.Geocoder({ geocoder: null }),
@@ -34,7 +34,7 @@
         }
     }
 
-    L.tileLayer('http://api.tiles.mapbox.com/v3/liedman.map-5qqfez0n/{z}/{x}/{y}.png', {
+    L.tileLayer('http://api.tiles.mapbox.com/v3/liedman.h9ekn0f1/{z}/{x}/{y}.png', {
         attribution: '<a href="http://osm.org/copyright">Terms & Feedback</a>'
     }).addTo(map);
 
