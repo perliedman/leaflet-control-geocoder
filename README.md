@@ -6,6 +6,16 @@ A simple geocoder for [Leaflet](http://leafletjs.com/) that by default uses [OSM
 See the [Leaflet Control Geocoder Demo](http://perliedman.github.com/leaflet-control-geocoder/).
 
 # Usage
+
+Load the CSS and Javascript:
+
+```HTML
+<link rel="stylesheet" href="../Control.Geocoder.css" />
+<script src="Control.Geocoder.js"></script>
+```
+
+Add the control to a map instance:
+
 ```javascript
 var map = L.map('map').setView([0, 0], 2);
 L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
@@ -13,6 +23,30 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 L.Control.geocoder().addTo(map);
 ```
+
+# Customizing
+
+By default, when a geocoding result is found, the control will center the map on it and place
+a marker at its location. This can be customized by overwriting the control's ```markGeocode```
+function, to perform any action desired.
+
+For example:
+
+```javascript
+var geocoder = L.Control.geocoder().addTo(map);
+
+geocoder.markGeocode = function(result) {
+    var bbox = result.bbox;
+    L.polygon([
+         bbox.getSouthEast(),
+         bbox.getNorthEast(),
+         bbox.getNorthWest(),
+         bbox.getSouthWest()
+    ]).addTo(map);
+};
+```
+
+This will add a polygon representing the result's boundingbox when a result is selected.
 
 # API
 
