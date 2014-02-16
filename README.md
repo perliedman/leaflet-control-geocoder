@@ -69,6 +69,7 @@ L.Control.Geocoder(options)
 | placeholder     |  String          |  "Search..."      | Placeholder text for text input
 | errorMessage    |  String          |  "Nothing found." | Message when no result found / geocoding error occurs |
 | geocoder        |  IGeocoder       |  new L.Control.Geocoder.Nominatim() | Object to perform the actual geocoding queries |
+| showResultIcons |  Boolean         |  false            | Show icons for geocoding results (if available); supported by Nominatim |
 
 ### Methods
 
@@ -128,3 +129,4 @@ An object that represents a result from a geocoding query.
 | name       | String           | Name of found location                |
 | bounds     | L.LatLngBounds   | The bounds of the location            |
 | center     | L.LatLng         | The center coordinate of the location |
+| icon       | String           | URL for icon representing result; optional |

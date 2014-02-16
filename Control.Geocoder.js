@@ -18,6 +18,7 @@
 	'use strict';
 	L.Control.Geocoder = L.Control.extend({
 		options: {
+			showResultIcons: false,
 			collapsed: true,
 			expand: 'click',
 			position: 'topright',
@@ -154,7 +155,11 @@
 
 		_createAlt: function(result, index) {
 			var li = document.createElement('li');
-			li.innerHTML = '<a href="#" data-result-index="' + index + '">' + result.name + '</a>';
+			li.innerHTML = '<a href="#" data-result-index="' + index + '">' +
+				(this.options.showResultIcons && result.icon ?
+					'<img src="' + result.icon + '"/>' :
+					'') +
+				result.name + '</a>';
 			L.DomEvent.addListener(li, 'click', function clickHandler() {
 				this._geocodeResultSelected(result);
 			}, this);
@@ -238,6 +243,7 @@
 					var bbox = data[i].boundingbox;
 					for (var j = 0; j < 4; j++) bbox[j] = parseFloat(bbox[j]);
 					results[i] = {
+						icon: data[i].icon,
 						name: data[i].display_name,
 						bbox: L.latLngBounds([bbox[0], bbox[2]], [bbox[1], bbox[3]]),
 						center: L.latLng((bbox[0] + bbox[1]) / 2, (bbox[2] + bbox[3]) / 2)
