@@ -130,6 +130,7 @@
 
 		_expand: function () {
 			L.DomUtil.addClass(this._container, 'leaflet-control-geocoder-expanded');
+			this._input.select();
 		},
 
 		_collapse: function () {
