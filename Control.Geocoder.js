@@ -18,6 +18,7 @@
 	'use strict';
 	L.Control.Geocoder = L.Control.extend({
 		options: {
+			showResultIcons: false,
 			collapsed: true,
 			expand: 'click',
 			position: 'topright',
@@ -83,7 +84,7 @@
 		_geocodeResult: function (results) {
 			this._form.className = this._form.className.replace(' leaflet-control-geocoder-throbber', '');
 			if (results.length === 1) {
-				this.markGeocode(results[0]);
+				this._geocodeResultSelected(results[0]);
 			} else if (results.length > 0) {
 				this._results = results;
 				this._alts.style.display = 'block';
@@ -120,6 +121,13 @@
 			return false;
 		},
 
+		_geocodeResultSelected: function(result) {
+			if (this.options.collapsed) {
+				this._collapse();
+			}
+			this.markGeocode(result);
+		},
+
 		_toggle: function() {
 			if (this._container.className.indexOf('leaflet-control-geocoder-expanded') >= 0) {
 				this._collapse();
@@ -130,6 +138,7 @@
 
 		_expand: function () {
 			L.DomUtil.addClass(this._container, 'leaflet-control-geocoder-expanded');
+			this._input.select();
 		},
 
 		_collapse: function () {
@@ -146,9 +155,13 @@
 
 		_createAlt: function(result, index) {
 			var li = document.createElement('li');
-			li.innerHTML = '<a href="#" data-result-index="' + index + '">' + result.name + '</a>';
+			li.innerHTML = '<a href="#" data-result-index="' + index + '">' +
+				(this.options.showResultIcons && result.icon ?
+					'<img src="' + result.icon + '"/>' :
+					'') +
+				result.name + '</a>';
 			L.DomEvent.addListener(li, 'click', function clickHandler() {
-				this.markGeocode(result);
+				this._geocodeResultSelected(result);
 			}, this);
 
 			return li;
@@ -185,7 +198,7 @@
 			case 13:
 				if (this._selection) {
 					var index = parseInt(this._selection.firstChild.getAttribute('data-result-index'), 10);
-					this.markGeocode(this._results[index]);
+					this._geocodeResultSelected(this._results[index]);
 					this._clearResults();
 					L.DomEvent.preventDefault(e);
 				}
@@ -230,6 +243,7 @@
 					var bbox = data[i].boundingbox;
 					for (var j = 0; j < 4; j++) bbox[j] = parseFloat(bbox[j]);
 					results[i] = {
+						icon: data[i].icon,
 						name: data[i].display_name,
 						bbox: L.latLngBounds([bbox[0], bbox[2]], [bbox[1], bbox[3]]),
 						center: L.latLng((bbox[0] + bbox[1]) / 2, (bbox[2] + bbox[3]) / 2)
