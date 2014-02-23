@@ -82,6 +82,8 @@
 				this._expand();
 			}
 
+			L.DomEvent.disableClickPropagation(container);
+
 			return container;
 		},
 
