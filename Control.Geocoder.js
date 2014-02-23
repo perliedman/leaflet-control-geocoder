@@ -43,7 +43,7 @@
 			    icon;
 
 			this._map = map;
-			input = this._input = document.createElement('input');
+			input = this._input = L.DomUtil.create('input');
 			input.type = 'text';
 
 			L.DomEvent.addListener(input, 'keydown', this._keydown, this);
