@@ -8,7 +8,8 @@
         selector = L.DomUtil.get('geocode-selector'),
         control = new L.Control.Geocoder({ geocoder: null }),
         btn,
-        selection;
+        selection,
+        marker;
 
     function select(geocoder, el) {
         if (selection) {
@@ -39,4 +40,20 @@
     }).addTo(map);
 
     control.addTo(map);
+
+    map.on('click', function(e) {
+        control.options.geocoder.reverse(e.latlng, map.options.crs.scale(map.getZoom()), function(results) {
+            var r = results[0];
+            if (r) {
+                if (marker) {
+                    marker.
+                        setLatLng(r.center).
+                        setPopupContent(r.name).
+                        openPopup();
+                } else {
+                    marker = L.marker(r.center).bindPopup(r.name).addTo(map).openPopup();
+                }
+            }
+        })
+    });
 })();
