@@ -94,7 +94,7 @@ L.Control.Geocoder.Nominatim(options)
 
 | Option          |  Type            |  Default          | Description |
 | --------------- | ---------------- | ----------------- | ----------- |
-| serviceUrl       | String          |  "http://nominatim.openstreetmap.org/search/" | URL of the service |
+| serviceUrl       | String          |  "http://nominatim.openstreetmap.org/" | URL of the service |
 
 ## L.Control.Geocoder.Bing
 
