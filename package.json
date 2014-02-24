@@ -1,6 +1,6 @@
 {
   "name": "leaflet-control-geocoder",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Extendable geocoder with builtin OSM/Nominatim support",
   "main": "Control.Geocoder.js",
   "scripts": {
