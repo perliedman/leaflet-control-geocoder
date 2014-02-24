@@ -43,6 +43,7 @@
 			    icon;
 
 			this._map = map;
+			this._container = container;
 			input = this._input = L.DomUtil.create('input');
 			input.type = 'text';
 
@@ -131,6 +132,8 @@
 		_geocodeResultSelected: function(result) {
 			if (this.options.collapsed) {
 				this._collapse();
+			} else {
+				this._clearResults();
 			}
 			this.markGeocode(result);
 		},
