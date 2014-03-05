@@ -3,7 +3,7 @@
         geocoders = {
             'Nominatim': L.Control.Geocoder.nominatim(),
             'Bing': L.Control.Geocoder.bing('AoArA0sD6eBGZyt5PluxhuN7N7X1vloSEIhzaKVkBBGL37akEVbrr0wn17hoYAMy'),
-            /*'RaveGeo': L.Control.Geocoder.raveGeo('http://services.geosition.com/ravegeo3/geocode2/Geocode', 'Teleatlas_Demo')*/
+            'MapQuest': L.Control.Geocoder.mapQuest('Fmjtd%7Cluur2l6825%2Crn%3Do5-90125r')
         },
         selector = L.DomUtil.get('geocode-selector'),
         control = new L.Control.Geocoder({ geocoder: null }),
