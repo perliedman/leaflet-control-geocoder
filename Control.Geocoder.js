@@ -459,8 +459,8 @@
 		}
 	});
 
-	L.Control.Geocoder.nominatim = function(options) {
-		return new L.Control.Geocoder.Nominatim(options);
+	L.Control.Geocoder.mapQuest = function(key) {
+		return new L.Control.Geocoder.MapQuest(key);
 	};
 
 	return L.Control.Geocoder;
