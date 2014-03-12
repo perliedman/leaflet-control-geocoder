@@ -37,13 +37,14 @@
 	height: 26px;
 	background-image: url(images/geocoder.png);
 	background-repeat: no-repeat;
-	background-position: right;
+	background-position: center;
 	float: right;
 	cursor: pointer;
 }
 
 .leaflet-touch .leaflet-control-geocoder-icon {
 	margin-top: 2px;
+	width: 30px;
 }
 
 .leaflet-control-geocoder-throbber .leaflet-control-geocoder-icon {
