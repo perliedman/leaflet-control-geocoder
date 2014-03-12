@@ -38,9 +38,9 @@
 		onAdd: function (map) {
 			var className = 'leaflet-control-geocoder',
 			    container = L.DomUtil.create('div', className),
+				icon = L.DomUtil.create('div', 'leaflet-control-geocoder-icon', container),
 			    form = this._form = L.DomUtil.create('form', className + '-form', container),
-			    input,
-			    icon;
+			    input;
 
 			this._map = map;
 			this._container = container;
@@ -50,9 +50,6 @@
 			L.DomEvent.addListener(input, 'keydown', this._keydown, this);
 			//L.DomEvent.addListener(input, 'onpaste', this._clearResults, this);
 			//L.DomEvent.addListener(input, 'oninput', this._clearResults, this);
-
-			icon = L.DomUtil.create('div', 'leaflet-control-geocoder-icon');
-			container.appendChild(icon);
 
 			this._errorElement = document.createElement('div');
 			this._errorElement.className = className + '-form-no-error';
@@ -154,6 +151,7 @@
 		_collapse: function () {
 			this._container.className = this._container.className.replace(' leaflet-control-geocoder-expanded', '');
 			L.DomUtil.addClass(this._alts, 'leaflet-control-geocoder-alternatives-minimized');
+			L.DomUtil.removeClass(this._errorElement, 'leaflet-control-geocoder-error');
 		},
 
 		_clearResults: function () {
