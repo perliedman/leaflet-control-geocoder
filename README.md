@@ -95,6 +95,8 @@ L.Control.Geocoder.Nominatim(options)
 | Option          |  Type            |  Default          | Description |
 | --------------- | ---------------- | ----------------- | ----------- |
 | serviceUrl       | String          |  "http://nominatim.openstreetmap.org/" | URL of the service |
+| geocodingQueryParams       | Object          |  {} | Additional URL parameters (strings) that will be added to geocoding requests |
+| reverseQueryParams       | Object          |  {} | Additional URL parameters (strings) that will be added to reverse geocoding requests |
 
 ## L.Control.Geocoder.Bing
 

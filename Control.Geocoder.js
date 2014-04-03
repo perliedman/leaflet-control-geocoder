@@ -232,7 +232,9 @@
 
 	L.Control.Geocoder.Nominatim = L.Class.extend({
 		options: {
-			serviceUrl: 'http://nominatim.openstreetmap.org/'
+			serviceUrl: 'http://nominatim.openstreetmap.org/',
+			geocodingQueryParams: {},
+			reverseQueryParams: {}
 		},
 
 		initialize: function(options) {
@@ -240,11 +242,12 @@
 		},
 
 		geocode: function(query, cb, context) {
-			L.Control.Geocoder.jsonp(this.options.serviceUrl + 'search/', {
+			L.Control.Geocoder.jsonp(this.options.serviceUrl + 'search/', L.extend({
 				q: query,
 				limit: 5,
 				format: 'json'
-			}, function(data) {
+			}, this.options.geocodingQueryParams),
+			function(data) {
 				var results = [];
 				for (var i = data.length - 1; i >= 0; i--) {
 					var bbox = data[i].boundingbox;
@@ -261,18 +264,25 @@
 		},
 
 		reverse: function(location, scale, cb, context) {
-			L.Control.Geocoder.jsonp(this.options.serviceUrl + 'reverse/', {
+			L.Control.Geocoder.jsonp(this.options.serviceUrl + 'reverse/', L.extend({
 				lat: location.lat,
 				lon: location.lng,
 				zoom: Math.round(Math.log(scale / 256) / Math.log(2)),
 				format: 'json'
-			}, function(data) {
-				var loc = L.latLng(data.lat, data.lon);
-				cb.call(context, [{
-					name: data.display_name,
-					center: loc,
-					bounds: L.latLngBounds(loc, loc)
-				}]);
+			}, this.options.reverseQueryParams), function(data) {
+				var result = [],
+				    loc;
+
+				if (data && data.lat && data.lon) {
+					loc = L.latLng(data.lat, data.lon);
+					result.push({
+						name: data.display_name,
+						center: loc,
+						bounds: L.latLngBounds(loc, loc)
+					});
+				}
+
+				cb.call(context, result);
 			}, this, 'json_callback');
 		}
 	});
