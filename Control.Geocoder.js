@@ -253,7 +253,7 @@
 						icon: data[i].icon,
 						name: data[i].display_name,
 						bbox: L.latLngBounds([bbox[0], bbox[2]], [bbox[1], bbox[3]]),
-						center: L.latLng((bbox[0] + bbox[1]) / 2, (bbox[2] + bbox[3]) / 2)
+						center: L.latLng(data[i].lat, data[i].lon)
 					};
 				}
 				cb.call(context, results);
