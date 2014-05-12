@@ -46,6 +46,7 @@
 			this._container = container;
 			input = this._input = L.DomUtil.create('input');
 			input.type = 'text';
+			input.placeholder = this.options.placeholder;
 
 			L.DomEvent.addListener(input, 'keydown', this._keydown, this);
 			//L.DomEvent.addListener(input, 'onpaste', this._clearResults, this);
