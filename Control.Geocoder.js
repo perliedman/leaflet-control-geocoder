@@ -162,12 +162,19 @@
 		},
 
 		_createAlt: function(result, index) {
-			var li = document.createElement('li');
-			li.innerHTML = '<a href="#" data-result-index="' + index + '">' +
-				(this.options.showResultIcons && result.icon ?
-					'<img src="' + result.icon + '"/>' :
-					'') +
-				result.name + '</a>';
+			var li = document.createElement('li'),
+			    a = L.DomUtil.create('a', '', li),
+			    icon = this.options.showResultIcons && result.icon ? L.DomUtil.createElement('img', '', a) : null,
+			    text = document.createTextNode(result.name);
+
+			if (icon) {
+				icon.src = result.icon;
+			}
+
+			a.href = '#';
+			a.setAttribute('data-result-index', index);
+			a.appendChild(text);
+
 			L.DomEvent.addListener(li, 'click', function clickHandler() {
 				this._geocodeResultSelected(result);
 			}, this);
