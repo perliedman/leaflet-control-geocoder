@@ -164,7 +164,7 @@
 		_createAlt: function(result, index) {
 			var li = document.createElement('li'),
 			    a = L.DomUtil.create('a', '', li),
-			    icon = this.options.showResultIcons && result.icon ? L.DomUtil.createElement('img', '', a) : null,
+			    icon = this.options.showResultIcons && result.icon ? L.DomUtil.create('img', '', a) : null,
 			    text = document.createTextNode(result.name);
 
 			if (icon) {
