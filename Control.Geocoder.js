@@ -175,7 +175,8 @@
 			a.setAttribute('data-result-index', index);
 			a.appendChild(text);
 
-			L.DomEvent.addListener(li, 'click', function clickHandler() {
+			L.DomEvent.addListener(li, 'click', function clickHandler(e) {
+				L.DomEvent.preventDefault(e);
 				this._geocodeResultSelected(result);
 			}, this);
 
