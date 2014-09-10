@@ -238,6 +238,16 @@
 		script.id = callbackId;
 		document.getElementsByTagName('head')[0].appendChild(script);
 	};
+	L.Control.Geocoder.getJSON = function(url, params, callback) {
+		var xmlHttp = new XMLHttpRequest();
+		xmlHttp.open( "GET", url + L.Util.getParamString(params), true);
+		xmlHttp.send(null);
+		xmlHttp.onreadystatechange = function () {
+			if (xmlHttp.readyState != 4) return;
+			if (xmlHttp.status != 200 && req.status != 304) return;
+			callback(JSON.parse(xmlHttp.response));
+		};
+	};
 
 	L.Control.Geocoder.Nominatim = L.Class.extend({
 		options: {
@@ -480,5 +490,157 @@
 		return new L.Control.Geocoder.MapQuest(key);
 	};
 
+	L.Control.Geocoder.Mapbox = L.Class.extend({
+		options: {
+			service_url: 'https://api.tiles.mapbox.com/v4/geocode/mapbox.places-v1/'
+		},
+
+		initialize: function(access_token) {
+			this._access_token = access_token;
+		},
+
+		geocode: function(query, cb, context) {
+			L.Control.Geocoder.getJSON(this.options.service_url + encodeURIComponent(query) + '.json', {
+				access_token: this._access_token,
+			}, function(data) {
+				var results = [],
+				loc,
+				latLng,
+				latLngBounds;
+				if (data.features && data.features.length) {
+					for (var i = 0; i <= data.features.length - 1; i++) {
+						loc = data.features[i];
+						latLng = L.latLng(loc.center.reverse());
+						if(loc.hasOwnProperty('bbox'))
+							{
+								latLngBounds = L.latLngBounds(L.latLng(loc.bbox.slice(0, 2).reverse()), L.latLng(loc.bbox.slice(2, 4).reverse()));
+							}
+							else
+							{
+								latLngBounds = L.latLngBounds(latLng, latLng);
+							}
+							results[i] = {
+								name: loc.place_name,
+								bbox: latLngBounds,
+								center: latLng
+							};
+						}
+					}
+
+					cb.call(context, results);
+			});
+		},
+
+		reverse: function(location, scale, cb, context) {
+			L.Control.Geocoder.getJSON(this.options.service_url + encodeURIComponent(location.lng) + ',' + encodeURIComponent(location.lat) + '.json', {
+				access_token: this._access_token,
+			}, function(data) {
+				var results = [],
+				loc,
+				latLng,
+				latLngBounds;
+				if (data.features && data.features.length) {
+					for (var i = 0; i <= data.features.length - 1; i++) {
+						loc = data.features[i];
+						latLng = L.latLng(loc.center.reverse());
+						if(loc.hasOwnProperty('bbox'))
+						{
+							latLngBounds = L.latLngBounds(L.latLng(loc.bbox.slice(0, 2).reverse()), L.latLng(loc.bbox.slice(2, 4).reverse()));
+						}
+						else
+						{
+							latLngBounds = L.latLngBounds(latLng, latLng);
+						}
+						results[i] = {
+							name: loc.place_name,
+							bbox: latLngBounds,
+							center: latLng
+						};
+					}
+				}
+
+				cb.call(context, results);
+			});
+		}
+	});
+
+	L.Control.Geocoder.mapbox = function(access_token) {
+			return new L.Control.Geocoder.Mapbox(access_token);
+	};
+
+	L.Control.Geocoder.Google = L.Class.extend({
+		options: {
+			service_url: 'https://maps.googleapis.com/maps/api/geocode/json'
+		},
+
+		initialize: function(key) {
+				this._key = key;
+		},
+
+		geocode: function(query, cb, context) {
+			var params = {
+				address: query,
+			};
+			if(this._key && this._key.length)
+			{
+				params['key'] = this._key
+			}
+
+			L.Control.Geocoder.getJSON(this.options.service_url, params, function(data) {
+					var results = [],
+							loc,
+							latLng,
+							latLngBounds;
+					if (data.results && data.results.length) {
+						for (var i = 0; i <= data.results.length - 1; i++) {
+							loc = data.results[i];
+							latLng = L.latLng(loc.geometry.location);
+							latLngBounds = L.latLngBounds(L.latLng(loc.geometry.viewport.northeast), L.latLng(loc.geometry.viewport.southwest));
+							results[i] = {
+									name: loc.formatted_address,
+									bbox: latLngBounds,
+									center: latLng
+							};
+						}
+					}
+
+					cb.call(context, results);
+			});
+		},
+
+		reverse: function(location, scale, cb, context) {
+			var params = {
+				latlng: encodeURIComponent(location.lat) + ',' + encodeURIComponent(location.lng)
+			};
+			if(this._key && this._key.length)
+			{
+				params['key'] = this._key
+			}
+			L.Control.Geocoder.getJSON(this.options.service_url, params, function(data) {
+				var results = [],
+						loc,
+						latLng,
+						latLngBounds;
+				if (data.results && data.results.length) {
+					for (var i = 0; i <= data.results.length - 1; i++) {
+						loc = data.results[i];
+						latLng = L.latLng(loc.geometry.location);
+						latLngBounds = L.latLngBounds(L.latLng(loc.geometry.viewport.northeast), L.latLng(loc.geometry.viewport.southwest));
+						results[i] = {
+							name: loc.formatted_address,
+							bbox: latLngBounds,
+							center: latLng
+						};
+					}
+				}
+
+				cb.call(context, results);
+			});
+		}
+	});
+
+	L.Control.Geocoder.google = function(key) {
+		return new L.Control.Geocoder.Google(key);
+	};
 	return L.Control.Geocoder;
 }));
