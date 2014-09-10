@@ -1,7 +1,18 @@
 Leaflet Control Geocoder [![NPM version](https://badge.fury.io/js/leaflet-control-geocoder.png)](http://badge.fury.io/js/leaflet-control-geocoder)
 =============================
 
-A simple geocoder for [Leaflet](http://leafletjs.com/) that by default uses [OSM](http://www.openstreetmap.org/)/[Nominatim](http://wiki.openstreetmap.org/wiki/Nominatim) to locate places, but also supports [Bing Locations API](http://msdn.microsoft.com/en-us/library/ff701715.aspx) and can easily be extended to support other providers.
+A simple geocoder for [Leaflet](http://leafletjs.com/) that by default uses [OSM](http://www.openstreetmap.org/)/[Nominatim](http://wiki.openstreetmap.org/wiki/Nominatim).
+
+The plugin supports many different data providers:
+
+* [OSM](http://www.openstreetmap.org/)/[Nominatim](http://wiki.openstreetmap.org/wiki/Nominatim)
+* [Bing Locations API](http://msdn.microsoft.com/en-us/library/ff701715.aspx)
+* [Google Geocoding API](https://developers.google.com/maps/documentation/geocoding/)
+* [Mapbox Geocoding](https://www.mapbox.com/developers/api/geocoding/)
+* [MapQuest Geocoding API](http://developer.mapquest.com/web/products/dev-services/geocoding-ws)
+* [RaveGeo](http://www2.idevio.com/ravegeo-server.html)
+
+The plugin can easily be extended to support other providers.
 
 See the [Leaflet Control Geocoder Demo](http://perliedman.github.com/leaflet-control-geocoder/).
 
