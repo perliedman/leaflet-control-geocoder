@@ -43,7 +43,7 @@
 					if (marker) {
 						marker.
 							setLatLng(r.center).
-							setPopupContent(r.name).
+							setPopupContent(r.html || r.name).
 							openPopup();
 					} else {
 						marker = L.marker(r.center).bindPopup(r.name).addTo(map).openPopup();

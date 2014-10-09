@@ -116,6 +116,8 @@ ul.leaflet-control-geocoder-alternatives {
 	color: black;
 	padding: 6px 8px 16px 6px;
 	font-size: 14px;
+	line-height: 1;
+	font-weight: bold;
 }
 
 .leaflet-touch .leaflet-control-geocoder-alternatives a {
@@ -124,4 +126,15 @@ ul.leaflet-control-geocoder-alternatives {
 
 .leaflet-control-geocoder-alternatives a:hover, .leaflet-control-geocoder-selected {
 	background-color: #ddd;
+}
+
+.leaflet-control-geocoder-address-detail {
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.leaflet-control-geocoder-address-context {
+	color: #666;
+	font-size: 12px;
+	font-weight: lighter;
 }
