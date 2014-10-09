@@ -200,6 +200,10 @@
 				};
 
 			switch (e.keyCode) {
+			// Escape
+			case 27:
+				this._collapse();
+				break;
 			// Up
 			case 38:
 				select(-1);
