@@ -264,7 +264,8 @@
 			L.Control.Geocoder.jsonp(this.options.serviceUrl + 'search/', L.extend({
 				q: query,
 				limit: 5,
-				format: 'json'
+				format: 'json',
+				addressdetails: 1
 			}, this.options.geocodingQueryParams),
 			function(data) {
 				var results = [];
@@ -275,7 +276,8 @@
 						icon: data[i].icon,
 						name: data[i].display_name,
 						bbox: L.latLngBounds([bbox[0], bbox[2]], [bbox[1], bbox[3]]),
-						center: L.latLng(data[i].lat, data[i].lon)
+						center: L.latLng(data[i].lat, data[i].lon),
+						properties: data[i]
 					};
 				}
 				cb.call(context, results);
@@ -287,6 +289,7 @@
 				lat: location.lat,
 				lon: location.lng,
 				zoom: Math.round(Math.log(scale / 256) / Math.log(2)),
+				addressdetails: 1,
 				format: 'json'
 			}, this.options.reverseQueryParams), function(data) {
 				var result = [],
@@ -297,7 +300,8 @@
 					result.push({
 						name: data.display_name,
 						center: loc,
-						bounds: L.latLngBounds(loc, loc)
+						bounds: L.latLngBounds(loc, loc),
+						properties: data
 					});
 				}
 
