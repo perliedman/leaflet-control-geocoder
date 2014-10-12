@@ -2,8 +2,7 @@
     var map = L.map('map').setView([0, 0], 2),
         geocoders = {
             'Nominatim': L.Control.Geocoder.nominatim(),
-            'Bing': L.Control.Geocoder.bing('AoArA0sD6eBGZyt5PluxhuN7N7X1vloSEIhzaKVkBBGL37akEVbrr0wn17hoYAMy'),
-            'MapQuest': L.Control.Geocoder.mapQuest('Fmjtd%7Cluur2l6825%2Crn%3Do5-90125r')
+            'Bing': L.Control.Geocoder.bing('AoArA0sD6eBGZyt5PluxhuN7N7X1vloSEIhzaKVkBBGL37akEVbrr0wn17hoYAMy')
         },
         selector = L.DomUtil.get('geocode-selector'),
         control = new L.Control.Geocoder({ geocoder: null }),
