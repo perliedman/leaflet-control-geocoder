@@ -45,13 +45,9 @@
             var r = results[0];
             if (r) {
                 if (marker) {
-                    marker.
-                        setLatLng(r.center).
-                        setPopupContent(r.name).
-                        openPopup();
-                } else {
-                    marker = L.marker(r.center).bindPopup(r.name).addTo(map).openPopup();
+                    map.removeLayer(marker);
                 }
+                marker = L.marker(r.center).bindPopup(r.html || r.name).addTo(map).openPopup();
             }
         })
     });
