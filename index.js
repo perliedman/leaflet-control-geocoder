@@ -34,7 +34,7 @@
         }
     }
 
-    L.tileLayer('http://api.tiles.mapbox.com/v3/liedman.h9ekn0f1/{z}/{x}/{y}.png', {
+    L.tileLayer('http://api.tiles.mapbox.com/v3/liedman.jokgn3nn/{z}/{x}/{y}.png', {
         attribution: '<a href="http://osm.org/copyright">Terms & Feedback</a>'
     }).addTo(map);
 
