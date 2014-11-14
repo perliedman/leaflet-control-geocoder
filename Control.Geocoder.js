@@ -207,7 +207,9 @@
 			switch (e.keyCode) {
 			// Escape
 			case 27:
-				this._collapse();
+				if (this.options.collapsed) {
+					this._collapse();
+				}
 				break;
 			// Up
 			case 38:
