@@ -68,7 +68,7 @@
 				if (this.options.expand === 'click') {
 					L.DomEvent.addListener(icon, 'click', function(e) {
 						// TODO: touch
-						if (e.button === 0 && e.detail === 1) {
+						if (e.button === 0 && e.detail !== 2) {
 							this._toggle();
 						}
 					}, this);
