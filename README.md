@@ -114,7 +114,7 @@ L.Control.Geocoder.Nominatim(options)
 | Option          |  Type            |  Default          | Description |
 | --------------- | ---------------- | ----------------- | ----------- |
 | serviceUrl       | String          |  "http://nominatim.openstreetmap.org/" | URL of the service |
-| geocodingQueryParams       | Object          |  {} | Additional URL parameters (strings) that will be added to geocoding requests |
+| geocodingQueryParams       | Object          |  {} | Additional URL parameters (strings) that will be added to geocoding requests; can be used to restrict results to a specific country for example, by providing the [`countrycodes`](http://wiki.openstreetmap.org/wiki/Nominatim#Parameters) parameter to Nominatim |
 | reverseQueryParams       | Object          |  {} | Additional URL parameters (strings) that will be added to reverse geocoding requests |
 | htmlTemplate     | function        | special           | A function that takes an GeocodingResult as argument and returns an HTML formatted string that represents the result. Default function breaks up address in parts from most to least specific, in attempt to increase readability compared to Nominatim's naming
 
