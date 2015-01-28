@@ -6,11 +6,12 @@
 
   // Define globals exposed by modern browsers.
   "browser": true,
+  "node": true,
 
   // Define globals exposed by jQuery.
   "jquery": true,
 
-  "globals": {"L": false, "proj4": false},
+  "globals": {},
 
   /*
    * ENFORCING OPTIONS
@@ -28,7 +29,7 @@
   "eqnull": true,
 
   // Enforce tab width of 2 spaces.
-  "indent": 2,
+  "indent": 4,
 
   "smarttabs": true,
 

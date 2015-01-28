@@ -5,11 +5,11 @@
 
   <meta name='viewport' content='width=device-width, user-scalable=no initial-scale=1, maximum-scale=1'>
 
-	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
 	<link rel="stylesheet" href="../Control.Geocoder.css" />
 
-	<script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet-src.js"></script>
-	<script src="../Control.Geocoder.js"></script>
+	<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet-src.js"></script>
+	<script src="../dist/leaflet-control-geocoder.js"></script>
 	<style type="text/css">
 		body {
 			margin: 0;
@@ -26,8 +26,8 @@
 
 	<script type="text/javascript">
 		var map = L.map('map').setView([0, 0], 2),
-			geocoder = L.Control.Geocoder.nominatim(),
-			control = L.Control.geocoder({
+			geocoder = L.control.geocoder.nominatim(),
+			control = L.control.geocoder({
 				geocoder: geocoder
 			}).addTo(map),
 			marker;
