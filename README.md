@@ -94,7 +94,7 @@ L.Control.Geocoder(options)
 
 | Method                                |  Returns            | Description       |
 | ------------------------------------- | ------------------- | ----------------- |
-| markGeocode(<GeocodingResult> result) |  this               | Marks a geocoding result on the map |
+| markGeocode(<GeocodingFeature> result) |  this               | Marks a geocoding result on the map |
 
 ## L.Control.Geocoder.Nominatim
 
@@ -116,7 +116,7 @@ L.Control.Geocoder.Nominatim(options)
 | serviceUrl       | String          |  "http://nominatim.openstreetmap.org/" | URL of the service |
 | geocodingQueryParams       | Object          |  {} | Additional URL parameters (strings) that will be added to geocoding requests; can be used to restrict results to a specific country for example, by providing the [`countrycodes`](http://wiki.openstreetmap.org/wiki/Nominatim#Parameters) parameter to Nominatim |
 | reverseQueryParams       | Object          |  {} | Additional URL parameters (strings) that will be added to reverse geocoding requests |
-| htmlTemplate     | function        | special           | A function that takes an GeocodingResult as argument and returns an HTML formatted string that represents the result. Default function breaks up address in parts from most to least specific, in attempt to increase readability compared to Nominatim's naming
+| htmlTemplate     | function        | special           | A function that takes an GeocodingFeature as argument and returns an HTML formatted string that represents the result. Default function breaks up address in parts from most to least specific, in attempt to increase readability compared to Nominatim's naming
 
 ## L.Control.Geocoder.Bing
 
@@ -138,19 +138,30 @@ An interface implemented to respond to geocoding queries.
 
 | Method                                |  Returns            | Description       |
 | ------------------------------------- | ------------------- | ----------------- |
-| geocode(<String> query, callback, context) | GeocodingResult[] | Performs a geocoding query and returns the results to the callback in the provided context |
-| reverse(<L.LatLng> location, <Number> scale, callback, context) | GeocodingResult[] | Performs a reverse geocoding query and returns the results to the callback in the provided context |
+| geocode(<String> query, callback, context) | - | Performs a geocoding query and returns the results to the callback in the provided context |
+| suggest(<String> query, callback, context) | - | (optional) Queries for a suggestion given a possibly incomplete query, and returns the results to the callback in the provided context; used for typeahead/autocomplete |
+| reverse(<L.LatLng> location, <Number> scale, callback, context) | - | Performs a reverse geocoding query and returns the results to the callback in the provided context |
 
-## GeocodingResult
+If the `suggest` method isn't defined, typeahead/autocomplete will be disabled. For example, Nominatim's usage policy prohibits using it for typeahead, so the implementation does not contain a suggest method.
 
-An object that represents a result from a geocoding query.
+The `callback`s should follow this contract:
+
+```js
+callback(err, result)
+```
+
+`err` will be falsy unless an error occured, otherwise it will be an object describing the error. `result` will contain a [FeatureCollection](http://geojson.org/geojson-spec.html#feature-collection-objects), where each feature is a [`GeocodingFeature`](#geocodingFeature)s unless an error occured.
+
+## GeocodingFeature
+
+An [GeoJSON feature object](http://geojson.org/geojson-spec.html#feature-objects) that represents a result from a geocoding query. The geometry is a [Point](http://geojson.org/geojson-spec.html#point) describing the location of the feature; if the result is an area, this point should be the area's center point.
 
 ### Properties
 
-| Property   | Type             | Description                           |
-| ---------- | ---------------- | ------------------------------------- |
-| name       | String           | Name of found location                |
-| bounds     | L.LatLngBounds   | The bounds of the location            |
-| center     | L.LatLng         | The center coordinate of the location |
-| icon       | String           | URL for icon representing result; optional |
-| html       | String           | (optional) HTML formatted representation of the name |
+| Property   | Type             | Description                                                       |
+| ---------- | ---------------- | ----------------------------------------------------------------- |
+| `name`     | `String`  | Name of location                                                         |
+| `bounds`   | [GeoJSON polygon](http://geojson.org/geojson-spec.html#polygon)   | Polygon describing the bounds of the result |
+| `icon`     | `String`  | (optional) URL for icon representing result                              |
+| `html`     | `String`  | (optional) HTML formatted representation of the name                     |
+| `source`   | `Object`  | (optional) The source data for this result, as obtained from the backend |     

@@ -38,7 +38,10 @@
                 resultContext: this.options.geocoder,
                 autocompleteFn: this.options.geocoder.suggest,
                 autocompleteContext: this.options.geocoder
-            });
+            })
+            .on('error', function(e) {
+                this.fire('geocodeerror', e);
+            }, this);
 
             container.appendChild(input);
 
@@ -65,18 +68,33 @@
         },
 
         markGeocode: function(result) {
-            this._map.fitBounds(result.bbox);
+            var bounds = result.properties.bounds,
+                center = result.geometry.coordinates;
+
+            this._map.fitBounds(this._toLatLngBoudns(bounds));
 
             if (this._geocodeMarker) {
                 this._map.removeLayer(this._geocodeMarker);
             }
 
-            this._geocodeMarker = new L.Marker(result.center)
-                .bindPopup(result.html || result.name)
+            this._geocodeMarker = new L.Marker([center[1], center[0]])
+                .bindPopup(result.properties.html || result.properties.name)
                 .addTo(this._map)
                 .openPopup();
 
             return this;
+        },
+
+        _toLatLngBoudns: function(geojsonPoly) {
+            var latLngs = [],
+                i,
+                c;
+            for (i = geojsonPoly.coordinates[0].length - 1; i >= 0; i--) {
+                c = geojsonPoly.coordinates[0][i];
+                latLngs.push(L.latLng(c[1], c[0]));
+            }
+
+            return new L.latLngBounds(latLngs);
         },
 
         _geocodeResultSelected: function(result) {
@@ -114,6 +132,7 @@
     require('./providers/google');
     require('./providers/bing');
     require('./providers/mapquest');
+    require('./providers/mapbox');
 
     module.exports = L.Control.Geocoder;
 })();

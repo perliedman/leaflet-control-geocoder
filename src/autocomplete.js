@@ -9,6 +9,8 @@
 			noResultsMessage: 'No results found.'
 		},
 
+		includes: L.Mixin.Events,
+
 		initialize: function(elem, callback, context, options) {
 			L.setOptions(this, options);
 
@@ -52,6 +54,7 @@
 
 		_setResults: function(results) {
 			var i,
+				r,
 			    tr,
 			    td,
 			    text;
@@ -64,19 +67,20 @@
 			}
 
 			for (i = 0; i < results.length; i++) {
+				r = results[i];
 				tr = L.DomUtil.create('tr', '', this._resultTable);
 				tr.setAttribute('data-result-index', i);
 				td = L.DomUtil.create('td', '', tr);
-				if (results[i].html) {
-					td.innerHTML = results[i].html;
+				if (r.html) {
+					td.innerHTML = r.properties.html;
 				} else {
-					text = document.createTextNode(results[i].name);
+					text = document.createTextNode(r.properties.name);
 					td.appendChild(text);
 				}
 				// mousedown + click because:
 				// http://stackoverflow.com/questions/10652852/jquery-fire-click-before-blur-event
 				L.DomEvent.addListener(td, 'mousedown', L.DomEvent.preventDefault);
-				L.DomEvent.addListener(td, 'click', this._createClickListener(results[i]));
+				L.DomEvent.addListener(td, 'click', this._createClickListener(r));
 			}
 
 			if (!i) {
@@ -104,8 +108,8 @@
 		_resultSelected: function(r) {
 			return L.bind(function() {
 				this.close();
-				this._elem.value = r.name;
-				this._lastCompletedText = r.name;
+				this._elem.value = r.properties.name;
+				this._lastCompletedText = r.properties.name;
 				this._selectFn(r);
 			}, this);
 		},
@@ -184,12 +188,15 @@
 
 		_complete: function(completeFn, trySelect) {
 			var v = this._elem.value;
-			function completeResults(results) {
-				this._lastCompletedText = v;
-				if (trySelect && results.length === 1) {
-					this._resultSelected(results[0])();
-				} else {
-					this._setResults(results);
+			function completeResults(err, results) {
+				if (!err) {
+					var features = results && results.features;
+					this._lastCompletedText = v;
+					if (trySelect && features.length === 1) {
+						this._resultSelected(features[0])();
+					} else {
+						this._setResults(features);
+					}
 				}
 			}
 

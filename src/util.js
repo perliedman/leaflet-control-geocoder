@@ -1,19 +1,23 @@
 (function() {
     'use strict';
 
-    var L = require('leaflet');
+    var L = require('leaflet'),
+        corslite = require('corslite');
     require('./control');
 
     L.Control.Geocoder._callbackId = 0;
-    L.Control.Geocoder._jsonp = function(url, params, callback, context, jsonpParam) {
-        var callbackId = '_l_geocoder_' + (L.Control.Geocoder._callbackId++);
-        params[jsonpParam || 'callback'] = callbackId;
-        window[callbackId] = L.Util.bind(callback, context);
-        var script = document.createElement('script');
-        script.type = 'text/javascript';
-        script.src = url + L.Util.getParamString(params);
-        script.id = callbackId;
-        document.getElementsByTagName('head')[0].appendChild(script);
+    L.Control.Geocoder._getJSON = function(url, params, callback, context) {
+        corslite(url + L.Util.getParamString(params), function(err, resp) {
+            if (!err) {
+                callback.call(context, undefined, JSON.parse(resp.responseText));
+            } else {
+                callback.call(context, {
+                    status: -1,
+                    message: 'HTTP request failed (' + resp.responseText + ')',
+                    context: resp
+                });
+            }
+        });
     };
 
     L.Control.Geocoder.template = function (str, data, htmlEscape) {
