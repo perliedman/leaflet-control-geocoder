@@ -620,6 +620,10 @@
 			});
 		},
 
+		suggest: function(query, cb, context) {
+			return this.geocode(query, cb, context);
+		},
+
 		reverse: function(location, scale, cb, context) {
 			L.Control.Geocoder.getJSON(this.options.service_url + encodeURIComponent(location.lng) + ',' + encodeURIComponent(location.lat) + '.json', {
 				access_token: this._access_token,
