@@ -63,6 +63,9 @@
 			container.appendChild(this._alts);
 
 			L.DomEvent.addListener(form, 'submit', this._geocode, this);
+			
+			// Autocomplete by mctommy8 2015-03-03
+			L.DomEvent.addListener(form, 'keyup', this._geocode, this);
 
 			if (this.options.collapsed) {
 				if (this.options.expand === 'click') {
