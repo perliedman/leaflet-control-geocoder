@@ -505,10 +505,16 @@
 	};
 
 	L.Control.Geocoder.MapQuest = L.Class.extend({
-		initialize: function(key) {
+		options: {
+			serviceUrl: '//www.mapquestapi.com/geocoding/v1'
+		},
+
+		initialize: function(key, options) {
 			// MapQuest seems to provide URI encoded API keys,
 			// so to avoid encoding them twice, we decode them here
 			this._key = decodeURIComponent(key);
+
+			L.Util.setOptions(this, options);
 		},
 
 		_formatName: function() {
@@ -524,7 +530,7 @@
 		},
 
 		geocode: function(query, cb, context) {
-			L.Control.Geocoder.jsonp('//www.mapquestapi.com/geocoding/v1/address', {
+			L.Control.Geocoder.jsonp(this.options.serviceUrl + '/address', {
 				key: this._key,
 				location: query,
 				limit: 5,
@@ -550,7 +556,7 @@
 		},
 
 		reverse: function(location, scale, cb, context) {
-			L.Control.Geocoder.jsonp('//www.mapquestapi.com/geocoding/v1/reverse', {
+			L.Control.Geocoder.jsonp(this.options.serviceUrl + '/reverse', {
 				key: this._key,
 				location: location.lat + ',' + location.lng,
 				outputFormat: 'json'
@@ -575,8 +581,8 @@
 		}
 	});
 
-	L.Control.Geocoder.mapQuest = function(key) {
-		return new L.Control.Geocoder.MapQuest(key);
+	L.Control.Geocoder.mapQuest = function(key, options) {
+		return new L.Control.Geocoder.MapQuest(key, options);
 	};
 
 	L.Control.Geocoder.Mapbox = L.Class.extend({
