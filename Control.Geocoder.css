@@ -30,6 +30,10 @@
 	transition: width 0.125s ease-in;
 }
 
+.leaflet-control-geocoder-form input{
+  padding: 0px;
+}
+
 .leaflet-touch .leaflet-control-geocoder-form input {
 	font-size: 22px;
 }
