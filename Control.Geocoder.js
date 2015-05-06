@@ -234,8 +234,8 @@
 		}
 	});
 
-	L.Control.geocoder = function(id, options) {
-		return new L.Control.Geocoder(id, options);
+	L.Control.geocoder = function(options) {
+		return new L.Control.Geocoder(options);
 	};
 
 	L.Control.Geocoder.callbackId = 0;
