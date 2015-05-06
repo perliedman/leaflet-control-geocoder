@@ -234,8 +234,8 @@
 		}
 	});
 
-	L.Control.geocoder = function(id, options) {
-		return new L.Control.Geocoder(id, options);
+	L.Control.geocoder = function(options) {
+		return new L.Control.Geocoder(options);
 	};
 
 	L.Control.Geocoder.callbackId = 0;
@@ -251,13 +251,18 @@
 	};
 	L.Control.Geocoder.getJSON = function(url, params, callback) {
 		var xmlHttp = new XMLHttpRequest();
-		xmlHttp.open( "GET", url + L.Util.getParamString(params), true);
-		xmlHttp.send(null);
 		xmlHttp.onreadystatechange = function () {
-			if (xmlHttp.readyState != 4) return;
-			if (xmlHttp.status != 200 && req.status != 304) return;
+			if (xmlHttp.readyState != 4){
+				return;
+			}
+			if (xmlHttp.status != 200 && xmlHttp.status != 304){
+				callback('');
+				return;
+			}
 			callback(JSON.parse(xmlHttp.response));
 		};
+		xmlHttp.open( "GET", url + L.Util.getParamString(params), true);
+		xmlHttp.send(null);
 	};
 
 	L.Control.Geocoder.template = function (str, data, htmlEscape) {
@@ -410,14 +415,16 @@
 				key : this.key
 			}, function(data) {
 				var results = [];
-				for (var i = data.resourceSets[0].resources.length - 1; i >= 0; i--) {
-					var resource = data.resourceSets[0].resources[i],
-						bbox = resource.bbox;
-					results[i] = {
-						name: resource.name,
-						bbox: L.latLngBounds([bbox[0], bbox[1]], [bbox[2], bbox[3]]),
-						center: L.latLng(resource.point.coordinates)
-					};
+				if( data.resourceSets.length > 0 ){
+					for (var i = data.resourceSets[0].resources.length - 1; i >= 0; i--) {
+						var resource = data.resourceSets[0].resources[i],
+							bbox = resource.bbox;
+						results[i] = {
+							name: resource.name,
+							bbox: L.latLngBounds([bbox[0], bbox[1]], [bbox[2], bbox[3]]),
+							center: L.latLng(resource.point.coordinates)
+						};
+					}
 				}
 				cb.call(context, results);
 			}, this, 'jsonp');
@@ -607,22 +614,22 @@
 						loc = data.features[i];
 						latLng = L.latLng(loc.center.reverse());
 						if(loc.hasOwnProperty('bbox'))
-							{
-								latLngBounds = L.latLngBounds(L.latLng(loc.bbox.slice(0, 2).reverse()), L.latLng(loc.bbox.slice(2, 4).reverse()));
-							}
-							else
-							{
-								latLngBounds = L.latLngBounds(latLng, latLng);
-							}
-							results[i] = {
-								name: loc.place_name,
-								bbox: latLngBounds,
-								center: latLng
-							};
+						{
+							latLngBounds = L.latLngBounds(L.latLng(loc.bbox.slice(0, 2).reverse()), L.latLng(loc.bbox.slice(2, 4).reverse()));
 						}
+						else
+						{
+							latLngBounds = L.latLngBounds(latLng, latLng);
+						}
+						results[i] = {
+							name: loc.place_name,
+							bbox: latLngBounds,
+							center: latLng
+						};
 					}
+				}
 
-					cb.call(context, results);
+				cb.call(context, results);
 			});
 		},
 
