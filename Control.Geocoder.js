@@ -251,8 +251,6 @@
 	};
 	L.Control.Geocoder.getJSON = function(url, params, callback) {
 		var xmlHttp = new XMLHttpRequest();
-		xmlHttp.open( "GET", url + L.Util.getParamString(params), true);
-		xmlHttp.send(null);
 		xmlHttp.onreadystatechange = function () {
 			if (xmlHttp.readyState != 4){
 				return;
@@ -263,6 +261,8 @@
 			}
 			callback(JSON.parse(xmlHttp.response));
 		};
+		xmlHttp.open( "GET", url + L.Util.getParamString(params), true);
+		xmlHttp.send(null);
 	};
 
 	L.Control.Geocoder.template = function (str, data, htmlEscape) {
