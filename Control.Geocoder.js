@@ -255,7 +255,6 @@
 		xmlHttp.send(null);
 		xmlHttp.onreadystatechange = function () {
 			if (xmlHttp.readyState != 4){
-				callback('');
 				return;
 			}
 			if (xmlHttp.status != 200 && xmlHttp.status != 304){
