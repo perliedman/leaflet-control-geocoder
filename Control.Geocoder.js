@@ -254,8 +254,14 @@
 		xmlHttp.open( "GET", url + L.Util.getParamString(params), true);
 		xmlHttp.send(null);
 		xmlHttp.onreadystatechange = function () {
-			if (xmlHttp.readyState != 4) return;
-			if (xmlHttp.status != 200 && xmlHttp.status != 304) return;
+			if (xmlHttp.readyState != 4){
+				callback('');
+				return;
+			}
+			if (xmlHttp.status != 200 && xmlHttp.status != 304){
+				callback('');
+				return;
+			}
 			callback(JSON.parse(xmlHttp.response));
 		};
 	};
@@ -607,22 +613,22 @@
 						loc = data.features[i];
 						latLng = L.latLng(loc.center.reverse());
 						if(loc.hasOwnProperty('bbox'))
-							{
-								latLngBounds = L.latLngBounds(L.latLng(loc.bbox.slice(0, 2).reverse()), L.latLng(loc.bbox.slice(2, 4).reverse()));
-							}
-							else
-							{
-								latLngBounds = L.latLngBounds(latLng, latLng);
-							}
-							results[i] = {
-								name: loc.place_name,
-								bbox: latLngBounds,
-								center: latLng
-							};
+						{
+							latLngBounds = L.latLngBounds(L.latLng(loc.bbox.slice(0, 2).reverse()), L.latLng(loc.bbox.slice(2, 4).reverse()));
 						}
+						else
+						{
+							latLngBounds = L.latLngBounds(latLng, latLng);
+						}
+						results[i] = {
+							name: loc.place_name,
+							bbox: latLngBounds,
+							center: latLng
+						};
 					}
+				}
 
-					cb.call(context, results);
+				cb.call(context, results);
 			});
 		},
 
