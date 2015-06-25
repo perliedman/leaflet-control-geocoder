@@ -37,10 +37,10 @@
 
 		onAdd: function (map) {
 			var className = 'leaflet-control-geocoder',
-				container = L.DomUtil.create('div', className + ' leaflet-bar'),
-				icon = L.DomUtil.create('a', 'leaflet-control-geocoder-icon', container),
-				form = this._form = L.DomUtil.create('form', className + '-form', container),
-				input;
+			    container = L.DomUtil.create('div', className + ' leaflet-bar'),
+			    icon = L.DomUtil.create('a', 'leaflet-control-geocoder-icon', container),
+			    form = this._form = L.DomUtil.create('form', className + '-form', container),
+			    input;
 
 			icon.innerHTML = '&nbsp;';
 			icon.href = '#';
@@ -165,8 +165,8 @@
 
 		_createAlt: function(result, index) {
 			var li = document.createElement('li'),
-				icon = this.options.showResultIcons && result.icon ? L.DomUtil.create('img', '', li) : null,
-				text = result.html ? undefined : document.createTextNode(result.name);
+			    icon = this.options.showResultIcons && result.icon ? L.DomUtil.create('img', '', li) : null,
+			    text = result.html ? undefined : document.createTextNode(result.name);
 
 			if (icon) {
 				icon.src = result.icon;
@@ -190,7 +190,7 @@
 
 		_keydown: function(e) {
 			var _this = this,
-				select = function select(dir) {
+			    select = function select(dir) {
 					if (_this._selection) {
 						L.DomUtil.removeClass(_this._selection, 'leaflet-control-geocoder-selected');
 						_this._selection = _this._selection[dir > 0 ? 'nextSibling' : 'previousSibling'];
