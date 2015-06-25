@@ -37,11 +37,13 @@
 
 		onAdd: function (map) {
 			var className = 'leaflet-control-geocoder',
-			    container = L.DomUtil.create('div', className),
-				icon = L.DomUtil.create('div', 'leaflet-control-geocoder-icon', container),
-			    form = this._form = L.DomUtil.create('form', className + '-form', container),
-			    input;
+				container = L.DomUtil.create('div', className + ' leaflet-bar'),
+				icon = L.DomUtil.create('a', 'leaflet-control-geocoder-icon', container),
+				form = this._form = L.DomUtil.create('form', className + '-form', container),
+				input;
 
+			icon.innerHTML = '&nbsp;';
+			icon.href = '#';
 			this._map = map;
 			this._container = container;
 			input = this._input = L.DomUtil.create('input');
@@ -163,21 +165,19 @@
 
 		_createAlt: function(result, index) {
 			var li = document.createElement('li'),
-			    a = L.DomUtil.create('a', '', li),
-			    icon = this.options.showResultIcons && result.icon ? L.DomUtil.create('img', '', a) : null,
-			    text = result.html ? undefined : document.createTextNode(result.name);
+				icon = this.options.showResultIcons && result.icon ? L.DomUtil.create('img', '', li) : null,
+				text = result.html ? undefined : document.createTextNode(result.name);
 
 			if (icon) {
 				icon.src = result.icon;
 			}
 
-			a.href = '#';
-			a.setAttribute('data-result-index', index);
+			li.setAttribute('data-result-index', index);
 
 			if (result.html) {
-				a.innerHTML = result.html;
+				li.innerHTML = result.html;
 			} else {
-				a.appendChild(text);
+				li.appendChild(text);
 			}
 
 			L.DomEvent.addListener(li, 'click', function clickHandler(e) {
@@ -192,7 +192,7 @@
 			var _this = this,
 				select = function select(dir) {
 					if (_this._selection) {
-						L.DomUtil.removeClass(_this._selection.firstChild, 'leaflet-control-geocoder-selected');
+						L.DomUtil.removeClass(_this._selection, 'leaflet-control-geocoder-selected');
 						_this._selection = _this._selection[dir > 0 ? 'nextSibling' : 'previousSibling'];
 					}
 					if (!_this._selection) {
@@ -200,7 +200,7 @@
 					}
 
 					if (_this._selection) {
-						L.DomUtil.addClass(_this._selection.firstChild, 'leaflet-control-geocoder-selected');
+						L.DomUtil.addClass(_this._selection, 'leaflet-control-geocoder-selected');
 					}
 				};
 
@@ -224,7 +224,7 @@
 			// Enter
 			case 13:
 				if (this._selection) {
-					var index = parseInt(this._selection.firstChild.getAttribute('data-result-index'), 10);
+					var index = parseInt(this._selection.getAttribute('data-result-index'), 10);
 					this._geocodeResultSelected(this._results[index]);
 					this._clearResults();
 					L.DomEvent.preventDefault(e);
