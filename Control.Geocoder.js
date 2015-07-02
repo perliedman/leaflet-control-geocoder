@@ -61,7 +61,7 @@
 			this._alts = L.DomUtil.create('ul', className + '-alternatives leaflet-control-geocoder-alternatives-minimized');
 
 			form.appendChild(input);
-			form.appendChild(this._errorElement);
+			this._container.appendChild(this._errorElement);
 			container.appendChild(this._alts);
 
 			L.DomEvent.addListener(form, 'submit', this._geocode, this);
