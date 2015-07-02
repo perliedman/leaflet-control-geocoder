@@ -164,9 +164,14 @@
 		},
 
 		_createAlt: function(result, index) {
-			var li = document.createElement('li'),
-			    icon = this.options.showResultIcons && result.icon ? L.DomUtil.create('img', '', li) : null,
-			    text = result.html ? undefined : document.createTextNode(result.name);
+			var li = L.DomUtil.create('li'),
+				a = L.DomUtil.create('a', '', li),
+			    icon = this.options.showResultIcons && result.icon ? L.DomUtil.create('img', '', a) : null,
+			    text = result.html ? undefined : document.createTextNode(result.name),
+			    clickHandler = function clickHandler(e) {
+					L.DomEvent.preventDefault(e);
+					this._geocodeResultSelected(result);
+				};
 
 			if (icon) {
 				icon.src = result.icon;
@@ -175,15 +180,13 @@
 			li.setAttribute('data-result-index', index);
 
 			if (result.html) {
-				li.innerHTML = result.html;
+				a.innerHTML = result.html;
 			} else {
-				li.appendChild(text);
+				a.appendChild(text);
 			}
 
-			L.DomEvent.addListener(li, 'click', function clickHandler(e) {
-				L.DomEvent.preventDefault(e);
-				this._geocodeResultSelected(result);
-			}, this);
+			L.DomEvent.addListener(a, 'click', clickHandler, this);
+			L.DomEvent.addListener(li, 'click', clickHandler, this);
 
 			return li;
 		},
