@@ -47,6 +47,7 @@
 }
 .leaflet-control-geocoder-error {
 	margin-top: 8px;
+	margin-left: 8px;
 	display: block;
 	color: #444;
 }
@@ -71,6 +72,16 @@
 	border-bottom: 1px solid #ccc;
 	cursor: pointer;
 }
+
+.leaflet-control-geocoder-alternatives li a, .leaflet-control-geocoder-alternatives li a:hover {
+	width: inherit;
+	height: inherit;
+	line-height: inherit;
+	background: inherit;
+	border-radius: inherit;
+	text-align: left;
+}
+
 .leaflet-control-geocoder-alternatives li:last-child {
 	border-bottom: none;
 }
