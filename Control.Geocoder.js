@@ -254,6 +254,7 @@
 	};
 	L.Control.Geocoder.getJSON = function(url, params, callback) {
 		var xmlHttp = new XMLHttpRequest();
+		xmlHttp.setRequestHeader("Accept", "application/json");
 		xmlHttp.onreadystatechange = function () {
 			if (xmlHttp.readyState != 4){
 				return;
