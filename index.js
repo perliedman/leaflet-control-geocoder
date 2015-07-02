@@ -2,7 +2,8 @@
     var map = L.map('map').setView([0, 0], 2),
         geocoders = {
             'Nominatim': L.Control.Geocoder.nominatim(),
-            'Bing': L.Control.Geocoder.bing('AoArA0sD6eBGZyt5PluxhuN7N7X1vloSEIhzaKVkBBGL37akEVbrr0wn17hoYAMy')
+            'Bing': L.Control.Geocoder.bing('AoArA0sD6eBGZyt5PluxhuN7N7X1vloSEIhzaKVkBBGL37akEVbrr0wn17hoYAMy'),
+            'Mapbox': L.Control.Geocoder.mapbox(LCG.apiToken)
         },
         selector = L.DomUtil.get('geocode-selector'),
         control = new L.Control.Geocoder({ geocoder: null }),
@@ -21,7 +22,7 @@
     }
 
     for (var name in geocoders) {
-        btn = L.DomUtil.create('button', '', selector);
+        btn = L.DomUtil.create('button', 'leaflet-bar', selector);
         btn.innerHTML = name;
         (function(n) {
             L.DomEvent.addListener(btn, 'click', function() {
