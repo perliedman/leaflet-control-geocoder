@@ -23,7 +23,9 @@
 			expand: 'click',
 			position: 'topright',
 			placeholder: 'Search...',
-			errorMessage: 'Nothing found.'
+			errorMessage: 'Nothing found.',
+			removeMarker: 'Remove marker',
+			keepMarkers: false
 		},
 
 		_callbackId: 0,
@@ -37,10 +39,10 @@
 
 		onAdd: function (map) {
 			var className = 'leaflet-control-geocoder',
-			    container = L.DomUtil.create('div', className + ' leaflet-bar'),
-			    icon = L.DomUtil.create('a', 'leaflet-control-geocoder-icon', container),
-			    form = this._form = L.DomUtil.create('form', className + '-form', container),
-			    input;
+				container = L.DomUtil.create('div', className + ' leaflet-bar'),
+				icon = L.DomUtil.create('a', 'leaflet-control-geocoder-icon', container),
+				form = this._form = L.DomUtil.create('form', className + '-form', container),
+				input;
 
 			icon.innerHTML = '&nbsp;';
 			icon.href = '#';
@@ -107,14 +109,34 @@
 		markGeocode: function(result) {
 			this._map.fitBounds(result.bbox);
 
-			if (this._geocodeMarker) {
-				this._map.removeLayer(this._geocodeMarker);
+			if (this._geocodeMarkers === undefined)
+				this._geocodeMarkers = [];
+
+			if (!this.options.keepMarkers && this._geocodeMarkers.length > 0) {
+				this._map.removeLayer(this._geocodeMarkers[0]);
+				this._geocodeMarkers.splice(1);
 			}
 
-			this._geocodeMarker = new L.Marker(result.center)
-				.bindPopup(result.html || result.name)
+			var popupCont = L.DomUtil.create('div');
+			var text = L.DomUtil.create('a', '', popupCont);
+			text.innerHTML = result.html || result.name;
+			var closeMarker = L.DomUtil.create('a', 'leaflet-control-geocoder-close', popupCont);
+			closeMarker.innerHTML = this.options.removeMarker;
+			closeMarker.href = "#";
+
+			var popup = L.popup();
+			popup.setContent(popupCont);
+
+			var marker = new L.Marker(result.center)
+				.bindPopup(popup)
 				.addTo(this._map)
 				.openPopup();
+			this._geocodeMarkers.push(marker);
+
+			L.DomEvent.addListener(closeMarker, 'click', function () {
+				this._map.removeLayer(marker);
+				this._geocodeMarkers.splice(this._geocodeMarkers.indexOf(marker), 1);
+			}, this);
 
 			return this;
 		},
@@ -166,10 +188,12 @@
 		_createAlt: function(result, index) {
 			var li = L.DomUtil.create('li'),
 				a = L.DomUtil.create('a', '', li),
-			    icon = this.options.showResultIcons && result.icon ? L.DomUtil.create('img', '', a) : null,
-			    text = result.html ? undefined : document.createTextNode(result.name),
-			    clickHandler = function clickHandler(e) {
-					L.DomEvent.preventDefault(e);
+				icon = this.options.showResultIcons && result.icon ? L.DomUtil.create('img', '', a) : null,
+				text = result.html ? undefined : document.createTextNode(result.name),
+				clickHandler = function clickHandler(e) {
+                    // otherwise will fire two times, for "li" and for "a"
+				    L.DomEvent.preventDefault(e);
+				    L.DomEvent.stopPropagation(e);
 					this._geocodeResultSelected(result);
 				};
 
@@ -193,7 +217,7 @@
 
 		_keydown: function(e) {
 			var _this = this,
-			    select = function select(dir) {
+				select = function select(dir) {
 					if (_this._selection) {
 						L.DomUtil.removeClass(_this._selection, 'leaflet-control-geocoder-selected');
 						_this._selection = _this._selection[dir > 0 ? 'nextSibling' : 'previousSibling'];
@@ -384,7 +408,7 @@
 				format: 'json'
 			}, this.options.reverseQueryParams), function(data) {
 				var result = [],
-				    loc;
+					loc;
 
 				if (data && data.lat && data.lon) {
 					loc = L.latLng(data.lat, data.lon);

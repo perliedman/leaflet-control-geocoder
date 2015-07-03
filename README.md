@@ -86,9 +86,11 @@ L.Control.Geocoder(options)
 | collapsed       |  Boolean         |  true             | Collapse control unless hovered/clicked |
 | position        |  String          |  "topright"       | Control [position](http://leafletjs.com/reference.html#control-positions) |
 | placeholder     |  String          |  "Search..."      | Placeholder text for text input
+| removeMarker    |  String          |  'Remove marker'  | Remove marker linkage, which shows in Marker popup |
 | errorMessage    |  String          |  "Nothing found." | Message when no result found / geocoding error occurs |
 | geocoder        |  IGeocoder       |  new L.Control.Geocoder.Nominatim() | Object to perform the actual geocoding queries |
 | showResultIcons |  Boolean         |  false            | Show icons for geocoding results (if available); supported by Nominatim |
+| keepMarkers     |  Boolean         |  false            | Keep Adding new markers without removing previous |
 
 ### Methods
 
