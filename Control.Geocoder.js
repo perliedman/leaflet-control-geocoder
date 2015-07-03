@@ -43,7 +43,7 @@
 			    input;
 
 			icon.innerHTML = '&nbsp;';
-			icon.href = '#';
+			icon.href = 'javascript:void(0);';
 			this._map = map;
 			this._container = container;
 			input = this._input = L.DomUtil.create('input');
