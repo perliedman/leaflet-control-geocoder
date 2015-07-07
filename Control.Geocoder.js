@@ -80,6 +80,9 @@
 					this._map.on('movestart', this._collapse, this);
 				}
 			} else {
+				L.DomEvent.addListener(icon, 'click', function(e) {
+					this._geocode(e);
+				}, this);
 				this._expand();
 			}
 
