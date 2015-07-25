@@ -188,7 +188,7 @@
 				a.appendChild(text);
 			}
 
-			L.DomEvent.addListener(a, 'click', clickHandler, this);
+			//L.DomEvent.addListener(a, 'click', clickHandler, this);
 			L.DomEvent.addListener(li, 'click', clickHandler, this);
 
 			return li;
