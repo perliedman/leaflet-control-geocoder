@@ -747,8 +747,9 @@
 			service_url: 'https://maps.googleapis.com/maps/api/geocode/json'
 		},
 
-		initialize: function(key) {
+		initialize: function(key, options) {
 				this._key = key;
+				this._options = options;
 		},
 
 		geocode: function(query, cb, context) {
@@ -759,6 +760,7 @@
 			{
 				params['key'] = this._key
 			}
+			params = L.Util.extend(params, this._options);
 
 			L.Control.Geocoder.getJSON(this.options.service_url, params, function(data) {
 					var results = [],
@@ -773,7 +775,8 @@
 							results[i] = {
 									name: loc.formatted_address,
 									bbox: latLngBounds,
-									center: latLng
+									center: latLng,
+									address_components: loc.address_components
 							};
 						}
 					}
