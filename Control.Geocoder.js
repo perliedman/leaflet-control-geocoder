@@ -680,6 +680,53 @@
 			return new L.Control.Geocoder.Mapbox(access_token);
 	};
 	
+	L.Control.Geocoder.pluscodes = L.Class.extend({
+		options: {
+			code_length: 2
+		},
+
+		initialize: function(code_length) {
+			this._code_length = code_length;
+		},
+
+		geocode: function(query, cb, context) {
+			var codeArea = OpenLocationCode.decode(query);
+			var results = [], latLng, latLngBounds;
+			latLng = L.latLng(codeArea.latitudeCenter,codeArea.longitudeCenter);
+			latLngBounds = L.latLngBounds(L.latLng(codeArea.latitudeHi,codeArea.longitudeHi), L.latLng(codeArea.latitudeLo,codeArea.longitudeLo));
+			results[0] = {
+				name: query,
+				bbox: latLngBounds,
+				center: latLng
+			};
+			cb.call(context, results);
+		},
+		suggest: function(query, cb, context) {
+			return this.geocode(query, cb, context);
+		},
+
+		reverse: function(location, scale, cb, context) {
+			var code = OpenLocationCode.encode(location.lat, location.lng);
+			var codeArea = OpenLocationCode.decode(code);
+			var results = [],latLng,latLngBounds;
+			latLng = L.latLng(codeArea.latitudeCenter,codeArea.longitudeCenter);
+			latLngBounds = L.latLngBounds(L.latLng(codeArea.latitudeHi,codeArea.longitudeHi), L.latLng(codeArea.latitudeLo,codeArea.longitudeLo));
+			results[0] = {
+				name: code,
+				bbox: latLngBounds,
+				center: latLng
+			};
+			cb.call(context, results);
+		}
+	});
+
+	L.Control.Geocoder.PlusCodes = function(code_length) {
+		//Must have reference to https://rawgit.com/google/open-location-code/master/js/openlocationcode.js or your own copy
+		if (typeof window.OpenLocationCode === 'undefined')
+			throw 'OpenLocationCode must be loaded first';
+		else
+			return new L.Control.Geocoder.pluscodes(code_length);
+	};
 	
 	L.Control.Geocoder.What3Words = L.Class.extend({
 		options: {
