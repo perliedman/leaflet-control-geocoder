@@ -23,7 +23,8 @@
 			expand: 'click',
 			position: 'topright',
 			placeholder: 'Search...',
-			errorMessage: 'Nothing found.'
+			errorMessage: 'Nothing found.',
+			keepCurrentZoomLevel: true
 		},
 
 		_callbackId: 0,
@@ -108,7 +109,12 @@
 		},
 
 		markGeocode: function(result) {
-			this._map.fitBounds(result.bbox);
+			if(this.options.keepCurrentZoomLevel){
+				this._map.panTo(Ember.get(result, 'center'));
+			}
+			else{
+				this._map.fitBounds(result.bbox);
+			}
 
 			if (this._geocodeMarker) {
 				this._map.removeLayer(this._geocodeMarker);
