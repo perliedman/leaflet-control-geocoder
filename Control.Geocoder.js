@@ -43,7 +43,7 @@
 			    input;
 
 			icon.innerHTML = '&nbsp;';
-			icon.href = '#';
+			icon.href = 'javascript:void(0);';
 			this._map = map;
 			this._container = container;
 			input = this._input = L.DomUtil.create('input');
@@ -80,6 +80,9 @@
 					this._map.on('movestart', this._collapse, this);
 				}
 			} else {
+				L.DomEvent.addListener(icon, 'click', function(e) {
+					this._geocode(e);
+				}, this);
 				this._expand();
 			}
 
@@ -164,7 +167,7 @@
 		},
 
 		_createAlt: function(result, index) {
-			var li = L.DomUtil.create('li'),
+			var li = L.DomUtil.create('li', ''),
 				a = L.DomUtil.create('a', '', li),
 			    icon = this.options.showResultIcons && result.icon ? L.DomUtil.create('img', '', a) : null,
 			    text = result.html ? undefined : document.createTextNode(result.name),
@@ -185,7 +188,6 @@
 				a.appendChild(text);
 			}
 
-			L.DomEvent.addListener(a, 'click', clickHandler, this);
 			L.DomEvent.addListener(li, 'click', clickHandler, this);
 
 			return li;
