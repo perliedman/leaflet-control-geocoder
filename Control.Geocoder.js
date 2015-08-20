@@ -818,7 +818,18 @@
 
 	L.Control.Geocoder.Photon = L.Class.extend({
 		options: {
-			serviceUrl: '//photon.komoot.de/api/'
+			serviceUrl: '//photon.komoot.de/api/',
+			reverseUrl: '//photon.komoot.de/reverse/',
+			nameProperties: [
+				'name',
+				'street',
+				'suburb',
+				'hamlet',
+				'town',
+				'city',
+				'state',
+				'country'
+			]
 		},
 
 		initialize: function(options) {
@@ -830,47 +841,68 @@
 				q: query,
 			}, this.options.geocodingQueryParams);
 
-			L.Control.Geocoder.getJSON(this.options.serviceUrl, params, function(data) {
-				var results = [],
-					i,
-					f,
-					c,
-					latLng,
-					extent,
-					bbox;
-				if (data && data.features) {
-					for (i = 0; i < data.features.length; i++) {
-						f = data.features[i];
-						c = f.geometry.coordinates;
-						latLng = L.latLng(c[1], c[0]);
-						extent = f.properties.extent;
-
-						if (extent) {
-							bbox = L.latLngBounds([extent[1], extent[0]], [extent[3], extent[2]]);
-						} else {
-							bbox = L.latLngBounds(latLng, latLng);
-						}
-
-						results.push({
-							name: f.properties.name,
-							center: latLng,
-							bbox: bbox
-						});
-					}
-				}
-
-				cb.call(context, results);
-			});
+			L.Control.Geocoder.getJSON(this.options.serviceUrl, params, L.bind(function(data) {
+				cb.call(context, this._decodeFeatures(data));
+			}, this));
 		},
 
 		suggest: function(query, cb, context) {
 			return this.geocode(query, cb, context);
 		},
 
-		reverse: function(latLng, cb, context) {
-			// Not yet implemented in Photon
-			// https://github.com/komoot/photon/issues/19
-			cb.call(context, []);
+		reverse: function(latLng, scale, cb, context) {
+			var params = L.extend({
+				lat: latLng.lat,
+				lon: latLng.lng
+			}, this.options.geocodingQueryParams);
+
+			L.Control.Geocoder.getJSON(this.options.reverseUrl, params, L.bind(function(data) {
+				cb.call(context, this._decodeFeatures(data));
+			}, this));
+		},
+
+		_decodeFeatures: function(data) {
+			var results = [],
+				i,
+				f,
+				c,
+				latLng,
+				extent,
+				bbox;
+
+			if (data && data.features) {
+				for (i = 0; i < data.features.length; i++) {
+					f = data.features[i];
+					c = f.geometry.coordinates;
+					latLng = L.latLng(c[1], c[0]);
+					extent = f.properties.extent;
+
+					if (extent) {
+						bbox = L.latLngBounds([extent[1], extent[0]], [extent[3], extent[2]]);
+					} else {
+						bbox = L.latLngBounds(latLng, latLng);
+					}
+
+					results.push({
+						name: this._deocodeFeatureName(f),
+						center: latLng,
+						bbox: bbox,
+						properties: f.properties
+					});
+				}
+			}
+
+			return results;
+		},
+
+		_deocodeFeatureName: function(f) {
+			var j,
+				name;
+			for (j = 0; !name && j < this.options.nameProperties.length; j++) {
+				name = f.properties[this.options.nameProperties[j]];
+			}
+
+			return name;
 		}
 	});
 

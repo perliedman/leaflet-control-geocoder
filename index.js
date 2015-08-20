@@ -3,7 +3,8 @@
         geocoders = {
             'Nominatim': L.Control.Geocoder.nominatim(),
             'Bing': L.Control.Geocoder.bing('AoArA0sD6eBGZyt5PluxhuN7N7X1vloSEIhzaKVkBBGL37akEVbrr0wn17hoYAMy'),
-            'Mapbox': L.Control.Geocoder.mapbox(LCG.apiToken)
+            'Mapbox': L.Control.Geocoder.mapbox(LCG.apiToken),
+            'Photon': L.Control.Geocoder.photon(),
         },
         selector = L.DomUtil.get('geocode-selector'),
         control = new L.Control.Geocoder({ geocoder: null }),
