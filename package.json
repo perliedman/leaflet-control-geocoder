@@ -1,9 +1,10 @@
 {
   "name": "leaflet-control-geocoder",
   "version": "1.2.1",
-  "description": "Extendable geocoder with builtin OSM/Nominatim support",
-  "main": "Control.Geocoder.js",
+  "description": "Extendable geocoder with builtin support for Nominatim, Bing, Google, Mapbox, Photon, What3Words, MapQuest",
+  "main": "src/index.js",
   "scripts": {
+    "prepublish": "sh ./scripts/build.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -13,14 +14,28 @@
   "keywords": [
     "leaflet",
     "geocoder",
-    "nominatim"
+    "locations",
+    "nominatim",
+    "bing",
+    "google",
+    "mapbox",
+    "photon",
+    "what3words",
+    "mapquest"
   ],
   "author": "Per Liedman <per@liedman.net>",
   "license": "BSD-2-Clause",
   "bugs": {
     "url": "https://github.com/perliedman/leaflet-control-geocoder/issues"
   },
+  "browserify-shim": {
+    "leaflet": "global:L"
+  },
   "dependencies": {
-    "leaflet": "~0.7.2"
+    "leaflet": "~0.7.3"
+  },
+  "devDependencies": {
+    "browserify": "^11.0.1",
+    "browserify-shim": "^3.8.10"
   }
 }

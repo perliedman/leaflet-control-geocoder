@@ -7,10 +7,9 @@
   // Define globals exposed by modern browsers.
   "browser": true,
 
-  // Define globals exposed by jQuery.
-  "jquery": true,
+  "node": true,
 
-  "globals": {"L": false, "proj4": false},
+  "globals": {},
 
   /*
    * ENFORCING OPTIONS
