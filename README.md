@@ -18,7 +18,8 @@ The plugin supports many different data providers:
 * [Google Geocoding API](https://developers.google.com/maps/documentation/geocoding/)
 * [Mapbox Geocoding](https://www.mapbox.com/developers/api/geocoding/)
 * [MapQuest Geocoding API](http://developer.mapquest.com/web/products/dev-services/geocoding-ws)
-* [RaveGeo](http://www2.idevio.com/ravegeo-server.html)
+* [What3Words](http://http://what3words.com/)
+* [Photon](http://photon.komoot.de/)
 
 The plugin can easily be extended to support other providers.
 
@@ -26,10 +27,10 @@ See the [Leaflet Control Geocoder Demo](http://perliedman.github.com/leaflet-con
 
 # Usage
 
-Load the CSS and Javascript:
+[Download latest release](http://www.liedman.net/leaflet-control-geocoder/download). Load the CSS and Javascript:
 
 ```HTML
-<link rel="stylesheet" href="../Control.Geocoder.css" />
+<link rel="stylesheet" href="Control.Geocoder.css" />
 <script src="Control.Geocoder.js"></script>
 ```
 
