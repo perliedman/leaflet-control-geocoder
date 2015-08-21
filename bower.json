@@ -1,6 +1,6 @@
 {
   "name": "leaflet-control-geocoder",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "homepage": "https://github.com/perliedman/leaflet-control-geocoder",
   "authors": [
     "Per Liedman <per@liedman.net>"
@@ -14,7 +14,14 @@
   "keywords": [
     "leaflet",
     "geocoder",
-    "nominatim"
+    "locations",
+    "nominatim",
+    "bing",
+    "google",
+    "mapbox",
+    "photon",
+    "what3words",
+    "mapquest"
   ],
   "license": "BSD-2-Clause",
   "ignore": [
