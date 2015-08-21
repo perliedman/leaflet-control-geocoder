@@ -33,6 +33,10 @@
 	background-color: transparent;
 	width: 246px;
 }
+.leaflet-control-geocoder-close {
+	display: block;
+	text-align: right;
+}
 .leaflet-control-geocoder-icon {
 	background-image: url(images/geocoder.png);
 	background-repeat: no-repeat;
@@ -95,6 +99,7 @@
 }
 .leaflet-control-geocoder-alternatives li:hover, .leaflet-control-geocoder-selected {
 	background-color: #f5f5f5;
+	border-radius: 4px;
 }
 .leaflet-control-geocoder-address-detail {
 	
