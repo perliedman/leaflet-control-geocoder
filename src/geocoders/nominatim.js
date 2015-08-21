@@ -2,11 +2,26 @@ var L = require('leaflet'),
 	Util = require('../util');
 
 module.exports = {
+	/*
+	 * 🍂class Nominatim
+	 * 🍂inherits IGeocoder
+	 * 🍂aka L.Control.Geocoder.Nominatim
+	 * Geocoder using OpenStreetMap's [Nominatim](http://wiki.openstreetmap.org/wiki/Nominatim) service.
+	 */
 	class: L.Class.extend({
 		options: {
+			/* 🍂option serviceUrl, String, '//nominatim.openstreetmap.org/'
+			 * URL used to locate the Nominatim service */
 			serviceUrl: '//nominatim.openstreetmap.org/',
+			/* 🍂option geocodingQueryParams, Object, {}
+			 * Parameters added to each geocoding request */
 			geocodingQueryParams: {},
+			/* 🍂option reverseQueryParams, Object, {}
+			 * Parameters added to each reverse geocoding request */
 			reverseQueryParams: {},
+			/* 🍂option htmlTemplate, Function,
+			 * Function used to generate the HTML representation of a geocoding response;
+			 * the function will be passed a parsed Nominatim geocoding response and should return a `String` */
 			htmlTemplate: function(r) {
 				var a = r.address,
 					parts = [];

@@ -125,6 +125,13 @@ module.exports = {
 			}
 		},
 
+		/*
+		 * 🍂method markGeocode
+		 * 🍂param result, IGeocodeResult
+		 * Called when a geocoding result is selected by the user. Default
+		 * implementation opens a marker on the result's location and opens a popup
+		 * with the result's name.
+		 */
 		markGeocode: function(result) {
 			this._map.fitBounds(result.bbox);
 
@@ -265,4 +272,53 @@ module.exports = {
 	factory: function(options) {
 		return new L.Control.Geocoder(options);
 	}
+
+	/*
+	 * 🍂class IGeocoder
+	 * An interface implemented to respond to geocoding queries.
+	 *
+	 * 🍂method geocode
+	 * 🍂param query, String
+	 * 🍂param callback, Function
+	 * 🍂param context?, Object
+	 * Performs a geocoding query (search). When the search completes, the `callback` is called
+	 * with an array of [`IGeocodeResult`](#igeocoderesult)s as argument
+	 *
+	 * 🍂method reverse
+	 * 🍂param latLng, L.LatLng
+	 * 🍂param callback, Function
+	 * 🍂param context?, Object
+	 * Tries to find locations close to the coordinate `latLng`. When the search completes,
+	 * the `callback` is called
+	 * with an array of [`IGeocodeResult`](#igeocoderesult)s as argument.
+	 *
+	 * 🍂method suggest
+	 * 🍂param query, String
+	 * 🍂param callback, Function
+	 * 🍂param context?, Object
+	 * Tries to find suggestions given a (possibly incomplete) search query. When the search completes,
+	 * the `callback` is called
+	 * with an array of [`IGeocodeResult`](#igeocoderesult)s as argument. This method is optional to implement.
+	 */
+
+	/*
+	 * 🍂class IGeocodeResult
+	 * An object that represents a result from a geocoding query.
+	 *
+	 * Note that there is not concrete implementation of `IGeocodeResult`, it
+	 * is the contract (interface) geocoders are expected to use when returning
+	 * results.
+	 *
+	 * 🍂property name, String
+	 * Name if found location
+	 * 🍂property bounds, L.LatLngBounds
+	 * Bounds of the location (possibly a single point)
+	 * 🍂property center, L.LatLng
+	 * Center coordinate of the location
+	 * 🍂property icon?, String
+	 * URL for icon representing result; optional
+	 * 🍂property html?, String
+	 * HTML formatted representation of the name
+	 */
+
 };
