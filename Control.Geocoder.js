@@ -743,11 +743,14 @@
 
 	L.Control.Geocoder.Google = L.Class.extend({
 		options: {
-			service_url: 'https://maps.googleapis.com/maps/api/geocode/json'
+			service_url: 'https://maps.googleapis.com/maps/api/geocode/json',
+			geocodingQueryParams: {},
+			reverseQueryParams: {}
 		},
 
-		initialize: function(key) {
-				this._key = key;
+		initialize: function(key, options) {
+			this._key = key;
+			L.setOptions(this, options);
 		},
 
 		geocode: function(query, cb, context) {
@@ -758,6 +761,7 @@
 			{
 				params['key'] = this._key
 			}
+			params = L.Util.extend(params, this.options.geocodingQueryParams);
 
 			L.Control.Geocoder.getJSON(this.options.service_url, params, function(data) {
 					var results = [],
@@ -772,7 +776,8 @@
 							results[i] = {
 									name: loc.formatted_address,
 									bbox: latLngBounds,
-									center: latLng
+									center: latLng,
+									properties: loc.address_components
 							};
 						}
 					}
@@ -785,6 +790,7 @@
 			var params = {
 				latlng: encodeURIComponent(location.lat) + ',' + encodeURIComponent(location.lng)
 			};
+			params = L.Util.extend(params, this.options.reverseQueryParams);
 			if(this._key && this._key.length)
 			{
 				params['key'] = this._key
@@ -802,7 +808,8 @@
 						results[i] = {
 							name: loc.formatted_address,
 							bbox: latLngBounds,
-							center: latLng
+							center: latLng,
+							properties: loc.address_components
 						};
 					}
 				}
@@ -812,8 +819,8 @@
 		}
 	});
 
-	L.Control.Geocoder.google = function(key) {
-		return new L.Control.Geocoder.Google(key);
+	L.Control.Geocoder.google = function(key, options) {
+		return new L.Control.Geocoder.Google(key, options);
 	};
 
 	L.Control.Geocoder.Photon = L.Class.extend({
