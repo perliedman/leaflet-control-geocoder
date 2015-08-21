@@ -2,14 +2,46 @@ var L = require('leaflet'),
 	Nominatim = require('./geocoders/nominatim');
 
 module.exports = {
+	/*
+	 * 🍂namespace L.Control
+	 * 🍂class Geocoder
+	 * 🍂inherits L.Control
+	 * 🍂aka L.Control.Geocoder
+	 * This is the geocoder control. It works like any other Leaflet control, and is added to the map.
+	 *
+	 * 🍂example
+	 * ```
+	 *  var map = L.map('map').setView([0, 0], 2);
+	 *	L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+	 *	    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+	 *	}).addTo(map);
+	 *	L.Control.geocoder().addTo(map);
+	 * ```
+	 */
 	class: L.Control.extend({
+		/* 🍂section
+		 * 🍂aka Geocode options */
 		options: {
+			/* 🍂option showResultIcon, Boolean, false
+			 * Enable icons describing result type, if available */
 			showResultIcons: false,
+			/* 🍂option collapsed, Boolean, true
+			 * Search field is collapsed (minimized) by default */
 			collapsed: true,
+			/* 🍂option expand, String, "click"
+			 * Method used for expanding the control; should be "click" or "hover" */
 			expand: 'click',
+			/* 🍂option position, String, "topright"
+			 * Sets the control's position, see [Leaflet's `Control` docs](http://leafletjs.com/reference.html#control) */
 			position: 'topright',
+			/* 🍂option placeholder, String, "Search..."
+			 * Search field's placeholder text */
 			placeholder: 'Search...',
+			/* 🍂option errorMessage, String, "Nothing found."
+			 * Message shown when an error occurs, or no results are found */
 			errorMessage: 'Nothing found.'
+			/* 🍂option geocoder, IGeocoder, L.Routing.Geocoder.nominatim()
+			 * Geocoder backend to use when searching */
 		},
 
 		_callbackId: 0,
@@ -224,6 +256,12 @@ module.exports = {
 			return true;
 		}
 	}),
+	/*
+	 * 🍂factory L.Control.geocoder
+	 * 🍂param options?, Geocoder options
+	 * Instantiates a new geocoder control, by default using Nominatim for search, unless another
+	 * `geocoder` is specified in the options.
+	 */
 	factory: function(options) {
 		return new L.Control.Geocoder(options);
 	}

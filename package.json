@@ -4,6 +4,7 @@
   "description": "Extendable geocoder with builtin support for Nominatim, Bing, Google, Mapbox, Photon, What3Words, MapQuest",
   "main": "src/index.js",
   "scripts": {
+    "docs": "node ./scripts/docs.js",
     "prepublish": "sh ./scripts/build.sh",
     "publish": "sh ./scripts/publish.sh"
   },
@@ -35,7 +36,9 @@
     "leaflet": "~0.7.3"
   },
   "devDependencies": {
+    "Leafdoc": "^0.1.0",
     "browserify": "^11.0.1",
-    "browserify-shim": "^3.8.10"
+    "browserify-shim": "^3.8.10",
+    "sander": "^0.3.5"
   }
 }

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{ title }}</title>
+	<meta charset="utf-8">
+
+	<link rel="stylesheet" href="http://leafletjs.com/docs/css/normalize.css" />
+	<link rel="stylesheet" href="http://leafletjs.com/docs/css/main.css" />
+	<script src="http://leafletjs.com/docs/highlight/highlight.pack.js"></script>
+	<link rel="stylesheet" href="http://leafletjs.com/docs/highlight/styles/github-gist.css" />
+	<link rel="stylesheet" href="http://leafletjs.com/dist/leaflet.css" />
+	<script src="http://leafletjs.com/dist/leaflet.js"></script>
+</head>
+<body class='api-page'>
+	<div class='container'>
+
+	<h2>Leaflet Control Geocodcer API reference</h2>
+	<div id="toc" class="clearfix">
+	</div>
+
+	{{{ body }}}
+
+	</div>
+	<script src="http://leafletjs.com/docs/js/docs.js"></script>
+	<script>
+	hljs.configure({tabReplace: '    '});
+	hljs.initHighlightingOnLoad();
+
+	var elems = document.querySelectorAll('h2, h3, h4, tr');
+
+	for (var i = 0, len = elems.length; i < len; i++) {
+		var el = elems[i];
+
+		if (el.id) {
+			var anchor = document.createElement('a');
+			anchor.setAttribute('anchor', el.id);
+			if (!el.children.length) {
+				// For headers, insert the anchor before.
+				el.parentNode.insertBefore(anchor, el);
+			} else {
+				// For table rows, insert the anchor inside the first <td>
+				el.querySelector('td').appendChild(anchor);
+			}
+		}
+	}
+
+	elems = document.querySelectorAll('div.accordion');
+	for (var i = 0, len = elems.length; i < len; i++) {
+		var el = elems[i];
+
+		el.querySelector('label').addEventListener('click', function(c){
+			return function() {
+				if (c.className === 'accordion expanded') {
+					c.className = 'accordion collapsed';
+				} else {
+					c.className = 'accordion expanded';
+				}
+				console.log(c);
+			};
+		}(el));
+
+// 		el.className = 'accordion collapsed';
+// 		el.querySelector('.accordion-content').style.display = 'none';
+	}
+
+</script>
+<style>
+	div.accordion {
+		width: 100%;
+		overflow: hidden;
+	}
+
+	div.accordion > label {
+		width: 100%;
+		cursor: pointer;
+		display: block;
+		background: #EEE;
+		padding: 0.5em 1em;
+		font-weight: bold;
+		font-size: 12px;
+	}
+
+	div.accordion > div.accordion-content {
+		max-height: 0;
+		display: none;
+	}
+
+	div.accordion.collapsed > div.accordion-content {
+		animation-duration: 0.4s;
+		animation-name: collapse;
+/* 		height: 0; */
+		max-height: 0;
+		display: block;
+	}
+
+	div.accordion.expanded > div.accordion-content {
+		animation-duration: 0.4s;
+		animation-name: expand;
+/* 		height: auto; */
+		max-height: none;
+		display: block;
+	}
+
+	@keyframes collapse {
+		0% { max-height: 100vh; }
+		100% { max-height: 0; }
+	}
+
+	@keyframes expand {
+		0% { max-height: 0; }
+		100% { max-height: 100vh; }
+	}
+
+/*	div.accordion > div.accordion-content {
+		transition: max-height 0.4s ease-out 0s;
+	}*/
+
+	div.accordion.expanded > label > span.expander {
+		transform: rotate(90deg);
+	}
+
+	div.accordion > label > span.expander {
+		transition: transform 0.4s ease-out 0s;
+		display: inline-block;
+	}
+
+	table {
+		margin-bottom: 0;
+	}
+
+</style>
+</body></html>
