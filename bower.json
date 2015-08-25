@@ -6,7 +6,10 @@
     "Per Liedman <per@liedman.net>"
   ],
   "description": "Extendable geocoder with builtin OSM/Nominatim support",
-  "main": "Control.Geocoder.js",
+  "main": [
+		"Control.Geocoder.js",
+		"Control.Geocoder.css"
+	],
   "moduleType": [
     "amd",
     "globals"
