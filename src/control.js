@@ -1,5 +1,5 @@
 var L = require('leaflet'),
-	Nominatim = require('./geocoders/nominatim');
+	Nominatim = require('./geocoders/nominatim').class;
 
 module.exports = {
 	class: L.Control.extend({
