@@ -6,7 +6,8 @@ var L = require('leaflet'),
 	Mapbox = require('./geocoders/mapbox'),
 	What3Words = require('./geocoders/what3words'),
 	Google = require('./geocoders/google'),
-	Photon = require('./geocoders/photon');
+	Photon = require('./geocoders/photon'),
+	Mapzen = require('./geocoders/mapzen');
 
 module.exports = L.Util.extend(Control.class, {
 	Nominatim: Nominatim.class,
@@ -22,7 +23,9 @@ module.exports = L.Util.extend(Control.class, {
 	Google: Google.class,
 	google: Google.factory,
 	Photon: Photon.class,
-	photon: Photon.factory
+	photon: Photon.factory,
+	Mapzen: Mapzen.class,
+	mapzen: Mapzen.factory
 });
 
 L.Util.extend(L.Control, {

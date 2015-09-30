@@ -20,6 +20,7 @@ The plugin supports many different data providers:
 * [MapQuest Geocoding API](http://developer.mapquest.com/web/products/dev-services/geocoding-ws)
 * [What3Words](http://http://what3words.com/)
 * [Photon](http://photon.komoot.de/)
+* [Mapzen Search](https://mapzen.com/projects/search)
 
 The plugin can easily be extended to support other providers.
 

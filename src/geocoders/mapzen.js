@@ -1,0 +1,60 @@
+var L = require('leaflet'),
+	Util = require('../util');
+
+module.exports = {
+	class: L.Class.extend({
+		options: {
+			serviceUrl: '//search.mapzen.com/v1',
+			geocodingQueryParams: {},
+			reverseQueryParams: {}
+		},
+
+		initialize: function(apiKey, options) {
+			L.Util.setOptions(this, options);
+			this._apiKey = apiKey;
+		},
+
+		geocode: function(query, cb, context) {
+			var _this = this;
+			Util.getJSON(this.options.serviceUrl + "/search", L.extend({
+				'api_key': this._apiKey,
+				'text': query
+			}, this.options.geocodingQueryParams), function(data) {
+				cb.call(context, _this._parseResults(data, "bbox"));
+			});
+		},
+
+		reverse: function(location, scale, cb, context) {
+			var _this = this;
+			Util.getJSON(this.options.serviceUrl + "/reverse", L.extend({
+				'api_key': this._apiKey,
+				'point.lat': location.lat,
+				'point.lon': location.lng
+			}, this.options.reverseQueryParams), function(data) {
+				cb.call(context, _this._parseResults(data, "bounds"));
+			});
+		},
+
+		_parseResults: function(data, bboxname) {
+			var results = [];
+			L.geoJson(data, {
+				pointToLayer: function (feature, latlng) {
+					return L.circleMarker(latlng);
+				},
+				onEachFeature: function(feature, layer) {
+					var result = {};
+					result['name'] = layer.feature.properties.label;
+					result[bboxname] = layer.getBounds();
+					result['center'] = result[bboxname].getCenter();
+					result['properties'] = layer.feature.properties;
+					results.push(result);
+				}
+			});
+			return results;
+		}
+	}),
+
+	factory: function(options) {
+		return new L.Control.Geocoder.Mapzen(options);
+	}
+};
