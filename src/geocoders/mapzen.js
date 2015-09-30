@@ -12,6 +12,7 @@ module.exports = {
 		initialize: function(apiKey, options) {
 			L.Util.setOptions(this, options);
 			this._apiKey = apiKey;
+			this._lastSuggest = 0;
 		},
 
 		geocode: function(query, cb, context) {
@@ -21,6 +22,19 @@ module.exports = {
 				'text': query
 			}, this.options.geocodingQueryParams), function(data) {
 				cb.call(context, _this._parseResults(data, "bbox"));
+			});
+		},
+
+		suggest: function(query, cb, context) {
+			var _this = this;
+			Util.getJSON(this.options.serviceUrl + "/autocomplete", L.extend({
+				'api_key': this._apiKey,
+				'text': query
+			}, this.options.geocodingQueryParams), function(data) {
+				if (data.geocoding.timestamp > this._lastSuggest) {
+					this._lastSuggest = data.geocoding.timestamp;
+					cb.call(context, _this._parseResults(data, "bbox"));
+				}
 			});
 		},
 
