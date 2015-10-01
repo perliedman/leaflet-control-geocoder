@@ -68,7 +68,7 @@ module.exports = {
 		}
 	}),
 
-	factory: function(options) {
-		return new L.Control.Geocoder.Mapzen(options);
+	factory: function(apiKey, options) {
+		return new L.Control.Geocoder.Mapzen(apiKey, options);
 	}
 };
