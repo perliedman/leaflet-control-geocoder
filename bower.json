@@ -24,7 +24,8 @@
     "mapbox",
     "photon",
     "what3words",
-    "mapquest"
+    "mapquest",
+    "mapzen"
   ],
   "license": "BSD-2-Clause",
   "ignore": [
