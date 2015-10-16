@@ -33,7 +33,7 @@ module.exports = {
 		},
 
 		geocode: function(query, cb, context) {
-			Util.jsonp(this.options.serviceUrl + 'search/', L.extend({
+			Util.jsonp(this.options.serviceUrl + 'search', L.extend({
 				q: query,
 				limit: 5,
 				format: 'json',
@@ -60,7 +60,7 @@ module.exports = {
 		},
 
 		reverse: function(location, scale, cb, context) {
-			Util.jsonp(this.options.serviceUrl + 'reverse/', L.extend({
+			Util.jsonp(this.options.serviceUrl + 'reverse', L.extend({
 				lat: location.lat,
 				lon: location.lng,
 				zoom: Math.round(Math.log(scale / 256) / Math.log(2)),
