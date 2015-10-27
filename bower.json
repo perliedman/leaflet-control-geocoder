@@ -7,9 +7,11 @@
   ],
   "description": "Extendable geocoder with builtin OSM/Nominatim support",
   "main": [
-		"Control.Geocoder.js",
-		"Control.Geocoder.css"
-	],
+    "Control.Geocoder.js",
+    "Control.Geocoder.css",
+    "images/geocoder.png",
+    "images/throbber.gif"
+  ],
   "moduleType": [
     "amd",
     "globals"
