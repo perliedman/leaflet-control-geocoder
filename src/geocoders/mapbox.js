@@ -50,7 +50,7 @@ module.exports = {
 
 		reverse: function(location, scale, cb, context) {
 			Util.getJSON(this.options.serviceUrl + encodeURIComponent(location.lng) + ',' + encodeURIComponent(location.lat) + '.json', {
-				access_token: this._accessToken,
+				access_token: this._accessToken
 			}, function(data) {
 				var results = [],
 				loc,
