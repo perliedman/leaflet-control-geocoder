@@ -9,22 +9,22 @@ var L = require('leaflet'),
 	Photon = require('./geocoders/photon'),
 	Mapzen = require('./geocoders/mapzen');
 
-module.exports = L.Util.extend(Control.class, {
-	Nominatim: Nominatim.class,
+module.exports = L.Util.extend(Control['class'], {
+	Nominatim: Nominatim['class'],
 	nominatim: Nominatim.factory,
-	Bing: Bing.class,
+	Bing: Bing['class'],
 	bing: Bing.factory,
-	MapQuest: MapQuest.class,
+	MapQuest: MapQuest['class'],
 	mapQuest: MapQuest.factory,
-	Mapbox: Mapbox.class,
+	Mapbox: Mapbox['class'],
 	mapbox: Mapbox.factory,
-	What3Words: What3Words.class,
+	What3Words: What3Words['class'],
 	what3words: What3Words.factory,
-	Google: Google.class,
+	Google: Google['class'],
 	google: Google.factory,
-	Photon: Photon.class,
+	Photon: Photon['class'],
 	photon: Photon.factory,
-	Mapzen: Mapzen.class,
+	Mapzen: Mapzen['class'],
 	mapzen: Mapzen.factory
 });
 
