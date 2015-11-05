@@ -2,7 +2,7 @@ var L = require('leaflet'),
 	Util = require('../util');
 
 module.exports = {
-	class: L.Class.extend({
+	'class': L.Class.extend({
 		options: {
 			serviceUrl: 'http://api.what3words.com/'
 		},
