@@ -2,7 +2,7 @@ var L = require('leaflet'),
 	Util = require('../util');
 
 module.exports = {
-	class: L.Class.extend({
+	'class': L.Class.extend({
 		options: {
 			serviceUrl: 'https://api.tiles.mapbox.com/v4/geocode/mapbox.places-v1/'
 		},
@@ -14,7 +14,7 @@ module.exports = {
 
 		geocode: function(query, cb, context) {
 			Util.getJSON(this.options.serviceUrl + encodeURIComponent(query) + '.json', {
-				access_token: this._accessToken,
+				access_token: this._accessToken
 			}, function(data) {
 				var results = [],
 				loc,
