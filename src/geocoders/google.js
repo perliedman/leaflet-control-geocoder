@@ -2,7 +2,7 @@ var L = require('leaflet'),
 	Util = require('../util');
 
 module.exports = {
-	class: L.Class.extend({
+	'class': L.Class.extend({
 		options: {
 			serviceUrl: 'https://maps.googleapis.com/maps/api/geocode/json',
 			geocodingQueryParams: {},
@@ -18,7 +18,7 @@ module.exports = {
 
 		geocode: function(query, cb, context) {
 			var params = {
-				address: query,
+				address: query
 			};
 
 			if (this._key && this._key.length) {
