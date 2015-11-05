@@ -2,7 +2,7 @@ var L = require('leaflet'),
 	Util = require('../util');
 
 module.exports = {
-	'class:' L.Class.extend({
+	'class': L.Class.extend({
 		options: {
 			serviceUrl: '//photon.komoot.de/api/',
 			reverseUrl: '//photon.komoot.de/reverse/',
