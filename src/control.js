@@ -2,7 +2,7 @@ var L = require('leaflet'),
 	Nominatim = require('./geocoders/nominatim').class;
 
 module.exports = {
-	class: L.Control.extend({
+	'class': L.Control.extend({
 		options: {
 			showResultIcons: false,
 			collapsed: true,
