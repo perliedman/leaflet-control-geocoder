@@ -2,7 +2,7 @@ var L = require('leaflet'),
 	Util = require('../util');
 
 module.exports = {
-	class: L.Class.extend({
+	'class': L.Class.extend({
 		options: {
 			serviceUrl: '//photon.komoot.de/api/',
 			reverseUrl: '//photon.komoot.de/reverse/',
@@ -24,7 +24,7 @@ module.exports = {
 
 		geocode: function(query, cb, context) {
 			var params = L.extend({
-				q: query,
+				q: query
 			}, this.options.geocodingQueryParams);
 
 			Util.getJSON(this.options.serviceUrl, params, L.bind(function(data) {
