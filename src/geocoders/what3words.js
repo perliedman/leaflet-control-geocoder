@@ -15,7 +15,7 @@ module.exports = {
 			//get three words and make a dot based string
 			Util.getJSON(this.options.serviceUrl +'w3w', {
 				key: this._accessToken,
-				string: query.split(/\s+/).join('.'),
+				string: query.split(/\s+/).join('.')
 			}, function(data) {
 				var results = [], loc, latLng, latLngBounds;
 				if (data.position && data.position.length) {
