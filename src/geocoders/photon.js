@@ -24,7 +24,7 @@ module.exports = {
 
 		geocode: function(query, cb, context) {
 			var params = L.extend({
-				q: query,
+				q: query
 			}, this.options.geocodingQueryParams);
 
 			Util.getJSON(this.options.serviceUrl, params, L.bind(function(data) {
