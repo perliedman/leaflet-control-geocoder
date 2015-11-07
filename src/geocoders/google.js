@@ -18,7 +18,7 @@ module.exports = {
 
 		geocode: function(query, cb, context) {
 			var params = {
-				address: query,
+				address: query
 			};
 
 			if (this._key && this._key.length) {
