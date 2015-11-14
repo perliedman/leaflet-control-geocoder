@@ -124,6 +124,7 @@ module.exports = {
 					name: json.puerta,
 					center: location
 				}];
+				cb.call(context || cb, results);
 			}, "callback");
 		}
 	}),
