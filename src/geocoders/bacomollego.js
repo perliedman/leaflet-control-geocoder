@@ -130,7 +130,7 @@ module.exports = {
 	}),
 
 	factory: function(options) {
-		return new L.Control.Geocoder.BAComoviajo(options);
+		return new L.Control.Geocoder.BAComoLlego(options);
 	}
 };
 

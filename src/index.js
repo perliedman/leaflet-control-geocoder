@@ -8,7 +8,7 @@ var L = require('leaflet'),
 	Google = require('./geocoders/google'),
 	Photon = require('./geocoders/photon'),
 	Mapzen = require('./geocoders/mapzen');
-	BAComoviajo = require('./geocoders/bacomoviajo');
+	BAComoLlego = require('./geocoders/bacomollego');
 
 module.exports = L.Util.extend(Control.class, {
 	Nominatim: Nominatim.class,
@@ -27,8 +27,8 @@ module.exports = L.Util.extend(Control.class, {
 	photon: Photon.factory,
 	Mapzen: Mapzen.class,
 	mapzen: Mapzen.factory,
-	BAComoviajo: BAComoviajo.class,
-	bacomoviajo: BAComoviajo.factory
+	BAComoLlego: BAComoLlego.class,
+	bacomollego: BAComoLlego.factory
 });
 
 L.Util.extend(L.Control, {
