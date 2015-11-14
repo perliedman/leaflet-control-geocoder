@@ -21,6 +21,7 @@ The plugin supports many different data providers:
 * [What3Words](http://http://what3words.com/)
 * [Photon](http://photon.komoot.de/)
 * [Mapzen Search](https://mapzen.com/projects/search)
+* [BA Como Viajo](https://mapa.buenosaires.gob.ar/comollego/)
 
 The plugin can easily be extended to support other providers.
 
@@ -152,7 +153,7 @@ An object that represents a result from a geocoding query.
 | Property   | Type             | Description                           |
 | ---------- | ---------------- | ------------------------------------- |
 | name       | String           | Name of found location                |
-| bounds     | L.LatLngBounds   | The bounds of the location            |
+| bbox       | L.LatLngBounds   | The bounds of the location            |
 | center     | L.LatLng         | The center coordinate of the location |
 | icon       | String           | URL for icon representing result; optional |
 | html       | String           | (optional) HTML formatted representation of the name |
