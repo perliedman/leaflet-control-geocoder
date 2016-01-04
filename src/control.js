@@ -169,7 +169,7 @@ module.exports = {
 			li.setAttribute('data-result-index', index);
 
 			if (result.html) {
-				a.innerHTML = result.html;
+				a.innerHTML = a.innerHTML + result.html;
 			} else {
 				a.appendChild(text);
 			}

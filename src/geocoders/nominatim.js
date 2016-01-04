@@ -14,9 +14,9 @@ module.exports = {
 					parts.push('{building} {road} {house_number}');
 				}
 
-				if (a.city || a.town || a.village) {
+				if (a.city || a.town || a.village || a.hamlet) {
 					parts.push('<span class="' + (parts.length > 0 ? 'leaflet-control-geocoder-address-detail' : '') +
-						'">{postcode} {city} {town} {village}</span>');
+						'">{postcode} {city} {town} {village} {hamlet}</span>');
 				}
 
 				if (a.state || a.country) {
