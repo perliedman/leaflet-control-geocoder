@@ -18,7 +18,7 @@ The plugin supports many different data providers:
 * [Google Geocoding API](https://developers.google.com/maps/documentation/geocoding/)
 * [Mapbox Geocoding](https://www.mapbox.com/developers/api/geocoding/)
 * [MapQuest Geocoding API](http://developer.mapquest.com/web/products/dev-services/geocoding-ws)
-* [What3Words](http://http://what3words.com/)
+* [What3Words](http://what3words.com/)
 * [Photon](http://photon.komoot.de/)
 * [Mapzen Search](https://mapzen.com/projects/search)
 
