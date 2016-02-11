@@ -30,12 +30,12 @@ module.exports = {
 			Util.getJSON(this.options.serviceUrl + "/autocomplete", L.extend({
 				'api_key': this._apiKey,
 				'text': query
-			}, this.options.geocodingQueryParams), function(data) {
+			}, this.options.geocodingQueryParams), L.bind(function(data) {
 				if (data.geocoding.timestamp > this._lastSuggest) {
 					this._lastSuggest = data.geocoding.timestamp;
 					cb.call(context, _this._parseResults(data, "bbox"));
 				}
-			});
+			}, this));
 		},
 
 		reverse: function(location, scale, cb, context) {
