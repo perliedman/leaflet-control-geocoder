@@ -27,7 +27,8 @@ module.exports = L.Util.extend(Control.class, {
 	photon: Photon.factory,
 	Mapzen: Mapzen.class,
 	mapzen: Mapzen.factory,
-	arcgis: ArcGis.arcgis
+	ArcGis: ArcGis.class,
+	arcgis: ArcGis.factory
 });
 
 L.Util.extend(L.Control, {
