@@ -8,7 +8,7 @@ var L = require('leaflet'),
 	Google = require('./geocoders/google'),
 	Photon = require('./geocoders/photon'),
 	Mapzen = require('./geocoders/mapzen'),
-	AcrGis = require('./geocoders/acrgis');
+	ArcGis = require('./geocoders/arcgis');
 
 module.exports = L.Util.extend(Control.class, {
 	Nominatim: Nominatim.class,
