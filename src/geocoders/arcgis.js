@@ -31,7 +31,7 @@ module.exports = {
 					latLng,
 					latLngBounds;
 
-				if (data.candidates && data.candidates.length {
+				if (data.candidates && data.candidates.length) {
 					for (var i = 0; i <= data.candidates.length - 1; i++) {
 						loc = data.candidates[i];
 						latLng = L.latLng(loc.location.y, loc.location.x);
@@ -60,7 +60,7 @@ module.exports = {
 			};
 
 			Util.getJSON(this.options.service_url + '/reverseGeocode', params, function(data) {
-				var results = [],
+				var result = [],
 					loc;
 
 				if (data && !data.error) {
@@ -72,7 +72,7 @@ module.exports = {
 					});
 				}
 
-				cb.call(context, results);
+				cb.call(context, result);
 			});
 		}
 	}),
