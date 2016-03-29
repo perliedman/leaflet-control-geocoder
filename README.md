@@ -28,7 +28,8 @@ See the [Leaflet Control Geocoder Demo](http://perliedman.github.com/leaflet-con
 
 # Usage
 
-[Download latest release](http://www.liedman.net/leaflet-control-geocoder/download). Load the CSS and Javascript:
+[Download latest release](https://github.com/perliedman/leaflet-control-geocoder/releases). Load the CSS and Javascript, located in
+the `dist` folder:
 
 ```HTML
 <link rel="stylesheet" href="Control.Geocoder.css" />
