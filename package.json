@@ -1,11 +1,12 @@
 {
   "name": "leaflet-control-geocoder",
-  "version": "1.3.3",
+  "version": "1.3.4",
   "description": "Extendable geocoder with builtin support for Nominatim, Bing, Google, Mapbox, Photon, What3Words, MapQuest, Mapzen",
   "main": "src/index.js",
   "scripts": {
-    "prepublish": "sh ./scripts/build.sh",
-    "publish": "sh ./scripts/publish.sh"
+    "postinstall": "sh ./scripts/build.sh",
+    "publish": "sh ./scripts/publish.sh",
+    "postpublish": "sh ./scripts/postpublish.sh"
   },
   "repository": {
     "type": "git",

@@ -14,6 +14,3 @@ git commit -m "v$VERSION"
 
 git tag v$VERSION -f
 git push origin build --tags -f
-
-git checkout master
-git branch -D build
