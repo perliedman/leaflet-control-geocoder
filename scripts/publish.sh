@@ -6,7 +6,7 @@ VERSION=`echo "console.log(require('./package.json').version)" | node`
 
 git checkout -b build
 
-npm run build
+npm install
 git add dist/* -f
 git add bower.json -f
 
