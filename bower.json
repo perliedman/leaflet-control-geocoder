@@ -27,7 +27,8 @@
     "photon",
     "what3words",
     "mapquest",
-    "mapzen"
+    "mapzen",
+    "here"
   ],
   "license": "BSD-2-Clause",
   "ignore": [
