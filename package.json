@@ -35,7 +35,7 @@
     "leaflet": "global:L"
   },
   "dependencies": {
-    "leaflet": "~0.7.3"
+    "leaflet": "~0.7.7"
   },
   "devDependencies": {
     "browserify": "^11.0.1",
