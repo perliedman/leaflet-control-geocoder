@@ -9,7 +9,9 @@ module.exports = {
 			expand: 'click',
 			position: 'topright',
 			placeholder: 'Search...',
-			errorMessage: 'Nothing found.'
+			errorMessage: 'Nothing found.',
+			suggestMinLength: 3,
+			suggestTimeout: 250
 		},
 
 		_callbackId: 0,
@@ -78,9 +80,9 @@ module.exports = {
 			return container;
 		},
 
-		_geocodeResult: function (results) {
+		_geocodeResult: function (results, suggest) {
 			L.DomUtil.removeClass(this._container, 'leaflet-control-geocoder-throbber');
-			if (results.length === 1) {
+			if (!suggest && results.length === 1) {
 				this._geocodeResultSelected(results[0]);
 			} else if (results.length > 0) {
 				this._alts.innerHTML = '';
@@ -109,12 +111,15 @@ module.exports = {
 			return this;
 		},
 
-		_geocode: function(event) {
+		_geocode: function(suggest) {
+			this._lastGeocode = this._input.value;
 			L.DomUtil.addClass(this._container, 'leaflet-control-geocoder-throbber');
-			this._clearResults();
-			this.options.geocoder.geocode(this._input.value, this._geocodeResult, this);
-
-			return false;
+			if (!suggest) {
+				this._clearResults();
+			}
+			this.options.geocoder.geocode(this._input.value, function(results) {
+				this._geocodeResult(results, suggest);
+			}, this);
 		},
 
 		_geocodeResultSelected: function(result) {
@@ -221,8 +226,20 @@ module.exports = {
 				} else {
 					this._geocode();
 				}
+				break;
+			default:
+				var v = this._input.value;
+				if (this.options.geocoder.suggest && v !== this._lastGeocode) {
+					clearTimeout(this._suggestTimeout);
+					if (v.length >= this.options.suggestMinLength) {
+						this._suggestTimeout = setTimeout(L.bind(function() {
+							this._geocode(true);
+						}, this), this.options.suggestTimeout);
+					} else {
+						this._clearResults();
+					}
+				}
 			}
-			return true;
 		}
 	}),
 	factory: function(options) {
