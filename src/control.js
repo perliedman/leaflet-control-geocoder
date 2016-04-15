@@ -24,12 +24,12 @@ module.exports = {
 		onAdd: function (map) {
 			var className = 'leaflet-control-geocoder',
 			    container = L.DomUtil.create('div', className + ' leaflet-bar'),
-			    icon = L.DomUtil.create('a', 'leaflet-control-geocoder-icon', container),
+			    icon = L.DomUtil.create('button', 'leaflet-control-geocoder-icon', container),
 			    form = this._form = L.DomUtil.create('div', className + '-form', container),
 			    input;
 
 			icon.innerHTML = '&nbsp;';
-			icon.href = 'javascript:void(0);';
+			icon.type = 'button';
 			this._map = map;
 			this._container = container;
 			input = this._input = L.DomUtil.create('input');
@@ -37,8 +37,11 @@ module.exports = {
 			input.placeholder = this.options.placeholder;
 
 			L.DomEvent.addListener(input, 'keydown', this._keydown, this);
-			//L.DomEvent.addListener(input, 'onpaste', this._clearResults, this);
-			//L.DomEvent.addListener(input, 'oninput', this._clearResults, this);
+			L.DomEvent.addListener(input, 'blur', function() {
+				if (this.options.collapsed) {
+					this._collapse();
+				}
+			}, this);
 
 			this._errorElement = document.createElement('div');
 			this._errorElement.className = className + '-form-no-error';
@@ -49,8 +52,6 @@ module.exports = {
 			form.appendChild(input);
 			this._container.appendChild(this._errorElement);
 			container.appendChild(this._alts);
-
-			L.DomEvent.addListener(form, 'submit', this._geocode, this);
 
 			if (this.options.collapsed) {
 				if (this.options.expand === 'click') {
