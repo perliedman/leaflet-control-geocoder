@@ -5,10 +5,10 @@
 
   <meta name='viewport' content='width=device-width, user-scalable=no initial-scale=1, maximum-scale=1'>
 
-	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css" />
 	<link rel="stylesheet" href="../dist/Control.Geocoder.css" />
 
-	<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
 	<script src="../dist/Control.Geocoder.js"></script>
 	<style type="text/css">
 		body {
@@ -26,7 +26,7 @@
 
 	<script type="text/javascript">
 		var map = L.map('map').setView([0, 0], 2),
-			geocoder = L.Control.Geocoder.nominatim(),
+			geocoder = L.Control.Geocoder.mapzen('search-DopSHJw'),
 			control = L.Control.geocoder({
 				geocoder: geocoder
 			}).addTo(map),
