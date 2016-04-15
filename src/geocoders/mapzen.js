@@ -4,7 +4,7 @@ var L = require('leaflet'),
 module.exports = {
 	class: L.Class.extend({
 		options: {
-			serviceUrl: '//search.mapzen.com/v1',
+			serviceUrl: 'https://search.mapzen.com/v1',
 			geocodingQueryParams: {},
 			reverseQueryParams: {}
 		},

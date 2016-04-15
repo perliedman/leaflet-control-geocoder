@@ -8,7 +8,7 @@ module.exports = {
 		},
 
 		geocode : function (query, cb, context) {
-			Util.jsonp('//dev.virtualearth.net/REST/v1/Locations', {
+			Util.jsonp('https://dev.virtualearth.net/REST/v1/Locations', {
 				query: query,
 				key : this.key
 			}, function(data) {

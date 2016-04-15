@@ -4,7 +4,7 @@ var L = require('leaflet'),
 module.exports = {
 	class: L.Class.extend({
 		options: {
-			serviceUrl: '//www.mapquestapi.com/geocoding/v1'
+			serviceUrl: 'https://www.mapquestapi.com/geocoding/v1'
 		},
 
 		initialize: function(key, options) {
