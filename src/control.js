@@ -25,7 +25,7 @@ module.exports = {
 			var className = 'leaflet-control-geocoder',
 			    container = L.DomUtil.create('div', className + ' leaflet-bar'),
 			    icon = L.DomUtil.create('a', 'leaflet-control-geocoder-icon', container),
-			    form = this._form = L.DomUtil.create('form', className + '-form', container),
+			    form = this._form = L.DomUtil.create('div', className + '-form', container),
 			    input;
 
 			icon.innerHTML = '&nbsp;';
@@ -109,8 +109,6 @@ module.exports = {
 		},
 
 		_geocode: function(event) {
-			L.DomEvent.preventDefault(event);
-
 			L.DomUtil.addClass(this._container, 'leaflet-control-geocoder-throbber');
 			this._clearResults();
 			this.options.geocoder.geocode(this._input.value, this._geocodeResult, this);
@@ -219,6 +217,8 @@ module.exports = {
 					this._geocodeResultSelected(this._results[index]);
 					this._clearResults();
 					L.DomEvent.preventDefault(e);
+				} else {
+					this._geocode();
 				}
 			}
 			return true;
