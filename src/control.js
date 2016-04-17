@@ -126,7 +126,7 @@ module.exports = {
 			}
 
 			this.fire(suggest ? 'startgeocode' : 'startsuggest');
-			this.options.geocoder.geocode(this._input.value, function(results) {
+			this.options.geocoder[suggest ? 'suggest' : 'geocode'](this._input.value, function(results) {
 				this.fire(suggest ? 'finishgeocode' : 'finishsuggest');
 				this._geocodeResult(results, suggest);
 			}, this);
