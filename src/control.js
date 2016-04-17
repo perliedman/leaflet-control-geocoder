@@ -26,17 +26,26 @@ module.exports = {
 		onAdd: function (map) {
 			var className = 'leaflet-control-geocoder',
 			    container = L.DomUtil.create('div', className + ' leaflet-bar'),
-			    icon = L.DomUtil.create('button', 'leaflet-control-geocoder-icon', container),
+			    icon = L.DomUtil.create('button', className + '-icon', container),
 			    form = this._form = L.DomUtil.create('div', className + '-form', container),
 			    input;
 
-			icon.innerHTML = '&nbsp;';
-			icon.type = 'button';
 			this._map = map;
 			this._container = container;
-			input = this._input = L.DomUtil.create('input');
+
+			icon.innerHTML = '&nbsp;';
+			icon.type = 'button';
+
+			input = this._input = L.DomUtil.create('input', '', form);
 			input.type = 'text';
 			input.placeholder = this.options.placeholder;
+
+			this._errorElement = L.DomUtil.create('div', className + '-form-no-error', container);
+			this._errorElement.innerHTML = this.options.errorMessage;
+
+			this._alts = L.DomUtil.create('ul',
+				className + '-alternatives leaflet-control-geocoder-alternatives-minimized',
+				container);
 
 			L.DomEvent.addListener(input, 'keydown', this._keydown, this);
 			L.DomEvent.addListener(input, 'blur', function() {
@@ -45,15 +54,6 @@ module.exports = {
 				}
 			}, this);
 
-			this._errorElement = document.createElement('div');
-			this._errorElement.className = className + '-form-no-error';
-			this._errorElement.innerHTML = this.options.errorMessage;
-
-			this._alts = L.DomUtil.create('ul', className + '-alternatives leaflet-control-geocoder-alternatives-minimized');
-
-			form.appendChild(input);
-			this._container.appendChild(this._errorElement);
-			container.appendChild(this._alts);
 
 			if (this.options.collapsed) {
 				if (this.options.expand === 'click') {
