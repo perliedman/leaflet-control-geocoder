@@ -235,10 +235,10 @@ module.exports = {
 					var index = parseInt(this._selection.getAttribute('data-result-index'), 10);
 					this._geocodeResultSelected(this._results[index]);
 					this._clearResults();
-					L.DomEvent.preventDefault(e);
 				} else {
 					this._geocode();
 				}
+				L.DomEvent.preventDefault(e);
 				break;
 			default:
 				var v = this._input.value;
