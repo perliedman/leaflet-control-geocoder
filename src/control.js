@@ -11,8 +11,11 @@ module.exports = {
 			placeholder: 'Search...',
 			errorMessage: 'Nothing found.',
 			suggestMinLength: 3,
-			suggestTimeout: 250
+			suggestTimeout: 250,
+			defaultMarkGeocode: true
 		},
+
+		includes: L.Mixin.Events,
 
 		initialize: function (options) {
 			L.Util.setOptions(this, options);
@@ -73,6 +76,10 @@ module.exports = {
 				this._expand();
 			}
 
+			if (this.options.defaultMarkGeocode) {
+				this.on('markgeocode', this.markGeocode, this);
+			}
+
 			L.DomEvent.disableClickPropagation(container);
 
 			return container;
@@ -95,6 +102,8 @@ module.exports = {
 		},
 
 		markGeocode: function(result) {
+			result = result.geocode || result;
+
 			this._map.fitBounds(result.bbox);
 
 			if (this._geocodeMarker) {
@@ -115,7 +124,10 @@ module.exports = {
 			if (!suggest) {
 				this._clearResults();
 			}
+
+			this.fire(suggest ? 'startgeocode' : 'startsuggest');
 			this.options.geocoder.geocode(this._input.value, function(results) {
+				this.fire(suggest ? 'finishgeocode' : 'finishsuggest');
 				this._geocodeResult(results, suggest);
 			}, this);
 		},
@@ -126,7 +138,8 @@ module.exports = {
 			} else {
 				this._clearResults();
 			}
-			this.markGeocode(result);
+
+			this.fire('markgeocode', {geocode: result});
 		},
 
 		_toggle: function() {
@@ -140,12 +153,14 @@ module.exports = {
 		_expand: function () {
 			L.DomUtil.addClass(this._container, 'leaflet-control-geocoder-expanded');
 			this._input.select();
+			this.fire('expand');
 		},
 
 		_collapse: function () {
 			this._container.className = this._container.className.replace(' leaflet-control-geocoder-expanded', '');
 			L.DomUtil.addClass(this._alts, 'leaflet-control-geocoder-alternatives-minimized');
 			L.DomUtil.removeClass(this._errorElement, 'leaflet-control-geocoder-error');
+			this.fire('collapse');
 		},
 
 		_clearResults: function () {
