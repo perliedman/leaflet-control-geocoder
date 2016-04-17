@@ -14,8 +14,6 @@ module.exports = {
 			suggestTimeout: 250
 		},
 
-		_callbackId: 0,
-
 		initialize: function (options) {
 			L.Util.setOptions(this, options);
 			if (!this.options.geocoder) {
