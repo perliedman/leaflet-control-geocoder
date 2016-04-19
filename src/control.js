@@ -9,7 +9,8 @@ module.exports = {
 			expand: 'click',
 			position: 'topright',
 			placeholder: 'Search...',
-			errorMessage: 'Nothing found.'
+			errorMessage: 'Nothing found.',
+			displayMarker: true
 		},
 
 		_callbackId: 0,
@@ -96,15 +97,25 @@ module.exports = {
 		markGeocode: function(result) {
 			this._map.fitBounds(result.bbox);
 
-			if (this._geocodeMarker) {
-				this._map.removeLayer(this._geocodeMarker);
+			if(this.options.displayMarker){
+				if (this._geocodeMarker) {
+					this._map.removeLayer(this._geocodeMarker);
+				}
+
+				this._geocodeMarker = new L.Marker(result.center)
+					.bindPopup(result.html || result.name)
+					.addTo(this._map)
+					.openPopup();
+			} else{
+				if (this._geocodePopup) {
+					this._map.removeLayer(this._geocodePopup)
+				}
+				
+				this._geocodePopup = new L.popup().setLatLng(result.center)
+				    .setContent(result.html || result.name)
+				    .openOn(this._map);
+
 			}
-
-			this._geocodeMarker = new L.Marker(result.center)
-				.bindPopup(result.html || result.name)
-				.addTo(this._map)
-				.openPopup();
-
 			return this;
 		},
 
