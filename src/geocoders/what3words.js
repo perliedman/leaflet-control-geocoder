@@ -4,7 +4,7 @@ var L = require('leaflet'),
 module.exports = {
 	class: L.Class.extend({
 		options: {
-			serviceUrl: 'http://api.what3words.com/'
+			serviceUrl: 'https://api.what3words.com/v2/'
 		},
 
 		initialize: function(accessToken) {
@@ -13,17 +13,16 @@ module.exports = {
 
 		geocode: function(query, cb, context) {
 			//get three words and make a dot based string
-			Util.getJSON(this.options.serviceUrl +'w3w', {
+			Util.getJSON(this.options.serviceUrl +'forward', {
 				key: this._accessToken,
-				string: query.split(/\s+/).join('.'),
+				addr: query.split(/\s+/).join('.'),
 			}, function(data) {
 				var results = [], loc, latLng, latLngBounds;
-				if (data.position && data.position.length) {
-					loc = data.words;
-					latLng = L.latLng(data.position[0],data.position[1]);
+				if (data.hasOwnProperty('geometry')) {
+					latLng = L.latLng(data.geometry['lat'],data.geometry['lng']);
 					latLngBounds = L.latLngBounds(latLng, latLng);
 					results[0] = {
-						name: loc.join('.'),
+						name: data.words,
 						bbox: latLngBounds,
 						center: latLng
 					};
@@ -38,17 +37,16 @@ module.exports = {
 		},
 
 		reverse: function(location, scale, cb, context) {
-			Util.getJSON(this.options.serviceUrl +'position', {
+			Util.getJSON(this.options.serviceUrl +'reverse', {
 				key: this._accessToken,
-				position: [location.lat,location.lng].join(',')
+				coords: [location.lat,location.lng].join(',')
 			}, function(data) {
 				var results = [],loc,latLng,latLngBounds;
-				if (data.position && data.position.length) {
-					loc = data.words;
-					latLng = L.latLng(data.position[0],data.position[1]);
+				if (data.status.status == 200) {
+					latLng = L.latLng(data.geometry['lat'],data.geometry['lng']);
 					latLngBounds = L.latLngBounds(latLng, latLng);
 					results[0] = {
-						name: loc.join('.'),
+						name: data.words,
 						bbox: latLngBounds,
 						center: latLng
 					};
