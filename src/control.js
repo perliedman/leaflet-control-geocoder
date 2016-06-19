@@ -22,6 +22,8 @@ module.exports = {
 			if (!this.options.geocoder) {
 				this.options.geocoder = new Nominatim();
 			}
+
+			this._requestCount = 0;
 		},
 
 		onAdd: function (map) {
@@ -80,13 +82,19 @@ module.exports = {
 				this.on('markgeocode', this.markGeocode, this);
 			}
 
+			this.on('startgeocode', function() {
+				L.DomUtil.addClass(this._container, 'leaflet-control-geocoder-throbber');
+			}, this);
+			this.on('finishgeocode', function() {
+				L.DomUtil.removeClass(this._container, 'leaflet-control-geocoder-throbber');
+			}, this);
+
 			L.DomEvent.disableClickPropagation(container);
 
 			return container;
 		},
 
 		_geocodeResult: function (results, suggest) {
-			L.DomUtil.removeClass(this._container, 'leaflet-control-geocoder-throbber');
 			if (!suggest && results.length === 1) {
 				this._geocodeResultSelected(results[0]);
 			} else if (results.length > 0) {
@@ -119,16 +127,20 @@ module.exports = {
 		},
 
 		_geocode: function(suggest) {
+			var requestCount = ++this._requestCount,
+				mode = suggest ? 'suggest' : 'geocode';
+
 			this._lastGeocode = this._input.value;
-			L.DomUtil.addClass(this._container, 'leaflet-control-geocoder-throbber');
 			if (!suggest) {
 				this._clearResults();
 			}
 
-			this.fire(suggest ? 'startgeocode' : 'startsuggest');
-			this.options.geocoder[suggest ? 'suggest' : 'geocode'](this._input.value, function(results) {
-				this.fire(suggest ? 'finishgeocode' : 'finishsuggest');
-				this._geocodeResult(results, suggest);
+			this.fire('start' + mode);
+			this.options.geocoder[mode](this._input.value, function(results) {
+				if (requestCount === this._requestCount) {
+					this.fire('finish' + mode);
+					this._geocodeResult(results, suggest);
+				}
 			}, this);
 		},
 
