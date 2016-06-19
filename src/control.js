@@ -191,7 +191,7 @@ module.exports = {
 				a.appendChild(text);
 			}
 
-			L.DomEvent.addListener(li, 'click', clickHandler, this);
+			L.DomEvent.addListener(li, 'mousedown', clickHandler, this);
 
 			return li;
 		},
