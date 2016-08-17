@@ -23,7 +23,9 @@ The plugin supports many different data providers:
 * [Mapzen Search](https://mapzen.com/projects/search)
 * [HERE Geocoder API] (https://developer.here.com/rest-apis/documentation/geocoder/topics/overview.html)
 
-The plugin can easily be extended to support other providers.
+The plugin can easily be extended to support other providers. Current extensions:
+
+* [DAWA Geocoder](https://github.com/kjoller/leaflet-control-geocoder-dawa/tree/new) - support for Danish Address Web API by [Niels Kjøller Hansen](https://github.com/kjoller)
 
 See the [Leaflet Control Geocoder Demo](http://perliedman.github.com/leaflet-control-geocoder/).
 
