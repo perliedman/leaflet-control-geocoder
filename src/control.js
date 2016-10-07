@@ -49,12 +49,14 @@ module.exports = {
 			this._alts = L.DomUtil.create('ul',
 				className + '-alternatives leaflet-control-geocoder-alternatives-minimized',
 				container);
+			L.DomEvent.disableClickPropagation(this._alts);
 
 			L.DomEvent.addListener(input, 'keydown', this._keydown, this);
 			L.DomEvent.addListener(input, 'blur', function() {
-				if (this.options.collapsed) {
+				if (this.options.collapsed && !this._preventBlurCollapse) {
 					this._collapse();
 				}
+				this._preventBlurCollapse = false;
 			}, this);
 
 
@@ -145,9 +147,7 @@ module.exports = {
 		},
 
 		_geocodeResultSelected: function(result) {
-			if (this.options.collapsed) {
-				this._collapse();
-			} else {
+			if (!this.options.collapsed) {
 				this._clearResults();
 			}
 
@@ -186,9 +186,20 @@ module.exports = {
 				a = L.DomUtil.create('a', '', li),
 			    icon = this.options.showResultIcons && result.icon ? L.DomUtil.create('img', '', a) : null,
 			    text = result.html ? undefined : document.createTextNode(result.name),
-			    clickHandler = function clickHandler(e) {
-					L.DomEvent.preventDefault(e);
+			    mouseDownHandler = function mouseDownHandler(e) {
+			    	// In some browsers, a click will fire on the map if the control is
+			    	// collapsed directly after mousedown. To work around this, we
+			    	// wait until the click is completed, and _then_ collapse the
+			    	// control. Messy, but this is the workaround I could come up with
+			    	// for #142.
+			    	this._preventBlurCollapse = true;
+					L.DomEvent.stop(e);
 					this._geocodeResultSelected(result);
+					L.DomEvent.on(li, 'click', function() {
+			    		if (this.options.collapsed) {
+			    			this._collapse();
+			    		}
+					}, this);
 				};
 
 			if (icon) {
@@ -203,7 +214,10 @@ module.exports = {
 				a.appendChild(text);
 			}
 
-			L.DomEvent.addListener(li, 'mousedown', clickHandler, this);
+			// Use mousedown and not click, since click will fire _after_ blur,
+			// causing the control to have collapsed and removed the items
+			// before the click can fire.
+			L.DomEvent.addListener(li, 'mousedown', mouseDownHandler, this);
 
 			return li;
 		},
