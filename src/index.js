@@ -8,6 +8,7 @@ var L = require('leaflet'),
 	Google = require('./geocoders/google'),
 	Photon = require('./geocoders/photon'),
 	Mapzen = require('./geocoders/mapzen'),
+	BAN = require('./geocoders/ban'),
 	ArcGis = require('./geocoders/arcgis'),
 	HERE = require('./geocoders/here');
 
@@ -28,6 +29,8 @@ module.exports = L.Util.extend(Control.class, {
 	photon: Photon.factory,
 	Mapzen: Mapzen.class,
 	mapzen: Mapzen.factory,
+	BAN: BAN.class,
+	ban: BAN.factory,
 	ArcGis: ArcGis.class,
 	arcgis: ArcGis.factory,
 	HERE: HERE.class,
