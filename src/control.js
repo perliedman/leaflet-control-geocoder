@@ -130,17 +130,19 @@ module.exports = {
 
 		_geocode: function(suggest) {
 			var requestCount = ++this._requestCount,
-				mode = suggest ? 'suggest' : 'geocode';
+				mode = suggest ? 'suggest' : 'geocode',
+				eventData = {input: this._input.value};
 
 			this._lastGeocode = this._input.value;
 			if (!suggest) {
 				this._clearResults();
 			}
 
-			this.fire('start' + mode);
+			this.fire('start' + mode, eventData);
 			this.options.geocoder[mode](this._input.value, function(results) {
 				if (requestCount === this._requestCount) {
-					this.fire('finish' + mode);
+					eventData.results = results;
+					this.fire('finish' + mode, eventData);
 					this._geocodeResult(results, suggest);
 				}
 			}, this);
