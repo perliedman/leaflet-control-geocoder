@@ -11,7 +11,10 @@ module.exports = {
 		initialize: function(accessToken, options) {
 			var params = options.geocodingQueryParams;
 			params.access_token = accessToken;
-			if (params.proximity.hasOwnProperty('lat') && params.proximity.hasOwnProperty('lng')) {
+			if (typeof params.proximity !== 'undefined'
+				&& params.proximity.hasOwnProperty('lat')
+				&& params.proximity.hasOwnProperty('lng'))
+			{
 				params.proximity = params.proximity.lng + ',' + params.proximity.lat;
 			}
 			options.geocodingQueryParams = params;
