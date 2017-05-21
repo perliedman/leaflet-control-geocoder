@@ -4,18 +4,26 @@ var L = require('leaflet'),
 module.exports = {
 	class: L.Class.extend({
 		options: {
-			serviceUrl: 'https://api.tiles.mapbox.com/v4/geocode/mapbox.places-v1/'
+			serviceUrl: 'https://api.tiles.mapbox.com/v4/geocode/mapbox.places-v1/',
+			geocodingQueryParams: {},
+			reverseQueryParams: {}
 		},
 
 		initialize: function(accessToken, options) {
 			L.setOptions(this, options);
-			this._accessToken = accessToken;
+			this.options.geocodingQueryParams.access_token = accessToken;
+			this.options.reverseQueryParams.access_token = accessToken;
 		},
 
 		geocode: function(query, cb, context) {
-			Util.getJSON(this.options.serviceUrl + encodeURIComponent(query) + '.json', {
-				access_token: this._accessToken,
-			}, function(data) {
+			var params = this.options.geocodingQueryParams;
+			if (typeof params.proximity !== 'undefined'
+				&& params.proximity.hasOwnProperty('lat')
+				&& params.proximity.hasOwnProperty('lng'))
+			{
+				params.proximity = params.proximity.lng + ',' + params.proximity.lat;
+			}
+			Util.getJSON(this.options.serviceUrl + encodeURIComponent(query) + '.json', params, function(data) {
 				var results = [],
 				loc,
 				latLng,
@@ -24,7 +32,7 @@ module.exports = {
 					for (var i = 0; i <= data.features.length - 1; i++) {
 						loc = data.features[i];
 						latLng = L.latLng(loc.center.reverse());
-						if(loc.hasOwnProperty('bbox'))
+						if (loc.hasOwnProperty('bbox'))
 						{
 							latLngBounds = L.latLngBounds(L.latLng(loc.bbox.slice(0, 2).reverse()), L.latLng(loc.bbox.slice(2, 4).reverse()));
 						}
@@ -49,9 +57,7 @@ module.exports = {
 		},
 
 		reverse: function(location, scale, cb, context) {
-			Util.getJSON(this.options.serviceUrl + encodeURIComponent(location.lng) + ',' + encodeURIComponent(location.lat) + '.json', {
-				access_token: this._accessToken,
-			}, function(data) {
+			Util.getJSON(this.options.serviceUrl + encodeURIComponent(location.lng) + ',' + encodeURIComponent(location.lat) + '.json', this.options.reverseQueryParams, function(data) {
 				var results = [],
 				loc,
 				latLng,
@@ -60,7 +66,7 @@ module.exports = {
 					for (var i = 0; i <= data.features.length - 1; i++) {
 						loc = data.features[i];
 						latLng = L.latLng(loc.center.reverse());
-						if(loc.hasOwnProperty('bbox'))
+						if (loc.hasOwnProperty('bbox'))
 						{
 							latLngBounds = L.latLngBounds(L.latLng(loc.bbox.slice(0, 2).reverse()), L.latLng(loc.bbox.slice(2, 4).reverse()));
 						}
