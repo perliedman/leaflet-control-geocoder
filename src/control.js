@@ -20,7 +20,7 @@ module.exports = {
 		initialize: function (options) {
 			L.Util.setOptions(this, options);
 			if (!this.options.geocoder) {
-				this.options.geocoder = new Nominatim();
+				this.options.geocoder = new L.Control.Geocoder.Nominatim();
 			}
 
 			this._requestCount = 0;
