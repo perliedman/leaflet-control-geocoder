@@ -24,6 +24,7 @@
     "what3words",
     "mapquest",
     "mapzen",
+    "ban",
     "here"
   ],
   "author": "Per Liedman <per@liedman.net>",

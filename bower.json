@@ -28,6 +28,7 @@
     "what3words",
     "mapquest",
     "mapzen",
+    "ban",
     "here"
   ],
   "license": "BSD-2-Clause",
