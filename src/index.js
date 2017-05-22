@@ -9,7 +9,8 @@ var L = require('leaflet'),
 	Photon = require('./geocoders/photon'),
 	Mapzen = require('./geocoders/mapzen'),
 	ArcGis = require('./geocoders/arcgis'),
-	HERE = require('./geocoders/here');
+	HERE = require('./geocoders/here'),
+	DAWA = require('./geocoders/dawa');
 
 module.exports = L.Util.extend(Control.class, {
 	Nominatim: Nominatim.class,
@@ -31,7 +32,10 @@ module.exports = L.Util.extend(Control.class, {
 	ArcGis: ArcGis.class,
 	arcgis: ArcGis.factory,
 	HERE: HERE.class,
-	here: HERE.factory
+	here: HERE.factory,
+	DAWA: DAWA.class,
+	dawa: DAWA.factory
+
 });
 
 L.Util.extend(L.Control, {
