@@ -1,6 +1,6 @@
 {
   "name": "leaflet-control-geocoder",
-  "version": "1.5.4",
+  "version": "1.5.5",
   "homepage": "https://github.com/perliedman/leaflet-control-geocoder",
   "authors": [
     "Per Liedman <per@liedman.net>"
