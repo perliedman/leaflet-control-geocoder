@@ -7,8 +7,8 @@
   ],
   "description": "Extendable geocoder with builtin OSM/Nominatim support",
   "main": [
-    "Control.Geocoder.js",
-    "Control.Geocoder.css",
+    "dist/Control.Geocoder.js",
+    "dist/Control.Geocoder.css",
     "images/geocoder.png",
     "images/throbber.gif"
   ],
