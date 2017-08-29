@@ -63,21 +63,35 @@ module.exports = {
 			if (this.options.collapsed) {
 				if (this.options.expand === 'click') {
 					L.DomEvent.addListener(icon, 'click', function(e) {
-						// TODO: touch
 						if (e.button === 0 && e.detail !== 2) {
 							this._toggle();
 						}
 					}, this);
-				} else {
+				}
+                else if (L.Browser.touch && this.options.expand === 'touch') {
+                    L.DomEvent.addListener(icon, 'touchstart', function(e) {
+                        this._toggle();
+                        e.preventDefault(); // mobile: clicking focuses the icon, so UI expands and immediately collapses
+                        e.stopPropagation();
+                    }, this);
+                }
+                else {
 					L.DomEvent.addListener(icon, 'mouseover', this._expand, this);
 					L.DomEvent.addListener(icon, 'mouseout', this._collapse, this);
 					this._map.on('movestart', this._collapse, this);
 				}
 			} else {
-				L.DomEvent.addListener(icon, 'click', function(e) {
-					this._geocode(e);
-				}, this);
-				this._expand();
+                this._expand();
+                if (L.Browser.touch) {
+                    L.DomEvent.addListener(icon, 'touchstart', function(e) {
+                        this._geocode(e);
+                    }, this);
+                }
+                else {
+                    L.DomEvent.addListener(icon, 'click', function(e) {
+                        this._geocode(e);
+                    }, this);
+                }
 			}
 
 			if (this.options.defaultMarkGeocode) {
@@ -157,7 +171,7 @@ module.exports = {
 		},
 
 		_toggle: function() {
-			if (this._container.className.indexOf('leaflet-control-geocoder-expanded') >= 0) {
+			if (L.DomUtil.hasClass(this._container, 'leaflet-control-geocoder-expanded')) {
 				this._collapse();
 			} else {
 				this._expand();
@@ -171,9 +185,10 @@ module.exports = {
 		},
 
 		_collapse: function () {
-			this._container.className = this._container.className.replace(' leaflet-control-geocoder-expanded', '');
+            L.DomUtil.removeClass(this._container, 'leaflet-control-geocoder-expanded');
 			L.DomUtil.addClass(this._alts, 'leaflet-control-geocoder-alternatives-minimized');
 			L.DomUtil.removeClass(this._errorElement, 'leaflet-control-geocoder-error');
+            this._input.blur(); // mobile: keyboard shouldn't stay expanded
 			this.fire('collapse');
 		},
 
