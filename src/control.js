@@ -68,30 +68,30 @@ module.exports = {
 						}
 					}, this);
 				}
-                else if (L.Browser.touch && this.options.expand === 'touch') {
-                    L.DomEvent.addListener(icon, 'touchstart', function(e) {
-                        this._toggle();
-                        e.preventDefault(); // mobile: clicking focuses the icon, so UI expands and immediately collapses
-                        e.stopPropagation();
-                    }, this);
-                }
-                else {
+				else if (L.Browser.touch && this.options.expand === 'touch') {
+					L.DomEvent.addListener(icon, 'touchstart', function(e) {
+						this._toggle();
+						e.preventDefault(); // mobile: clicking focuses the icon, so UI expands and immediately collapses
+						e.stopPropagation();
+					}, this);
+				}
+				else {
 					L.DomEvent.addListener(icon, 'mouseover', this._expand, this);
 					L.DomEvent.addListener(icon, 'mouseout', this._collapse, this);
 					this._map.on('movestart', this._collapse, this);
 				}
 			} else {
-                this._expand();
-                if (L.Browser.touch) {
-                    L.DomEvent.addListener(icon, 'touchstart', function(e) {
-                        this._geocode(e);
-                    }, this);
-                }
-                else {
-                    L.DomEvent.addListener(icon, 'click', function(e) {
-                        this._geocode(e);
-                    }, this);
-                }
+				this._expand();
+				if (L.Browser.touch) {
+					L.DomEvent.addListener(icon, 'touchstart', function(e) {
+						this._geocode(e);
+					}, this);
+				}
+				else {
+					L.DomEvent.addListener(icon, 'click', function(e) {
+						this._geocode(e);
+					}, this);
+				}
 			}
 
 			if (this.options.defaultMarkGeocode) {
@@ -166,7 +166,6 @@ module.exports = {
 			if (!this.options.collapsed) {
 				this._clearResults();
 			}
-
 			this.fire('markgeocode', {geocode: result});
 		},
 
@@ -185,10 +184,10 @@ module.exports = {
 		},
 
 		_collapse: function () {
-            L.DomUtil.removeClass(this._container, 'leaflet-control-geocoder-expanded');
+			L.DomUtil.removeClass(this._container, 'leaflet-control-geocoder-expanded');
 			L.DomUtil.addClass(this._alts, 'leaflet-control-geocoder-alternatives-minimized');
 			L.DomUtil.removeClass(this._errorElement, 'leaflet-control-geocoder-error');
-            this._input.blur(); // mobile: keyboard shouldn't stay expanded
+			this._input.blur(); // mobile: keyboard shouldn't stay expanded
 			this.fire('collapse');
 		},
 
@@ -201,21 +200,21 @@ module.exports = {
 		_createAlt: function(result, index) {
 			var li = L.DomUtil.create('li', ''),
 				a = L.DomUtil.create('a', '', li),
-			    icon = this.options.showResultIcons && result.icon ? L.DomUtil.create('img', '', a) : null,
-			    text = result.html ? undefined : document.createTextNode(result.name),
-			    mouseDownHandler = function mouseDownHandler(e) {
-			    	// In some browsers, a click will fire on the map if the control is
-			    	// collapsed directly after mousedown. To work around this, we
-			    	// wait until the click is completed, and _then_ collapse the
-			    	// control. Messy, but this is the workaround I could come up with
-			    	// for #142.
-			    	this._preventBlurCollapse = true;
+				icon = this.options.showResultIcons && result.icon ? L.DomUtil.create('img', '', a) : null,
+				text = result.html ? undefined : document.createTextNode(result.name),
+				mouseDownHandler = function mouseDownHandler(e) {
+					// In some browsers, a click will fire on the map if the control is
+					// collapsed directly after mousedown. To work around this, we
+					// wait until the click is completed, and _then_ collapse the
+					// control. Messy, but this is the workaround I could come up with
+					// for #142.
+					this._preventBlurCollapse = true;
 					L.DomEvent.stop(e);
 					this._geocodeResultSelected(result);
 					L.DomEvent.on(li, 'click', function() {
-			    		if (this.options.collapsed) {
-			    			this._collapse();
-			    		}
+						if (this.options.collapsed) {
+							this._collapse();
+						}
 					}, this);
 				};
 
