@@ -94,6 +94,7 @@ L.Control.Geocoder(options)
 | Option          |  Type            |  Default          | Description |
 | --------------- | ---------------- | ----------------- | ----------- |
 | collapsed       |  Boolean         |  true             | Collapse control unless hovered/clicked |
+| expand          |  String          |  "touch"          | How to expand a collapsed control: `touch` `click` `hover` |
 | position        |  String          |  "topright"       | Control [position](http://leafletjs.com/reference.html#control-positions) |
 | placeholder     |  String          |  "Search..."      | Placeholder text for text input
 | errorMessage    |  String          |  "Nothing found." | Message when no result found / geocoding error occurs |
