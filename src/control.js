@@ -6,7 +6,7 @@ module.exports = {
 		options: {
 			showResultIcons: false,
 			collapsed: true,
-			expand: 'click',
+			expand: 'touch', // options: touch, click, anythingelse
 			position: 'topright',
 			placeholder: 'Search...',
 			errorMessage: 'Nothing found.',
