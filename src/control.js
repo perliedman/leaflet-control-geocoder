@@ -15,7 +15,7 @@ module.exports = {
 			defaultMarkGeocode: true
 		},
 
-		includes: L.Mixin.Events,
+		includes: L.Evented.prototype || L.Mixin.Events,
 
 		initialize: function (options) {
 			L.Util.setOptions(this, options);
