@@ -23,7 +23,7 @@
     }
 
     for (var name in geocoders) {
-        btn = L.DomUtil.create('button', 'leaflet-bar', selector);
+        btn = L.DomUtil.create('button', '', selector);
         btn.innerHTML = name;
         (function(n) {
             L.DomEvent.addListener(btn, 'click', function() {
