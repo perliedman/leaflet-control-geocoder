@@ -21,7 +21,7 @@ The plugin supports many different data providers:
 * [What3Words](http://what3words.com/)
 * [Photon](http://photon.komoot.de/)
 * [Mapzen Search](https://mapzen.com/projects/search)
-* [HERE Geocoder API] (https://developer.here.com/rest-apis/documentation/geocoder/topics/overview.html)
+* [HERE Geocoder API](https://developer.here.com/rest-apis/documentation/geocoder/topics/overview.html)
 
 The plugin can easily be extended to support other providers. Current extensions:
 
