@@ -52,6 +52,9 @@ module.exports = {
 			L.DomEvent.disableClickPropagation(this._alts);
 
 			L.DomEvent.addListener(input, 'keydown', this._keydown, this);
+			if (this.options.geocoder.suggest) {
+				L.DomEvent.addListener(input, 'input', this._change, this);
+			}
 			L.DomEvent.addListener(input, 'blur', function() {
 				if (this.options.collapsed && !this._preventBlurCollapse) {
 					this._collapse();
@@ -282,17 +285,18 @@ module.exports = {
 				}
 				L.DomEvent.preventDefault(e);
 				break;
-			default:
-				var v = this._input.value;
-				if (this.options.geocoder.suggest && v !== this._lastGeocode) {
-					clearTimeout(this._suggestTimeout);
-					if (v.length >= this.options.suggestMinLength) {
-						this._suggestTimeout = setTimeout(L.bind(function() {
-							this._geocode(true);
-						}, this), this.options.suggestTimeout);
-					} else {
-						this._clearResults();
-					}
+			}
+		},
+		_change: function(e) {
+			var v = this._input.value;
+			if (v !== this._lastGeocode) {
+				clearTimeout(this._suggestTimeout);
+				if (v.length >= this.options.suggestMinLength) {
+					this._suggestTimeout = setTimeout(L.bind(function() {
+						this._geocode(true);
+					}, this), this.options.suggestTimeout);
+				} else {
+					this._clearResults();
 				}
 			}
 		}
