@@ -72,7 +72,7 @@ module.exports = {
 					}, this);
 				}
 				else if (L.Browser.touch && this.options.expand === 'touch') {
-					L.DomEvent.addListener(icon, 'touchstart', function(e) {
+					L.DomEvent.addListener(icon, 'touchstart mousedown', function(e) {
 						this._toggle();
 						e.preventDefault(); // mobile: clicking focuses the icon, so UI expands and immediately collapses
 						e.stopPropagation();
