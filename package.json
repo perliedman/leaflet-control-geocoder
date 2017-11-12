@@ -4,7 +4,7 @@
   "description": "Extendable geocoder with builtin support for Nominatim, Bing, Google, Mapbox, Photon, What3Words, MapQuest, Mapzen, HERE",
   "main": "dist/Control.Geocoder.js",
   "scripts": {
-    "prepublish": "sh ./scripts/build.sh",
+    "prepare": "sh ./scripts/build.sh",
     "publish": "sh ./scripts/publish.sh",
     "postpublish": "sh ./scripts/postpublish.sh"
   },
