@@ -267,12 +267,10 @@ module.exports = {
 			// Up
 			case 38:
 				select(-1);
-				L.DomEvent.preventDefault(e);
 				break;
 			// Up
 			case 40:
 				select(1);
-				L.DomEvent.preventDefault(e);
 				break;
 			// Enter
 			case 13:
@@ -283,7 +281,6 @@ module.exports = {
 				} else {
 					this._geocode();
 				}
-				L.DomEvent.preventDefault(e);
 				break;
 			}
 		},
