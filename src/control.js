@@ -236,7 +236,7 @@ module.exports = {
 			// Use mousedown and not click, since click will fire _after_ blur,
 			// causing the control to have collapsed and removed the items
 			// before the click can fire.
-			L.DomEvent.addListener(li, 'mousedown', mouseDownHandler, this);
+			L.DomEvent.addListener(li, 'mousedown touchstart', mouseDownHandler, this);
 
 			return li;
 		},
