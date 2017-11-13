@@ -2,7 +2,7 @@
     var map = L.map('map').setView([0, 0], 2),
         geocoders = {
             'Nominatim': L.Control.Geocoder.nominatim(),
-            'Bing': L.Control.Geocoder.bing('AoArA0sD6eBGZyt5PluxhuN7N7X1vloSEIhzaKVkBBGL37akEVbrr0wn17hoYAMy'),
+            'Bing': L.Control.Geocoder.bing('AlsFLEm5UIoF-8kfQdB-XlTCGU_pLLNliREprSZFOZfEr08UCqD0OCzhL5jWAwQn'),
             'Mapbox': L.Control.Geocoder.mapbox(LCG.apiToken),
             'Photon': L.Control.Geocoder.photon(),
         },
