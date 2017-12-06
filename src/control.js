@@ -166,9 +166,6 @@ module.exports = {
 		},
 
 		_geocodeResultSelected: function(result) {
-			if (!this.options.collapsed) {
-				this._clearResults();
-			}
 			this.fire('markgeocode', {geocode: result});
 		},
 
@@ -217,6 +214,8 @@ module.exports = {
 					L.DomEvent.on(li, 'click', function() {
 						if (this.options.collapsed) {
 							this._collapse();
+						} else {
+							this._clearResults();
 						}
 					}, this);
 				};
