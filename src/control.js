@@ -65,33 +65,33 @@ module.exports = {
 
 			if (this.options.collapsed) {
 				if (this.options.expand === 'click') {
-					L.DomEvent.addListener(icon, 'click', function(e) {
+					L.DomEvent.addListener(container, 'click', function(e) {
 						if (e.button === 0 && e.detail !== 2) {
 							this._toggle();
 						}
 					}, this);
 				}
 				else if (L.Browser.touch && this.options.expand === 'touch') {
-					L.DomEvent.addListener(icon, 'touchstart mousedown', function(e) {
+					L.DomEvent.addListener(container, 'touchstart mousedown', function(e) {
 						this._toggle();
 						e.preventDefault(); // mobile: clicking focuses the icon, so UI expands and immediately collapses
 						e.stopPropagation();
 					}, this);
 				}
 				else {
-					L.DomEvent.addListener(icon, 'mouseover', this._expand, this);
-					L.DomEvent.addListener(icon, 'mouseout', this._collapse, this);
+					L.DomEvent.addListener(container, 'mouseover', this._expand, this);
+					L.DomEvent.addListener(container, 'mouseout', this._collapse, this);
 					this._map.on('movestart', this._collapse, this);
 				}
 			} else {
 				this._expand();
 				if (L.Browser.touch) {
-					L.DomEvent.addListener(icon, 'touchstart', function(e) {
+					L.DomEvent.addListener(container, 'touchstart', function(e) {
 						this._geocode(e);
 					}, this);
 				}
 				else {
-					L.DomEvent.addListener(icon, 'click', function(e) {
+					L.DomEvent.addListener(container, 'click', function(e) {
 						this._geocode(e);
 					}, this);
 				}
