@@ -5,7 +5,7 @@
   "main": "dist/Control.Geocoder.js",
   "scripts": {
     "prepare": "npm run build",
-    "build": "rollup --output.format=iife --name=L.Control.Geocoder --globals=leaflet:L src/index.js --output.file=dist/Control.Geocoder.js",
+    "build": "rollup --output.format=iife --name=L.Control.Geocoder --globals=leaflet:L src/index.js --output.file=dist/Control.Geocoder.js && cpr Control.Geocoder.css dist/ --overwrite && cpr images/ dist/ --overwrite",
     "publish": "sh ./scripts/publish.sh",
     "postpublish": "sh ./scripts/postpublish.sh"
   },
@@ -37,6 +37,7 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "cpr": "^3.0.1",
     "rollup": "^0.53.2"
   }
 }
