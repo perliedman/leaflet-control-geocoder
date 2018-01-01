@@ -87,12 +87,12 @@ module.exports = {
 				this._expand();
 				if (L.Browser.touch) {
 					L.DomEvent.addListener(container, 'touchstart', function(e) {
-						this._geocode(e);
+						this._geocode();
 					}, this);
 				}
 				else {
 					L.DomEvent.addListener(container, 'click', function(e) {
-						this._geocode(e);
+						this._geocode();
 					}, this);
 				}
 			}
