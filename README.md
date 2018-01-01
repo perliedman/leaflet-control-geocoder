@@ -85,8 +85,12 @@ This is the geocoder control. It works like any other Leaflet control, and is ad
 
 ### Constructor
 
+This plugin supports the standard JavaScript constructor (to be invoked using `new`) as well as the [class factory methods](http://leafletjs.com/reference.html#class-class-factories) known from Leaflet:
+
 ```js
-L.Control.Geocoder(options)
+new L.Control.Geocoder(options)
+// or
+L.Control.geocoder(options)
 ```
 
 ### Options
@@ -117,7 +121,9 @@ Unless using your own Nominatim installation, please refer to the [Nominatim usa
 ### Constructor
 
 ```js
-L.Control.Geocoder.Nominatim(options)
+new L.Control.Geocoder.Nominatim(options)
+// or
+L.Control.Geocoder.nominatim(options)
 ```
 
 ## Options
@@ -137,8 +143,10 @@ Note that you need an API key to use this service.
 
 ### Constructor
 
-```
-L.Control.Geocoder.Bing(<String> key)
+```ts
+new L.Control.Geocoder.Bing(<String> key)
+// or
+L.Control.Geocoder.bing(<String> key)
 ```
 
 ## IGeocoder
