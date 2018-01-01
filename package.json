@@ -4,7 +4,8 @@
   "description": "Extendable geocoder with builtin support for Nominatim, Bing, Google, Mapbox, Photon, What3Words, MapQuest, Mapzen, HERE",
   "main": "dist/Control.Geocoder.js",
   "scripts": {
-    "prepare": "sh ./scripts/build.sh",
+    "prepare": "npm run build",
+    "build": "rollup --output.format=iife --name=L.Control.Geocoder --globals=leaflet:L src/index.js --output.file=dist/Control.Geocoder.js",
     "publish": "sh ./scripts/publish.sh",
     "postpublish": "sh ./scripts/postpublish.sh"
   },
@@ -36,9 +37,6 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "browserify": "^11.0.1",
-    "browserify-shim": "^3.8.10",
-    "derequire": "^2.0.3",
-    "es3ify": "^0.1.4"
+    "rollup": "^0.53.2"
   }
 }

@@ -1,5 +1,5 @@
-var L = require('leaflet'),
-	lastCallbackId = 0,
+import L from 'leaflet';
+var	lastCallbackId = 0,
 	htmlEscape = (function() {
 		// Adapted from handlebars.js
 		// https://github.com/wycats/handlebars.js/
@@ -37,7 +37,7 @@ var L = require('leaflet'),
 		};
 	})();
 
-module.exports = {
+export default {
 	jsonp: function(url, params, callback, context, jsonpParam) {
 		var callbackId = '_l_geocoder_' + (lastCallbackId++);
 		params[jsonpParam || 'callback'] = callbackId;

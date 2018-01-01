@@ -1,7 +1,7 @@
-var L = require('leaflet'),
-	Util = require('../util');
+import L from 'leaflet';
+import Util from '../util';
 
-module.exports = {
+export default {
 	class: L.Class.extend({
 		options: {
 			serviceUrl: 'https://api.tiles.mapbox.com/v4/geocode/mapbox.places-v1/',
