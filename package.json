@@ -5,7 +5,10 @@
   "main": "dist/Control.Geocoder.js",
   "scripts": {
     "prepare": "npm run build",
-    "build": "rollup --output.format=iife --name=L.Control.Geocoder --globals=leaflet:L src/index.js --output.file=dist/Control.Geocoder.js && cpr Control.Geocoder.css dist/ --overwrite && cpr images/ dist/ --overwrite",
+    "build": "npm run build:js && npm run build:css && npm run build:img",
+    "build:js": "rollup --output.format=iife --name=L.Control.Geocoder --globals=leaflet:L src/index.js --output.file=dist/Control.Geocoder.js",
+    "build:css": "cpr Control.Geocoder.css dist/ --overwrite",
+    "build:img": "cpr images/ dist/ --overwrite",
     "publish": "sh ./scripts/publish.sh",
     "postpublish": "sh ./scripts/postpublish.sh"
   },
@@ -31,9 +34,6 @@
   "license": "BSD-2-Clause",
   "bugs": {
     "url": "https://github.com/perliedman/leaflet-control-geocoder/issues"
-  },
-  "browserify-shim": {
-    "leaflet": "global:L"
   },
   "dependencies": {},
   "devDependencies": {
