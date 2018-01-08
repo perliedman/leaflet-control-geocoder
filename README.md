@@ -95,21 +95,21 @@ L.Control.geocoder(options)
 
 ### Options
 
-| Option          |  Type            |  Default          | Description |
-| --------------- | ---------------- | ----------------- | ----------- |
-| collapsed       |  Boolean         |  true             | Collapse control unless hovered/clicked |
-| expand          |  String          |  "touch"          | How to expand a collapsed control: `touch` `click` `hover` |
-| position        |  String          |  "topright"       | Control [position](http://leafletjs.com/reference.html#control-positions) |
-| placeholder     |  String          |  "Search..."      | Placeholder text for text input
-| errorMessage    |  String          |  "Nothing found." | Message when no result found / geocoding error occurs |
-| geocoder        |  IGeocoder       |  new L.Control.Geocoder.Nominatim() | Object to perform the actual geocoding queries |
-| showResultIcons |  Boolean         |  false            | Show icons for geocoding results (if available); supported by Nominatim |
+| Option            |  Type            |  Default            | Description |
+| ----------------- | ---------------- | ------------------- | ----------- |
+| `collapsed`       |  Boolean         |  `true`             | Collapse control unless hovered/clicked |
+| `expand`          |  String          |  `"touch"`          | How to expand a collapsed control: `touch` or `click` or `hover` |
+| `position`        |  String          |  `"topright"`       | Control [position](http://leafletjs.com/reference.html#control-positions) |
+| `placeholder`     |  String          |  `"Search..."`      | Placeholder text for text input
+| `errorMessage`    |  String          |  `"Nothing found."` | Message when no result found / geocoding error occurs |
+| `geocoder`        |  IGeocoder       |  `new L.Control.Geocoder.Nominatim()` | Object to perform the actual geocoding queries |
+| `showResultIcons` |  Boolean         |  `false`            | Show icons for geocoding results (if available); supported by Nominatim |
 
 ### Methods
 
 | Method                                |  Returns            | Description       |
 | ------------------------------------- | ------------------- | ----------------- |
-| markGeocode(<GeocodingResult> result) |  this               | Marks a geocoding result on the map |
+| `markGeocode(<GeocodingResult> result)` |  `this`               | Marks a geocoding result on the map |
 
 ## L.Control.Geocoder.Nominatim
 
@@ -130,10 +130,10 @@ L.Control.Geocoder.nominatim(options)
 
 | Option          |  Type            |  Default          | Description |
 | --------------- | ---------------- | ----------------- | ----------- |
-| serviceUrl       | String          |  "http://nominatim.openstreetmap.org/" | URL of the service |
-| geocodingQueryParams       | Object          |  {} | Additional URL parameters (strings) that will be added to geocoding requests; can be used to restrict results to a specific country for example, by providing the [`countrycodes`](http://wiki.openstreetmap.org/wiki/Nominatim#Parameters) parameter to Nominatim |
-| reverseQueryParams       | Object          |  {} | Additional URL parameters (strings) that will be added to reverse geocoding requests |
-| htmlTemplate     | function        | special           | A function that takes an GeocodingResult as argument and returns an HTML formatted string that represents the result. Default function breaks up address in parts from most to least specific, in attempt to increase readability compared to Nominatim's naming
+| `serviceUrl`       | String          |  `"https://nominatim.openstreetmap.org/"` | URL of the service |
+| `geocodingQueryParams`       | Object          |  `{}` | Additional URL parameters (strings) that will be added to geocoding requests; can be used to restrict results to a specific country for example, by providing the [`countrycodes`](http://wiki.openstreetmap.org/wiki/Nominatim#Parameters) parameter to Nominatim |
+| `reverseQueryParams`       | Object          |  `{}` | Additional URL parameters (strings) that will be added to reverse geocoding requests |
+| `htmlTemplate`     | function        | special           | A function that takes an GeocodingResult as argument and returns an HTML formatted string that represents the result. Default function breaks up address in parts from most to least specific, in attempt to increase readability compared to Nominatim's naming
 
 ## L.Control.Geocoder.Bing
 
@@ -157,8 +157,8 @@ An interface implemented to respond to geocoding queries.
 
 | Method                                |  Returns            | Description       |
 | ------------------------------------- | ------------------- | ----------------- |
-| geocode(<String> query, callback, context) | GeocodingResult[] | Performs a geocoding query and returns the results to the callback in the provided context |
-| reverse(<L.LatLng> location, <Number> scale, callback, context) | GeocodingResult[] | Performs a reverse geocoding query and returns the results to the callback in the provided context |
+| `geocode(<String> query, callback, context)` | `GeocodingResult[]` | Performs a geocoding query and returns the results to the callback in the provided context |
+| `reverse(<L.LatLng> location, <Number> scale, callback, context)` | `GeocodingResult[]` | Performs a reverse geocoding query and returns the results to the callback in the provided context |
 
 ## GeocodingResult
 
@@ -166,10 +166,10 @@ An object that represents a result from a geocoding query.
 
 ### Properties
 
-| Property   | Type             | Description                           |
-| ---------- | ---------------- | ------------------------------------- |
-| name       | String           | Name of found location                |
-| bbox       | L.LatLngBounds   | The bounds of the location            |
-| center     | L.LatLng         | The center coordinate of the location |
-| icon       | String           | URL for icon representing result; optional |
-| html       | String           | (optional) HTML formatted representation of the name |
+| Property     | Type             | Description                           |
+| ------------ | ---------------- | ------------------------------------- |
+| `name`       | String           | Name of found location                |
+| `bbox`       | L.LatLngBounds   | The bounds of the location            |
+| `center`     | L.LatLng         | The center coordinate of the location |
+| `icon`       | String           | URL for icon representing result; optional |
+| `html`       | String           | (optional) HTML formatted representation of the name |
