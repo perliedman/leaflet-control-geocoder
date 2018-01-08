@@ -28,12 +28,12 @@ export default {
 		},
 
 		geocode: function(query, cb, context) {
-			Util.jsonp(this.options.serviceUrl + '/address', {
+			Util.getJSON(this.options.serviceUrl + '/address', {
 				key: this._key,
 				location: query,
 				limit: 5,
 				outFormat: 'json'
-			}, function(data) {
+			}, L.bind(function(data) {
 				var results = [],
 					loc,
 					latLng;
@@ -50,15 +50,15 @@ export default {
 				}
 
 				cb.call(context, results);
-			}, this);
+			}, this));
 		},
 
 		reverse: function(location, scale, cb, context) {
-			Util.jsonp(this.options.serviceUrl + '/reverse', {
+			Util.getJSON(this.options.serviceUrl + '/reverse', {
 				key: this._key,
 				location: location.lat + ',' + location.lng,
 				outputFormat: 'json'
-			}, function(data) {
+			}, L.bind(function(data) {
 				var results = [],
 					loc,
 					latLng;
@@ -75,7 +75,7 @@ export default {
 				}
 
 				cb.call(context, results);
-			}, this);
+			}, this));
 		}
 	}),
 
