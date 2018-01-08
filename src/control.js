@@ -1,7 +1,7 @@
-var L = require('leaflet'),
-	Nominatim = require('./geocoders/nominatim').class;
+import L from 'leaflet';
+import Nominatim from './geocoders/nominatim';
 
-module.exports = {
+export default {
 	class: L.Control.extend({
 		options: {
 			showResultIcons: false,
@@ -20,7 +20,7 @@ module.exports = {
 		initialize: function (options) {
 			L.Util.setOptions(this, options);
 			if (!this.options.geocoder) {
-				this.options.geocoder = new Nominatim();
+				this.options.geocoder = new Nominatim.class();
 			}
 
 			this._requestCount = 0;

@@ -1,7 +1,7 @@
-var L = require('leaflet'),
-	Util = require('../util');
+import L from 'leaflet';
+import Util from '../util';
 
-module.exports = {
+export default {
 	class: L.Class.extend({
 		options: {
 			serviceUrl: 'https://search.mapzen.com/v1',

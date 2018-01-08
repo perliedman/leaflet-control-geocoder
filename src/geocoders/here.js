@@ -1,7 +1,7 @@
-var L = require('leaflet'),
-    Util = require('../util');
+import L from 'leaflet';
+import Util from '../util';
 
-module.exports = {
+export default {
     class: L.Class.extend({
         options: {
             geocodeUrl: 'http://geocoder.api.here.com/6.2/geocode.json',

@@ -1,17 +1,17 @@
-var L = require('leaflet'),
-	Control = require('./control'),
-	Nominatim = require('./geocoders/nominatim'),
-	Bing = require('./geocoders/bing'),
-	MapQuest = require('./geocoders/mapquest'),
-	Mapbox = require('./geocoders/mapbox'),
-	What3Words = require('./geocoders/what3words'),
-	Google = require('./geocoders/google'),
-	Photon = require('./geocoders/photon'),
-	Mapzen = require('./geocoders/mapzen'),
-	ArcGis = require('./geocoders/arcgis'),
-	HERE = require('./geocoders/here');
+import L from 'leaflet';
+import Control from './control';
+import Nominatim from './geocoders/nominatim';
+import Bing from './geocoders/bing';
+import MapQuest from './geocoders/mapquest';
+import Mapbox from './geocoders/mapbox';
+import What3Words from './geocoders/what3words';
+import Google from './geocoders/google';
+import Photon from './geocoders/photon';
+import Mapzen from './geocoders/mapzen';
+import ArcGis from './geocoders/arcgis';
+import HERE from './geocoders/here';
 
-module.exports = L.Util.extend(Control.class, {
+var Geocoder = L.Util.extend(Control.class, {
 	Nominatim: Nominatim.class,
 	nominatim: Nominatim.factory,
 	Bing: Bing.class,
@@ -34,7 +34,9 @@ module.exports = L.Util.extend(Control.class, {
 	here: HERE.factory
 });
 
+export default Geocoder;
+
 L.Util.extend(L.Control, {
-	Geocoder: module.exports,
+	Geocoder: Geocoder,
 	geocoder: Control.factory
 });
