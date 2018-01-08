@@ -1,5 +1,5 @@
 import L from 'leaflet';
-import Util from '../util';
+import {getJSON} from '../util';
 
 export default {
     class: L.Class.extend({
@@ -42,7 +42,7 @@ export default {
         },
 
         getJSON: function(url, params, cb, context) {
-            Util.getJSON(url, params, function(data) {
+            getJSON(url, params, function(data) {
                 var results = [],
                     loc,
                     latLng,

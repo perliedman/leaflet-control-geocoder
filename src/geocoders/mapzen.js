@@ -1,5 +1,5 @@
 import L from 'leaflet';
-import Util from '../util';
+import {getJSON} from '../util';
 
 export default {
 	class: L.Class.extend({
@@ -17,7 +17,7 @@ export default {
 
 		geocode: function(query, cb, context) {
 			var _this = this;
-			Util.getJSON(this.options.serviceUrl + "/search", L.extend({
+			getJSON(this.options.serviceUrl + "/search", L.extend({
 				'api_key': this._apiKey,
 				'text': query
 			}, this.options.geocodingQueryParams), function(data) {
@@ -27,7 +27,7 @@ export default {
 
 		suggest: function(query, cb, context) {
 			var _this = this;
-			Util.getJSON(this.options.serviceUrl + "/autocomplete", L.extend({
+			getJSON(this.options.serviceUrl + "/autocomplete", L.extend({
 				'api_key': this._apiKey,
 				'text': query
 			}, this.options.geocodingQueryParams), L.bind(function(data) {
@@ -40,7 +40,7 @@ export default {
 
 		reverse: function(location, scale, cb, context) {
 			var _this = this;
-			Util.getJSON(this.options.serviceUrl + "/reverse", L.extend({
+			getJSON(this.options.serviceUrl + "/reverse", L.extend({
 				'api_key': this._apiKey,
 				'point.lat': location.lat,
 				'point.lon': location.lng

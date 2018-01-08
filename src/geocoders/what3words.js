@@ -1,5 +1,5 @@
 import L from 'leaflet';
-import Util from '../util';
+import {getJSON} from '../util';
 
 export default {
 	class: L.Class.extend({
@@ -13,7 +13,7 @@ export default {
 
 		geocode: function(query, cb, context) {
 			//get three words and make a dot based string
-			Util.getJSON(this.options.serviceUrl +'forward', {
+			getJSON(this.options.serviceUrl +'forward', {
 				key: this._accessToken,
 				addr: query.split(/\s+/).join('.'),
 			}, function(data) {
@@ -37,7 +37,7 @@ export default {
 		},
 
 		reverse: function(location, scale, cb, context) {
-			Util.getJSON(this.options.serviceUrl +'reverse', {
+			getJSON(this.options.serviceUrl +'reverse', {
 				key: this._accessToken,
 				coords: [location.lat,location.lng].join(',')
 			}, function(data) {

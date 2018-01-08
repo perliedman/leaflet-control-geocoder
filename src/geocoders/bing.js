@@ -1,5 +1,5 @@
 import L from 'leaflet';
-import Util from '../util';
+import {jsonp} from '../util';
 
 export default {
 	class: L.Class.extend({
@@ -8,7 +8,7 @@ export default {
 		},
 
 		geocode : function (query, cb, context) {
-			Util.jsonp('https://dev.virtualearth.net/REST/v1/Locations', {
+			jsonp('https://dev.virtualearth.net/REST/v1/Locations', {
 				query: query,
 				key : this.key
 			}, function(data) {
@@ -29,7 +29,7 @@ export default {
 		},
 
 		reverse: function(location, scale, cb, context) {
-			Util.jsonp('//dev.virtualearth.net/REST/v1/Locations/' + location.lat + ',' + location.lng, {
+			jsonp('//dev.virtualearth.net/REST/v1/Locations/' + location.lat + ',' + location.lng, {
 				key : this.key
 			}, function(data) {
 				var results = [];

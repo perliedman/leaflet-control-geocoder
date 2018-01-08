@@ -1,5 +1,5 @@
 import L from 'leaflet';
-import Util from '../util';
+import {getJSON} from '../util';
 
 export default {
 	class: L.Class.extend({
@@ -25,7 +25,7 @@ export default {
 				params.token = this._key;
 			}
 
-			Util.getJSON(this.options.service_url + '/findAddressCandidates', params, function(data) {
+			getJSON(this.options.service_url + '/findAddressCandidates', params, function(data) {
 				var results = [],
 					loc,
 					latLng,
@@ -59,7 +59,7 @@ export default {
 				f: 'json'
 			};
 
-			Util.getJSON(this.options.service_url + '/reverseGeocode', params, function(data) {
+			getJSON(this.options.service_url + '/reverseGeocode', params, function(data) {
 				var result = [],
 					loc;
 

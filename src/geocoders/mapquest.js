@@ -1,5 +1,5 @@
 import L from 'leaflet';
-import Util from '../util';
+import {getJSON} from '../util';
 
 export default {
 	class: L.Class.extend({
@@ -28,7 +28,7 @@ export default {
 		},
 
 		geocode: function(query, cb, context) {
-			Util.getJSON(this.options.serviceUrl + '/address', {
+			getJSON(this.options.serviceUrl + '/address', {
 				key: this._key,
 				location: query,
 				limit: 5,
@@ -54,7 +54,7 @@ export default {
 		},
 
 		reverse: function(location, scale, cb, context) {
-			Util.getJSON(this.options.serviceUrl + '/reverse', {
+			getJSON(this.options.serviceUrl + '/reverse', {
 				key: this._key,
 				location: location.lat + ',' + location.lng,
 				outputFormat: 'json'

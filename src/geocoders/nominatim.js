@@ -1,5 +1,5 @@
 import L from 'leaflet';
-import Util from '../util';
+import {template, getJSON} from '../util';
 
 export default {
 	class: L.Class.extend({
@@ -24,7 +24,7 @@ export default {
 						'">{state} {country}</span>');
 				}
 
-				return Util.template(parts.join('<br/>'), a, true);
+				return template(parts.join('<br/>'), a, true);
 			}
 		},
 
@@ -33,7 +33,7 @@ export default {
 		},
 
 		geocode: function(query, cb, context) {
-			Util.getJSON(this.options.serviceUrl + 'search', L.extend({
+			getJSON(this.options.serviceUrl + 'search', L.extend({
 				q: query,
 				limit: 5,
 				format: 'json',
@@ -60,7 +60,7 @@ export default {
 		},
 
 		reverse: function(location, scale, cb, context) {
-			Util.getJSON(this.options.serviceUrl + 'reverse', L.extend({
+			getJSON(this.options.serviceUrl + 'reverse', L.extend({
 				lat: location.lat,
 				lon: location.lng,
 				zoom: Math.round(Math.log(scale / 256) / Math.log(2)),

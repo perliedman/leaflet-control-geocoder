@@ -1,5 +1,5 @@
 import L from 'leaflet';
-import Util from '../util';
+import {getJSON} from '../util';
 
 export default {
 	class: L.Class.extend({
@@ -27,7 +27,7 @@ export default {
 				q: query,
 			}, this.options.geocodingQueryParams);
 
-			Util.getJSON(this.options.serviceUrl, params, L.bind(function(data) {
+			getJSON(this.options.serviceUrl, params, L.bind(function(data) {
 				cb.call(context, this._decodeFeatures(data));
 			}, this));
 		},
@@ -42,7 +42,7 @@ export default {
 				lon: latLng.lng
 			}, this.options.geocodingQueryParams);
 
-			Util.getJSON(this.options.reverseUrl, params, L.bind(function(data) {
+			getJSON(this.options.reverseUrl, params, L.bind(function(data) {
 				cb.call(context, this._decodeFeatures(data));
 			}, this));
 		},

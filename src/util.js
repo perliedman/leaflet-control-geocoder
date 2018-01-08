@@ -1,6 +1,6 @@
 import L from 'leaflet';
-var	lastCallbackId = 0,
-	htmlEscape = (function() {
+var lastCallbackId = 0;
+
 		// Adapted from handlebars.js
 		// https://github.com/wycats/handlebars.js/
 		var badChars = /[&<>"'`]/g;
@@ -18,7 +18,7 @@ var	lastCallbackId = 0,
 		  return escape[chr];
 		}
 
-		return function(string) {
+		export function htmlEscape(string) {
 			if (string == null) {
 				return '';
 			} else if (!string) {
@@ -34,11 +34,9 @@ var	lastCallbackId = 0,
 				return string;
 			}
 			return string.replace(badChars, escapeChar);
-		};
-	})();
+		}
 
-export default {
-	jsonp: function(url, params, callback, context, jsonpParam) {
+	export function jsonp(url, params, callback, context, jsonpParam) {
 		var callbackId = '_l_geocoder_' + (lastCallbackId++);
 		params[jsonpParam || 'callback'] = callbackId;
 		window[callbackId] = L.Util.bind(callback, context);
@@ -47,9 +45,9 @@ export default {
 		script.src = url + L.Util.getParamString(params);
 		script.id = callbackId;
 		document.getElementsByTagName('head')[0].appendChild(script);
-	},
+	}
 
-	getJSON: function(url, params, callback) {
+	export function getJSON(url, params, callback) {
 		var xmlHttp = new XMLHttpRequest();
 		xmlHttp.onreadystatechange = function () {
 			if (xmlHttp.readyState !== 4){
@@ -64,9 +62,9 @@ export default {
 		xmlHttp.open('GET', url + L.Util.getParamString(params), true);
 		xmlHttp.setRequestHeader('Accept', 'application/json');
 		xmlHttp.send(null);
-	},
+	}
 
-	template: function (str, data) {
+	export function template(str, data) {
 		return str.replace(/\{ *([\w_]+) *\}/g, function (str, key) {
 			var value = data[key];
 			if (value === undefined) {
@@ -76,7 +74,4 @@ export default {
 			}
 			return htmlEscape(value);
 		});
-	},
-
-	htmlEscape: htmlEscape
-};
+	}

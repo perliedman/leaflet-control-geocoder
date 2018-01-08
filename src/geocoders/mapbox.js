@@ -1,5 +1,5 @@
 import L from 'leaflet';
-import Util from '../util';
+import {getJSON} from '../util';
 
 export default {
 	class: L.Class.extend({
@@ -23,7 +23,7 @@ export default {
 			{
 				params.proximity = params.proximity.lng + ',' + params.proximity.lat;
 			}
-			Util.getJSON(this.options.serviceUrl + encodeURIComponent(query) + '.json', params, function(data) {
+			getJSON(this.options.serviceUrl + encodeURIComponent(query) + '.json', params, function(data) {
 				var results = [],
 				loc,
 				latLng,
@@ -57,7 +57,7 @@ export default {
 		},
 
 		reverse: function(location, scale, cb, context) {
-			Util.getJSON(this.options.serviceUrl + encodeURIComponent(location.lng) + ',' + encodeURIComponent(location.lat) + '.json', this.options.reverseQueryParams, function(data) {
+			getJSON(this.options.serviceUrl + encodeURIComponent(location.lng) + ',' + encodeURIComponent(location.lat) + '.json', this.options.reverseQueryParams, function(data) {
 				var results = [],
 				loc,
 				latLng,
