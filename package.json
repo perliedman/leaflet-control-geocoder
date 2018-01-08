@@ -8,7 +8,7 @@
     "build": "npm run build:js && npm run build:css && npm run build:img",
     "build:js": "rollup --output.format=iife --name=L.Control.Geocoder --globals=leaflet:L src/index.js --output.file=dist/Control.Geocoder.js --sourcemap",
     "build:css": "cpr Control.Geocoder.css dist/ --overwrite",
-    "build:img": "cpr images/ dist/ --overwrite",
+    "build:img": "cpr images/ dist/images/ --overwrite",
     "publish": "sh ./scripts/publish.sh",
     "postpublish": "sh ./scripts/postpublish.sh"
   },
