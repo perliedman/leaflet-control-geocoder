@@ -33,13 +33,13 @@ export default {
 		},
 
 		geocode: function(query, cb, context) {
-			Util.jsonp(this.options.serviceUrl + 'search', L.extend({
+			Util.getJSON(this.options.serviceUrl + 'search', L.extend({
 				q: query,
 				limit: 5,
 				format: 'json',
 				addressdetails: 1
 			}, this.options.geocodingQueryParams),
-			function(data) {
+			L.bind(function(data) {
 				var results = [];
 				for (var i = data.length - 1; i >= 0; i--) {
 					var bbox = data[i].boundingbox;
@@ -56,17 +56,17 @@ export default {
 					};
 				}
 				cb.call(context, results);
-			}, this, 'json_callback');
+			}, this));
 		},
 
 		reverse: function(location, scale, cb, context) {
-			Util.jsonp(this.options.serviceUrl + 'reverse', L.extend({
+			Util.getJSON(this.options.serviceUrl + 'reverse', L.extend({
 				lat: location.lat,
 				lon: location.lng,
 				zoom: Math.round(Math.log(scale / 256) / Math.log(2)),
 				addressdetails: 1,
 				format: 'json'
-			}, this.options.reverseQueryParams), function(data) {
+			}, this.options.reverseQueryParams), L.bind(function(data) {
 				var result = [],
 				    loc;
 
@@ -84,7 +84,7 @@ export default {
 				}
 
 				cb.call(context, result);
-			}, this, 'json_callback');
+			}, this));
 		}
 	}),
 
