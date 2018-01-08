@@ -79,8 +79,8 @@ export default {
 					}, this);
 				}
 				else {
-					L.DomEvent.addListener(container, 'mouseover', this._expand, this);
-					L.DomEvent.addListener(container, 'mouseout', this._collapse, this);
+					L.DomEvent.addListener(container, 'mouseenter', this._expand, this);
+					L.DomEvent.addListener(container, 'mouseleave', this._collapse, this);
 					this._map.on('movestart', this._collapse, this);
 				}
 			} else {
