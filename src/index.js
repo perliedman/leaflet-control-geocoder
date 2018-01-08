@@ -12,31 +12,31 @@ import ArcGis from './geocoders/arcgis';
 import HERE from './geocoders/here';
 
 var Geocoder = L.Util.extend(Control.class, {
-	Nominatim: Nominatim.class,
-	nominatim: Nominatim.factory,
-	Bing: Bing.class,
-	bing: Bing.factory,
-	MapQuest: MapQuest.class,
-	mapQuest: MapQuest.factory,
-	Mapbox: Mapbox.class,
-	mapbox: Mapbox.factory,
-	What3Words: What3Words.class,
-	what3words: What3Words.factory,
-	Google: Google.class,
-	google: Google.factory,
-	Photon: Photon.class,
-	photon: Photon.factory,
-	Mapzen: Mapzen.class,
-	mapzen: Mapzen.factory,
-	ArcGis: ArcGis.class,
-	arcgis: ArcGis.factory,
-	HERE: HERE.class,
-	here: HERE.factory
+  Nominatim: Nominatim.class,
+  nominatim: Nominatim.factory,
+  Bing: Bing.class,
+  bing: Bing.factory,
+  MapQuest: MapQuest.class,
+  mapQuest: MapQuest.factory,
+  Mapbox: Mapbox.class,
+  mapbox: Mapbox.factory,
+  What3Words: What3Words.class,
+  what3words: What3Words.factory,
+  Google: Google.class,
+  google: Google.factory,
+  Photon: Photon.class,
+  photon: Photon.factory,
+  Mapzen: Mapzen.class,
+  mapzen: Mapzen.factory,
+  ArcGis: ArcGis.class,
+  arcgis: ArcGis.factory,
+  HERE: HERE.class,
+  here: HERE.factory
 });
 
 export default Geocoder;
 
 L.Util.extend(L.Control, {
-	Geocoder: Geocoder,
-	geocoder: Control.factory
+  Geocoder: Geocoder,
+  geocoder: Control.factory
 });
