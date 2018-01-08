@@ -31,12 +31,11 @@ See the [Leaflet Control Geocoder Demo](http://perliedman.github.com/leaflet-con
 
 # Usage
 
-[Download latest release](https://github.com/perliedman/leaflet-control-geocoder/releases). Load the CSS and Javascript, located in
-the `dist` folder:
+[Download latest release](https://github.com/perliedman/leaflet-control-geocoder/releases), or obtain the latest release via [unpkg.com](https://unpkg.com/):
 
 ```HTML
-<link rel="stylesheet" href="Control.Geocoder.css" />
-<script src="Control.Geocoder.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 ```
 
 Add the control to a map instance:
