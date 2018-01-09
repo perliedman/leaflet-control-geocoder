@@ -1,0 +1,15 @@
+extends:
+  - eslint:recommended
+
+plugins:
+  - prettier
+
+env:
+  browser: true
+  es6: true
+
+parserOptions:
+  sourceType: module
+
+rules:
+  prettier/prettier: warn

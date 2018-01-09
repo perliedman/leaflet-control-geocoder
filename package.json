@@ -9,6 +9,10 @@
     "build:js": "rollup --output.format=iife --name=L.Control.Geocoder --globals=leaflet:L src/index.js --output.file=dist/Control.Geocoder.js --sourcemap",
     "build:css": "cpr Control.Geocoder.css dist/ --overwrite",
     "build:img": "cpr images/ dist/images/ --overwrite",
+    "test": "npm run lint",
+    "lint": "npm run lint:js && npm run lint:css",
+    "lint:js": "eslint 'src/**'",
+    "lint:css": "prettier --list-different '*.css'",
     "publish": "sh ./scripts/publish.sh",
     "postpublish": "sh ./scripts/postpublish.sh"
   },
@@ -38,6 +42,9 @@
   "dependencies": {},
   "devDependencies": {
     "cpr": "^3.0.1",
+    "eslint": "^4.15.0",
+    "eslint-plugin-prettier": "^2.4.0",
+    "prettier": "^1.9.2",
     "rollup": "^0.53.2"
   }
 }
