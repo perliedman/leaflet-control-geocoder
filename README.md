@@ -16,7 +16,7 @@ The plugin supports many different data providers:
 * [OSM](https://www.openstreetmap.org/)/[Nominatim](https://wiki.openstreetmap.org/wiki/Nominatim)
 * [Bing Locations API](http://msdn.microsoft.com/en-us/library/ff701715.aspx)
 * [Google Geocoding API](https://developers.google.com/maps/documentation/geocoding/)
-* [Mapbox Geocoding](https://www.mapbox.com/developers/api/geocoding/)
+* [Mapbox Geocoding](https://www.mapbox.com/api-documentation/#geocoding)
 * [MapQuest Geocoding API](http://developer.mapquest.com/web/products/dev-services/geocoding-ws)
 * [What3Words](http://what3words.com/)
 * [Photon](http://photon.komoot.de/)

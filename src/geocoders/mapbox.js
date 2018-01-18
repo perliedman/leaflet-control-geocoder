@@ -4,7 +4,7 @@ import { getJSON } from '../util';
 export default {
   class: L.Class.extend({
     options: {
-      serviceUrl: 'https://api.tiles.mapbox.com/v4/geocode/mapbox.places-v1/',
+      serviceUrl: 'https://api.mapbox.com/geocoding/v5/mapbox.places/',
       geocodingQueryParams: {},
       reverseQueryParams: {}
     },
