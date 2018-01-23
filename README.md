@@ -148,6 +148,25 @@ new L.Control.Geocoder.Bing(<String> key)
 L.Control.Geocoder.bing(<String> key)
 ```
 
+## L.Control.Geocoder.HERE
+
+Uses [Here Geocoder API](https://developer.here.com/documentation/geocoder/topics/introduction.html) to respond to geocoding queries. Implements ```IGeocoder```.
+
+Note that you need an API key to use this service.
+
+### Constructor
+
+```ts
+new L.Control.Geocoder.HERE(<String> app_id, <String> app_code, options)
+// or
+L.Control.Geocoder.HERE(<String> app_id, <String> app_code, options)
+```
+## Options
+
+| Option          |  Type            |  Default          | Description |
+| --------------- | ---------------- | ----------------- | ----------- |
+| `reverseQueryParams`       | Object          |  `{ radius: 50 }` | Additional URL parameters (strings) that will be added to reverse geocoding requests. For more information see [Reverse Geocode Resource](https://developer.here.com/documentation/geocoder/topics/resource-reverse-geocode.html) |
+
 ## IGeocoder
 
 An interface implemented to respond to geocoding queries.

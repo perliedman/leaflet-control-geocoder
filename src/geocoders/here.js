@@ -29,17 +29,28 @@ export default {
     },
 
     reverse: function(location, scale, cb, context) {
-      var params = {
-        prox: encodeURIComponent(location.lat) + ',' + encodeURIComponent(location.lng),
-        mode: 'retrieveAddresses',
-        app_id: this.options.app_id,
-        app_code: this.options.app_code,
-        gen: 9,
-        jsonattributes: 1
-      };
-      params = L.Util.extend(params, this.options.reverseQueryParams);
-      this.getJSON(this.options.reverseGeocodeUrl, params, cb, context);
-    },
+        var radius = this.options.reverseQueryParams.radius || 50;
+        var prox = encodeURIComponent(location.lat) 
+          + ',' + encodeURIComponent(location.lng)
+          + ',' + radius;
+  
+        var params = {
+          prox: prox,
+          mode: 'retrieveAddresses',
+          app_id: this.options.app_id,
+          app_code: this.options.app_code,
+          gen: 9,
+          jsonattributes: 1
+        };
+        params = L.Util.extend(params, this.options.reverseQueryParams);
+  
+        // ommit "radius" in request
+        if (params.hasOwnProperty('radius')) {
+            delete params.radius;
+        }
+  
+        this.getJSON(this.options.reverseGeocodeUrl, params, cb, context);
+      },
 
     getJSON: function(url, params, cb, context) {
       getJSON(url, params, function(data) {
