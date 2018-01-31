@@ -9,11 +9,11 @@ While I can't force anyone to do anything, if you happen to disagree with this, 
 Leaflet Control Geocoder [![NPM version](https://img.shields.io/npm/v/leaflet-control-geocoder.svg)](https://www.npmjs.com/package/leaflet-control-geocoder) ![Leaflet 1.0.0 compatible!](https://img.shields.io/badge/Leaflet%201.0.0-%E2%9C%93-1EB300.svg?style=flat)
 =============================
 
-A simple geocoder for [Leaflet](http://leafletjs.com/) that by default uses [OSM](http://www.openstreetmap.org/)/[Nominatim](http://wiki.openstreetmap.org/wiki/Nominatim).
+A simple geocoder for [Leaflet](http://leafletjs.com/) that by default uses [OSM](https://www.openstreetmap.org/)/[Nominatim](https://wiki.openstreetmap.org/wiki/Nominatim).
 
 The plugin supports many different data providers:
 
-* [OSM](http://www.openstreetmap.org/)/[Nominatim](http://wiki.openstreetmap.org/wiki/Nominatim)
+* [OSM](https://www.openstreetmap.org/)/[Nominatim](https://wiki.openstreetmap.org/wiki/Nominatim)
 * [Bing Locations API](http://msdn.microsoft.com/en-us/library/ff701715.aspx)
 * [Google Geocoding API](https://developers.google.com/maps/documentation/geocoding/)
 * [Mapbox Geocoding](https://www.mapbox.com/developers/api/geocoding/)
@@ -112,10 +112,10 @@ L.Control.geocoder(options)
 
 ## L.Control.Geocoder.Nominatim
 
-Uses [Nominatim](http://wiki.openstreetmap.org/wiki/Nominatim) to respond to geocoding queries. This is the default
+Uses [Nominatim](https://wiki.openstreetmap.org/wiki/Nominatim) to respond to geocoding queries. This is the default
 geocoding service used by the control, unless otherwise specified in the options. Implements ```IGeocoder```.
 
-Unless using your own Nominatim installation, please refer to the [Nominatim usage policy](http://wiki.openstreetmap.org/wiki/Nominatim_usage_policy).
+Unless using your own Nominatim installation, please refer to the [Nominatim usage policy](https://operations.osmfoundation.org/policies/nominatim/).
 
 ### Constructor
 
@@ -130,7 +130,7 @@ L.Control.Geocoder.nominatim(options)
 | Option          |  Type            |  Default          | Description |
 | --------------- | ---------------- | ----------------- | ----------- |
 | `serviceUrl`       | String          |  `"https://nominatim.openstreetmap.org/"` | URL of the service |
-| `geocodingQueryParams`       | Object          |  `{}` | Additional URL parameters (strings) that will be added to geocoding requests; can be used to restrict results to a specific country for example, by providing the [`countrycodes`](http://wiki.openstreetmap.org/wiki/Nominatim#Parameters) parameter to Nominatim |
+| `geocodingQueryParams`       | Object          |  `{}` | Additional URL parameters (strings) that will be added to geocoding requests; can be used to restrict results to a specific country for example, by providing the [`countrycodes`](https://wiki.openstreetmap.org/wiki/Nominatim#Parameters) parameter to Nominatim |
 | `reverseQueryParams`       | Object          |  `{}` | Additional URL parameters (strings) that will be added to reverse geocoding requests |
 | `htmlTemplate`     | function        | special           | A function that takes an GeocodingResult as argument and returns an HTML formatted string that represents the result. Default function breaks up address in parts from most to least specific, in attempt to increase readability compared to Nominatim's naming
 
