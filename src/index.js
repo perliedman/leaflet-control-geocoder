@@ -10,6 +10,7 @@ import Photon from './geocoders/photon';
 import Mapzen from './geocoders/mapzen';
 import ArcGis from './geocoders/arcgis';
 import HERE from './geocoders/here';
+import Neutrino from './geocoders/neutrino';
 
 var Geocoder = L.Util.extend(Control.class, {
   Nominatim: Nominatim.class,
@@ -31,7 +32,9 @@ var Geocoder = L.Util.extend(Control.class, {
   ArcGis: ArcGis.class,
   arcgis: ArcGis.factory,
   HERE: HERE.class,
-  here: HERE.factory
+  here: HERE.factory,
+  Neutrino: Neutrino.class,
+  neutrino: Neutrino.factory,
 });
 
 export default Geocoder;
