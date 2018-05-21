@@ -19,7 +19,7 @@ export default {
         {
           'api-key': this._accessToken,
           'user-id': this._userName,
-          addr: query.split(/\s+/).join('.')
+          address: query.split(/\s+/).join('.')
         },
         function(data) {
           var results = [],
