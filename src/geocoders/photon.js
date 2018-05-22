@@ -89,11 +89,13 @@ export default {
 
     _deocodeFeatureName: function(f) {
       var j, name;
-      for (j = 0; !name && j < this.options.nameProperties.length; j++) {
-        name = f.properties[this.options.nameProperties[j]];
+      for (j = 0; j < this.options.nameProperties.length; j++) {
+          if(f.properties[this.options.nameProperties[j]]){
+              name += f.properties[this.options.nameProperties[j]]+',';
+          }
       }
 
-      return name;
+      return name.substring(0, name.length-1);
     }
   }),
 
