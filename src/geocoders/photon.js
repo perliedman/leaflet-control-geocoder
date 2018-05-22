@@ -75,7 +75,7 @@ export default {
           }
 
           results.push({
-            name: this._deocodeFeatureName(f),
+            name: this._decodeFeatureName(f),
             html: this.options.htmlTemplate ? this.options.htmlTemplate(f) : undefined,
             center: latLng,
             bbox: bbox,
@@ -87,13 +87,15 @@ export default {
       return results;
     },
 
-    _deocodeFeatureName: function(f) {
-      var j, name;
-      for (j = 0; !name && j < this.options.nameProperties.length; j++) {
-        name = f.properties[this.options.nameProperties[j]];
-      }
-
-      return name;
+    _decodeFeatureName: function(f) {
+      return (this.options.nameProperties || [])
+        .map(function(p) {
+          return f.properties[p];
+        })
+        .filter(function(v) {
+          return !!v;
+        })
+        .join(', ');
     }
   }),
 
