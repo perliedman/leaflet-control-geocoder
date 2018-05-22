@@ -88,7 +88,8 @@ export default {
     },
 
     _deocodeFeatureName: function(f) {
-      var j, name;
+      var j
+      var name = '';
       for (j = 0; j < this.options.nameProperties.length; j++) {
           if(f.properties[this.options.nameProperties[j]]){
               name += f.properties[this.options.nameProperties[j]]+',';
