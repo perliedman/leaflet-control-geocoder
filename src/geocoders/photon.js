@@ -40,7 +40,7 @@ export default {
           lat: latLng.lat,
           lon: latLng.lng
         },
-        this.options.geocodingQueryParams
+        this.options.reverseQueryParams
       );
 
       getJSON(
