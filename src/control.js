@@ -6,7 +6,7 @@ export default {
     options: {
       showResultIcons: false,
       collapsed: true,
-      expand: 'touch', // options: touch, click, anythingelse
+      expand: 'hover', // options: click or anything else (hover or touch)
       position: 'topright',
       placeholder: 'Search...',
       errorMessage: 'Nothing found.',
@@ -69,54 +69,26 @@ export default {
         this
       );
 
+      // based on https://github.com/leaflet/leaflet/blob/2dbda53/src/control/Control.Layers.js#L187-L211
       if (this.options.collapsed) {
+        this._map.on('click', this._collapse, this);
+        this._map.on('movestart', this._collapse, this);
         if (this.options.expand === 'click') {
-          L.DomEvent.addListener(
-            container,
-            'click',
-            function(e) {
-              if (e.button === 0 && e.detail !== 2) {
-                this._toggle();
-              }
-            },
-            this
-          );
-        } else if (L.Browser.touch && this.options.expand === 'touch') {
-          L.DomEvent.addListener(
-            container,
-            'touchstart mousedown',
-            function(e) {
-              this._toggle();
-              e.preventDefault(); // mobile: clicking focuses the icon, so UI expands and immediately collapses
-              e.stopPropagation();
-            },
-            this
-          );
-        } else {
-          L.DomEvent.addListener(container, 'mouseover', this._expand, this);
-          L.DomEvent.addListener(container, 'mouseout', this._collapse, this);
-          this._map.on('movestart', this._collapse, this);
+          L.DomEvent.on(container, 'click', L.DomEvent.stop);
+          L.DomEvent.on(container, 'click', this._expand, this);
+        } else if (!L.Browser.android) {
+          L.DomEvent.addListener(container, 'mouseenter', this._expand, this);
+          L.DomEvent.addListener(container, 'mouseleave', this._collapse, this);
         }
       } else {
         this._expand();
+      }
+      if (this.options.expand !== 'click') {
         if (L.Browser.touch) {
-          L.DomEvent.addListener(
-            container,
-            'touchstart',
-            function() {
-              this._geocode();
-            },
-            this
-          );
+          L.DomEvent.on(container, 'click', L.DomEvent.stop);
+          L.DomEvent.on(container, 'click', this._expand, this);
         } else {
-          L.DomEvent.addListener(
-            container,
-            'click',
-            function() {
-              this._geocode();
-            },
-            this
-          );
+          L.DomEvent.on(container, 'focus', this._expand, this);
         }
       }
 
