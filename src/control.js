@@ -87,8 +87,11 @@ export default {
             container,
             'touchstart mousedown',
             function(e) {
-              this._toggle();
-              e.preventDefault(); // mobile: clicking focuses the icon, so UI expands and immediately collapses
+              // we do prevent toggle when user clicks input
+              if (e.target.tagName != 'INPUT') {
+                this._toggle();
+                e.preventDefault(); // mobile: clicking focuses the icon, so UI expands and immediately collapses
+              }
               e.stopPropagation();
             },
             this
