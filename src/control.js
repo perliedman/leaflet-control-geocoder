@@ -149,6 +149,7 @@ export default {
     },
 
     _geocodeResult: function(results, suggest) {
+      this._clearResults();
       if (!suggest && results.length === 1) {
         this._geocodeResultSelected(results[0]);
       } else if (results.length > 0) {
