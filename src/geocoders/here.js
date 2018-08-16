@@ -28,6 +28,36 @@ export default {
       this.getJSON(this.options.geocodeUrl, params, cb, context);
     },
 
+    geocodeSuggestion: function(query, cb, context) {
+      var params = {
+        locationid: query,
+        gen: 9,
+        app_id: this.options.app_id,
+        app_code: this.options.app_code,
+        jsonattributes: 1
+      };
+      params = L.Util.extend(params, this.options.geocodingQueryParams);
+      this.getJSON(this.options.geocodeUrl, params, cb, context);
+    },
+
+    suggest: function(query, cb, context) {
+      var _this = this;
+      var params = {
+        query: query,
+        app_id: this.options.app_id,
+        app_code: this.options.app_code,
+        country: this.options.country
+      };
+
+      getJSON(
+        'http://autocomplete.geocoder.api.here.com/6.2/suggest.json',
+        L.extend(params, this.options.geocodingQueryParams),
+        L.bind(function(data) {
+          cb.call(context, _this._parseResults(data));
+        }, this)
+      );
+    },
+
     reverse: function(location, scale, cb, context) {
       var params = {
         prox: encodeURIComponent(location.lat) + ',' + encodeURIComponent(location.lng),
@@ -39,6 +69,16 @@ export default {
       };
       params = L.Util.extend(params, this.options.reverseQueryParams);
       this.getJSON(this.options.reverseGeocodeUrl, params, cb, context);
+    },
+    _parseResults: function(data) {
+      var results = [];
+      for (var i = 0; i < data.suggestions.length; i++) {
+        var result = {};
+        result.name = data.suggestions[i].label;
+        result.location_id = data.suggestions[i].locationId;
+        results.push(result);
+      }
+      return results;
     },
 
     getJSON: function(url, params, cb, context) {
