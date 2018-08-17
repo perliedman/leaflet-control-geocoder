@@ -43,6 +43,7 @@ export default {
       input = this._input = L.DomUtil.create('input', '', form);
       input.type = 'text';
       input.placeholder = this.options.placeholder;
+      L.DomEvent.disableClickPropagation(input);
 
       this._errorElement = L.DomUtil.create('div', className + '-form-no-error', container);
       this._errorElement.innerHTML = this.options.errorMessage;
