@@ -4,3 +4,4 @@ pygments:     true
 paginate:     5
 url:          http://www.liedman.net/leaflet-control-geocoder
 baseurl:      /leaflet-control-geocoder
+highlighter:  rouge
