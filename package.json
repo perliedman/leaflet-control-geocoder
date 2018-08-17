@@ -6,7 +6,7 @@
   "scripts": {
     "prepare": "npm run build",
     "build": "npm run build:js && npm run build:css && npm run build:img",
-    "build:js": "rollup --output.format=iife --name=L.Control.Geocoder --globals=leaflet:L src/index.js --output.file=dist/Control.Geocoder.js --sourcemap",
+    "build:js": "rollup -c",
     "build:css": "cpr Control.Geocoder.css dist/Control.Geocoder.css --overwrite",
     "build:img": "cpr images/ dist/images/ --overwrite",
     "test": "npm run lint",
