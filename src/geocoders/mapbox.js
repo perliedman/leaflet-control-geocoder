@@ -43,10 +43,21 @@ export default {
             } else {
               latLngBounds = L.latLngBounds(latLng, latLng);
             }
+
+            var props = {}, id, j;
+            props['text'] = loc.text;
+            props['address'] = loc.address;
+
+            for (j = 0; j < loc.context.length; j++) {
+              id = loc.context[j].id.split('.')[0];
+              props[id] = loc.context[j].text;
+            }
+
             results[i] = {
               name: loc.place_name,
               bbox: latLngBounds,
-              center: latLng
+              center: latLng,
+              properties: props
             };
           }
         }
