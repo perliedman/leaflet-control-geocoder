@@ -35,6 +35,8 @@
     "what3words",
     "mapquest",
     "mapzen",
+    "pluscodes",
+    "open location code",
     "here"
   ],
   "author": "Per Liedman <per@liedman.net>",
@@ -60,5 +62,8 @@
     "rollup-plugin-uglify": "^5.0.2",
     "sinon": "^7.3.2",
     "uglify-js": "^3.4.9"
+  },
+  "optionalDependencies": {
+    "open-location-code": "^1.0.0"
   }
 }

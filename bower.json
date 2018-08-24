@@ -23,6 +23,8 @@
     "what3words",
     "mapquest",
     "mapzen",
+    "pluscodes",
+    "open location code",
     "here"
   ],
   "license": "BSD-2-Clause",
