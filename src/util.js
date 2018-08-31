@@ -42,7 +42,7 @@ export function jsonp(url, params, callback, context, jsonpParam) {
   window[callbackId] = L.Util.bind(callback, context);
   var script = document.createElement('script');
   script.type = 'text/javascript';
-  script.src = url + L.Util.getParamString(params);
+  script.src = url + getParamString(params);
   script.id = callbackId;
   document.getElementsByTagName('head')[0].appendChild(script);
 }
@@ -59,7 +59,7 @@ export function getJSON(url, params, callback) {
     }
     callback(JSON.parse(xmlHttp.response));
   };
-  xmlHttp.open('GET', url + L.Util.getParamString(params), true);
+  xmlHttp.open('GET', url + getParamString(params), true);
   xmlHttp.setRequestHeader('Accept', 'application/json');
   xmlHttp.send(null);
 }
@@ -74,4 +74,20 @@ export function template(str, data) {
     }
     return htmlEscape(value);
   });
+}
+
+export function getParamString(obj, existingUrl, uppercase) {
+  var params = [];
+  for (var i in obj) {
+    var key = encodeURIComponent(uppercase ? i.toUpperCase() : i);
+    var value = obj[i];
+    if (!L.Util.isArray(value)) {
+      params.push(key + '=' + encodeURIComponent(value));
+    } else {
+      for (var j = 0; j < value.length; j++) {
+        params.push(key + '=' + encodeURIComponent(value[j]));
+      }
+    }
+  }
+  return (!existingUrl || existingUrl.indexOf('?') === -1 ? '?' : '&') + params.join('&');
 }
