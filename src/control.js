@@ -180,7 +180,7 @@ export default {
 
     _geocode: function(suggest) {
       var value = this._input.value;
-      if (!suggest && (value === this._lastGeocode || value.length < this.options.queryMinLength)) {
+      if (!suggest && value.length < this.options.queryMinLength) {
         return;
       }
 
