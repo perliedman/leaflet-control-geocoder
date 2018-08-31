@@ -328,7 +328,11 @@ export default {
             this._geocode();
           }
           break;
+        default:
+          return;
       }
+
+      L.DomEvent.preventDefault(e);
     },
     _change: function() {
       var v = this._input.value;
