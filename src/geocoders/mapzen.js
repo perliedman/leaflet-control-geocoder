@@ -4,7 +4,7 @@ import { getJSON } from '../util';
 export default {
   class: L.Class.extend({
     options: {
-      serviceUrl: 'https://search.mapzen.com/v1',
+      serviceUrl: 'https://api.geocode.earth/v1',
       geocodingQueryParams: {},
       reverseQueryParams: {}
     },

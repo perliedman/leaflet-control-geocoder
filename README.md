@@ -20,7 +20,7 @@ The plugin supports many different data providers:
 * [MapQuest Geocoding API](http://developer.mapquest.com/web/products/dev-services/geocoding-ws)
 * [What3Words](http://what3words.com/)
 * [Photon](http://photon.komoot.de/)
-* [Mapzen Search](https://mapzen.com/projects/search)
+* [Pelias](https://pelias.io/), [geocode.earth](https://geocode.earth/) (formerly Mapzen Search)
 * [HERE Geocoder API](https://developer.here.com/documentation/geocoder/topics/introduction.html)
 
 The plugin can easily be extended to support other providers. Current extensions:
