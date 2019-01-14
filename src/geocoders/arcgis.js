@@ -25,7 +25,7 @@ export default {
         params.token = this._key;
       }
 
-      getJSON(this.options.service_url + '/findAddressCandidates', params, function(data) {
+      getJSON(this.options.service_url + '/findAddressCandidates', L.extend(params, this.options.geocodingQueryParams), function(data) {
         var results = [],
           loc,
           latLng,
