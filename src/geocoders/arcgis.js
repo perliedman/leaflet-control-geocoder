@@ -4,7 +4,7 @@ import { getJSON } from '../util';
 export default {
   class: L.Class.extend({
     options: {
-      service_url: 'http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer'
+      service_url: 'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer'
     },
 
     initialize: function(accessToken, options) {
