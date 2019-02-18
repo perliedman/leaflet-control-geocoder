@@ -22,6 +22,7 @@ The plugin supports many different data providers:
 * [Photon](http://photon.komoot.de/)
 * [Pelias](https://pelias.io/), [geocode.earth](https://geocode.earth/) (formerly Mapzen Search)
 * [HERE Geocoder API](https://developer.here.com/documentation/geocoder/topics/introduction.html)
+* [Neutrino API](https://www.neutrinoapi.com/api/geocode-address/)
 
 The plugin can easily be extended to support other providers. Current extensions:
 
