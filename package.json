@@ -1,6 +1,6 @@
 {
   "name": "leaflet-control-geocoder",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "Extendable geocoder with builtin support for Nominatim, Bing, Google, Mapbox, Photon, What3Words, MapQuest, Mapzen, HERE",
   "main": "dist/Control.Geocoder.js",
   "scripts": {
