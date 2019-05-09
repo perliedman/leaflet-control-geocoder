@@ -9,7 +9,8 @@
     "build:js": "rollup -c",
     "build:css": "cpr Control.Geocoder.css dist/Control.Geocoder.css --overwrite",
     "build:img": "cpr images/ dist/images/ --overwrite",
-    "test": "npm run lint",
+    "test": "npm run test:karma -- --single-run && npm run lint",
+    "test:karma": "karma start spec/karma.conf.js",
     "lint": "npm run lint:js && npm run lint:css",
     "lint:js": "eslint 'src/**' '*.js'",
     "lint:css": "prettier --list-different '*.css'",
@@ -44,9 +45,18 @@
     "cpr": "^3.0.1",
     "eslint": "^4.15.0",
     "eslint-plugin-prettier": "^2.4.0",
+    "karma": "^4.1.0",
+    "karma-expect": "^1.1.3",
+    "karma-mocha": "^1.3.0",
+    "karma-phantomjs-launcher": "^1.0.4",
+    "karma-sinon": "^1.0.5",
+    "leaflet": "^1.5.1",
+    "mocha": "^6.1.4",
+    "phantomjs-prebuilt": "^2.1.16",
     "prettier": "^1.9.2",
     "rollup": "^0.65.0",
     "rollup-plugin-uglify": "^5.0.2",
+    "sinon": "^7.3.2",
     "uglify-js": "^3.4.9"
   }
 }
