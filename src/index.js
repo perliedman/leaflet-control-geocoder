@@ -38,7 +38,7 @@ var Geocoder = L.Util.extend(Control.class, {
   HERE: HERE.class,
   here: HERE.factory,
   Neutrino: Neutrino.class,
-  neutrino: Neutrino.factory,
+  neutrino: Neutrino.factory
 });
 
 export default Geocoder;

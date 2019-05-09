@@ -25,30 +25,34 @@ export default {
         params.token = this._key;
       }
 
-      getJSON(this.options.service_url + '/findAddressCandidates', L.extend(params, this.options.geocodingQueryParams), function(data) {
-        var results = [],
-          loc,
-          latLng,
-          latLngBounds;
+      getJSON(
+        this.options.service_url + '/findAddressCandidates',
+        L.extend(params, this.options.geocodingQueryParams),
+        function(data) {
+          var results = [],
+            loc,
+            latLng,
+            latLngBounds;
 
-        if (data.candidates && data.candidates.length) {
-          for (var i = 0; i <= data.candidates.length - 1; i++) {
-            loc = data.candidates[i];
-            latLng = L.latLng(loc.location.y, loc.location.x);
-            latLngBounds = L.latLngBounds(
-              L.latLng(loc.extent.ymax, loc.extent.xmax),
-              L.latLng(loc.extent.ymin, loc.extent.xmin)
-            );
-            results[i] = {
-              name: loc.address,
-              bbox: latLngBounds,
-              center: latLng
-            };
+          if (data.candidates && data.candidates.length) {
+            for (var i = 0; i <= data.candidates.length - 1; i++) {
+              loc = data.candidates[i];
+              latLng = L.latLng(loc.location.y, loc.location.x);
+              latLngBounds = L.latLngBounds(
+                L.latLng(loc.extent.ymax, loc.extent.xmax),
+                L.latLng(loc.extent.ymin, loc.extent.xmin)
+              );
+              results[i] = {
+                name: loc.address,
+                bbox: latLngBounds,
+                center: latLng
+              };
+            }
           }
-        }
 
-        cb.call(context, results);
-      });
+          cb.call(context, results);
+        }
+      );
     },
 
     suggest: function(query, cb, context) {

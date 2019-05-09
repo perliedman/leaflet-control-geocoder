@@ -14,6 +14,7 @@
     "lint": "npm run lint:js && npm run lint:css",
     "lint:js": "eslint 'src/**' '*.js'",
     "lint:css": "prettier --list-different '*.css'",
+    "fix:style": "prettier --write $(git ls-files '*.js' '*.css')",
     "publish": "sh ./scripts/publish.sh",
     "postpublish": "sh ./scripts/postpublish.sh"
   },
@@ -53,7 +54,7 @@
     "leaflet": "^1.5.1",
     "mocha": "^6.1.4",
     "phantomjs-prebuilt": "^2.1.16",
-    "prettier": "^1.9.2",
+    "prettier": "^1.17.0",
     "rollup": "^0.65.0",
     "rollup-plugin-uglify": "^5.0.2",
     "sinon": "^7.3.2",
