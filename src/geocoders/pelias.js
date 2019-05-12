@@ -83,6 +83,12 @@ export var Pelias = L.Class.extend({
         if (layer.getBounds) {
           bbox = layer.getBounds();
           center = bbox.getCenter();
+        } else if (layer.feature.bbox) {
+          center = layer.getLatLng();
+          bbox = L.latLngBounds(
+            L.GeoJSON.coordsToLatLng(layer.feature.bbox.slice(0, 2)),
+            L.GeoJSON.coordsToLatLng(layer.feature.bbox.slice(2, 4))
+          );
         } else {
           center = layer.getLatLng();
           bbox = L.latLngBounds(center, center);
@@ -107,3 +113,12 @@ export var geocodeEarth = pelias;
 
 export var Mapzen = Pelias; // r.i.p.
 export var mapzen = pelias;
+
+export var Openrouteservice = Mapzen.extend({
+  options: {
+    serviceUrl: 'https://api.openrouteservice.org/geocode'
+  }
+});
+export function openrouteservice(apiKey, options) {
+  return new Openrouteservice(apiKey, options);
+}

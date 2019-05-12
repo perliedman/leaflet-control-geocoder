@@ -21,7 +21,7 @@ The plugin supports many different data providers:
 * [MapQuest Geocoding API](http://developer.mapquest.com/web/products/dev-services/geocoding-ws)
 * [What3Words](http://what3words.com/)
 * [Photon](http://photon.komoot.de/)
-* [Pelias](https://pelias.io/), [geocode.earth](https://geocode.earth/) (formerly Mapzen Search)
+* [Pelias](https://pelias.io/), [geocode.earth](https://geocode.earth/) (formerly Mapzen Search), [Openrouteservice](https://openrouteservice.org/dev/#/api-docs/geocode)
 * [HERE Geocoder API](https://developer.here.com/documentation/geocoder/topics/introduction.html)
 * [Neutrino API](https://www.neutrinoapi.com/api/geocode-address/)
 
