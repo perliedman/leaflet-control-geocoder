@@ -1,5 +1,6 @@
 import L from 'leaflet';
 import Control from './control';
+import LatLng from './geocoders/latlng';
 import Nominatim from './geocoders/nominatim';
 import Bing from './geocoders/bing';
 import MapQuest from './geocoders/mapquest';
@@ -13,6 +14,8 @@ import HERE from './geocoders/here';
 import Neutrino from './geocoders/neutrino';
 
 var Geocoder = L.Util.extend(Control.class, {
+  LatLng: LatLng.class,
+  latLng: LatLng.factory,
   Nominatim: Nominatim.class,
   nominatim: Nominatim.factory,
   Bing: Bing.class,

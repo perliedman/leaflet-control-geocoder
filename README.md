@@ -13,6 +13,7 @@ A simple geocoder for [Leaflet](http://leafletjs.com/) that by default uses [OSM
 
 The plugin supports many different data providers:
 
+* LatLng to parse basic latitude/longitude strings
 * [OSM](https://www.openstreetmap.org/)/[Nominatim](https://wiki.openstreetmap.org/wiki/Nominatim)
 * [Bing Locations API](http://msdn.microsoft.com/en-us/library/ff701715.aspx)
 * [Google Geocoding API](https://developers.google.com/maps/documentation/geocoding/)
@@ -129,7 +130,7 @@ new L.Control.Geocoder.Nominatim(options)
 L.Control.Geocoder.nominatim(options)
 ```
 
-## Options
+### Options
 
 | Option          |  Type            |  Default          | Description |
 | --------------- | ---------------- | ----------------- | ----------- |
@@ -151,6 +152,24 @@ new L.Control.Geocoder.Bing(<String> key)
 // or
 L.Control.Geocoder.bing(<String> key)
 ```
+
+## L.Control.Geocoder.LatLng
+
+Parses basic latitude/longitude strings such as `'50.06773 14.37742'`, `'N50.06773 W14.37742'`, `'S 50° 04.064 E 014° 22.645'`, or `'S 50° 4′ 03.828″, W 14° 22′ 38.712″'`.
+
+### Constructor
+
+```ts
+new L.Control.Geocoder.LatLng(options)
+// or
+L.Control.Geocoder.latLng(options)
+```
+
+### Options
+
+| Option          |  Type     |  Default | Description |
+| --------------- | --------- | -------- | ----------- |
+| `next`          | IGeocoder |          | The next geocoder to use for non-supported queries. |
 
 ## IGeocoder
 
