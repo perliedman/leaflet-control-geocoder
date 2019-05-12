@@ -87,6 +87,6 @@ export default {
   }),
 
   factory: function(options) {
-    return new L.Control.Geocoder.LatLon(options);
+    return new L.Control.Geocoder.LatLng(options);
   }
 };
