@@ -1,7 +1,7 @@
 import L from 'leaflet';
 import { getJSON } from '../util';
 
-export var Mapzen = L.Class.extend({
+export var Pelias = L.Class.extend({
   options: {
     serviceUrl: 'https://api.geocode.earth/v1',
     geocodingQueryParams: {},
@@ -99,11 +99,11 @@ export var Mapzen = L.Class.extend({
   }
 });
 
-export var GeocodeEarth = Mapzen;
-export var Pelias = Mapzen;
-
-export function mapzen(apiKey, options) {
-  return new Mapzen(apiKey, options);
+export function pelias(apiKey, options) {
+  return new Pelias(apiKey, options);
 }
-export var geocodeEarth = mapzen;
-export var pelias = mapzen;
+export var GeocodeEarth = Pelias;
+export var geocodeEarth = pelias;
+
+export var Mapzen = Pelias; // r.i.p.
+export var mapzen = pelias;
