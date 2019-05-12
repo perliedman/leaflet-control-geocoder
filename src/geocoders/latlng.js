@@ -4,7 +4,8 @@ export default {
   class: L.Class.extend({
     options: {
       // the next geocoder to use
-      next: undefined
+      next: undefined,
+      sizeInMeters: 10000
     },
 
     initialize: function(options) {
@@ -79,7 +80,14 @@ export default {
         center = L.latLng(parseFloat(match[1]), parseFloat(match[2]));
       }
       if (center) {
-        cb([{ name: query, center: center }]);
+        var results = [
+          {
+            name: query,
+            center: center,
+            bbox: center.toBounds(this.options.sizeInMeters)
+          }
+        ];
+        cb.call(context, results);
       } else if (this.options.next) {
         this.options.next.geocode(query, cb, context);
       }

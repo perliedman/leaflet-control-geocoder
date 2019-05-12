@@ -145,9 +145,7 @@ describe('L.Control.Geocoder.LatLng', function() {
     expect(callback.calledOnce).to.be.ok();
     expect(callback.lastArg).to.be.ok();
     expect(callback.lastArg).to.have.length(1);
-    expect(callback.lastArg[0]).to.eql({
-      name: query,
-      center: expected
-    });
+    expect(callback.lastArg[0].name).to.eql(query);
+    expect(callback.lastArg[0].center).to.eql(expected);
   }
 });

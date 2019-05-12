@@ -170,6 +170,7 @@ L.Control.Geocoder.latLng(options)
 | Option          |  Type     |  Default | Description |
 | --------------- | --------- | -------- | ----------- |
 | `next`          | IGeocoder |          | The next geocoder to use for non-supported queries. |
+| `sizeInMeters`  | Number    | 10000    | The size in meters used for passing to `LatLng.toBounds`. |
 
 ## IGeocoder
 
