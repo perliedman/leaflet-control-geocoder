@@ -1,0 +1,7 @@
+env:
+  mocha: true
+
+globals:
+  expect: true
+  L: true
+  sinon: true

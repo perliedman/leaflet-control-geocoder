@@ -1,3 +1,4 @@
+/* eslint-env node */
 module.exports = function(config) {
   config.set({
     plugins: ['karma-mocha', 'karma-sinon', 'karma-expect', 'karma-phantomjs-launcher'],
