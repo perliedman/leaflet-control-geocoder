@@ -11,10 +11,10 @@
     "build:img": "cpr images/ dist/images/ --overwrite",
     "test": "npm run test:karma -- --single-run && npm run lint",
     "test:karma": "karma start spec/karma.conf.js",
-    "lint": "npm run lint:js && npm run lint:css",
+    "lint": "npm run lint:js && npm run lint:style",
     "lint:js": "eslint $(git ls-files '*.js')",
-    "lint:css": "prettier --list-different '*.css'",
-    "fix:style": "prettier --write $(git ls-files '*.js' '*.css')",
+    "lint:style": "prettier --list-different $(git ls-files '*.js' '*.css' '*.html')",
+    "fix:style": "prettier --write $(git ls-files '*.js' '*.css' '*.html')",
     "publish": "sh ./scripts/publish.sh",
     "postpublish": "sh ./scripts/postpublish.sh"
   },
