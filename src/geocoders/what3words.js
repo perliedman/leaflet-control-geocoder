@@ -1,74 +1,72 @@
 import L from 'leaflet';
 import { getJSON } from '../util';
 
-export default {
-  class: L.Class.extend({
-    options: {
-      serviceUrl: 'https://api.what3words.com/v2/'
-    },
+export var What3Words = L.Class.extend({
+  options: {
+    serviceUrl: 'https://api.what3words.com/v2/'
+  },
 
-    initialize: function(accessToken) {
-      this._accessToken = accessToken;
-    },
+  initialize: function(accessToken) {
+    this._accessToken = accessToken;
+  },
 
-    geocode: function(query, cb, context) {
-      //get three words and make a dot based string
-      getJSON(
-        this.options.serviceUrl + 'forward',
-        {
-          key: this._accessToken,
-          addr: query.split(/\s+/).join('.')
-        },
-        function(data) {
-          var results = [],
-            latLng,
-            latLngBounds;
-          if (data.hasOwnProperty('geometry')) {
-            latLng = L.latLng(data.geometry['lat'], data.geometry['lng']);
-            latLngBounds = L.latLngBounds(latLng, latLng);
-            results[0] = {
-              name: data.words,
-              bbox: latLngBounds,
-              center: latLng
-            };
-          }
-
-          cb.call(context, results);
+  geocode: function(query, cb, context) {
+    //get three words and make a dot based string
+    getJSON(
+      this.options.serviceUrl + 'forward',
+      {
+        key: this._accessToken,
+        addr: query.split(/\s+/).join('.')
+      },
+      function(data) {
+        var results = [],
+          latLng,
+          latLngBounds;
+        if (data.hasOwnProperty('geometry')) {
+          latLng = L.latLng(data.geometry['lat'], data.geometry['lng']);
+          latLngBounds = L.latLngBounds(latLng, latLng);
+          results[0] = {
+            name: data.words,
+            bbox: latLngBounds,
+            center: latLng
+          };
         }
-      );
-    },
 
-    suggest: function(query, cb, context) {
-      return this.geocode(query, cb, context);
-    },
+        cb.call(context, results);
+      }
+    );
+  },
 
-    reverse: function(location, scale, cb, context) {
-      getJSON(
-        this.options.serviceUrl + 'reverse',
-        {
-          key: this._accessToken,
-          coords: [location.lat, location.lng].join(',')
-        },
-        function(data) {
-          var results = [],
-            latLng,
-            latLngBounds;
-          if (data.status.status == 200) {
-            latLng = L.latLng(data.geometry['lat'], data.geometry['lng']);
-            latLngBounds = L.latLngBounds(latLng, latLng);
-            results[0] = {
-              name: data.words,
-              bbox: latLngBounds,
-              center: latLng
-            };
-          }
-          cb.call(context, results);
+  suggest: function(query, cb, context) {
+    return this.geocode(query, cb, context);
+  },
+
+  reverse: function(location, scale, cb, context) {
+    getJSON(
+      this.options.serviceUrl + 'reverse',
+      {
+        key: this._accessToken,
+        coords: [location.lat, location.lng].join(',')
+      },
+      function(data) {
+        var results = [],
+          latLng,
+          latLngBounds;
+        if (data.status.status == 200) {
+          latLng = L.latLng(data.geometry['lat'], data.geometry['lng']);
+          latLngBounds = L.latLngBounds(latLng, latLng);
+          results[0] = {
+            name: data.words,
+            bbox: latLngBounds,
+            center: latLng
+          };
         }
-      );
-    }
-  }),
-
-  factory: function(accessToken) {
-    return new L.Control.Geocoder.What3Words(accessToken);
+        cb.call(context, results);
+      }
+    );
   }
-};
+});
+
+export function what3words(accessToken) {
+  return new What3Words(accessToken);
+}
