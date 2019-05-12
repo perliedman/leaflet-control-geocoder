@@ -13,8 +13,9 @@
     "test:karma": "karma start spec/karma.conf.js",
     "lint": "npm run lint:js && npm run lint:style",
     "lint:js": "eslint $(git ls-files '*.js')",
-    "lint:style": "prettier --list-different $(git ls-files '*.js' '*.css' '*.html')",
-    "fix:style": "prettier --write $(git ls-files '*.js' '*.css' '*.html')",
+    "lint:style": "prettier --list-different $(npm run ls-files)",
+    "fix:style": "prettier --write $(npm run ls-files)",
+    "ls-files": "git ls-files '*.js' '*.json' '*.css' '*.html' '*.yaml' '*.yml'",
     "publish": "sh ./scripts/publish.sh",
     "postpublish": "sh ./scripts/postpublish.sh"
   },
