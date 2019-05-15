@@ -181,6 +181,7 @@ An interface implemented to respond to geocoding queries.
 | Method                                |  Returns            | Description       |
 | ------------------------------------- | ------------------- | ----------------- |
 | `geocode(<String> query, callback, context)` | `GeocodingResult[]` | Performs a geocoding query and returns the results to the callback in the provided context |
+| `suggest(<String> query, callback, context)` | `GeocodingResult[]` | Performs a geocoding query suggestion (this happens while typing) and returns the results to the callback in the provided context |
 | `reverse(<L.LatLng> location, <Number> scale, callback, context)` | `GeocodingResult[]` | Performs a reverse geocoding query and returns the results to the callback in the provided context |
 
 ## GeocodingResult
