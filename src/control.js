@@ -307,6 +307,8 @@ export var Geocoder = L.Control.extend({
       case 27:
         if (this.options.collapsed) {
           this._collapse();
+        } else {
+          this._clearResults();
         }
         break;
       // Up
