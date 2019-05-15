@@ -26,6 +26,14 @@ export var Geocoder = L.Control.extend({
     this._requestCount = 0;
   },
 
+  addThrobberClass: function() {
+    L.DomUtil.addClass(this._container, 'leaflet-control-geocoder-throbber');
+  },
+
+  removeThrobberClass: function() {
+    L.DomUtil.removeClass(this._container, 'leaflet-control-geocoder-throbber');
+  },
+
   onAdd: function(map) {
     var className = 'leaflet-control-geocoder',
       container = L.DomUtil.create('div', className + ' leaflet-bar'),
@@ -125,20 +133,10 @@ export var Geocoder = L.Control.extend({
       this.on('markgeocode', this.markGeocode, this);
     }
 
-    this.on(
-      'startgeocode',
-      function() {
-        L.DomUtil.addClass(this._container, 'leaflet-control-geocoder-throbber');
-      },
-      this
-    );
-    this.on(
-      'finishgeocode',
-      function() {
-        L.DomUtil.removeClass(this._container, 'leaflet-control-geocoder-throbber');
-      },
-      this
-    );
+    this.on('startgeocode', this.addThrobberClass, this);
+    this.on('finishgeocode', this.removeThrobberClass, this);
+    this.on('startsuggest', this.addThrobberClass, this);
+    this.on('finishsuggest', this.removeThrobberClass, this);
 
     L.DomEvent.disableClickPropagation(container);
 
