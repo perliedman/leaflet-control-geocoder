@@ -150,10 +150,12 @@ export var Geocoder = L.Control.extend({
       this._alts.innerHTML = '';
       this._results = results;
       L.DomUtil.removeClass(this._alts, 'leaflet-control-geocoder-alternatives-minimized');
+      L.DomUtil.addClass(this._container, 'leaflet-control-geocoder-options-open');
       for (var i = 0; i < results.length; i++) {
         this._alts.appendChild(this._createAlt(results[i], i));
       }
     } else {
+      L.DomUtil.addClass(this._container, 'leaflet-control-geocoder-options-error');
       L.DomUtil.addClass(this._errorElement, 'leaflet-control-geocoder-error');
     }
   },
@@ -226,6 +228,8 @@ export var Geocoder = L.Control.extend({
     L.DomUtil.removeClass(this._container, 'leaflet-control-geocoder-expanded');
     L.DomUtil.addClass(this._alts, 'leaflet-control-geocoder-alternatives-minimized');
     L.DomUtil.removeClass(this._errorElement, 'leaflet-control-geocoder-error');
+    L.DomUtil.removeClass(this._container, 'leaflet-control-geocoder-options-open');
+    L.DomUtil.removeClass(this._container, 'leaflet-control-geocoder-options-error');
     this._input.blur(); // mobile: keyboard shouldn't stay expanded
     this.fire('collapse');
   },
@@ -234,6 +238,8 @@ export var Geocoder = L.Control.extend({
     L.DomUtil.addClass(this._alts, 'leaflet-control-geocoder-alternatives-minimized');
     this._selection = null;
     L.DomUtil.removeClass(this._errorElement, 'leaflet-control-geocoder-error');
+    L.DomUtil.removeClass(this._container, 'leaflet-control-geocoder-options-open');
+    L.DomUtil.removeClass(this._container, 'leaflet-control-geocoder-options-error');
   },
 
   _createAlt: function(result, index) {
