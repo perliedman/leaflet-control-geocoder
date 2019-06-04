@@ -3,6 +3,7 @@
   "version": "1.7.0",
   "description": "Extendable geocoder with builtin support for Nominatim, Bing, Google, Mapbox, Photon, What3Words, MapQuest, Mapzen, HERE",
   "main": "dist/Control.Geocoder.js",
+  "module": "src/index.js",
   "scripts": {
     "prepare": "npm run build",
     "build": "npm run build:js && npm run build:css && npm run build:img",
