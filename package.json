@@ -14,7 +14,7 @@
     "test:karma": "karma start spec/karma.conf.js",
     "lint": "npm run lint:js && npm run lint:style",
     "lint:js": "eslint $(git ls-files '*.js')",
-    "lint:style": "prettier --list-different $(npm run ls-files)",
+    "lint:style": "prettier --check $(npm run ls-files)",
     "fix:style": "prettier --write $(npm run ls-files)",
     "ls-files": "git ls-files '*.js' '*.json' '*.css' '*.html' '*.yaml' '*.yml'",
     "publish": "sh ./scripts/publish.sh",
@@ -48,8 +48,8 @@
   "dependencies": {},
   "devDependencies": {
     "cpr": "^3.0.1",
-    "eslint": "^4.15.0",
-    "eslint-plugin-prettier": "^2.4.0",
+    "eslint": "^4.19.1",
+    "eslint-plugin-prettier": "^2.7.0",
     "karma": "^4.1.0",
     "karma-expect": "^1.1.3",
     "karma-mocha": "^1.3.0",
@@ -58,11 +58,11 @@
     "leaflet": "^1.5.1",
     "mocha": "^6.1.4",
     "phantomjs-prebuilt": "^2.1.16",
-    "prettier": "^1.17.0",
-    "rollup": "^0.65.0",
+    "prettier": "^1.17.1",
+    "rollup": "^0.65.2",
     "rollup-plugin-uglify": "^5.0.2",
     "sinon": "^7.3.2",
-    "uglify-js": "^3.4.9"
+    "uglify-js": "^3.6.0"
   },
   "optionalDependencies": {
     "open-location-code": "^1.0.0"
