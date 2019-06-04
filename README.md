@@ -30,7 +30,7 @@ The plugin can easily be extended to support other providers. Current extensions
 
 * [DAWA Geocoder](https://github.com/kjoller/leaflet-control-geocoder-dawa/tree/new) - support for Danish Address Web API by [Niels Kjøller Hansen](https://github.com/kjoller)
 
-See the [Leaflet Control Geocoder Demo](http://perliedman.github.com/leaflet-control-geocoder/).
+See the [Leaflet Control Geocoder Demo](https://www.liedman.net/leaflet-control-geocoder/).
 
 # Usage
 
