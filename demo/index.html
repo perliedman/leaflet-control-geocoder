@@ -29,12 +29,25 @@
     <div id="map"></div>
 
     <script type="text/javascript">
-      var map = L.map('map').setView([0, 0], 2),
-        geocoder = L.Control.Geocoder.nominatim(),
-        control = L.Control.geocoder({
-          geocoder: geocoder
-        }).addTo(map),
-        marker;
+      var map = L.map('map').setView([0, 0], 2);
+
+      var geocoder = L.Control.Geocoder.nominatim();
+      if (URLSearchParams && location.search) {
+        // parse /?geocoder=nominatim from URL
+        var params = new URLSearchParams(location.search);
+        var geocoderString = params.get('geocoder');
+        if (geocoderString && L.Control.Geocoder[geocoderString]) {
+          console.log('Using geocoder', geocoderString);
+          geocoder = L.Control.Geocoder[geocoderString]();
+        } else if (geocoderString) {
+          console.warn('Unsupported geocoder', geocoderString);
+        }
+      }
+
+      var control = L.Control.geocoder({
+        geocoder: geocoder
+      }).addTo(map);
+      var marker;
 
       L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
