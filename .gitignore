@@ -1,3 +1,6 @@
-node_modules/
+demo-rollup/bundle.js
+demo-rollup/node_modules/
+demo-rollup/package-lock.json
 dist/
+node_modules/
 test/bundle.js

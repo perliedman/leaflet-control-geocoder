@@ -1,0 +1,16 @@
+{
+  "name": "leaflet-control-geocoder-demo-rollup",
+  "private": true,
+  "scripts": {
+    "build": "rollup --config"
+  },
+  "dependencies": {
+    "leaflet": "^1.5.1",
+    "leaflet-control-geocoder": "^1.8.0"
+  },
+  "devDependencies": {
+    "rollup": "^1.14.4",
+    "rollup-plugin-commonjs": "^10.0.0",
+    "rollup-plugin-node-resolve": "^5.0.1"
+  }
+}

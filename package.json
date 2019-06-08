@@ -6,10 +6,11 @@
   "module": "src/index.js",
   "scripts": {
     "prepare": "npm run build",
-    "build": "npm run build:js && npm run build:css && npm run build:img",
+    "build": "npm run build:js && npm run build:css && npm run build:img && npm run build:demo-rollup",
     "build:js": "rollup -c",
     "build:css": "cpr Control.Geocoder.css dist/Control.Geocoder.css --overwrite",
     "build:img": "cpr images/ dist/images/ --overwrite",
+    "build:demo-rollup": "cd demo-rollup && npm run build",
     "test": "npm run test:karma -- --single-run && npm run lint",
     "test:karma": "karma start spec/karma.conf.js",
     "lint": "npm run lint:js && npm run lint:style",
