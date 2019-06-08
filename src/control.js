@@ -20,7 +20,7 @@ export var Geocoder = L.Control.extend({
   initialize: function(options) {
     L.Util.setOptions(this, options);
     if (!this.options.geocoder) {
-      this.options.geocoder = new Nominatim.class();
+      this.options.geocoder = new Nominatim();
     }
 
     this._requestCount = 0;
