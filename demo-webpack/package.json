@@ -1,0 +1,15 @@
+{
+  "name": "leaflet-control-geocoder-demo-webpack",
+  "private": true,
+  "scripts": {
+    "build": "webpack-cli"
+  },
+  "dependencies": {
+    "leaflet": "^1.5.1",
+    "leaflet-control-geocoder": "^1.8.0"
+  },
+  "devDependencies": {
+    "webpack": "^4.33.0",
+    "webpack-cli": "^3.3.3"
+  }
+}
