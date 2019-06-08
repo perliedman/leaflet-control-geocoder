@@ -41,6 +41,9 @@
     "here"
   ],
   "author": "Per Liedman <per@liedman.net>",
+  "contributors": [
+    "Simon Legner <Simon.Legner@gmail.com>"
+  ],
   "license": "BSD-2-Clause",
   "bugs": {
     "url": "https://github.com/perliedman/leaflet-control-geocoder/issues"
