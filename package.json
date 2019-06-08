@@ -17,7 +17,7 @@
     "lint:js": "eslint .",
     "lint:style": "prettier --check $(npm run ls-files)",
     "fix:style": "prettier --write $(npm run ls-files)",
-    "ls-files": "git ls-files '*.js' '*.json' '*.css' '*.html' '*.yaml' '*.yml'",
+    "ls-files": "git ls-files '*.js' '*.json' '*.css' '*.html' '*.yaml' '*.yml' '*.md'",
     "publish": "sh ./scripts/publish.sh",
     "postpublish": "sh ./scripts/postpublish.sh"
   },
