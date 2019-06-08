@@ -13,7 +13,7 @@
     "test": "npm run test:karma -- --single-run && npm run lint",
     "test:karma": "karma start spec/karma.conf.js",
     "lint": "npm run lint:js && npm run lint:style",
-    "lint:js": "eslint $(git ls-files '*.js')",
+    "lint:js": "eslint .",
     "lint:style": "prettier --check $(npm run ls-files)",
     "fix:style": "prettier --write $(npm run ls-files)",
     "ls-files": "git ls-files '*.js' '*.json' '*.css' '*.html' '*.yaml' '*.yml'",
