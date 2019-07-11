@@ -130,9 +130,9 @@ export var Geocoder = L.Control.extend({
     }
 
     if (this.options.defaultMarkGeocode) {
-      typeof this.options.defaultMarkGeocode == 'function' ?
-        this.on('markgeocode', this.options.defaultMarkGeocode, this) :
-        this.on('markgeocode', this.markGeocode, this);
+      typeof this.options.defaultMarkGeocode == 'function'
+        ? this.on('markgeocode', this.options.defaultMarkGeocode, this)
+        : this.on('markgeocode', this.markGeocode, this);
     }
 
     this.on('startgeocode', this.addThrobberClass, this);
