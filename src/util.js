@@ -53,11 +53,21 @@ export function getJSON(url, params, callback) {
     if (xmlHttp.readyState !== 4) {
       return;
     }
+    var message;
     if (xmlHttp.status !== 200 && xmlHttp.status !== 304) {
-      callback('');
-      return;
+      message = '';
+    } else if (typeof xmlHttp.response === 'string') {
+      // IE doesn't parse JSON responses even with responseType: 'json'.
+      try {
+        message = JSON.parse(xmlHttp.response);
+      } catch (e) {
+        // Not a JSON response
+        message = xmlHttp.response;
+      }
+    } else {
+      message = xmlHttp.response;
     }
-    callback(xmlHttp.response);
+    callback(message);
   };
   xmlHttp.open('GET', url + getParamString(params), true);
   xmlHttp.responseType = 'json';
