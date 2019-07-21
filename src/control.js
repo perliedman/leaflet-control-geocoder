@@ -3,6 +3,7 @@ import { Nominatim } from './geocoders/index';
 
 export var Geocoder = L.Control.extend({
   options: {
+    showUniqueResult: true,
     showResultIcons: false,
     collapsed: true,
     expand: 'touch', // options: touch, click, anythingelse
@@ -144,7 +145,7 @@ export var Geocoder = L.Control.extend({
   },
 
   _geocodeResult: function(results, suggest) {
-    if (!suggest && results.length === 1) {
+    if (!suggest && this.options.showUniqueResult && results.length === 1) {
       this._geocodeResultSelected(results[0]);
     } else if (results.length > 0) {
       this._alts.innerHTML = '';
