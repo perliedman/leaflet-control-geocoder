@@ -26,7 +26,7 @@ export var Neutrino = L.Class.extend({
         var results = [],
           latLng,
           latLngBounds;
-        if (data.hasOwnProperty('locations')) {
+        if (data.locations) {
           data.geometry = data.locations[0];
           latLng = L.latLng(data.geometry['latitude'], data.geometry['longitude']);
           latLngBounds = L.latLngBounds(latLng, latLng);

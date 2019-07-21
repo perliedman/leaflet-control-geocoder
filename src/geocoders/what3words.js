@@ -22,7 +22,7 @@ export var What3Words = L.Class.extend({
         var results = [],
           latLng,
           latLngBounds;
-        if (data.hasOwnProperty('geometry')) {
+        if (data.geometry) {
           latLng = L.latLng(data.geometry['lat'], data.geometry['lng']);
           latLngBounds = L.latLngBounds(latLng, latLng);
           results[0] = {

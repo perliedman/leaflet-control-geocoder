@@ -17,9 +17,9 @@ export var Mapbox = L.Class.extend({
   geocode: function(query, cb, context) {
     var params = this.options.geocodingQueryParams;
     if (
-      typeof params.proximity !== 'undefined' &&
-      params.proximity.hasOwnProperty('lat') &&
-      params.proximity.hasOwnProperty('lng')
+      params.proximity !== undefined &&
+      params.proximity.lat !== undefined &&
+      params.proximity.lng !== undefined
     ) {
       params.proximity = params.proximity.lng + ',' + params.proximity.lat;
     }
@@ -32,7 +32,7 @@ export var Mapbox = L.Class.extend({
         for (var i = 0; i <= data.features.length - 1; i++) {
           loc = data.features[i];
           latLng = L.latLng(loc.center.reverse());
-          if (loc.hasOwnProperty('bbox')) {
+          if (loc.bbox) {
             latLngBounds = L.latLngBounds(
               L.latLng(loc.bbox.slice(0, 2).reverse()),
               L.latLng(loc.bbox.slice(2, 4).reverse())
@@ -85,7 +85,7 @@ export var Mapbox = L.Class.extend({
           for (var i = 0; i <= data.features.length - 1; i++) {
             loc = data.features[i];
             latLng = L.latLng(loc.center.reverse());
-            if (loc.hasOwnProperty('bbox')) {
+            if (loc.bbox) {
               latLngBounds = L.latLngBounds(
                 L.latLng(loc.bbox.slice(0, 2).reverse()),
                 L.latLng(loc.bbox.slice(2, 4).reverse())
