@@ -8,7 +8,7 @@ While I can't force anyone to do anything, if you happen to disagree with this, 
 
 # Leaflet Control Geocoder [![NPM version](https://img.shields.io/npm/v/leaflet-control-geocoder.svg)](https://www.npmjs.com/package/leaflet-control-geocoder) ![Leaflet 1.0.0 compatible!](https://img.shields.io/badge/Leaflet%201.0.0-%E2%9C%93-1EB300.svg?style=flat)
 
-A simple geocoder for [Leaflet](http://leafletjs.com/) that by default uses [OSM](https://www.openstreetmap.org/)/[Nominatim](https://wiki.openstreetmap.org/wiki/Nominatim).
+A simple geocoder for [Leaflet](https://leafletjs.com/) that by default uses [OSM](https://www.openstreetmap.org/)/[Nominatim](https://wiki.openstreetmap.org/wiki/Nominatim).
 
 The plugin supports many different data providers:
 
@@ -91,7 +91,7 @@ This is the geocoder control. It works like any other Leaflet control, and is ad
 
 ### Constructor
 
-This plugin supports the standard JavaScript constructor (to be invoked using `new`) as well as the [class factory methods](http://leafletjs.com/reference.html#class-class-factories) known from Leaflet:
+This plugin supports the standard JavaScript constructor (to be invoked using `new`) as well as the [class factory methods](https://leafletjs.com/reference.html#class-class-factories) known from Leaflet:
 
 ```js
 new L.Control.Geocoder(options);
@@ -105,7 +105,7 @@ L.Control.geocoder(options);
 | ------------------ | --------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------- |
 | `collapsed`        | Boolean   | `true`                               | Collapse control unless hovered/clicked                                                                       |
 | `expand`           | String    | `"touch"`                            | How to expand a collapsed control: `touch` or `click` or `hover`                                              |
-| `position`         | String    | `"topright"`                         | Control [position](http://leafletjs.com/reference.html#control-positions)                                     |
+| `position`         | String    | `"topright"`                         | Control [position](https://leafletjs.com/reference.html#control-positions)                                    |
 | `placeholder`      | String    | `"Search..."`                        | Placeholder text for text input                                                                               |
 | `errorMessage`     | String    | `"Nothing found."`                   | Message when no result found / geocoding error occurs                                                         |
 | `geocoder`         | IGeocoder | `new L.Control.Geocoder.Nominatim()` | Object to perform the actual geocoding queries                                                                |
