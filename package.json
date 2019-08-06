@@ -38,6 +38,7 @@
     "google-maps",
     "mapbox",
     "mapquest",
+    "opencage",
     "what3words",
     "photon",
     "mapzen",

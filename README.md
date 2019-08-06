@@ -159,6 +159,20 @@ new L.Control.Geocoder.Bing(<String>key);
 L.Control.Geocoder.bing(<String>key);
 ```
 
+## L.Control.Geocoder.OpenCage
+
+Uses [OpenCage Data API](https://opencagedata.com/) to respond to geocoding queries. Implements `IGeocoder`.
+
+Note that you need an API key to use this service.
+
+### Constructor
+
+```ts
+new L.Control.Geocoder.OpenCage(<String>key);
+// or
+L.Control.Geocoder.opencage(<String>key);
+```
+
 ## L.Control.Geocoder.LatLng
 
 Parses basic latitude/longitude strings such as `'50.06773 14.37742'`, `'N50.06773 W14.37742'`, `'S 50° 04.064 E 014° 22.645'`, or `'S 50° 4′ 03.828″, W 14° 22′ 38.712″'`.
