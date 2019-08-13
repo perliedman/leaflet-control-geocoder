@@ -3,8 +3,8 @@ import { getJSON } from '../util';
 
 export var HERE = L.Class.extend({
   options: {
-    geocodeUrl: 'http://geocoder.api.here.com/6.2/geocode.json',
-    reverseGeocodeUrl: 'http://reverse.geocoder.api.here.com/6.2/reversegeocode.json',
+    geocodeUrl: 'https://geocoder.api.here.com/6.2/geocode.json',
+    reverseGeocodeUrl: 'https://reverse.geocoder.api.here.com/6.2/reversegeocode.json',
     app_id: '<insert your app_id here>',
     app_code: '<insert your app_code here>',
     geocodingQueryParams: {},
