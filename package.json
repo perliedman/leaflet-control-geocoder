@@ -26,6 +26,14 @@
     "type": "git",
     "url": "git://github.com/perliedman/leaflet-control-geocoder.git"
   },
+  "files": [
+    "LICENCE",
+    "dist/**",
+    "demo/**",
+    "images/**",
+    "src/**",
+    "*.css"
+  ],
   "keywords": [
     "leaflet",
     "geocoder",
