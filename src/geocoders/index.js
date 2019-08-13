@@ -8,6 +8,7 @@ export * from './mapquest';
 export * from './neutrino';
 export * from './nominatim';
 export * from './open-location-code';
+export * from './opencage';
 export * from './pelias';
 export * from './photon';
 export * from './what3words';
