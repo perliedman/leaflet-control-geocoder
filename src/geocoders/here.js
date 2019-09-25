@@ -8,7 +8,8 @@ export var HERE = L.Class.extend({
     app_id: '<insert your app_id here>',
     app_code: '<insert your app_code here>',
     geocodingQueryParams: {},
-    reverseQueryParams: {}
+    reverseQueryParams: {},
+    reverseGeocodeProxRadius: null
   },
 
   initialize: function(options) {
@@ -28,8 +29,10 @@ export var HERE = L.Class.extend({
   },
 
   reverse: function(location, scale, cb, context) {
+    var _proxRadius = this.options.reverseGeocodeProxRadius ? Number.isInteger(this.options.reverseGeocodeProxRadius) ? this.options.reverseGeocodeProxRadius : null : null;
+    var proxRadius = _proxRadius ? ','+encodeURIComponent(_proxRadius) : '';
     var params = {
-      prox: encodeURIComponent(location.lat) + ',' + encodeURIComponent(location.lng),
+      prox: encodeURIComponent(location.lat) + ',' + encodeURIComponent(location.lng) + proxRadius,
       mode: 'retrieveAddresses',
       app_id: this.options.app_id,
       app_code: this.options.app_code,
