@@ -30,10 +30,7 @@ export var HERE = L.Class.extend({
 
   reverse: function(location, scale, cb, context) {
     var _proxRadius = this.options.reverseGeocodeProxRadius
-      ? Number.isInteger(this.options.reverseGeocodeProxRadius)
-        ? this.options.reverseGeocodeProxRadius
-        : null
-      : null;
+      ? this.options.reverseGeocodeProxRadius : null;
     var proxRadius = _proxRadius ? ',' + encodeURIComponent(_proxRadius) : '';
     var params = {
       prox: encodeURIComponent(location.lat) + ',' + encodeURIComponent(location.lng) + proxRadius,
