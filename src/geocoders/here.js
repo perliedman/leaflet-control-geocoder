@@ -1,6 +1,5 @@
 import L from 'leaflet';
 import { getJSON } from '../util';
-
 export var HERE = L.Class.extend({
   options: {
     geocodeUrl: 'https://geocoder.api.here.com/6.2/geocode.json',
@@ -8,13 +7,12 @@ export var HERE = L.Class.extend({
     app_id: '<insert your app_id here>',
     app_code: '<insert your app_code here>',
     geocodingQueryParams: {},
-    reverseQueryParams: {}
+    reverseQueryParams: {},
+    reverseGeocodeProxRadius: null
   },
-
   initialize: function(options) {
     L.setOptions(this, options);
   },
-
   geocode: function(query, cb, context) {
     var params = {
       searchtext: query,
@@ -26,10 +24,13 @@ export var HERE = L.Class.extend({
     params = L.Util.extend(params, this.options.geocodingQueryParams);
     this.getJSON(this.options.geocodeUrl, params, cb, context);
   },
-
   reverse: function(location, scale, cb, context) {
+    var _proxRadius = this.options.reverseGeocodeProxRadius
+      ? this.options.reverseGeocodeProxRadius
+      : null;
+    var proxRadius = _proxRadius ? ',' + encodeURIComponent(_proxRadius) : '';
     var params = {
-      prox: encodeURIComponent(location.lat) + ',' + encodeURIComponent(location.lng),
+      prox: encodeURIComponent(location.lat) + ',' + encodeURIComponent(location.lng) + proxRadius,
       mode: 'retrieveAddresses',
       app_id: this.options.app_id,
       app_code: this.options.app_code,
@@ -39,7 +40,6 @@ export var HERE = L.Class.extend({
     params = L.Util.extend(params, this.options.reverseQueryParams);
     this.getJSON(this.options.reverseGeocodeUrl, params, cb, context);
   },
-
   getJSON: function(url, params, cb, context) {
     getJSON(url, params, function(data) {
       var results = [],
@@ -65,7 +65,6 @@ export var HERE = L.Class.extend({
     });
   }
 });
-
 export function here(options) {
   return new HERE(options);
 }
