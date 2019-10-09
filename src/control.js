@@ -47,6 +47,7 @@ export var Geocoder = L.Control.extend({
 
     icon.innerHTML = '&nbsp;';
     icon.type = 'button';
+    icon.setAttribute('aria-label', 'Initiate a new search');
 
     input = this._input = L.DomUtil.create('input', '', form);
     input.type = 'text';
