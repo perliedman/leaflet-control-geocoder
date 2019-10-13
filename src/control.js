@@ -49,6 +49,9 @@ export var Geocoder = L.Control.extend({
     icon.type = 'button';
 
     input = this._input = L.DomUtil.create('input', '', form);
+    if (this.options.searchInputId) {
+      input.id = this.options.searchInputId;
+    }
     input.type = 'text';
     input.placeholder = this.options.placeholder;
     L.DomEvent.disableClickPropagation(input);

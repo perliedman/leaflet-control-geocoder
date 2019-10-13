@@ -115,6 +115,7 @@ L.Control.geocoder(options);
 | `suggestTimeout`     | Number    | `250`                                | Number of milliseconds after typing stopped before suggest functionality is used (if available from geocoder) |
 | `queryMinLength`     | Number    | `1`                                  | Minimum number of characters in search text before performing a query                                         |
 | `defaultMarkGeocode` | Boolean   | `true`                               | Add a marker to the map for the selected result                                                               |
+| `searchInputId`      | String    | `''`                                 | Id of the search input element                                                                                |
 
 ### Methods
 
