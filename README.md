@@ -101,19 +101,20 @@ L.Control.geocoder(options);
 
 ### Options
 
-| Option             | Type      | Default                              | Description                                                                                                   |
-| ------------------ | --------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------- |
-| `collapsed`        | Boolean   | `true`                               | Collapse control unless hovered/clicked                                                                       |
-| `expand`           | String    | `"touch"`                            | How to expand a collapsed control: `touch` or `click` or `hover`                                              |
-| `position`         | String    | `"topright"`                         | Control [position](https://leafletjs.com/reference.html#control-positions)                                    |
-| `placeholder`      | String    | `"Search..."`                        | Placeholder text for text input                                                                               |
-| `errorMessage`     | String    | `"Nothing found."`                   | Message when no result found / geocoding error occurs                                                         |
-| `geocoder`         | IGeocoder | `new L.Control.Geocoder.Nominatim()` | Object to perform the actual geocoding queries                                                                |
-| `showUniqueResult` | Boolean   | `true`                               | Immediately show the unique result without prompting for alternatives                                         |
-| `showResultIcons`  | Boolean   | `false`                              | Show icons for geocoding results (if available); supported by Nominatim                                       |
-| `suggestMinLength` | Number    | `3`                                  | Minimum number characters before suggest functionality is used (if available from geocoder)                   |
-| `suggestTimeout`   | Number    | `250`                                | Number of milliseconds after typing stopped before suggest functionality is used (if available from geocoder) |
-| `queryMinLength`   | Number    | `1`                                  | Minimum number of characters in search text before performing a query                                         |
+| Option               | Type      | Default                              | Description                                                                                                   |
+| -------------------- | --------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------- |
+| `collapsed`          | Boolean   | `true`                               | Collapse control unless hovered/clicked                                                                       |
+| `expand`             | String    | `"touch"`                            | How to expand a collapsed control: `touch` or `click` or `hover`                                              |
+| `position`           | String    | `"topright"`                         | Control [position](https://leafletjs.com/reference.html#control-positions)                                    |
+| `placeholder`        | String    | `"Search..."`                        | Placeholder text for text input                                                                               |
+| `errorMessage`       | String    | `"Nothing found."`                   | Message when no result found / geocoding error occurs                                                         |
+| `geocoder`           | IGeocoder | `new L.Control.Geocoder.Nominatim()` | Object to perform the actual geocoding queries                                                                |
+| `showUniqueResult`   | Boolean   | `true`                               | Immediately show the unique result without prompting for alternatives                                         |
+| `showResultIcons`    | Boolean   | `false`                              | Show icons for geocoding results (if available); supported by Nominatim                                       |
+| `suggestMinLength`   | Number    | `3`                                  | Minimum number characters before suggest functionality is used (if available from geocoder)                   |
+| `suggestTimeout`     | Number    | `250`                                | Number of milliseconds after typing stopped before suggest functionality is used (if available from geocoder) |
+| `queryMinLength`     | Number    | `1`                                  | Minimum number of characters in search text before performing a query                                         |
+| `defaultMarkGeocode` | Boolean   | `true`                               | Add a marker to the map for the selected result                                                               |
 
 ### Methods
 
