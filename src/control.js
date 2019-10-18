@@ -10,6 +10,7 @@ export var Geocoder = L.Control.extend({
     position: 'topright',
     placeholder: 'Search...',
     errorMessage: 'Nothing found.',
+    iconLabel: 'Initiate a new search',
     queryMinLength: 1,
     suggestMinLength: 3,
     suggestTimeout: 250,
@@ -47,7 +48,7 @@ export var Geocoder = L.Control.extend({
 
     icon.innerHTML = '&nbsp;';
     icon.type = 'button';
-    icon.setAttribute('aria-label', 'Initiate a new search');
+    icon.setAttribute('aria-label', this.options.iconLabel);
 
     input = this._input = L.DomUtil.create('input', '', form);
     input.type = 'text';
