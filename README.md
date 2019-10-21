@@ -108,6 +108,7 @@ L.Control.geocoder(options);
 | `position`         | String    | `"topright"`                         | Control [position](https://leafletjs.com/reference.html#control-positions)                                    |
 | `placeholder`      | String    | `"Search..."`                        | Placeholder text for text input                                                                               |
 | `errorMessage`     | String    | `"Nothing found."`                   | Message when no result found / geocoding error occurs                                                         |
+| `iconLabel`        | String    | `"Initiate a new search"`            | Accessibility label for the search icon used by screen readers                                                |
 | `geocoder`         | IGeocoder | `new L.Control.Geocoder.Nominatim()` | Object to perform the actual geocoding queries                                                                |
 | `showUniqueResult` | Boolean   | `true`                               | Immediately show the unique result without prompting for alternatives                                         |
 | `showResultIcons`  | Boolean   | `false`                              | Show icons for geocoding results (if available); supported by Nominatim                                       |
