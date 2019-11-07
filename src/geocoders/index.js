@@ -12,3 +12,4 @@ export * from './opencage';
 export * from './pelias';
 export * from './photon';
 export * from './what3words';
+export * from './locationiq';
