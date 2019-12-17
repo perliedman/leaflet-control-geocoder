@@ -6,17 +6,19 @@ export var OpenCage = L.Class.extend({
     serviceUrl: 'https://api.opencagedata.com/geocode/v1/json'
   },
 
-  initialize: function(apiKey) {
+  initialize: function(apiKey, options) {
+    L.setOptions(this, options);
     this._accessToken = apiKey;
   },
 
   geocode: function(query, cb, context) {
+    var params = {
+      key: this._accessToken,
+      q: query
+    };
     getJSON(
       this.options.serviceUrl,
-      {
-        key: this._accessToken,
-        q: query
-      },
+      L.extend(params, this.options.geocodingQueryParams),
       function(data) {
         var results = [],
           latLng,
@@ -87,6 +89,6 @@ export var OpenCage = L.Class.extend({
   }
 });
 
-export function opencage(apiKey) {
-  return new OpenCage(apiKey);
+export function opencage(apiKey, options) {
+  return new OpenCage(apiKey, options);
 }
