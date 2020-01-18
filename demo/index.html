@@ -45,6 +45,8 @@
       }
 
       var control = L.Control.geocoder({
+        query: 'Moon',
+        placeholder: 'Search here...',
         geocoder: geocoder
       }).addTo(map);
       var marker;

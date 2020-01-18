@@ -114,6 +114,7 @@ L.Control.geocoder(options);
 | `showResultIcons`  | Boolean   | `false`                              | Show icons for geocoding results (if available); supported by Nominatim                                       |
 | `suggestMinLength` | Number    | `3`                                  | Minimum number characters before suggest functionality is used (if available from geocoder)                   |
 | `suggestTimeout`   | Number    | `250`                                | Number of milliseconds after typing stopped before suggest functionality is used (if available from geocoder) |
+| `query`            | String    | `""`                                 | Initial query string for text input                                                                           |
 | `queryMinLength`   | Number    | `1`                                  | Minimum number of characters in search text before performing a query                                         |
 
 ### Methods
