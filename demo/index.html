@@ -51,6 +51,10 @@
       }).addTo(map);
       var marker;
 
+      setTimeout(function() {
+        control.setQuery('Earth');
+      }, 12000);
+
       L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
       }).addTo(map);

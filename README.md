@@ -119,9 +119,10 @@ L.Control.geocoder(options);
 
 ### Methods
 
-| Method                                  | Returns | Description                         |
-| --------------------------------------- | ------- | ----------------------------------- |
-| `markGeocode(<GeocodingResult> result)` | `this`  | Marks a geocoding result on the map |
+| Method                                  | Returns | Description                             |
+| --------------------------------------- | ------- | --------------------------------------- |
+| `markGeocode(<GeocodingResult> result)` | `this`  | Marks a geocoding result on the map     |
+| `setQuery(<String> query)`              | `this`  | Sets the query string on the text input |
 
 ## L.Control.Geocoder.Nominatim
 

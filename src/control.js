@@ -147,6 +147,11 @@ export var Geocoder = L.Control.extend({
     return container;
   },
 
+  setQuery(string) {
+    this._input.value = string;
+    return this;
+  },
+
   _geocodeResult: function(results, suggest) {
     if (!suggest && this.options.showUniqueResult && results.length === 1) {
       this._geocodeResultSelected(results[0]);
