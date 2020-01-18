@@ -147,7 +147,7 @@ export var Geocoder = L.Control.extend({
     return container;
   },
 
-  setQuery(string) {
+  setQuery: function(string) {
     this._input.value = string;
     return this;
   },
