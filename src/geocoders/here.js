@@ -56,6 +56,7 @@ export var HERE = L.Class.extend({
           );
           results[i] = {
             name: loc.address.label,
+            properties: loc.address,
             bbox: latLngBounds,
             center: latLng
           };
