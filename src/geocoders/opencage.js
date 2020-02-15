@@ -16,36 +16,33 @@ export var OpenCage = L.Class.extend({
       key: this._accessToken,
       q: query
     };
-    getJSON(
-      this.options.serviceUrl,
-      L.extend(params, this.options.geocodingQueryParams),
-      function(data) {
-        var results = [],
-          latLng,
-          latLngBounds,
-          loc;
-        if (data.results && data.results.length) {
-          for (var i = 0; i < data.results.length; i++) {
-            loc = data.results[i];
-            latLng = L.latLng(loc.geometry);
-            if (loc.annotations && loc.annotations.bounds) {
-              latLngBounds = L.latLngBounds(
-                L.latLng(loc.annotations.bounds.northeast),
-                L.latLng(loc.annotations.bounds.southwest)
-              );
-            } else {
-              latLngBounds = L.latLngBounds(latLng, latLng);
-            }
-            results.push({
-              name: loc.formatted,
-              bbox: latLngBounds,
-              center: latLng
-            });
+    params = L.extend(params, this.options.geocodingQueryParams);
+    getJSON(this.options.serviceUrl, params, function(data) {
+      var results = [],
+        latLng,
+        latLngBounds,
+        loc;
+      if (data.results && data.results.length) {
+        for (var i = 0; i < data.results.length; i++) {
+          loc = data.results[i];
+          latLng = L.latLng(loc.geometry);
+          if (loc.annotations && loc.annotations.bounds) {
+            latLngBounds = L.latLngBounds(
+              L.latLng(loc.annotations.bounds.northeast),
+              L.latLng(loc.annotations.bounds.southwest)
+            );
+          } else {
+            latLngBounds = L.latLngBounds(latLng, latLng);
           }
+          results.push({
+            name: loc.formatted,
+            bbox: latLngBounds,
+            center: latLng
+          });
         }
-        cb.call(context, results);
       }
-    );
+      cb.call(context, results);
+    });
   },
 
   suggest: function(query, cb, context) {
