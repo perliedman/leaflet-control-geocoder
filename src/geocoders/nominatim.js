@@ -8,25 +8,22 @@ export var Nominatim = L.Class.extend({
     reverseQueryParams: {},
     htmlTemplate: function(r) {
       var a = r.address,
+        className,
         parts = [];
       if (a.road || a.building) {
         parts.push('{building} {road} {house_number}');
       }
 
       if (a.city || a.town || a.village || a.hamlet) {
+        className = parts.length > 0 ? 'leaflet-control-geocoder-address-detail' : '';
         parts.push(
-          '<span class="' +
-            (parts.length > 0 ? 'leaflet-control-geocoder-address-detail' : '') +
-            '">{postcode} {city} {town} {village} {hamlet}</span>'
+          '<span class="' + className + '">{postcode} {city} {town} {village} {hamlet}</span>'
         );
       }
 
       if (a.state || a.country) {
-        parts.push(
-          '<span class="' +
-            (parts.length > 0 ? 'leaflet-control-geocoder-address-context' : '') +
-            '">{state} {country}</span>'
-        );
+        className = parts.length > 0 ? 'leaflet-control-geocoder-address-context' : '';
+        parts.push('<span class="' + className + '">{state} {country}</span>');
       }
 
       return template(parts.join('<br/>'), a, true);
