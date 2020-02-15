@@ -267,7 +267,7 @@ export var Geocoder = L.Control.extend({
         this._geocodeResultSelected(result);
         L.DomEvent.on(
           li,
-          'click',
+          'click touchend',
           function() {
             if (this.options.collapsed) {
               this._collapse();
