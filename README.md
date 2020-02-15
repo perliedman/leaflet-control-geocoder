@@ -171,10 +171,18 @@ Note that you need an API key to use this service.
 ### Constructor
 
 ```ts
-new L.Control.Geocoder.OpenCage(<String>key);
+new L.Control.Geocoder.OpenCage(<String>key, options);
 // or
-L.Control.Geocoder.opencage(<String>key);
+L.Control.Geocoder.opencage(<String>key, options);
 ```
+
+### Options
+
+| Option                 | Type   | Default                                          | Description                                                                          |
+| ---------------------- | ------ | ------------------------------------------------ | ------------------------------------------------------------------------------------ |
+| `serviceUrl`           | String | `"https://api.opencagedata.com/geocode/v1/json"` | URL of the service                                                                   |
+| `geocodingQueryParams` | Object | `{}`                                             | Additional URL parameters (strings) that will be added to geocoding requests         |
+| `reverseQueryParams`   | Object | `{}`                                             | Additional URL parameters (strings) that will be added to reverse geocoding requests |
 
 ## L.Control.Geocoder.LatLng
 
