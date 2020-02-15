@@ -6,44 +6,43 @@ export var OpenCage = L.Class.extend({
     serviceUrl: 'https://api.opencagedata.com/geocode/v1/json'
   },
 
-  initialize: function(apiKey) {
+  initialize: function(apiKey, options) {
+    L.setOptions(this, options);
     this._accessToken = apiKey;
   },
 
   geocode: function(query, cb, context) {
-    getJSON(
-      this.options.serviceUrl,
-      {
-        key: this._accessToken,
-        q: query
-      },
-      function(data) {
-        var results = [],
-          latLng,
-          latLngBounds,
-          loc;
-        if (data.results && data.results.length) {
-          for (var i = 0; i < data.results.length; i++) {
-            loc = data.results[i];
-            latLng = L.latLng(loc.geometry);
-            if (loc.annotations && loc.annotations.bounds) {
-              latLngBounds = L.latLngBounds(
-                L.latLng(loc.annotations.bounds.northeast),
-                L.latLng(loc.annotations.bounds.southwest)
-              );
-            } else {
-              latLngBounds = L.latLngBounds(latLng, latLng);
-            }
-            results.push({
-              name: loc.formatted,
-              bbox: latLngBounds,
-              center: latLng
-            });
+    var params = {
+      key: this._accessToken,
+      q: query
+    };
+    params = L.extend(params, this.options.geocodingQueryParams);
+    getJSON(this.options.serviceUrl, params, function(data) {
+      var results = [],
+        latLng,
+        latLngBounds,
+        loc;
+      if (data.results && data.results.length) {
+        for (var i = 0; i < data.results.length; i++) {
+          loc = data.results[i];
+          latLng = L.latLng(loc.geometry);
+          if (loc.annotations && loc.annotations.bounds) {
+            latLngBounds = L.latLngBounds(
+              L.latLng(loc.annotations.bounds.northeast),
+              L.latLng(loc.annotations.bounds.southwest)
+            );
+          } else {
+            latLngBounds = L.latLngBounds(latLng, latLng);
           }
+          results.push({
+            name: loc.formatted,
+            bbox: latLngBounds,
+            center: latLng
+          });
         }
-        cb.call(context, results);
       }
-    );
+      cb.call(context, results);
+    });
   },
 
   suggest: function(query, cb, context) {
@@ -87,6 +86,6 @@ export var OpenCage = L.Class.extend({
   }
 });
 
-export function opencage(apiKey) {
-  return new OpenCage(apiKey);
+export function opencage(apiKey, options) {
+  return new OpenCage(apiKey, options);
 }
