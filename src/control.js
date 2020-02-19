@@ -265,13 +265,13 @@ export var Geocoder = L.Control.extend({
         this._preventBlurCollapse = true;
         L.DomEvent.stop(e);
 
-        if(result.bbox || result.center) {
+        if (result.bbox || result.center) {
           this._geocodeResultSelected(result);
         } else {
           this.setQuery(result.name);
           this._geocode();
         }
-        
+
         L.DomEvent.on(
           li,
           'click touchend',

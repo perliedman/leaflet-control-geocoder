@@ -61,7 +61,7 @@ export var HERE = L.Class.extend({
           loc = data.suggestions[i];
           results[i] = {
             name: loc.label,
-            properties: loc.address,
+            properties: loc.address
           };
         }
       }
