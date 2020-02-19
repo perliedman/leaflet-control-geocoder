@@ -4,6 +4,7 @@ export var HERE = L.Class.extend({
   options: {
     geocodeUrl: 'https://geocoder.api.here.com/6.2/geocode.json',
     reverseGeocodeUrl: 'https://reverse.geocoder.api.here.com/6.2/reversegeocode.json',
+    suggestUrl: 'https://autocomplete.geocoder.api.here.com/6.2/suggest.json',
     app_id: '<insert your app_id here>',
     app_code: '<insert your app_code here>',
     geocodingQueryParams: {},
@@ -24,6 +25,17 @@ export var HERE = L.Class.extend({
     params = L.Util.extend(params, this.options.geocodingQueryParams);
     this.getJSON(this.options.geocodeUrl, params, cb, context);
   },
+  suggest: function(query, cb, context) {
+    var params = {
+      query: query,
+      app_id: this.options.app_id,
+      app_code: this.options.app_code,
+      gen: 9,
+      jsonattributes: 1
+    };
+    params = L.Util.extend(params, this.options.geocodingQueryParams);
+    this.getSuggestJSON(this.options.suggestUrl, params, cb, context);
+  },
   reverse: function(location, scale, cb, context) {
     var _proxRadius = this.options.reverseGeocodeProxRadius
       ? this.options.reverseGeocodeProxRadius
@@ -39,6 +51,22 @@ export var HERE = L.Class.extend({
     };
     params = L.Util.extend(params, this.options.reverseQueryParams);
     this.getJSON(this.options.reverseGeocodeUrl, params, cb, context);
+  },
+  getSuggestJSON: function(url, params, cb, context) {
+    getJSON(url, params, function(data) {
+      var results = [],
+        loc;
+      if (data.suggestions && data.suggestions.length) {
+        for (var i = 0; i <= data.suggestions.length - 1; i++) {
+          loc = data.suggestions[i];
+          results[i] = {
+            name: loc.label,
+            properties: loc.address,
+          };
+        }
+      }
+      cb.call(context, results);
+    });
   },
   getJSON: function(url, params, cb, context) {
     getJSON(url, params, function(data) {
