@@ -89,7 +89,7 @@ export var Geocoder = L.Control.extend({
           'click',
           function(e) {
             if (e.button === 0 && e.detail !== 2) {
-              this._toggle();
+            this._toggle();
             }
           },
           this
@@ -264,7 +264,14 @@ export var Geocoder = L.Control.extend({
         // for #142.
         this._preventBlurCollapse = true;
         L.DomEvent.stop(e);
-        this._geocodeResultSelected(result);
+
+        if(result.bbox || result.center) {
+          this._geocodeResultSelected(result);
+        } else {
+          this.setQuery(result.name);
+          this._geocode();
+        }
+        
         L.DomEvent.on(
           li,
           'click touchend',
