@@ -89,7 +89,7 @@ export var Geocoder = L.Control.extend({
           'click',
           function(e) {
             if (e.button === 0 && e.detail !== 2) {
-            this._toggle();
+              this._toggle();
             }
           },
           this
