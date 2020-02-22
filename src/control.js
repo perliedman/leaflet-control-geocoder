@@ -94,10 +94,10 @@ export var Geocoder = L.Control.extend({
           },
           this
         );
-      } else if (L.Browser.touch && this.options.expand === 'touch') {
+      } else if (this.options.expand === 'touch') {
         L.DomEvent.addListener(
           container,
-          'touchstart mousedown',
+          L.Browser.touch ? 'touchstart mousedown' : 'mousedown',
           function(e) {
             this._toggle();
             e.preventDefault(); // mobile: clicking focuses the icon, so UI expands and immediately collapses
