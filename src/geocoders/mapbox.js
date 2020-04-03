@@ -49,6 +49,11 @@ export var Mapbox = L.Class.extend({
           for (var j = 0; j < (loc.context || []).length; j++) {
             var id = loc.context[j].id.split('.')[0];
             properties[id] = loc.context[j].text;
+
+            // Get country code when available
+            if (loc.context[j].short_code) {
+              properties['countryShortCode'] = loc.context[j].short_code
+            }
           }
 
           results[i] = {
