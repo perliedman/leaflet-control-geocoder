@@ -1,4 +1,5 @@
 import pkg from './package.json';
+import typescript from '@rollup/plugin-typescript';
 import { terser } from 'rollup-plugin-terser';
 
 var banner =
@@ -25,8 +26,9 @@ var output = {
 };
 
 export default {
-  input: 'src/index.js',
+  input: 'src/index.ts',
   external: ['leaflet'],
+  plugins: [typescript()],
   output: [
     output,
     Object.assign({}, output, {
