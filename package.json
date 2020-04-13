@@ -64,9 +64,10 @@
   "bugs": {
     "url": "https://github.com/perliedman/leaflet-control-geocoder/issues"
   },
-  "dependencies": {},
   "devDependencies": {
     "conventional-changelog-cli": "^2.1.0",
+    "@rollup/plugin-typescript": "^4.1.1",
+    "@types/leaflet": "^1.5.12",
     "cpr": "^3.0.1",
     "eslint": "^6.8.0",
     "eslint-plugin-prettier": "^3.1.2",
@@ -81,7 +82,9 @@
     "prettier": "^1.19.1",
     "rollup": "^2.6.1",
     "rollup-plugin-terser": "^5.3.0",
-    "sinon": "^7.5.0"
+    "sinon": "^7.5.0",
+    "tslib": "^1.11.1",
+    "typescript": "^3.8.3"
   },
   "optionalDependencies": {
     "open-location-code": "^1.0.0"

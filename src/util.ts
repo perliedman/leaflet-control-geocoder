@@ -1,11 +1,11 @@
-import L from 'leaflet';
+import * as L from 'leaflet';
 var lastCallbackId = 0;
 
 // Adapted from handlebars.js
 // https://github.com/wycats/handlebars.js/
 var badChars = /[&<>"'`]/g;
 var possible = /[&<>"'`]/;
-var escape = {
+var escape: Record<string, string> = {
   '&': '&amp;',
   '<': '&lt;',
   '>': '&gt;',
@@ -14,11 +14,11 @@ var escape = {
   '`': '&#x60;'
 };
 
-function escapeChar(chr) {
+function escapeChar(chr: string) {
   return escape[chr];
 }
 
-export function htmlEscape(string) {
+export function htmlEscape(string?: string): string {
   if (string == null) {
     return '';
   } else if (!string) {
@@ -36,10 +36,16 @@ export function htmlEscape(string) {
   return string.replace(badChars, escapeChar);
 }
 
-export function jsonp(url, params, callback, context, jsonpParam) {
+export function jsonp(
+  url: string,
+  params: Record<string, any>,
+  callback: (message: any) => void,
+  context: any,
+  jsonpParam?: string
+) {
   var callbackId = '_l_geocoder_' + lastCallbackId++;
   params[jsonpParam || 'callback'] = callbackId;
-  window[callbackId] = L.Util.bind(callback, context);
+  (window as any)[callbackId] = L.Util.bind(callback, context);
   var script = document.createElement('script');
   script.type = 'text/javascript';
   script.src = url + getParamString(params);
@@ -47,7 +53,7 @@ export function jsonp(url, params, callback, context, jsonpParam) {
   document.getElementsByTagName('head')[0].appendChild(script);
 }
 
-export function getJSON(url, params, callback) {
+export function getJSON(url: string, params: object, callback: (message: any) => void): void {
   var xmlHttp = new XMLHttpRequest();
   xmlHttp.onreadystatechange = function() {
     if (xmlHttp.readyState !== 4) {
@@ -75,7 +81,7 @@ export function getJSON(url, params, callback) {
   xmlHttp.send(null);
 }
 
-export function template(str, data) {
+export function template(str: string, data: Record<string, any>): string {
   return str.replace(/\{ *([\w_]+) *\}/g, function(str, key) {
     var value = data[key];
     if (value === undefined) {
@@ -87,7 +93,11 @@ export function template(str, data) {
   });
 }
 
-export function getParamString(obj, existingUrl, uppercase) {
+export function getParamString(
+  obj: Record<string, any>,
+  existingUrl?: string,
+  uppercase?: boolean
+): string {
   var params = [];
   for (var i in obj) {
     var key = encodeURIComponent(uppercase ? i.toUpperCase() : i);
