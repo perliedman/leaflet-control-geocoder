@@ -52,7 +52,7 @@ export var Mapbox = L.Class.extend({
 
             // Get country code when available
             if (loc.context[j].short_code) {
-              properties['countryShortCode'] = loc.context[j].short_code
+              properties['countryShortCode'] = loc.context[j].short_code;
             }
           }
 
