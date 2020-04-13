@@ -19,6 +19,7 @@ export interface GeocoderOptions extends L.ControlOptions {
 
 export interface GeocoderControl {
   _map?: L.Map;
+  _e?: L.Evented;
   _requestCount?: number;
   _container?: HTMLElement;
   _form?: HTMLElement;
@@ -78,6 +79,7 @@ export const GeocoderControl = L.Control.extend<GeocoderControl>({
       this.options.geocoder = new Nominatim();
     }
 
+    this._e = (this as unknown) as L.Evented;
     this._requestCount = 0;
   },
 
@@ -162,13 +164,13 @@ export const GeocoderControl = L.Control.extend<GeocoderControl>({
     }
 
     if (this.options.defaultMarkGeocode) {
-      this.on('markgeocode', this.markGeocode, this);
+      this._e!.on('markgeocode', this.markGeocode, this);
     }
 
-    this.on('startgeocode', this.addThrobberClass, this);
-    this.on('finishgeocode', this.removeThrobberClass, this);
-    this.on('startsuggest', this.addThrobberClass, this);
-    this.on('finishsuggest', this.removeThrobberClass, this);
+    this._e!.on('startgeocode', this.addThrobberClass, this);
+    this._e!.on('finishgeocode', this.removeThrobberClass, this);
+    this._e!.on('startsuggest', this.addThrobberClass, this);
+    this._e!.on('finishsuggest', this.removeThrobberClass, this);
 
     L.DomEvent.disableClickPropagation(container);
 
@@ -229,18 +231,18 @@ export const GeocoderControl = L.Control.extend<GeocoderControl>({
       this._clearResults();
     }
 
-    this.fire('start' + mode, eventData);
+    this._e!.fire('start' + mode, eventData);
     this.options.geocoder[mode](value, (results: any) => {
       if (requestCount === this._requestCount) {
         eventData.results = results;
-        this.fire('finish' + mode, eventData);
+        this._e!.fire('finish' + mode, eventData);
         this._geocodeResult(results, suggest);
       }
     });
   },
 
   _geocodeResultSelected: function(result) {
-    this.fire('markgeocode', { geocode: result });
+    this._e!.fire('markgeocode', { geocode: result });
   },
 
   _toggle: function() {
@@ -254,7 +256,7 @@ export const GeocoderControl = L.Control.extend<GeocoderControl>({
   _expand: function() {
     L.DomUtil.addClass(this._container!, 'leaflet-control-geocoder-expanded');
     this._input!.select();
-    this.fire('expand');
+    this._e!.fire('expand');
   },
 
   _collapse: function() {
@@ -264,7 +266,7 @@ export const GeocoderControl = L.Control.extend<GeocoderControl>({
     L.DomUtil.removeClass(this._container!, 'leaflet-control-geocoder-options-open');
     L.DomUtil.removeClass(this._container!, 'leaflet-control-geocoder-options-error');
     this._input!.blur(); // mobile: keyboard shouldn't stay expanded
-    this.fire('collapse');
+    this._e!.fire('collapse');
   },
 
   _clearResults: function() {
