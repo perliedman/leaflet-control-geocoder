@@ -76,10 +76,9 @@
     "mocha": "^6.2.2",
     "phantomjs-prebuilt": "^2.1.16",
     "prettier": "^1.19.1",
-    "rollup": "^0.65.2",
-    "rollup-plugin-uglify": "^5.0.2",
-    "sinon": "^7.5.0",
-    "uglify-js": "^3.7.5"
+    "rollup": "^2.6.1",
+    "rollup-plugin-terser": "^5.3.0",
+    "sinon": "^7.5.0"
   },
   "optionalDependencies": {
     "open-location-code": "^1.0.0"

@@ -1,5 +1,5 @@
 import pkg from './package.json';
-import { uglify } from 'rollup-plugin-uglify';
+import { terser } from 'rollup-plugin-terser';
 
 var banner =
   '/* @preserve\n' +
@@ -13,33 +13,25 @@ var banner =
   ' * All rights reserved.\n' +
   ' */\n';
 
-const config = Object.freeze({
+var output = {
+  file: 'dist/Control.Geocoder.js',
+  format: 'iife',
+  name: 'L.Control.Geocoder',
+  sourcemap: true,
+  globals: {
+    leaflet: 'L'
+  },
+  banner: banner
+};
+
+export default {
   input: 'src/index.js',
   external: ['leaflet'],
-  output: {
-    file: 'dist/Control.Geocoder.js',
-    format: 'iife',
-    name: 'L.Control.Geocoder',
-    sourcemap: true,
-    globals: {
-      leaflet: 'L'
-    },
-    banner: banner
-  }
-});
-
-export default [
-  config,
-  Object.assign({}, config, {
-    plugins: [
-      uglify({
-        output: {
-          comments: 'some'
-        }
-      })
-    ],
-    output: Object.assign({}, config.output, {
-      file: 'dist/Control.Geocoder.min.js'
+  output: [
+    output,
+    Object.assign({}, output, {
+      file: 'dist/Control.Geocoder.min.js',
+      plugins: [terser()]
     })
-  })
-];
+  ]
+};
