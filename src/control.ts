@@ -1,5 +1,6 @@
 import * as L from 'leaflet';
 import { Nominatim } from './geocoders/index';
+import { GeocoderAPI, GeocodingResult } from './geocoders/interfaces';
 
 export interface GeocoderOptions extends L.ControlOptions {
   collapsed: boolean;
@@ -7,7 +8,7 @@ export interface GeocoderOptions extends L.ControlOptions {
   placeholder: string;
   errorMessage: string;
   iconLabel: string;
-  geocoder: any; // TODO
+  geocoder: GeocoderAPI;
   showUniqueResult: boolean;
   showResultIcons: boolean;
   suggestMinLength: number;
@@ -15,6 +16,11 @@ export interface GeocoderOptions extends L.ControlOptions {
   query: string;
   queryMinLength: number;
   defaultMarkGeocode: boolean;
+}
+
+export interface EventData {
+  input: string;
+  results: GeocodingResult[];
 }
 
 export interface GeocoderControl {
@@ -55,7 +61,6 @@ export interface GeocoderControl {
 
 export const GeocoderControl = L.Control.extend<GeocoderControl>({
   options: {
-    geocoder: undefined,
     showUniqueResult: true,
     showResultIcons: false,
     collapsed: true,
@@ -224,7 +229,7 @@ export const GeocoderControl = L.Control.extend<GeocoderControl>({
 
     var requestCount = ++this._requestCount!,
       mode = suggest ? 'suggest' : 'geocode',
-      eventData = { input: value, results: undefined };
+      eventData = { input: value } as EventData;
 
     this._lastGeocode = value;
     if (!suggest) {
@@ -232,13 +237,18 @@ export const GeocoderControl = L.Control.extend<GeocoderControl>({
     }
 
     this._e!.fire('start' + mode, eventData);
-    this.options.geocoder[mode](value, (results: any) => {
+    var cb = (results: GeocodingResult[]) => {
       if (requestCount === this._requestCount) {
         eventData.results = results;
         this._e!.fire('finish' + mode, eventData);
         this._geocodeResult(results, suggest);
       }
-    });
+    };
+    if (suggest) {
+      this.options.geocoder.suggest!(value, cb);
+    } else {
+      this.options.geocoder.geocode(value, cb);
+    }
   },
 
   _geocodeResultSelected: function(result) {
