@@ -1,19 +1,36 @@
-import L from 'leaflet';
+import * as L from 'leaflet';
+import { GeocoderAPI, GeocodingResult } from './interfaces';
 
-export var OpenLocationCode = L.Class.extend({
-  options: {
-    OpenLocationCode: undefined,
-    codeLength: undefined
-  },
+export interface OpenLocationCodeOptions {
+  OpenLocationCode: OpenLocationCodeApi;
+  codeLength?: number;
+}
 
-  initialize: function(options) {
-    L.setOptions(this, options);
-  },
+export interface OpenLocationCodeApi {
+  encode(latitude: number, longitude: number, codeLength?: number): string;
+  decode(code: string): CodeArea;
+}
 
-  geocode: function(query, cb, context) {
+export interface CodeArea {
+  latitudeLo: number;
+  longitudeLo: number;
+  latitudeHi: number;
+  longitudeHi: number;
+  latitudeCenter: number;
+  longitudeCenter: number;
+  codeLength: number;
+}
+
+export class OpenLocationCode implements GeocoderAPI {
+  options: OpenLocationCodeOptions;
+  constructor(options: OpenLocationCodeOptions) {
+    this.options = options;
+  }
+
+  geocode(query: string, cb: (result: GeocodingResult[]) => void, context?: any) {
     try {
       var decoded = this.options.OpenLocationCode.decode(query);
-      var result = {
+      var result: GeocodingResult = {
         name: query,
         center: L.latLng(decoded.latitudeCenter, decoded.longitudeCenter),
         bbox: L.latLngBounds(
@@ -26,8 +43,8 @@ export var OpenLocationCode = L.Class.extend({
       console.warn(e); // eslint-disable-line no-console
       cb.call(context, []);
     }
-  },
-  reverse: function(location, scale, cb, context) {
+  }
+  reverse?(location: L.LatLng, scale: number, cb: (result: any) => void, context?: any) {
     try {
       var code = this.options.OpenLocationCode.encode(
         location.lat,
@@ -48,8 +65,8 @@ export var OpenLocationCode = L.Class.extend({
       cb.call(context, []);
     }
   }
-});
+}
 
-export function openLocationCode(options) {
+export function openLocationCode(options: OpenLocationCodeOptions) {
   return new OpenLocationCode(options);
 }
