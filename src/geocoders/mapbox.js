@@ -14,6 +14,24 @@ export var Mapbox = L.Class.extend({
     this.options.reverseQueryParams.access_token = accessToken;
   },
 
+  _getProperties: function(loc) {
+    var properties = {
+      text: loc.text,
+      address: loc.address
+    };
+
+    for (var j = 0; j < (loc.context || []).length; j++) {
+      var id = loc.context[j].id.split('.')[0];
+      properties[id] = loc.context[j].text;
+
+      // Get country code when available
+      if (loc.context[j].short_code) {
+        properties['countryShortCode'] = loc.context[j].short_code;
+      }
+    }
+    return properties;
+  },
+
   geocode: function(query, cb, context) {
     var params = this.options.geocodingQueryParams;
     if (
@@ -23,7 +41,7 @@ export var Mapbox = L.Class.extend({
     ) {
       params.proximity = params.proximity.lng + ',' + params.proximity.lat;
     }
-    getJSON(this.options.serviceUrl + encodeURIComponent(query) + '.json', params, function(data) {
+    getJSON(this.options.serviceUrl + encodeURIComponent(query) + '.json', params, L.bind(function(data) {
       var results = [],
         loc,
         latLng,
@@ -41,32 +59,17 @@ export var Mapbox = L.Class.extend({
             latLngBounds = L.latLngBounds(latLng, latLng);
           }
 
-          var properties = {
-            text: loc.text,
-            address: loc.address
-          };
-
-          for (var j = 0; j < (loc.context || []).length; j++) {
-            var id = loc.context[j].id.split('.')[0];
-            properties[id] = loc.context[j].text;
-
-            // Get country code when available
-            if (loc.context[j].short_code) {
-              properties['countryShortCode'] = loc.context[j].short_code;
-            }
-          }
-
           results[i] = {
             name: loc.place_name,
             bbox: latLngBounds,
             center: latLng,
-            properties: properties
+            properties: this._getProperties(loc)
           };
         }
       }
 
       cb.call(context, results);
-    });
+    }, this));
   },
 
   suggest: function(query, cb, context) {
@@ -81,7 +84,7 @@ export var Mapbox = L.Class.extend({
         encodeURIComponent(location.lat) +
         '.json',
       this.options.reverseQueryParams,
-      function(data) {
+      L.bind(function(data) {
         var results = [],
           loc,
           latLng,
@@ -101,13 +104,14 @@ export var Mapbox = L.Class.extend({
             results[i] = {
               name: loc.place_name,
               bbox: latLngBounds,
-              center: latLng
+              center: latLng,
+              properties: this._getProperties(loc)
             };
           }
         }
 
         cb.call(context, results);
-      }
+      }, this)
     );
   }
 });
