@@ -47,3 +47,42 @@ Array [
   ],
 ]
 `;
+
+exports[`L.Control.Geocoder.HEREv2 geocodes Innsbruck 1`] = `
+Array [
+  Array [
+    Array [
+      Object {
+        "bbox": Object {
+          "_northEast": Object {
+            "lat": 42.36355,
+            "lng": -71.05439,
+          },
+          "_southWest": Object {
+            "lat": 42.36355,
+            "lng": -71.05439,
+          },
+        },
+        "center": Object {
+          "lat": 42.36355,
+          "lng": -71.05439,
+        },
+        "name": "Salumeria Italiana, 151 Richmond St, Boston, MA 02109, United States",
+        "properties": Object {
+          "city": "Boston",
+          "countryCode": "USA",
+          "countryName": "United States",
+          "county": "Suffolk",
+          "district": "North End",
+          "houseNumber": "151",
+          "label": "Salumeria Italiana, 151 Richmond St, Boston, MA 02109, United States",
+          "postalCode": "02109",
+          "state": "Massachusetts",
+          "stateCode": "MA",
+          "street": "Richmond St",
+        },
+      },
+    ],
+  ],
+]
+`;

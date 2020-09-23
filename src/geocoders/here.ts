@@ -13,6 +13,8 @@ export interface HereOptions extends GeocoderOptions {
   app_id: string;
   app_code: string;
   reverseGeocodeProxRadius: null;
+  reverseGeocodeUrl: string;
+  apiKey: string;
 }
 
 /**
@@ -23,7 +25,9 @@ export class HERE implements IGeocoder {
     serviceUrl: 'https://geocoder.api.here.com/6.2/',
     app_id: '',
     app_code: '',
-    reverseGeocodeProxRadius: null
+    reverseGeocodeProxRadius: null,
+    apiKey: '',
+    reverseGeocodeUrl: ''
   };
 
   constructor(options?: Partial<HereOptions>) {
@@ -82,10 +86,97 @@ export class HERE implements IGeocoder {
   }
 }
 
+export class HEREv2 implements IGeocoder {
+
+  options: HereOptions = {
+    serviceUrl: 'https://geocode.search.hereapi.com/v1/discover',
+    reverseGeocodeUrl: 'https://revgeocode.search.hereapi.com/v1/revgeocode',
+    apiKey: '<insert your api key>',
+    reverseGeocodeProxRadius: null,
+    app_id: '',
+    app_code: ''
+  }
+
+  constructor(options?: Partial<HereOptions>) {
+    L.Util.setOptions(this, options);
+  }
+
+  geocode(query: string, cb: GeocodingCallback, context?: any): void {
+    
+    const params = geocodingParams(this.options, {
+      q: query,
+      apiKey: this.options.apiKey
+    });
+
+    if (!params.at && !params.in) {
+      throw Error('at / in parameters not found. Please define coordinates (at=latitude,longitude) or other (in) in your geocodingQueryParams.');
+    }
+
+    this.getJSON(this.options.serviceUrl, params, cb, context);
+  }
+
+  reverse(location: L.LatLngLiteral, scale: number, cb: GeocodingCallback, context?: any): void {
+    const _proxRadius = this.options.reverseGeocodeProxRadius
+      ? this.options.reverseGeocodeProxRadius
+      : null;
+    const proxRadius = _proxRadius ? ',' + encodeURIComponent(_proxRadius) : '';
+    const params = reverseParams(this.options, {
+      at: encodeURIComponent(location.lat) + ',' + encodeURIComponent(location.lng),
+      apiKey: this.options.apiKey
+    });
+
+    if (proxRadius) {
+      params.limit = proxRadius;
+    }
+
+    this.getJSON(this.options.reverseGeocodeUrl, params, cb, context);
+  }
+
+  getJSON(url: string, params: any, cb: GeocodingCallback, context?: any) {
+    getJSON(url, params, data => {
+      const results: GeocodingResult[] = [];
+
+      if (data.items && data.items.length) {
+        for (let i = 0; i <= data.items.length - 1; i++) {
+          let item, latLng, latLngBounds;
+          item = data.items[i];
+          latLng = L.latLng(item.position.lat, item.position.lng);
+
+          if (item.mapView) {
+            latLngBounds = L.latLngBounds(
+              L.latLng(item.mapView.south, item.mapView.west),
+              L.latLng(item.mapView.north, item.mapView.east)
+            );
+          } else {
+            // Using only position when not provided
+            latLngBounds = L.latLngBounds(
+              L.latLng(item.position.lat, item.position.lng),
+              L.latLng(item.position.lat, item.position.lng)
+            );
+          }
+          results[i] = {
+            name: item.address.label,
+            properties: item.address,
+            bbox: latLngBounds,
+            center: latLng
+          };
+        }
+      }
+      cb.call(context, results);
+    });
+  }
+}
+
+
 /**
  * [Class factory method](https://leafletjs.com/reference.html#class-class-factories) for {@link HERE}
  * @param options the options
  */
 export function here(options?: Partial<HereOptions>) {
-  return new HERE(options);
+  if (options.apiKey) {
+    return new HEREv2(options);
+  } else {
+    console.log('Using the api with app_code and app_id is deprecated. Check the docs to use an apiKey.')
+    return new HERE(options);
+  }
 }
