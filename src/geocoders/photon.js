@@ -3,8 +3,8 @@ import { getJSON } from '../util';
 
 export var Photon = L.Class.extend({
   options: {
-    serviceUrl: 'https://photon.komoot.de/api/',
-    reverseUrl: 'https://photon.komoot.de/reverse/',
+    serviceUrl: 'https://photon.komoot.io/api/',
+    reverseUrl: 'https://photon.komoot.io/reverse/',
     nameProperties: ['name', 'street', 'suburb', 'hamlet', 'town', 'city', 'state', 'country']
   },
 
