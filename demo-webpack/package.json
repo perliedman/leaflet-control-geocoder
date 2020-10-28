@@ -9,7 +9,10 @@
     "leaflet-control-geocoder": "^1.8.0"
   },
   "devDependencies": {
-    "webpack": "^4.33.0",
-    "webpack-cli": "^3.3.3"
+    "css-loader": "^5.0.0",
+    "file-loader": "^6.2.0",
+    "mini-css-extract-plugin": "^1.2.1",
+    "webpack": "^5.3.0",
+    "webpack-cli": "^4.1.0"
   }
 }
