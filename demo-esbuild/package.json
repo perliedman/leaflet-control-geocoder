@@ -1,0 +1,14 @@
+{
+  "name": "leaflet-control-geocoder-demo-esbuild",
+  "private": true,
+  "scripts": {
+    "build": "esbuild --bundle --loader:.gif=file --loader:.png=file --outdir=dist/ main.js"
+  },
+  "dependencies": {
+    "leaflet": "^1.5.1",
+    "leaflet-control-geocoder": "^1.8.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.8.0"
+  }
+}
