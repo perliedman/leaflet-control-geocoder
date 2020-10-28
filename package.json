@@ -13,6 +13,7 @@
     "build:demo-esbuild": "cd demo-esbuild && npm install && npm run build",
     "build:demo-rollup": "cd demo-rollup && npm install && npm run build",
     "build:demo-webpack": "cd demo-rollup && npm install && npm run build",
+    "changelog": "conventional-changelog --infile CHANGELOG.md --same-file --output-unreleased",
     "test": "npm run test:karma -- --single-run && npm run lint",
     "test:karma": "karma start spec/karma.conf.js",
     "lint": "npm run lint:js && npm run lint:style",
@@ -65,6 +66,7 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "conventional-changelog-cli": "^2.1.0",
     "cpr": "^3.0.1",
     "eslint": "^6.8.0",
     "eslint-plugin-prettier": "^3.1.2",
