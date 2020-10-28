@@ -6,10 +6,11 @@
   "module": "src/index.js",
   "scripts": {
     "prepare": "npm run build",
-    "build": "npm run build:js && npm run build:css && npm run build:img && npm run build:demo-rollup && npm run build:demo-webpack",
+    "build": "npm run build:js && npm run build:css && npm run build:img && npm run build:demo-esbuild && npm run build:demo-rollup && npm run build:demo-webpack",
     "build:js": "rollup -c",
     "build:css": "cpr Control.Geocoder.css dist/Control.Geocoder.css --overwrite",
     "build:img": "cpr images/ dist/images/ --overwrite",
+    "build:demo-esbuild": "cd demo-esbuild && npm install && npm run build",
     "build:demo-rollup": "cd demo-rollup && npm install && npm run build",
     "build:demo-webpack": "cd demo-rollup && npm install && npm run build",
     "test": "npm run test:karma -- --single-run && npm run lint",

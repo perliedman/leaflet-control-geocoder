@@ -1,5 +1,4 @@
 bundle.js
-demo-rollup/package-lock.json
-demo-webpack/package-lock.json
+demo-*/package-lock.json
 dist/
 node_modules/
