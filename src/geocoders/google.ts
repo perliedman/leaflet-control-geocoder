@@ -1,28 +1,31 @@
-import L from 'leaflet';
+import * as L from 'leaflet';
 import { getJSON } from '../util';
+import { GeocoderAPI, GeocodingResult } from './interfaces';
 
-export var Google = L.Class.extend({
-  options: {
+export interface GoogleOptions {
+  serviceUrl: string;
+  geocodingQueryParams?: object;
+  reverseQueryParams?: object;
+}
+
+export class Google  implements GeocoderAPI{
+  options:GoogleOptions= {
     serviceUrl: 'https://maps.googleapis.com/maps/api/geocode/json',
     geocodingQueryParams: {},
     reverseQueryParams: {}
-  },
+  }
 
-  initialize: function(key, options) {
-    this._key = key;
-    L.setOptions(this, options);
+  constructor(private key: string, options: Partial<GoogleOptions>) {
+    L.Util.setOptions(this, options);
     // Backwards compatibility
-    this.options.serviceUrl = this.options.service_url || this.options.serviceUrl;
-  },
+    this.options.serviceUrl = (this.options as any).service_url || this.options.serviceUrl;
+  }
 
-  geocode: function(query, cb, context) {
+  geocode(query: string, cb: (result: GeocodingResult[]) => void, context?: any): void {
     var params = {
+      key: this.key,
       address: query
     };
-
-    if (this._key && this._key.length) {
-      params.key = this._key;
-    }
 
     params = L.Util.extend(params, this.options.geocodingQueryParams);
 
@@ -50,16 +53,14 @@ export var Google = L.Class.extend({
 
       cb.call(context, results);
     });
-  },
+  }
 
-  reverse: function(location, scale, cb, context) {
+  reverse(location: L.LatLng, scale: number, cb: (result: any) => void, context?: any): void {
     var params = {
+      key: this.key,
       latlng: encodeURIComponent(location.lat) + ',' + encodeURIComponent(location.lng)
     };
     params = L.Util.extend(params, this.options.reverseQueryParams);
-    if (this._key && this._key.length) {
-      params.key = this._key;
-    }
 
     getJSON(this.options.serviceUrl, params, function(data) {
       var results = [],
@@ -86,8 +87,8 @@ export var Google = L.Class.extend({
       cb.call(context, results);
     });
   }
-});
+}
 
-export function google(key, options) {
+export function google(key:string, options: Partial<GoogleOptions>) {
   return new Google(key, options);
 }
