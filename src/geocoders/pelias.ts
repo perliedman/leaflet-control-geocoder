@@ -1,26 +1,33 @@
-import L from 'leaflet';
+import * as L from 'leaflet';
 import { getJSON } from '../util';
+import { GeocoderAPI, GeocodingResult } from './interfaces';
 
-export var Pelias = L.Class.extend({
-  options: {
+export interface PeliasOptions {
+  serviceUrl: string;
+  geocodingQueryParams?: object;
+  reverseQueryParams?: object;
+}
+
+export class Pelias implements GeocoderAPI {
+  options: PeliasOptions = {
     serviceUrl: 'https://api.geocode.earth/v1',
     geocodingQueryParams: {},
     reverseQueryParams: {}
-  },
+  };
 
-  initialize: function(apiKey, options) {
+  private _lastSuggest = 0;
+
+  constructor(private apiKey: string, options: Partial<PeliasOptions>) {
     L.Util.setOptions(this, options);
-    this._apiKey = apiKey;
-    this._lastSuggest = 0;
-  },
+  }
 
-  geocode: function(query, cb, context) {
+  geocode(query: string, cb: (result: GeocodingResult[]) => void, context?: any): void {
     var _this = this;
     getJSON(
       this.options.serviceUrl + '/search',
-      L.extend(
+      L.Util.extend(
         {
-          api_key: this._apiKey,
+          api_key: this.apiKey,
           text: query
         },
         this.options.geocodingQueryParams
@@ -29,35 +36,35 @@ export var Pelias = L.Class.extend({
         cb.call(context, _this._parseResults(data, 'bbox'));
       }
     );
-  },
+  }
 
-  suggest: function(query, cb, context) {
+  suggest(query: string, cb: (result: GeocodingResult[]) => void, context?: any): void {
     var _this = this;
     getJSON(
       this.options.serviceUrl + '/autocomplete',
-      L.extend(
+      L.Util.extend(
         {
-          api_key: this._apiKey,
+          api_key: this.apiKey,
           text: query
         },
         this.options.geocodingQueryParams
       ),
-      L.bind(function(data) {
+      L.Util.bind(function(data) {
         if (data.geocoding.timestamp > this._lastSuggest) {
           this._lastSuggest = data.geocoding.timestamp;
           cb.call(context, _this._parseResults(data, 'bbox'));
         }
       }, this)
     );
-  },
+  }
 
-  reverse: function(location, scale, cb, context) {
+  reverse(location: L.LatLng, scale: number, cb: (result: any) => void, context?: any): void {
     var _this = this;
     getJSON(
       this.options.serviceUrl + '/reverse',
-      L.extend(
+      L.Util.extend(
         {
-          api_key: this._apiKey,
+          api_key: this.apiKey,
           'point.lat': location.lat,
           'point.lon': location.lng
         },
@@ -67,16 +74,16 @@ export var Pelias = L.Class.extend({
         cb.call(context, _this._parseResults(data, 'bounds'));
       }
     );
-  },
+  }
 
-  _parseResults: function(data, bboxname) {
+  _parseResults(data, bboxname) {
     var results = [];
-    L.geoJson(data, {
+    L.geoJSON(data, {
       pointToLayer: function(feature, latlng) {
         return L.circleMarker(latlng);
       },
-      onEachFeature: function(feature, layer) {
-        var result = {},
+      onEachFeature: function(feature, layer: any) {
+        var result = {} as GeocodingResult,
           bbox,
           center;
 
@@ -103,9 +110,9 @@ export var Pelias = L.Class.extend({
     });
     return results;
   }
-});
+}
 
-export function pelias(apiKey, options) {
+export function pelias(apiKey: string, options: Partial<PeliasOptions>) {
   return new Pelias(apiKey, options);
 }
 export var GeocodeEarth = Pelias;
@@ -114,11 +121,19 @@ export var geocodeEarth = pelias;
 export var Mapzen = Pelias; // r.i.p.
 export var mapzen = pelias;
 
-export var Openrouteservice = Mapzen.extend({
-  options: {
-    serviceUrl: 'https://api.openrouteservice.org/geocode'
+export class Openrouteservice extends Mapzen {
+  constructor(apiKey: string, options: Partial<PeliasOptions>) {
+    super(
+      apiKey,
+      L.Util.extend(
+        {
+          serviceUrl: 'https://api.openrouteservice.org/geocode'
+        },
+        options
+      )
+    );
   }
-});
-export function openrouteservice(apiKey, options) {
+}
+export function openrouteservice(apiKey: string, options: Partial<PeliasOptions>) {
   return new Openrouteservice(apiKey, options);
 }
