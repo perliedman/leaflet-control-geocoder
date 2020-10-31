@@ -1,19 +1,26 @@
-import L from 'leaflet';
+import * as L from 'leaflet';
 import { getJSON } from '../util';
+import { GeocoderAPI, GeocodingResult } from './interfaces';
 
-export var Neutrino = L.Class.extend({
-  options: {
-    userId: '<insert your userId here>',
-    apiKey: '<insert your apiKey here>',
+export interface NeutrinoOptions {
+  userId: string;
+  apiKey: string;
+  serviceUrl: string;
+}
+
+export class Neutrino implements GeocoderAPI {
+  options: NeutrinoOptions = {
+    userId: undefined,
+    apiKey: undefined,
     serviceUrl: 'https://neutrinoapi.com/'
-  },
+  };
 
-  initialize: function(options) {
+  constructor(options: Partial<NeutrinoOptions>) {
     L.Util.setOptions(this, options);
-  },
+  }
 
   // https://www.neutrinoapi.com/api/geocode-address/
-  geocode: function(query, cb, context) {
+  geocode(query: string, cb: (result: GeocodingResult[]) => void, context?: any): void {
     getJSON(
       this.options.serviceUrl + 'geocode-address',
       {
@@ -40,14 +47,14 @@ export var Neutrino = L.Class.extend({
         cb.call(context, results);
       }
     );
-  },
+  }
 
-  suggest: function(query, cb, context) {
+  suggest(query: string, cb: (result: GeocodingResult[]) => void, context?: any): void {
     return this.geocode(query, cb, context);
-  },
+  }
 
   // https://www.neutrinoapi.com/api/geocode-reverse/
-  reverse: function(location, scale, cb, context) {
+  reverse(location: L.LatLng, scale: number, cb: (result: any) => void, context?: any): void {
     getJSON(
       this.options.serviceUrl + 'geocode-reverse',
       {
@@ -73,8 +80,8 @@ export var Neutrino = L.Class.extend({
       }
     );
   }
-});
+}
 
-export function neutrino(accessToken) {
-  return new Neutrino(accessToken);
+export function neutrino(options: Partial<NeutrinoOptions>) {
+  return new Neutrino(options);
 }
