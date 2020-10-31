@@ -1,18 +1,24 @@
-import L from 'leaflet';
+import * as L from 'leaflet';
 import { getJSON } from '../util';
+import { GeocoderAPI, GeocodingResult } from './interfaces';
 
-export var ArcGis = L.Class.extend({
-  options: {
+export interface ArcGisOptions {
+  geocodingQueryParams?: any;
+  service_url: string;
+}
+
+export class ArcGis implements GeocoderAPI {
+  options: ArcGisOptions = {
     service_url: 'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer'
-  },
+  };
 
-  initialize: function(accessToken, options) {
-    L.setOptions(this, options);
-    this._accessToken = accessToken;
-  },
+  constructor(private accessToken: string, options: Partial<ArcGisOptions>) {
+    L.Util.setOptions(this, options);
+  }
 
-  geocode: function(query, cb, context) {
+  geocode(query: string, cb: (result: GeocodingResult[]) => void, context?: any): void {
     var params = {
+      token: this.accessToken,
       SingleLine: query,
       outFields: 'Addr_Type',
       forStorage: false,
@@ -20,13 +26,9 @@ export var ArcGis = L.Class.extend({
       f: 'json'
     };
 
-    if (this._key && this._key.length) {
-      params.token = this._key;
-    }
-
     getJSON(
       this.options.service_url + '/findAddressCandidates',
-      L.extend(params, this.options.geocodingQueryParams),
+      L.Util.extend(params, this.options.geocodingQueryParams),
       function(data) {
         var results = [],
           loc,
@@ -52,13 +54,13 @@ export var ArcGis = L.Class.extend({
         cb.call(context, results);
       }
     );
-  },
+  }
 
-  suggest: function(query, cb, context) {
+  suggest(query: string, cb: (result: GeocodingResult[]) => void, context?: any): void {
     return this.geocode(query, cb, context);
-  },
+  }
 
-  reverse: function(location, scale, cb, context) {
+  reverse(location: L.LatLng, scale: number, cb: (result: any) => void, context?: any): void {
     var params = {
       location: encodeURIComponent(location.lng) + ',' + encodeURIComponent(location.lat),
       distance: 100,
@@ -81,8 +83,8 @@ export var ArcGis = L.Class.extend({
       cb.call(context, result);
     });
   }
-});
+}
 
-export function arcgis(accessToken, options) {
+export function arcgis(accessToken: string, options: Partial<ArcGisOptions>) {
   return new ArcGis(accessToken, options);
 }
