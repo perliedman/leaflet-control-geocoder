@@ -1,11 +1,11 @@
 import * as L from 'leaflet';
 
 export interface GeocodingResult {
-  name: String;
+  name: string;
   bbox: L.LatLngBounds;
   center: L.LatLng;
-  icon?: String;
-  html?: String;
+  icon?: string;
+  html?: string;
   properties?: any;
 }
 
