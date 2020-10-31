@@ -33,7 +33,11 @@ export default {
     output,
     Object.assign({}, output, {
       file: 'dist/Control.Geocoder.min.js',
-      plugins: [terser()]
+      plugins: [
+        terser({
+          output: { comments: /leaflet-control-geocoder/ }
+        })
+      ]
     })
   ]
 };
