@@ -1,5 +1,5 @@
 import * as L from 'leaflet';
-import { GeocoderAPI, GeocodingResult } from './interfaces';
+import { GeocoderAPI, GeocodingCallback, GeocodingResult } from './interfaces';
 
 export interface LatLngOptions {
   /**
@@ -85,7 +85,7 @@ export class LatLng implements GeocoderAPI {
     L.Util.setOptions(this, options);
   }
 
-  geocode(query: string, cb: (result: GeocodingResult[]) => void, context?: any) {
+  geocode(query: string, cb: GeocodingCallback, context?: any) {
     var center = parseLatLng(query);
     if (center) {
       var results: GeocodingResult[] = [

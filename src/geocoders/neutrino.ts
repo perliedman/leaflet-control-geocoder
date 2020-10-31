@@ -1,6 +1,6 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import { GeocoderAPI, GeocodingResult } from './interfaces';
+import { GeocoderAPI, GeocodingCallback } from './interfaces';
 
 export interface NeutrinoOptions {
   userId: string;
@@ -20,7 +20,7 @@ export class Neutrino implements GeocoderAPI {
   }
 
   // https://www.neutrinoapi.com/api/geocode-address/
-  geocode(query: string, cb: (result: GeocodingResult[]) => void, context?: any): void {
+  geocode(query: string, cb: GeocodingCallback, context?: any): void {
     getJSON(
       this.options.serviceUrl + 'geocode-address',
       {
@@ -49,7 +49,7 @@ export class Neutrino implements GeocoderAPI {
     );
   }
 
-  suggest(query: string, cb: (result: GeocodingResult[]) => void, context?: any): void {
+  suggest(query: string, cb: GeocodingCallback, context?: any): void {
     return this.geocode(query, cb, context);
   }
 

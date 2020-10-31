@@ -1,6 +1,6 @@
 import * as L from 'leaflet';
 import { template, getJSON } from '../util';
-import { GeocoderAPI, GeocodingResult } from './interfaces';
+import { GeocoderAPI, GeocodingCallback, GeocodingResult } from './interfaces';
 
 export interface NominatimResult {
   place_id: number;
@@ -76,7 +76,7 @@ export class Nominatim implements GeocoderAPI {
     L.Util.setOptions(this, options || {});
   }
 
-  geocode(query: string, cb: (result: GeocodingResult[]) => void, context?: any) {
+  geocode(query: string, cb: GeocodingCallback, context?: any) {
     getJSON(
       this.options.serviceUrl + 'search',
       L.Util.extend(

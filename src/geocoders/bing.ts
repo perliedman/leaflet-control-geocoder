@@ -1,11 +1,11 @@
 import * as L from 'leaflet';
 import { jsonp } from '../util';
-import { GeocoderAPI, GeocodingResult } from './interfaces';
+import { GeocoderAPI, GeocodingCallback } from './interfaces';
 
 export class Bing implements GeocoderAPI {
   constructor(private key: string) {}
 
-  geocode(query: string, cb: (result: GeocodingResult[]) => void, context?: any): void {
+  geocode(query: string, cb: GeocodingCallback, context?: any): void {
     jsonp(
       'https://dev.virtualearth.net/REST/v1/Locations',
       {

@@ -1,5 +1,5 @@
 import * as L from 'leaflet';
-import { GeocoderAPI, GeocodingResult } from './interfaces';
+import { GeocoderAPI, GeocodingCallback, GeocodingResult } from './interfaces';
 
 export interface OpenLocationCodeOptions {
   OpenLocationCode: OpenLocationCodeApi;
@@ -27,7 +27,7 @@ export class OpenLocationCode implements GeocoderAPI {
     L.Util.setOptions(this, options);
   }
 
-  geocode(query: string, cb: (result: GeocodingResult[]) => void, context?: any) {
+  geocode(query: string, cb: GeocodingCallback, context?: any) {
     try {
       var decoded = this.options.OpenLocationCode.decode(query);
       var result: GeocodingResult = {

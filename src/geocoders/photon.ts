@@ -1,6 +1,6 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import { GeocoderAPI, GeocodingResult } from './interfaces';
+import { GeocoderAPI, GeocodingCallback } from './interfaces';
 
 export interface PhotonOptions {
   serviceUrl: string;
@@ -22,7 +22,7 @@ export class Photon implements GeocoderAPI {
     L.Util.setOptions(this, options);
   }
 
-  geocode(query: string, cb: (result: GeocodingResult[]) => void, context?: any): void {
+  geocode(query: string, cb: GeocodingCallback, context?: any): void {
     var params = L.Util.extend(
       {
         q: query
@@ -39,7 +39,7 @@ export class Photon implements GeocoderAPI {
     );
   }
 
-  suggest(query: string, cb: (result: GeocodingResult[]) => void, context?: any): void {
+  suggest(query: string, cb: GeocodingCallback, context?: any): void {
     return this.geocode(query, cb, context);
   }
 

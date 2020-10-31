@@ -1,6 +1,6 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import { GeocoderAPI, GeocodingResult } from './interfaces';
+import { GeocoderAPI, GeocodingCallback } from './interfaces';
 
 export interface MapboxOptions {
   serviceUrl: string;
@@ -21,7 +21,7 @@ export class Mapbox implements GeocoderAPI {
     this.options.reverseQueryParams.access_token = accessToken;
   }
 
-  geocode(query: string, cb: (result: GeocodingResult[]) => void, context?: any): void {
+  geocode(query: string, cb: GeocodingCallback, context?: any): void {
     var params = this.options.geocodingQueryParams;
     if (
       params.proximity !== undefined &&
@@ -76,7 +76,7 @@ export class Mapbox implements GeocoderAPI {
     });
   }
 
-  suggest(query: string, cb: (result: GeocodingResult[]) => void, context?: any): void {
+  suggest(query: string, cb: GeocodingCallback, context?: any): void {
     return this.geocode(query, cb, context);
   }
 

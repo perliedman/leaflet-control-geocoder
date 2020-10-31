@@ -1,6 +1,6 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import { GeocoderAPI, GeocodingResult } from './interfaces';
+import { GeocoderAPI, GeocodingCallback } from './interfaces';
 
 export interface GoogleOptions {
   serviceUrl: string;
@@ -21,7 +21,7 @@ export class Google  implements GeocoderAPI{
     this.options.serviceUrl = (this.options as any).service_url || this.options.serviceUrl;
   }
 
-  geocode(query: string, cb: (result: GeocodingResult[]) => void, context?: any): void {
+  geocode(query: string, cb: GeocodingCallback, context?: any): void {
     var params = {
       key: this.key,
       address: query
