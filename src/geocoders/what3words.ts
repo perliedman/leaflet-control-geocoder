@@ -1,21 +1,20 @@
-import L from 'leaflet';
+import * as L from 'leaflet';
 import { getJSON } from '../util';
+import { GeocoderAPI, GeocodingResult } from './interfaces';
 
-export var What3Words = L.Class.extend({
-  options: {
+export class What3Words implements GeocoderAPI {
+  options = {
     serviceUrl: 'https://api.what3words.com/v2/'
-  },
+  };
 
-  initialize: function(accessToken) {
-    this._accessToken = accessToken;
-  },
+  constructor(private accessToken: string) {}
 
-  geocode: function(query, cb, context) {
+  geocode(query: string, cb: (result: GeocodingResult[]) => void, context?: any): void {
     //get three words and make a dot based string
     getJSON(
       this.options.serviceUrl + 'forward',
       {
-        key: this._accessToken,
+        key: this.accessToken,
         addr: query.split(/\s+/).join('.')
       },
       function(data) {
@@ -35,17 +34,17 @@ export var What3Words = L.Class.extend({
         cb.call(context, results);
       }
     );
-  },
+  }
 
-  suggest: function(query, cb, context) {
+  suggest(query: string, cb: (result: GeocodingResult[]) => void, context?: any): void {
     return this.geocode(query, cb, context);
-  },
+  }
 
-  reverse: function(location, scale, cb, context) {
+  reverse(location: L.LatLng, scale: number, cb: (result: any) => void, context?: any): void {
     getJSON(
       this.options.serviceUrl + 'reverse',
       {
-        key: this._accessToken,
+        key: this.accessToken,
         coords: [location.lat, location.lng].join(',')
       },
       function(data) {
@@ -65,8 +64,8 @@ export var What3Words = L.Class.extend({
       }
     );
   }
-});
+}
 
-export function what3words(accessToken) {
+export function what3words(accessToken: string) {
   return new What3Words(accessToken);
 }
