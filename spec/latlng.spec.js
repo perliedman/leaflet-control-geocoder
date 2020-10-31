@@ -146,6 +146,7 @@ describe('L.Control.Geocoder.LatLng', function() {
     expect(callback.lastArg).to.be.ok();
     expect(callback.lastArg).to.have.length(1);
     expect(callback.lastArg[0].name).to.eql(query);
-    expect(callback.lastArg[0].center).to.eql(expected);
+    expect(callback.lastArg[0].center.lat).to.be.within(expected.lat - 1e-6, expected.lat + 1e-6);
+    expect(callback.lastArg[0].center.lng).to.be.within(expected.lng - 1e-6, expected.lng + 1e-6);
   }
 });
