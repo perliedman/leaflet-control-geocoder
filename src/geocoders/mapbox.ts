@@ -1,20 +1,27 @@
-import L from 'leaflet';
+import * as L from 'leaflet';
 import { getJSON } from '../util';
+import { GeocoderAPI, GeocodingResult } from './interfaces';
 
-export var Mapbox = L.Class.extend({
-  options: {
+export interface MapboxOptions {
+  serviceUrl: string;
+  geocodingQueryParams: any;
+  reverseQueryParams: any;
+}
+
+export class Mapbox implements GeocoderAPI {
+  options: MapboxOptions = {
     serviceUrl: 'https://api.mapbox.com/geocoding/v5/mapbox.places/',
     geocodingQueryParams: {},
     reverseQueryParams: {}
-  },
+  };
 
-  initialize: function(accessToken, options) {
-    L.setOptions(this, options);
+  constructor(accessToken: string, options: Partial<MapboxOptions>) {
+    L.Util.setOptions(this, options);
     this.options.geocodingQueryParams.access_token = accessToken;
     this.options.reverseQueryParams.access_token = accessToken;
-  },
+  }
 
-  geocode: function(query, cb, context) {
+  geocode(query: string, cb: (result: GeocodingResult[]) => void, context?: any): void {
     var params = this.options.geocodingQueryParams;
     if (
       params.proximity !== undefined &&
@@ -67,13 +74,13 @@ export var Mapbox = L.Class.extend({
 
       cb.call(context, results);
     });
-  },
+  }
 
-  suggest: function(query, cb, context) {
+  suggest(query: string, cb: (result: GeocodingResult[]) => void, context?: any): void {
     return this.geocode(query, cb, context);
-  },
+  }
 
-  reverse: function(location, scale, cb, context) {
+  reverse(location: L.LatLng, scale: number, cb: (result: any) => void, context?: any): void {
     getJSON(
       this.options.serviceUrl +
         encodeURIComponent(location.lng) +
@@ -110,8 +117,8 @@ export var Mapbox = L.Class.extend({
       }
     );
   }
-});
+}
 
-export function mapbox(accessToken, options) {
+export function mapbox(accessToken: string, options: Partial<MapboxOptions>) {
   return new Mapbox(accessToken, options);
 }
