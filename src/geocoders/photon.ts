@@ -1,19 +1,29 @@
-import L from 'leaflet';
+import * as L from 'leaflet';
 import { getJSON } from '../util';
+import { GeocoderAPI, GeocodingResult } from './interfaces';
 
-export var Photon = L.Class.extend({
-  options: {
+export interface PhotonOptions {
+  serviceUrl: string;
+  reverseUrl: string;
+  nameProperties: string[];
+  geocodingQueryParams?: object;
+  reverseQueryParams?: object;
+  htmlTemplate?: (r: any) => string;
+}
+
+export class Photon implements GeocoderAPI {
+  options: PhotonOptions = {
     serviceUrl: 'https://photon.komoot.io/api/',
     reverseUrl: 'https://photon.komoot.io/reverse/',
     nameProperties: ['name', 'street', 'suburb', 'hamlet', 'town', 'city', 'state', 'country']
-  },
+  };
 
-  initialize: function(options) {
-    L.setOptions(this, options);
-  },
+  constructor(options: Partial<PhotonOptions>) {
+    L.Util.setOptions(this, options);
+  }
 
-  geocode: function(query, cb, context) {
-    var params = L.extend(
+  geocode(query: string, cb: (result: GeocodingResult[]) => void, context?: any): void {
+    var params = L.Util.extend(
       {
         q: query
       },
@@ -23,18 +33,18 @@ export var Photon = L.Class.extend({
     getJSON(
       this.options.serviceUrl,
       params,
-      L.bind(function(data) {
+      L.Util.bind(function(data) {
         cb.call(context, this._decodeFeatures(data));
       }, this)
     );
-  },
+  }
 
-  suggest: function(query, cb, context) {
+  suggest(query: string, cb: (result: GeocodingResult[]) => void, context?: any): void {
     return this.geocode(query, cb, context);
-  },
+  }
 
-  reverse: function(latLng, scale, cb, context) {
-    var params = L.extend(
+  reverse(latLng: L.LatLng, scale: number, cb: (result: any) => void, context?: any): void {
+    var params = L.Util.extend(
       {
         lat: latLng.lat,
         lon: latLng.lng
@@ -45,13 +55,13 @@ export var Photon = L.Class.extend({
     getJSON(
       this.options.reverseUrl,
       params,
-      L.bind(function(data) {
+      L.Util.bind(function(data) {
         cb.call(context, this._decodeFeatures(data));
       }, this)
     );
-  },
+  }
 
-  _decodeFeatures: function(data) {
+  _decodeFeatures(data: GeoJSON.FeatureCollection<GeoJSON.Point>) {
     var results = [],
       i,
       f,
@@ -84,9 +94,9 @@ export var Photon = L.Class.extend({
     }
 
     return results;
-  },
+  }
 
-  _decodeFeatureName: function(f) {
+  _decodeFeatureName(f: GeoJSON.Feature) {
     return (this.options.nameProperties || [])
       .map(function(p) {
         return f.properties[p];
@@ -96,8 +106,8 @@ export var Photon = L.Class.extend({
       })
       .join(', ');
   }
-});
+}
 
-export function photon(options) {
+export function photon(options: Partial<PhotonOptions>) {
   return new Photon(options);
 }
