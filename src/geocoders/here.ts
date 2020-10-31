@@ -1,7 +1,19 @@
-import L from 'leaflet';
+import * as L from 'leaflet';
 import { getJSON } from '../util';
-export var HERE = L.Class.extend({
-  options: {
+import { GeocoderAPI, GeocodingResult } from './interfaces';
+
+export interface HereOptions {
+  geocodeUrl: string;
+  reverseGeocodeUrl: string;
+  app_id: string;
+  app_code: string;
+  geocodingQueryParams?: object;
+  reverseQueryParams?: object;
+  reverseGeocodeProxRadius: null;
+}
+
+export class HERE implements GeocoderAPI {
+  options: HereOptions = {
     geocodeUrl: 'https://geocoder.api.here.com/6.2/geocode.json',
     reverseGeocodeUrl: 'https://reverse.geocoder.api.here.com/6.2/reversegeocode.json',
     app_id: '<insert your app_id here>',
@@ -9,11 +21,13 @@ export var HERE = L.Class.extend({
     geocodingQueryParams: {},
     reverseQueryParams: {},
     reverseGeocodeProxRadius: null
-  },
-  initialize: function(options) {
-    L.setOptions(this, options);
-  },
-  geocode: function(query, cb, context) {
+  };
+
+  constructor(options: Partial<HereOptions>) {
+    L.Util.setOptions(this, options);
+  }
+
+  geocode(query: string, cb: (result: GeocodingResult[]) => void, context?: any): void {
     var params = {
       searchtext: query,
       gen: 9,
@@ -23,8 +37,9 @@ export var HERE = L.Class.extend({
     };
     params = L.Util.extend(params, this.options.geocodingQueryParams);
     this.getJSON(this.options.geocodeUrl, params, cb, context);
-  },
-  reverse: function(location, scale, cb, context) {
+  }
+
+  reverse(location: L.LatLng, scale: number, cb: (result: any) => void, context?: any): void {
     var _proxRadius = this.options.reverseGeocodeProxRadius
       ? this.options.reverseGeocodeProxRadius
       : null;
@@ -39,8 +54,9 @@ export var HERE = L.Class.extend({
     };
     params = L.Util.extend(params, this.options.reverseQueryParams);
     this.getJSON(this.options.reverseGeocodeUrl, params, cb, context);
-  },
-  getJSON: function(url, params, cb, context) {
+  }
+
+  getJSON(url: string, params: any, cb: (result: any) => void, context?: any) {
     getJSON(url, params, function(data) {
       var results = [],
         loc,
@@ -65,7 +81,8 @@ export var HERE = L.Class.extend({
       cb.call(context, results);
     });
   }
-});
-export function here(options) {
+}
+
+export function here(options: Partial<HereOptions>) {
   return new HERE(options);
 }
