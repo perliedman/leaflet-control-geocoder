@@ -3,7 +3,7 @@ import { GeocoderControl as Geocoder, geocoder } from './control';
 import * as geocoders from './geocoders/index';
 
 L.Util.extend(Geocoder, geocoders);
-export default GeocoderControl;
+export default Geocoder;
 
 L.Util.extend(L.Control, {
   Geocoder: Geocoder,
