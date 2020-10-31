@@ -44,39 +44,36 @@ export interface NominatimOptions {
 }
 
 export class Nominatim implements GeocoderAPI {
-  options: NominatimOptions;
+  options: NominatimOptions = {
+    serviceUrl: 'https://nominatim.openstreetmap.org/',
+    geocodingQueryParams: {},
+    reverseQueryParams: {},
+    htmlTemplate: function(r: NominatimResult) {
+      var a = r.address,
+        className,
+        parts = [];
+      if (a.road || a.building) {
+        parts.push('{building} {road} {house_number}');
+      }
 
-  constructor(options?: NominatimOptions) {
-    this.options = L.Util.extend(
-      {
-        serviceUrl: 'https://nominatim.openstreetmap.org/',
-        geocodingQueryParams: {},
-        reverseQueryParams: {},
-        htmlTemplate: function(r: NominatimResult) {
-          var a = r.address,
-            className,
-            parts = [];
-          if (a.road || a.building) {
-            parts.push('{building} {road} {house_number}');
-          }
+      if (a.city || (a as any).town || a.village || a.hamlet) {
+        className = parts.length > 0 ? 'leaflet-control-geocoder-address-detail' : '';
+        parts.push(
+          '<span class="' + className + '">{postcode} {city} {town} {village} {hamlet}</span>'
+        );
+      }
 
-          if (a.city || (a as any).town || a.village || a.hamlet) {
-            className = parts.length > 0 ? 'leaflet-control-geocoder-address-detail' : '';
-            parts.push(
-              '<span class="' + className + '">{postcode} {city} {town} {village} {hamlet}</span>'
-            );
-          }
+      if (a.state || a.country) {
+        className = parts.length > 0 ? 'leaflet-control-geocoder-address-context' : '';
+        parts.push('<span class="' + className + '">{state} {country}</span>');
+      }
 
-          if (a.state || a.country) {
-            className = parts.length > 0 ? 'leaflet-control-geocoder-address-context' : '';
-            parts.push('<span class="' + className + '">{state} {country}</span>');
-          }
+      return template(parts.join('<br/>'), a);
+    }
+  };
 
-          return template(parts.join('<br/>'), a);
-        }
-      },
-      options
-    );
+  constructor(options?: Partial<NominatimOptions>) {
+    L.Util.setOptions(this, options || {});
   }
 
   geocode(query: string, cb: (result: GeocodingResult[]) => void, context?: any) {
@@ -143,6 +140,6 @@ export class Nominatim implements GeocoderAPI {
   }
 }
 
-export function nominatim(options: NominatimOptions) {
+export function nominatim(options: Partial<NominatimOptions>) {
   return new Nominatim(options);
 }

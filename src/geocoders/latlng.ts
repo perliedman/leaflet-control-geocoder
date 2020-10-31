@@ -76,16 +76,13 @@ export function parseLatLng(query: string): L.LatLng | undefined {
 }
 
 export class LatLng implements GeocoderAPI {
-  options: LatLngOptions;
+  options: LatLngOptions = {
+    next: undefined,
+    sizeInMeters: 10000
+  };
 
-  constructor(options: LatLngOptions) {
-    this.options = L.Util.extend(
-      {
-        next: undefined,
-        sizeInMeters: 10000
-      },
-      options
-    );
+  constructor(options: Partial<LatLngOptions>) {
+    L.Util.setOptions(this, options);
   }
 
   geocode(query: string, cb: (result: GeocodingResult[]) => void, context?: any) {
@@ -105,6 +102,6 @@ export class LatLng implements GeocoderAPI {
   }
 }
 
-export function latLng(options: LatLngOptions) {
+export function latLng(options: Partial<LatLngOptions>) {
   return new LatLng(options);
 }
