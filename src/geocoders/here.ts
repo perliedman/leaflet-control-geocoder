@@ -1,6 +1,6 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import { GeocoderAPI, GeocodingResult } from './interfaces';
+import { GeocoderAPI, GeocodingCallback } from './interfaces';
 
 export interface HereOptions {
   geocodeUrl: string;
@@ -27,7 +27,7 @@ export class HERE implements GeocoderAPI {
     L.Util.setOptions(this, options);
   }
 
-  geocode(query: string, cb: (result: GeocodingResult[]) => void, context?: any): void {
+  geocode(query: string, cb: GeocodingCallback, context?: any): void {
     var params = {
       searchtext: query,
       gen: 9,

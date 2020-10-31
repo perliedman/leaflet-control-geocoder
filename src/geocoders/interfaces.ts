@@ -9,8 +9,10 @@ export interface GeocodingResult {
   properties?: any;
 }
 
+export type GeocodingCallback = (result: GeocodingResult[]) => void;
+
 export interface GeocoderAPI {
-  geocode(query: string, cb: (result: GeocodingResult[]) => void, context?: any): void;
-  suggest?(query: string, cb: (result: GeocodingResult[]) => void, context?: any): void;
+  geocode(query: string, cb: GeocodingCallback, context?: any): void;
+  suggest?(query: string, cb: GeocodingCallback, context?: any): void;
   reverse?(location: L.LatLng, scale: number, cb: (result: any) => void, context?: any): void;
 }

@@ -1,6 +1,6 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import { GeocoderAPI, GeocodingResult } from './interfaces';
+import { GeocoderAPI, GeocodingCallback } from './interfaces';
 
 export class What3Words implements GeocoderAPI {
   options = {
@@ -9,7 +9,7 @@ export class What3Words implements GeocoderAPI {
 
   constructor(private accessToken: string) {}
 
-  geocode(query: string, cb: (result: GeocodingResult[]) => void, context?: any): void {
+  geocode(query: string, cb: GeocodingCallback, context?: any): void {
     //get three words and make a dot based string
     getJSON(
       this.options.serviceUrl + 'forward',
@@ -36,7 +36,7 @@ export class What3Words implements GeocoderAPI {
     );
   }
 
-  suggest(query: string, cb: (result: GeocodingResult[]) => void, context?: any): void {
+  suggest(query: string, cb: GeocodingCallback, context?: any): void {
     return this.geocode(query, cb, context);
   }
 
