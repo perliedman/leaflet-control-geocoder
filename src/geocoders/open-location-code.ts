@@ -23,8 +23,8 @@ export interface CodeArea {
 
 export class OpenLocationCode implements GeocoderAPI {
   options: OpenLocationCodeOptions;
-  constructor(options: OpenLocationCodeOptions) {
-    this.options = options;
+  constructor(options: Partial<OpenLocationCodeOptions>) {
+    L.Util.setOptions(this, options);
   }
 
   geocode(query: string, cb: (result: GeocodingResult[]) => void, context?: any) {
@@ -67,6 +67,6 @@ export class OpenLocationCode implements GeocoderAPI {
   }
 }
 
-export function openLocationCode(options: OpenLocationCodeOptions) {
+export function openLocationCode(options: Partial<OpenLocationCodeOptions>) {
   return new OpenLocationCode(options);
 }
