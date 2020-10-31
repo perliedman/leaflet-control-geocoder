@@ -1,12 +1,11 @@
-import L from 'leaflet';
+import * as L from 'leaflet';
 import { jsonp } from '../util';
+import { GeocoderAPI, GeocodingResult } from './interfaces';
 
-export var Bing = L.Class.extend({
-  initialize: function(key) {
-    this.key = key;
-  },
+export class Bing implements GeocoderAPI {
+  constructor(private key: string) {}
 
-  geocode: function(query, cb, context) {
+  geocode(query: string, cb: (result: GeocodingResult[]) => void, context?: any): void {
     jsonp(
       'https://dev.virtualearth.net/REST/v1/Locations',
       {
@@ -31,9 +30,9 @@ export var Bing = L.Class.extend({
       this,
       'jsonp'
     );
-  },
+  }
 
-  reverse: function(location, scale, cb, context) {
+  reverse(location: L.LatLng, scale: number, cb: (result: any) => void, context?: any): void {
     jsonp(
       '//dev.virtualearth.net/REST/v1/Locations/' + location.lat + ',' + location.lng,
       {
@@ -56,8 +55,8 @@ export var Bing = L.Class.extend({
       'jsonp'
     );
   }
-});
+}
 
-export function bing(key) {
+export function bing(key: string) {
   return new Bing(key);
 }
