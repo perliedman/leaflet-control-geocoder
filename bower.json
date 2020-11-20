@@ -7,7 +7,7 @@
   "main": [
     "dist/Control.Geocoder.js",
     "dist/Control.Geocoder.css",
-    "images/geocoder.png",
+    "images/geocoder.svg",
     "images/throbber.gif"
   ],
   "moduleType": ["amd", "globals"],
