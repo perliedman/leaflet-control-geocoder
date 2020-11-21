@@ -8,7 +8,7 @@
     "dist/Control.Geocoder.js",
     "dist/Control.Geocoder.css",
     "images/geocoder.svg",
-    "images/throbber.gif"
+    "images/throbber.svg"
   ],
   "moduleType": ["amd", "globals"],
   "keywords": [
