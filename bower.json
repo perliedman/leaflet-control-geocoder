@@ -6,9 +6,7 @@
   "description": "Extendable geocoder with builtin OSM/Nominatim support",
   "main": [
     "dist/Control.Geocoder.js",
-    "dist/Control.Geocoder.css",
-    "images/geocoder.svg",
-    "images/throbber.svg"
+    "dist/Control.Geocoder.css"
   ],
   "moduleType": ["amd", "globals"],
   "keywords": [
