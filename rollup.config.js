@@ -1,4 +1,5 @@
 import pkg from './package.json';
+import typescript from '@rollup/plugin-typescript';
 import { terser } from 'rollup-plugin-terser';
 
 var banner =
@@ -25,13 +26,18 @@ var output = {
 };
 
 export default {
-  input: 'src/index.js',
+  input: 'src/index.ts',
   external: ['leaflet'],
+  plugins: [typescript()],
   output: [
     output,
     Object.assign({}, output, {
       file: 'dist/Control.Geocoder.min.js',
-      plugins: [terser()]
+      plugins: [
+        terser({
+          output: { comments: /leaflet-control-geocoder/ }
+        })
+      ]
     })
   ]
 };

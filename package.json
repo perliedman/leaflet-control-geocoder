@@ -6,19 +6,15 @@
   "module": "src/index.js",
   "scripts": {
     "prepare": "npm run build",
-    "build": "npm run build:js && npm run build:css && npm run build:img && npm run build:demo-rollup && npm run build:demo-webpack",
+    "build": "npm run build:js && npm run build:css && npm run build:demo-esbuild && npm run build:demo-rollup && npm run build:demo-webpack",
     "build:js": "rollup -c",
     "build:css": "cpr Control.Geocoder.css dist/Control.Geocoder.css --overwrite",
-    "build:img": "cpr images/ dist/images/ --overwrite",
+    "build:demo-esbuild": "cd demo-esbuild && npm install && npm run build",
     "build:demo-rollup": "cd demo-rollup && npm install && npm run build",
     "build:demo-webpack": "cd demo-rollup && npm install && npm run build",
-    "test": "npm run test:karma -- --single-run && npm run lint",
-    "test:karma": "karma start spec/karma.conf.js",
-    "lint": "npm run lint:js && npm run lint:style",
-    "lint:js": "eslint .",
-    "lint:style": "prettier --check $(npm run ls-files)",
-    "fix:style": "prettier --write $(npm run ls-files)",
-    "ls-files": "git ls-files '*.js' '*.json' '*.css' '*.html' '*.yaml' '*.yml' '*.md'"
+    "changelog": "conventional-changelog --infile CHANGELOG.md --same-file --output-unreleased",
+    "test": "jest",
+    "lint": "eslint --ext .js,.ts ."
   },
   "repository": {
     "type": "git",
@@ -62,23 +58,23 @@
   "bugs": {
     "url": "https://github.com/perliedman/leaflet-control-geocoder/issues"
   },
-  "dependencies": {},
   "devDependencies": {
+    "@rollup/plugin-typescript": "^4.1.1",
+    "@types/leaflet": "^1.5.12",
+    "@typescript-eslint/eslint-plugin": "^4.8.1",
+    "@typescript-eslint/parser": "^4.8.1",
+    "conventional-changelog-cli": "^2.1.0",
     "cpr": "^3.0.1",
     "eslint": "^6.8.0",
     "eslint-plugin-prettier": "^3.1.2",
-    "karma": "^4.4.1",
-    "karma-expect": "^1.1.3",
-    "karma-mocha": "^1.3.0",
-    "karma-phantomjs-launcher": "^1.0.4",
-    "karma-sinon": "^1.0.5",
+    "jest": "^26.6.3",
     "leaflet": "^1.6.0",
-    "mocha": "^6.2.2",
-    "phantomjs-prebuilt": "^2.1.16",
     "prettier": "^1.19.1",
     "rollup": "^2.6.1",
     "rollup-plugin-terser": "^5.3.0",
-    "sinon": "^7.5.0"
+    "ts-jest": "^26.4.4",
+    "tslib": "^1.11.1",
+    "typescript": "^3.8.3"
   },
   "optionalDependencies": {
     "open-location-code": "^1.0.0"

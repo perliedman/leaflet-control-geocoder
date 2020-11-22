@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`L.Control.Geocoder.Google geocodes Innsbruck 1`] = `
+Array [
+  Array [
+    Array [
+      Object {
+        "bbox": Object {
+          "_northEast": Object {
+            "lat": 47.3599301,
+            "lng": 11.45593,
+          },
+          "_southWest": Object {
+            "lat": 47.21098000000001,
+            "lng": 11.3016499,
+          },
+        },
+        "center": Object {
+          "lat": 47.2692124,
+          "lng": 11.4041024,
+        },
+        "name": "Innsbruck, Austria",
+        "properties": Array [
+          Object {
+            "long_name": "Innsbruck",
+            "short_name": "Innsbruck",
+            "types": Array [
+              "locality",
+              "political",
+            ],
+          },
+          Object {
+            "long_name": "Innsbruck",
+            "short_name": "Innsbruck",
+            "types": Array [
+              "administrative_area_level_2",
+              "political",
+            ],
+          },
+          Object {
+            "long_name": "Tyrol",
+            "short_name": "Tyrol",
+            "types": Array [
+              "administrative_area_level_1",
+              "political",
+            ],
+          },
+          Object {
+            "long_name": "Austria",
+            "short_name": "AT",
+            "types": Array [
+              "country",
+              "political",
+            ],
+          },
+        ],
+      },
+    ],
+  ],
+]
+`;
