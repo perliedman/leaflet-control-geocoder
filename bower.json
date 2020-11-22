@@ -4,10 +4,7 @@
   "homepage": "https://github.com/perliedman/leaflet-control-geocoder",
   "authors": ["Per Liedman <per@liedman.net>"],
   "description": "Extendable geocoder with builtin OSM/Nominatim support",
-  "main": [
-    "dist/Control.Geocoder.js",
-    "dist/Control.Geocoder.css"
-  ],
+  "main": ["dist/Control.Geocoder.js", "dist/Control.Geocoder.css"],
   "moduleType": ["amd", "globals"],
   "keywords": [
     "leaflet",
