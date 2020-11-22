@@ -13,7 +13,7 @@ export class MapQuest implements GeocoderAPI {
 
   private _key: string;
 
-  constructor(key: string, options: Partial<MapQuestOptions>) {
+  constructor(key: string, options?: Partial<MapQuestOptions>) {
     // MapQuest seems to provide URI encoded API keys,
     // so to avoid encoding them twice, we decode them here
     this._key = decodeURIComponent(key);
@@ -93,6 +93,6 @@ export class MapQuest implements GeocoderAPI {
   }
 }
 
-export function mapQuest(key: string, options: Partial<MapQuestOptions>) {
+export function mapQuest(key: string, options?: Partial<MapQuestOptions>) {
   return new MapQuest(key, options);
 }

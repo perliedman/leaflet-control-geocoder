@@ -23,7 +23,7 @@ export class HERE implements GeocoderAPI {
     reverseGeocodeProxRadius: null
   };
 
-  constructor(options: Partial<HereOptions>) {
+  constructor(options?: Partial<HereOptions>) {
     L.Util.setOptions(this, options);
   }
 
@@ -83,6 +83,6 @@ export class HERE implements GeocoderAPI {
   }
 }
 
-export function here(options: Partial<HereOptions>) {
+export function here(options?: Partial<HereOptions>) {
   return new HERE(options);
 }

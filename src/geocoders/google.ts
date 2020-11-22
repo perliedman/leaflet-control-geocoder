@@ -15,7 +15,7 @@ export class Google  implements GeocoderAPI{
     reverseQueryParams: {}
   }
 
-  constructor(private key: string, options: Partial<GoogleOptions>) {
+  constructor(private key: string, options?: Partial<GoogleOptions>) {
     L.Util.setOptions(this, options);
     // Backwards compatibility
     this.options.serviceUrl = (this.options as any).service_url || this.options.serviceUrl;
@@ -89,6 +89,6 @@ export class Google  implements GeocoderAPI{
   }
 }
 
-export function google(key:string, options: Partial<GoogleOptions>) {
+export function google(key:string, options?: Partial<GoogleOptions>) {
   return new Google(key, options);
 }

@@ -102,6 +102,6 @@ export class LatLng implements GeocoderAPI {
   }
 }
 
-export function latLng(options: Partial<LatLngOptions>) {
+export function latLng(options?: Partial<LatLngOptions>) {
   return new LatLng(options);
 }

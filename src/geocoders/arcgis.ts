@@ -12,7 +12,7 @@ export class ArcGis implements GeocoderAPI {
     service_url: 'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer'
   };
 
-  constructor(private accessToken: string, options: Partial<ArcGisOptions>) {
+  constructor(private accessToken: string, options?: Partial<ArcGisOptions>) {
     L.Util.setOptions(this, options);
   }
 
@@ -85,6 +85,6 @@ export class ArcGis implements GeocoderAPI {
   }
 }
 
-export function arcgis(accessToken: string, options: Partial<ArcGisOptions>) {
+export function arcgis(accessToken: string, options?: Partial<ArcGisOptions>) {
   return new ArcGis(accessToken, options);
 }
