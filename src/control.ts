@@ -49,7 +49,7 @@ export class GeocoderControl extends L.Control {
   private _selection: any;
   private _suggestTimeout: any;
 
-  constructor(options: Partial<GeocoderOptions>) {
+  constructor(options?: Partial<GeocoderOptions>) {
     super(options);
     L.Util.setOptions(this, options);
     if (!this.options.geocoder) {

@@ -15,7 +15,7 @@ export class Mapbox implements GeocoderAPI {
     reverseQueryParams: {}
   };
 
-  constructor(accessToken: string, options: Partial<MapboxOptions>) {
+  constructor(accessToken: string, options?: Partial<MapboxOptions>) {
     L.Util.setOptions(this, options);
     this.options.geocodingQueryParams.access_token = accessToken;
     this.options.reverseQueryParams.access_token = accessToken;
@@ -119,6 +119,6 @@ export class Mapbox implements GeocoderAPI {
   }
 }
 
-export function mapbox(accessToken: string, options: Partial<MapboxOptions>) {
+export function mapbox(accessToken: string, options?: Partial<MapboxOptions>) {
   return new Mapbox(accessToken, options);
 }

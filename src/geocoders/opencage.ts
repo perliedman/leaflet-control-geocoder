@@ -15,7 +15,7 @@ export class OpenCage implements GeocoderAPI {
     reverseQueryParams: {}
   };
 
-  constructor(private apiKey: string, options: Partial<OpenCageOptions>) {
+  constructor(private apiKey: string, options?: Partial<OpenCageOptions>) {
     L.Util.setOptions(this, options);
   }
 
@@ -92,6 +92,6 @@ export class OpenCage implements GeocoderAPI {
   }
 }
 
-export function opencage(apiKey: string, options: Partial<OpenCageOptions>) {
+export function opencage(apiKey: string, options?: Partial<OpenCageOptions>) {
   return new OpenCage(apiKey, options);
 }

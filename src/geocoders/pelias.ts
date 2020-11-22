@@ -17,7 +17,7 @@ export class Pelias implements GeocoderAPI {
 
   private _lastSuggest = 0;
 
-  constructor(private apiKey: string, options: Partial<PeliasOptions>) {
+  constructor(private apiKey: string, options?: Partial<PeliasOptions>) {
     L.Util.setOptions(this, options);
   }
 
@@ -112,7 +112,7 @@ export class Pelias implements GeocoderAPI {
   }
 }
 
-export function pelias(apiKey: string, options: Partial<PeliasOptions>) {
+export function pelias(apiKey: string, options?: Partial<PeliasOptions>) {
   return new Pelias(apiKey, options);
 }
 export var GeocodeEarth = Pelias;
@@ -122,7 +122,7 @@ export var Mapzen = Pelias; // r.i.p.
 export var mapzen = pelias;
 
 export class Openrouteservice extends Mapzen {
-  constructor(apiKey: string, options: Partial<PeliasOptions>) {
+  constructor(apiKey: string, options?: Partial<PeliasOptions>) {
     super(
       apiKey,
       L.Util.extend(
@@ -134,6 +134,6 @@ export class Openrouteservice extends Mapzen {
     );
   }
 }
-export function openrouteservice(apiKey: string, options: Partial<PeliasOptions>) {
+export function openrouteservice(apiKey: string, options?: Partial<PeliasOptions>) {
   return new Openrouteservice(apiKey, options);
 }

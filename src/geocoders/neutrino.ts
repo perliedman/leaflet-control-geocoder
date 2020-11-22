@@ -15,7 +15,7 @@ export class Neutrino implements GeocoderAPI {
     serviceUrl: 'https://neutrinoapi.com/'
   };
 
-  constructor(options: Partial<NeutrinoOptions>) {
+  constructor(options?: Partial<NeutrinoOptions>) {
     L.Util.setOptions(this, options);
   }
 
@@ -82,6 +82,6 @@ export class Neutrino implements GeocoderAPI {
   }
 }
 
-export function neutrino(options: Partial<NeutrinoOptions>) {
+export function neutrino(options?: Partial<NeutrinoOptions>) {
   return new Neutrino(options);
 }

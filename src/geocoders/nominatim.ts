@@ -140,6 +140,6 @@ export class Nominatim implements GeocoderAPI {
   }
 }
 
-export function nominatim(options: Partial<NominatimOptions>) {
+export function nominatim(options?: Partial<NominatimOptions>) {
   return new Nominatim(options);
 }

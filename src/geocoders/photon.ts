@@ -18,7 +18,7 @@ export class Photon implements GeocoderAPI {
     nameProperties: ['name', 'street', 'suburb', 'hamlet', 'town', 'city', 'state', 'country']
   };
 
-  constructor(options: Partial<PhotonOptions>) {
+  constructor(options?: Partial<PhotonOptions>) {
     L.Util.setOptions(this, options);
   }
 
@@ -108,6 +108,6 @@ export class Photon implements GeocoderAPI {
   }
 }
 
-export function photon(options: Partial<PhotonOptions>) {
+export function photon(options?: Partial<PhotonOptions>) {
   return new Photon(options);
 }
