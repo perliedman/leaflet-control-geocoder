@@ -21,6 +21,24 @@ export class Mapbox implements GeocoderAPI {
     this.options.reverseQueryParams.access_token = accessToken;
   }
 
+  _getProperties(loc) {
+    const properties = {
+      text: loc.text,
+      address: loc.address
+    };
+
+    for (let j = 0; j < (loc.context || []).length; j++) {
+      const id = loc.context[j].id.split('.')[0];
+      properties[id] = loc.context[j].text;
+
+      // Get country code when available
+      if (loc.context[j].short_code) {
+        properties['countryShortCode'] = loc.context[j].short_code;
+      }
+    }
+    return properties;
+  }
+
   geocode(query: string, cb: GeocodingCallback, context?: any): void {
     const params = this.options.geocodingQueryParams;
     if (
@@ -46,26 +64,11 @@ export class Mapbox implements GeocoderAPI {
             bbox = L.latLngBounds(center, center);
           }
 
-          const properties = {
-            text: loc.text,
-            address: loc.address
-          };
-
-          for (let j = 0; j < (loc.context || []).length; j++) {
-            const id = loc.context[j].id.split('.')[0];
-            properties[id] = loc.context[j].text;
-
-            // Get country code when available
-            if (loc.context[j].short_code) {
-              properties['countryShortCode'] = loc.context[j].short_code;
-            }
-          }
-
           results[i] = {
             name: loc.place_name,
             bbox: bbox,
             center: center,
-            properties: properties
+            properties: this._getProperties(loc)
           };
         }
       }
@@ -109,7 +112,8 @@ export class Mapbox implements GeocoderAPI {
             results[i] = {
               name: loc.place_name,
               bbox: bbox,
-              center: center
+              center: center,
+              properties: this._getProperties(loc)
             };
           }
         }
