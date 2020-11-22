@@ -107,7 +107,7 @@ export class Nominatim implements GeocoderAPI {
     );
   }
 
-  reverse(location: L.LatLng, scale: number, cb: (result: any) => void, context?: any) {
+  reverse(location: L.LatLngLiteral, scale: number, cb: (result: any) => void, context?: any) {
     getJSON(
       this.options.serviceUrl + 'reverse',
       L.Util.extend(
