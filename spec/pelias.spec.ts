@@ -1,10 +1,10 @@
 import { testXMLHttpRequest } from './mockXMLHttpRequest';
 import { Openrouteservice } from '../src/geocoders/pelias';
 
-describe('L.Control.Geocoder.Openrouteservice', function() {
+describe('L.Control.Geocoder.Openrouteservice', () => {
   const geocoder = new Openrouteservice('0123', {});
 
-  it('geocodes Innsbruck', function() {
+  it('geocodes Innsbruck', () => {
     const callback = jest.fn();
     testXMLHttpRequest(
       'https://api.openrouteservice.org/geocode/search?api_key=0123&text=innsbruck',

@@ -17,7 +17,7 @@ export class What3Words implements GeocoderAPI {
         key: this.accessToken,
         addr: query.split(/\s+/).join('.')
       },
-      function(data) {
+      data => {
         var results = [],
           latLng,
           latLngBounds;
@@ -52,7 +52,7 @@ export class What3Words implements GeocoderAPI {
         key: this.accessToken,
         coords: [location.lat, location.lng].join(',')
       },
-      function(data) {
+      data => {
         var results = [],
           latLng,
           latLngBounds;

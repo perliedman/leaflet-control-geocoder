@@ -22,7 +22,6 @@ export class Pelias implements GeocoderAPI {
   }
 
   geocode(query: string, cb: GeocodingCallback, context?: any): void {
-    var _this = this;
     getJSON(
       this.options.serviceUrl + '/search',
       L.Util.extend(
@@ -32,14 +31,13 @@ export class Pelias implements GeocoderAPI {
         },
         this.options.geocodingQueryParams
       ),
-      function(data) {
-        cb.call(context, _this._parseResults(data, 'bbox'));
+      data => {
+        cb.call(context, this._parseResults(data, 'bbox'));
       }
     );
   }
 
   suggest(query: string, cb: GeocodingCallback, context?: any): void {
-    var _this = this;
     getJSON(
       this.options.serviceUrl + '/autocomplete',
       L.Util.extend(
@@ -49,12 +47,12 @@ export class Pelias implements GeocoderAPI {
         },
         this.options.geocodingQueryParams
       ),
-      L.Util.bind(function(data) {
+      data => {
         if (data.geocoding.timestamp > this._lastSuggest) {
           this._lastSuggest = data.geocoding.timestamp;
-          cb.call(context, _this._parseResults(data, 'bbox'));
+          cb.call(context, this._parseResults(data, 'bbox'));
         }
-      }, this)
+      }
     );
   }
 
@@ -64,7 +62,6 @@ export class Pelias implements GeocoderAPI {
     cb: (result: any) => void,
     context?: any
   ): void {
-    var _this = this;
     getJSON(
       this.options.serviceUrl + '/reverse',
       L.Util.extend(
@@ -75,8 +72,8 @@ export class Pelias implements GeocoderAPI {
         },
         this.options.reverseQueryParams
       ),
-      function(data) {
-        cb.call(context, _this._parseResults(data, 'bounds'));
+      data => {
+        cb.call(context, this._parseResults(data, 'bounds'));
       }
     );
   }

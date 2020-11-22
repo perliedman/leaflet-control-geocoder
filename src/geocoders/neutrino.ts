@@ -29,7 +29,7 @@ export class Neutrino implements GeocoderAPI {
         //get three words and make a dot based string
         address: query.split(/\s+/).join('.')
       },
-      function(data) {
+      data => {
         var results = [],
           latLng,
           latLngBounds;
@@ -68,7 +68,7 @@ export class Neutrino implements GeocoderAPI {
         latitude: location.lat,
         longitude: location.lng
       },
-      function(data) {
+      data => {
         var results = [],
           latLng,
           latLngBounds;
