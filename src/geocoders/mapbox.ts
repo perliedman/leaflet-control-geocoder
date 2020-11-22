@@ -80,7 +80,7 @@ export class Mapbox implements GeocoderAPI {
     return this.geocode(query, cb, context);
   }
 
-  reverse(location: L.LatLng, scale: number, cb: (result: any) => void, context?: any): void {
+  reverse(location: L.LatLngLiteral, scale: number, cb: (result: any) => void, context?: any): void {
     getJSON(
       this.options.serviceUrl +
         encodeURIComponent(location.lng) +
