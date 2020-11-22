@@ -1,6 +1,11 @@
 import * as L from 'leaflet';
 import { template, getJSON } from '../util';
-import { GeocoderAPI, GeocodingCallback, GeocodingResult } from './interfaces';
+import {
+  GeocoderAPI,
+  GeocodingCallback,
+  GeocodingResult,
+  ReverseGeocodingResult
+} from './interfaces';
 
 export interface NominatimResult {
   place_id: number;
@@ -121,16 +126,16 @@ export class Nominatim implements GeocoderAPI {
         this.options.reverseQueryParams
       ),
       data => {
-        let result = [],
-          loc;
-
+        const result: ReverseGeocodingResult[] = [];
         if (data && data.lat && data.lon) {
-          loc = L.latLng(data.lat, data.lon);
+          const center = L.latLng(data.lat, data.lon);
+          const bbox = L.latLngBounds(center, center);
           result.push({
             name: data.display_name,
             html: this.options.htmlTemplate ? this.options.htmlTemplate(data) : undefined,
-            center: loc,
-            bounds: L.latLngBounds(loc, loc),
+            center: center,
+            bbox: bbox,
+            bounds: bbox,
             properties: data
           });
         }

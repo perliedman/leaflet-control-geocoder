@@ -1,6 +1,11 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import { GeocoderAPI, GeocodingCallback, GeocodingResult } from './interfaces';
+import {
+  GeocoderAPI,
+  GeocodingCallback,
+  GeocodingResult,
+  ReverseGeocodingResult
+} from './interfaces';
 
 export interface ArcGisOptions {
   geocodingQueryParams?: any;
@@ -69,15 +74,15 @@ export class ArcGis implements GeocoderAPI {
     };
 
     getJSON(this.options.service_url + '/reverseGeocode', params, data => {
-      let result = [],
-        loc;
-
+      const result: ReverseGeocodingResult[] = [];
       if (data && !data.error) {
-        loc = L.latLng(data.location.y, data.location.x);
+        const center = L.latLng(data.location.y, data.location.x);
+        const bbox = L.latLngBounds(center, center);
         result.push({
           name: data.address.Match_addr,
-          center: loc,
-          bounds: L.latLngBounds(loc, loc)
+          center: center,
+          bbox: bbox,
+          bounds: bbox
         });
       }
 
