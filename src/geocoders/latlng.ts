@@ -10,7 +10,7 @@ export interface LatLngOptions {
 }
 
 export function parseLatLng(query: string): L.LatLng | undefined {
-  var match;
+  let match;
   // regex from https://github.com/openstreetmap/openstreetmap-website/blob/master/app/controllers/geocoder_controller.rb
   if ((match = query.match(/^([NS])\s*(\d{1,3}(?:\.\d*)?)\W*([EW])\s*(\d{1,3}(?:\.\d*)?)$/))) {
     // [NSEW] decimal degrees
@@ -86,9 +86,9 @@ export class LatLng implements GeocoderAPI {
   }
 
   geocode(query: string, cb: GeocodingCallback, context?: any) {
-    var center = parseLatLng(query);
+    const center = parseLatLng(query);
     if (center) {
-      var results: GeocodingResult[] = [
+      const results: GeocodingResult[] = [
         {
           name: query,
           center: center,

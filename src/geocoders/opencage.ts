@@ -1,6 +1,6 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import { GeocoderAPI, GeocodingCallback } from './interfaces';
+import { GeocoderAPI, GeocodingCallback, GeocodingResult } from './interfaces';
 
 export interface OpenCageOptions {
   serviceUrl: string;
@@ -20,32 +20,30 @@ export class OpenCage implements GeocoderAPI {
   }
 
   geocode(query: string, cb: GeocodingCallback, context?: any): void {
-    var params = {
+    let params = {
       key: this.apiKey,
       q: query
     };
     params = L.Util.extend(params, this.options.geocodingQueryParams);
     getJSON(this.options.serviceUrl, params, data => {
-      var results = [],
-        latLng,
-        latLngBounds,
-        loc;
+      const results: GeocodingResult[] = [];
       if (data.results && data.results.length) {
-        for (var i = 0; i < data.results.length; i++) {
-          loc = data.results[i];
-          latLng = L.latLng(loc.geometry);
+        for (let i = 0; i < data.results.length; i++) {
+          const loc = data.results[i];
+          const center = L.latLng(loc.geometry);
+          let bbox: L.LatLngBounds;
           if (loc.annotations && loc.annotations.bounds) {
-            latLngBounds = L.latLngBounds(
+            bbox = L.latLngBounds(
               L.latLng(loc.annotations.bounds.northeast),
               L.latLng(loc.annotations.bounds.southwest)
             );
           } else {
-            latLngBounds = L.latLngBounds(latLng, latLng);
+            bbox = L.latLngBounds(center, center);
           }
           results.push({
             name: loc.formatted,
-            bbox: latLngBounds,
-            center: latLng
+            bbox: bbox,
+            center: center
           });
         }
       }
@@ -63,32 +61,30 @@ export class OpenCage implements GeocoderAPI {
     cb: (result: any) => void,
     context?: any
   ): void {
-    var params = {
+    let params = {
       key: this.apiKey,
       q: [location.lat, location.lng].join(',')
     };
     params = L.Util.extend(params, this.options.reverseQueryParams);
     getJSON(this.options.serviceUrl, params, data => {
-      var results = [],
-        latLng,
-        latLngBounds,
-        loc;
+      const results: GeocodingResult[] = [];
       if (data.results && data.results.length) {
-        for (var i = 0; i < data.results.length; i++) {
-          loc = data.results[i];
-          latLng = L.latLng(loc.geometry);
+        for (let i = 0; i < data.results.length; i++) {
+          const loc = data.results[i];
+          const center = L.latLng(loc.geometry);
+          let bbox: L.LatLngBounds;
           if (loc.annotations && loc.annotations.bounds) {
-            latLngBounds = L.latLngBounds(
+            bbox = L.latLngBounds(
               L.latLng(loc.annotations.bounds.northeast),
               L.latLng(loc.annotations.bounds.southwest)
             );
           } else {
-            latLngBounds = L.latLngBounds(latLng, latLng);
+            bbox = L.latLngBounds(center, center);
           }
           results.push({
             name: loc.formatted,
-            bbox: latLngBounds,
-            center: latLng
+            bbox: bbox,
+            center: center
           });
         }
       }

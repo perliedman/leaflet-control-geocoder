@@ -1,6 +1,6 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import { GeocoderAPI, GeocodingCallback } from './interfaces';
+import { GeocoderAPI, GeocodingCallback, GeocodingResult } from './interfaces';
 
 export interface ArcGisOptions {
   geocodingQueryParams?: any;
@@ -17,7 +17,7 @@ export class ArcGis implements GeocoderAPI {
   }
 
   geocode(query: string, cb: GeocodingCallback, context?: any): void {
-    var params = {
+    const params = {
       token: this.accessToken,
       SingleLine: query,
       outFields: 'Addr_Type',
@@ -30,16 +30,12 @@ export class ArcGis implements GeocoderAPI {
       this.options.service_url + '/findAddressCandidates',
       L.Util.extend(params, this.options.geocodingQueryParams),
       data => {
-        var results = [],
-          loc,
-          latLng,
-          latLngBounds;
-
+        const results: GeocodingResult[] = [];
         if (data.candidates && data.candidates.length) {
-          for (var i = 0; i <= data.candidates.length - 1; i++) {
-            loc = data.candidates[i];
-            latLng = L.latLng(loc.location.y, loc.location.x);
-            latLngBounds = L.latLngBounds(
+          for (let i = 0; i <= data.candidates.length - 1; i++) {
+            const loc = data.candidates[i];
+            const latLng = L.latLng(loc.location.y, loc.location.x);
+            const latLngBounds = L.latLngBounds(
               L.latLng(loc.extent.ymax, loc.extent.xmax),
               L.latLng(loc.extent.ymin, loc.extent.xmin)
             );
@@ -66,14 +62,14 @@ export class ArcGis implements GeocoderAPI {
     cb: (result: any) => void,
     context?: any
   ): void {
-    var params = {
+    const params = {
       location: encodeURIComponent(location.lng) + ',' + encodeURIComponent(location.lat),
       distance: 100,
       f: 'json'
     };
 
     getJSON(this.options.service_url + '/reverseGeocode', params, data => {
-      var result = [],
+      let result = [],
         loc;
 
       if (data && !data.error) {

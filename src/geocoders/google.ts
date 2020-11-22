@@ -1,6 +1,6 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import { GeocoderAPI, GeocodingCallback } from './interfaces';
+import { GeocoderAPI, GeocodingCallback, GeocodingResult } from './interfaces';
 
 export interface GoogleOptions {
   serviceUrl: string;
@@ -22,7 +22,7 @@ export class Google implements GeocoderAPI {
   }
 
   geocode(query: string, cb: GeocodingCallback, context?: any): void {
-    var params = {
+    let params = {
       key: this.key,
       address: query
     };
@@ -30,15 +30,12 @@ export class Google implements GeocoderAPI {
     params = L.Util.extend(params, this.options.geocodingQueryParams);
 
     getJSON(this.options.serviceUrl, params, data => {
-      var results = [],
-        loc,
-        latLng,
-        latLngBounds;
+      const results: GeocodingResult[] = [];
       if (data.results && data.results.length) {
-        for (var i = 0; i <= data.results.length - 1; i++) {
-          loc = data.results[i];
-          latLng = L.latLng(loc.geometry.location);
-          latLngBounds = L.latLngBounds(
+        for (let i = 0; i <= data.results.length - 1; i++) {
+          const loc = data.results[i];
+          const latLng = L.latLng(loc.geometry.location);
+          const latLngBounds = L.latLngBounds(
             L.latLng(loc.geometry.viewport.northeast),
             L.latLng(loc.geometry.viewport.southwest)
           );
@@ -61,29 +58,26 @@ export class Google implements GeocoderAPI {
     cb: (result: any) => void,
     context?: any
   ): void {
-    var params = {
+    let params = {
       key: this.key,
       latlng: encodeURIComponent(location.lat) + ',' + encodeURIComponent(location.lng)
     };
     params = L.Util.extend(params, this.options.reverseQueryParams);
 
     getJSON(this.options.serviceUrl, params, data => {
-      var results = [],
-        loc,
-        latLng,
-        latLngBounds;
+      const results: GeocodingResult[] = [];
       if (data.results && data.results.length) {
-        for (var i = 0; i <= data.results.length - 1; i++) {
-          loc = data.results[i];
-          latLng = L.latLng(loc.geometry.location);
-          latLngBounds = L.latLngBounds(
+        for (let i = 0; i <= data.results.length - 1; i++) {
+          const loc = data.results[i];
+          const center = L.latLng(loc.geometry.location);
+          const bbox = L.latLngBounds(
             L.latLng(loc.geometry.viewport.northeast),
             L.latLng(loc.geometry.viewport.southwest)
           );
           results[i] = {
             name: loc.formatted_address,
-            bbox: latLngBounds,
-            center: latLng,
+            bbox: bbox,
+            center: center,
             properties: loc.address_components
           };
         }

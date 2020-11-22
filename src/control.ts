@@ -81,10 +81,10 @@ export class GeocoderControl extends L.Control {
   }
 
   onAdd(map: L.Map) {
-    var className = 'leaflet-control-geocoder';
-    var container = L.DomUtil.create('div', className + ' leaflet-bar') as HTMLDivElement;
-    var icon = L.DomUtil.create('button', className + '-icon', container) as HTMLButtonElement;
-    var form = (this._form = L.DomUtil.create(
+    const className = 'leaflet-control-geocoder';
+    const container = L.DomUtil.create('div', className + ' leaflet-bar') as HTMLDivElement;
+    const icon = L.DomUtil.create('button', className + '-icon', container) as HTMLButtonElement;
+    const form = (this._form = L.DomUtil.create(
       'div',
       className + '-form',
       container
@@ -97,7 +97,7 @@ export class GeocoderControl extends L.Control {
     icon.type = 'button';
     icon.setAttribute('aria-label', this.options.iconLabel);
 
-    var input = (this._input = L.DomUtil.create('input', '', form) as HTMLInputElement);
+    const input = (this._input = L.DomUtil.create('input', '', form) as HTMLInputElement);
     input.type = 'text';
     input.value = this.options.query;
     input.placeholder = this.options.placeholder;
@@ -187,7 +187,7 @@ export class GeocoderControl extends L.Control {
       this._results = results;
       L.DomUtil.removeClass(this._alts, 'leaflet-control-geocoder-alternatives-minimized');
       L.DomUtil.addClass(this._container, 'leaflet-control-geocoder-options-open');
-      for (var i = 0; i < results.length; i++) {
+      for (let i = 0; i < results.length; i++) {
         this._alts.appendChild(this._createAlt(results[i], i));
       }
     } else {
@@ -214,27 +214,25 @@ export class GeocoderControl extends L.Control {
   }
 
   _geocode(suggest?: boolean) {
-    var value = this._input.value;
+    const value = this._input.value;
     if (!suggest && value.length < this.options.queryMinLength) {
       return;
     }
 
-    var requestCount = ++this._requestCount;
-    var cb = (results: GeocodingResult[]) => {
+    const requestCount = ++this._requestCount;
+    const cb = (results: GeocodingResult[]) => {
       if (requestCount === this._requestCount) {
-        eventData.results = results;
-        this.fire(suggest ? 'finishsuggest' : 'finishgeocode', eventData);
+        this.fire(suggest ? 'finishsuggest' : 'finishgeocode', { input: value, results });
         this._geocodeResult(results, suggest);
       }
     };
-    var eventData = { input: value, results: [] as GeocodingResult[] };
 
     this._lastGeocode = value;
     if (!suggest) {
       this._clearResults();
     }
 
-    this.fire(suggest ? 'startsuggest' : 'startgeocode', eventData);
+    this.fire(suggest ? 'startsuggest' : 'startgeocode', { input: value });
     if (suggest) {
       this.options.geocoder.suggest(value, cb);
     } else {
@@ -279,7 +277,7 @@ export class GeocoderControl extends L.Control {
   }
 
   _createAlt(result: GeocodingResult, index: number) {
-    var li = L.DomUtil.create('li', ''),
+    const li = L.DomUtil.create('li', ''),
       a = L.DomUtil.create('a', '', li),
       icon =
         this.options.showResultIcons && result.icon
@@ -325,7 +323,7 @@ export class GeocoderControl extends L.Control {
   }
 
   _keydown(e: KeyboardEvent) {
-    var select = (dir: number) => {
+    const select = (dir: number) => {
       if (this._selection) {
         L.DomUtil.removeClass(this._selection, 'leaflet-control-geocoder-selected');
         this._selection = this._selection[dir > 0 ? 'nextSibling' : 'previousSibling'];
@@ -359,7 +357,7 @@ export class GeocoderControl extends L.Control {
       // Enter
       case 13:
         if (this._selection) {
-          var index = parseInt(this._selection.getAttribute('data-result-index'), 10);
+          const index = parseInt(this._selection.getAttribute('data-result-index'), 10);
           this._geocodeResultSelected(this._results[index]);
           this._clearResults();
         } else {
@@ -374,7 +372,7 @@ export class GeocoderControl extends L.Control {
   }
 
   _change() {
-    var v = this._input.value;
+    const v = this._input.value;
     if (v !== this._lastGeocode) {
       clearTimeout(this._suggestTimeout);
       if (v.length >= this.options.suggestMinLength) {

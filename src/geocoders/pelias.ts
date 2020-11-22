@@ -79,15 +79,15 @@ export class Pelias implements GeocoderAPI {
   }
 
   _parseResults(data, bboxname) {
-    var results = [];
+    const results: GeocodingResult[] = [];
     L.geoJSON(data, {
       pointToLayer: function(feature, latlng) {
         return L.circleMarker(latlng);
       },
       onEachFeature: function(feature, layer: any) {
-        var result = {} as GeocodingResult,
-          bbox,
-          center;
+        const result = {} as GeocodingResult;
+        let bbox;
+        let center;
 
         if (layer.getBounds) {
           bbox = layer.getBounds();
@@ -117,11 +117,11 @@ export class Pelias implements GeocoderAPI {
 export function pelias(apiKey: string, options?: Partial<PeliasOptions>) {
   return new Pelias(apiKey, options);
 }
-export var GeocodeEarth = Pelias;
-export var geocodeEarth = pelias;
+export const GeocodeEarth = Pelias;
+export const geocodeEarth = pelias;
 
-export var Mapzen = Pelias; // r.i.p.
-export var mapzen = pelias;
+export const Mapzen = Pelias; // r.i.p.
+export const mapzen = pelias;
 
 export class Openrouteservice extends Mapzen {
   constructor(apiKey: string, options?: Partial<PeliasOptions>) {

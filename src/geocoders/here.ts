@@ -1,6 +1,6 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import { GeocoderAPI, GeocodingCallback } from './interfaces';
+import { GeocoderAPI, GeocodingCallback, GeocodingResult } from './interfaces';
 
 export interface HereOptions {
   geocodeUrl: string;
@@ -28,7 +28,7 @@ export class HERE implements GeocoderAPI {
   }
 
   geocode(query: string, cb: GeocodingCallback, context?: any): void {
-    var params = {
+    let params = {
       searchtext: query,
       gen: 9,
       app_id: this.options.app_id,
@@ -45,11 +45,11 @@ export class HERE implements GeocoderAPI {
     cb: (result: any) => void,
     context?: any
   ): void {
-    var _proxRadius = this.options.reverseGeocodeProxRadius
+    const _proxRadius = this.options.reverseGeocodeProxRadius
       ? this.options.reverseGeocodeProxRadius
       : null;
-    var proxRadius = _proxRadius ? ',' + encodeURIComponent(_proxRadius) : '';
-    var params = {
+    const proxRadius = _proxRadius ? ',' + encodeURIComponent(_proxRadius) : '';
+    let params = {
       prox: encodeURIComponent(location.lat) + ',' + encodeURIComponent(location.lng) + proxRadius,
       mode: 'retrieveAddresses',
       app_id: this.options.app_id,
@@ -63,23 +63,20 @@ export class HERE implements GeocoderAPI {
 
   getJSON(url: string, params: any, cb: (result: any) => void, context?: any) {
     getJSON(url, params, data => {
-      var results = [],
-        loc,
-        latLng,
-        latLngBounds;
+      const results: GeocodingResult[] = [];
       if (data.response.view && data.response.view.length) {
-        for (var i = 0; i <= data.response.view[0].result.length - 1; i++) {
-          loc = data.response.view[0].result[i].location;
-          latLng = L.latLng(loc.displayPosition.latitude, loc.displayPosition.longitude);
-          latLngBounds = L.latLngBounds(
+        for (let i = 0; i <= data.response.view[0].result.length - 1; i++) {
+          const loc = data.response.view[0].result[i].location;
+          const center = L.latLng(loc.displayPosition.latitude, loc.displayPosition.longitude);
+          const bbox = L.latLngBounds(
             L.latLng(loc.mapView.topLeft.latitude, loc.mapView.topLeft.longitude),
             L.latLng(loc.mapView.bottomRight.latitude, loc.mapView.bottomRight.longitude)
           );
           results[i] = {
             name: loc.address.label,
             properties: loc.address,
-            bbox: latLngBounds,
-            center: latLng
+            bbox: bbox,
+            center: center
           };
         }
       }

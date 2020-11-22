@@ -1,6 +1,6 @@
 import * as L from 'leaflet';
 import { jsonp } from '../util';
-import { GeocoderAPI, GeocodingCallback } from './interfaces';
+import { GeocoderAPI, GeocodingCallback, GeocodingResult } from './interfaces';
 
 export class Bing implements GeocoderAPI {
   constructor(private key: string) {}
@@ -13,10 +13,10 @@ export class Bing implements GeocoderAPI {
         key: this.key
       },
       data => {
-        var results = [];
+        const results: GeocodingResult[] = [];
         if (data.resourceSets.length > 0) {
-          for (var i = data.resourceSets[0].resources.length - 1; i >= 0; i--) {
-            var resource = data.resourceSets[0].resources[i],
+          for (let i = data.resourceSets[0].resources.length - 1; i >= 0; i--) {
+            const resource = data.resourceSets[0].resources[i],
               bbox = resource.bbox;
             results[i] = {
               name: resource.name,
@@ -44,9 +44,9 @@ export class Bing implements GeocoderAPI {
         key: this.key
       },
       data => {
-        var results = [];
-        for (var i = data.resourceSets[0].resources.length - 1; i >= 0; i--) {
-          var resource = data.resourceSets[0].resources[i],
+        const results: GeocodingResult[] = [];
+        for (let i = data.resourceSets[0].resources.length - 1; i >= 0; i--) {
+          const resource = data.resourceSets[0].resources[i],
             bbox = resource.bbox;
           results[i] = {
             name: resource.name,

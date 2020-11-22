@@ -1,6 +1,6 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import { GeocoderAPI, GeocodingCallback } from './interfaces';
+import { GeocoderAPI, GeocodingCallback, GeocodingResult } from './interfaces';
 
 export class What3Words implements GeocoderAPI {
   options = {
@@ -18,12 +18,10 @@ export class What3Words implements GeocoderAPI {
         addr: query.split(/\s+/).join('.')
       },
       data => {
-        var results = [],
-          latLng,
-          latLngBounds;
+        const results: GeocodingResult[] = [];
         if (data.geometry) {
-          latLng = L.latLng(data.geometry['lat'], data.geometry['lng']);
-          latLngBounds = L.latLngBounds(latLng, latLng);
+          const latLng = L.latLng(data.geometry['lat'], data.geometry['lng']);
+          const latLngBounds = L.latLngBounds(latLng, latLng);
           results[0] = {
             name: data.words,
             bbox: latLngBounds,
@@ -53,16 +51,14 @@ export class What3Words implements GeocoderAPI {
         coords: [location.lat, location.lng].join(',')
       },
       data => {
-        var results = [],
-          latLng,
-          latLngBounds;
+        const results: GeocodingResult[] = [];
         if (data.status.status == 200) {
-          latLng = L.latLng(data.geometry['lat'], data.geometry['lng']);
-          latLngBounds = L.latLngBounds(latLng, latLng);
+          const center = L.latLng(data.geometry['lat'], data.geometry['lng']);
+          const bbox = L.latLngBounds(center, center);
           results[0] = {
             name: data.words,
-            bbox: latLngBounds,
-            center: latLng
+            bbox: bbox,
+            center: center
           };
         }
         cb.call(context, results);
