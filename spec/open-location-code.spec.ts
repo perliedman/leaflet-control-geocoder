@@ -2,7 +2,6 @@
 import * as OpenLocationCode from './vendor/openlocationcode';
 import { OpenLocationCode as Geocoder } from '../src/geocoders/open-location-code';
 
-/* global OpenLocationCode */
 describe('L.Control.Geocoder.OpenLocationCode', function() {
   const geocoder = new Geocoder({ OpenLocationCode: OpenLocationCode });
 
