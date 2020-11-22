@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`L.Control.Geocoder.HERE geocodes Innsbruck 1`] = `
+Array [
+  Array [
+    Array [
+      Object {
+        "bbox": Object {
+          "_northEast": Object {
+            "lat": 47.35922,
+            "lng": 11.45587,
+          },
+          "_southWest": Object {
+            "lat": 47.21082,
+            "lng": 11.30194,
+          },
+        },
+        "center": Object {
+          "lat": 47.268,
+          "lng": 11.3913,
+        },
+        "name": "Innsbruck, Tirol, Österreich",
+        "properties": Object {
+          "additionalData": Array [
+            Object {
+              "key": "CountryName",
+              "value": "Österreich",
+            },
+            Object {
+              "key": "StateName",
+              "value": "Tirol",
+            },
+            Object {
+              "key": "CountyName",
+              "value": "Innsbruck-Stadt",
+            },
+          ],
+          "city": "Innsbruck",
+          "country": "AUT",
+          "county": "Innsbruck-Stadt",
+          "label": "Innsbruck, Tirol, Österreich",
+          "postalCode": "6020",
+          "state": "Tirol",
+        },
+      },
+    ],
+  ],
+]
+`;
