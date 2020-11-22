@@ -30,7 +30,7 @@ export class Mapbox implements GeocoderAPI {
     ) {
       params.proximity = params.proximity.lng + ',' + params.proximity.lat;
     }
-    getJSON(this.options.serviceUrl + encodeURIComponent(query) + '.json', params, function(data) {
+    getJSON(this.options.serviceUrl + encodeURIComponent(query) + '.json', params, data => {
       var results = [],
         loc,
         latLng,
@@ -93,7 +93,7 @@ export class Mapbox implements GeocoderAPI {
         encodeURIComponent(location.lat) +
         '.json',
       this.options.reverseQueryParams,
-      function(data) {
+      data => {
         var results = [],
           loc,
           latLng,

@@ -1,10 +1,10 @@
 import { testXMLHttpRequest } from './mockXMLHttpRequest';
 import { Nominatim } from '../src/geocoders/nominatim';
 
-describe('L.Control.Geocoder.Nominatim', function() {
+describe('L.Control.Geocoder.Nominatim', () => {
   const geocoder = new Nominatim();
 
-  it('geocodes Innsbruck', function() {
+  it('geocodes Innsbruck', () => {
     const callback = jest.fn();
 
     testXMLHttpRequest(
@@ -53,7 +53,7 @@ describe('L.Control.Geocoder.Nominatim', function() {
     expect(callback.mock.calls).toMatchSnapshot();
   });
 
-  it('reverse geocodes 47.3/11.3', function() {
+  it('reverse geocodes 47.3/11.3', () => {
     const callback = jest.fn();
 
     testXMLHttpRequest(

@@ -29,7 +29,7 @@ export class ArcGis implements GeocoderAPI {
     getJSON(
       this.options.service_url + '/findAddressCandidates',
       L.Util.extend(params, this.options.geocodingQueryParams),
-      function(data) {
+      data => {
         var results = [],
           loc,
           latLng,
@@ -72,7 +72,7 @@ export class ArcGis implements GeocoderAPI {
       f: 'json'
     };
 
-    getJSON(this.options.service_url + '/reverseGeocode', params, function(data) {
+    getJSON(this.options.service_url + '/reverseGeocode', params, data => {
       var result = [],
         loc;
 

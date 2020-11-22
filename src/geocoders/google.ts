@@ -29,7 +29,7 @@ export class Google implements GeocoderAPI {
 
     params = L.Util.extend(params, this.options.geocodingQueryParams);
 
-    getJSON(this.options.serviceUrl, params, function(data) {
+    getJSON(this.options.serviceUrl, params, data => {
       var results = [],
         loc,
         latLng,
@@ -67,7 +67,7 @@ export class Google implements GeocoderAPI {
     };
     params = L.Util.extend(params, this.options.reverseQueryParams);
 
-    getJSON(this.options.serviceUrl, params, function(data) {
+    getJSON(this.options.serviceUrl, params, data => {
       var results = [],
         loc,
         latLng,

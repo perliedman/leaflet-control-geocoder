@@ -86,7 +86,7 @@ export function getJSON(
 }
 
 export function template(str: string, data: Record<string, any>): string {
-  return str.replace(/\{ *([\w_]+) *\}/g, function(str, key) {
+  return str.replace(/\{ *([\w_]+) *\}/g, (str, key) => {
     var value = data[key];
     if (value === undefined) {
       value = '';

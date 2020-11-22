@@ -98,10 +98,10 @@ export class Photon implements GeocoderAPI {
 
   _decodeFeatureName(f: GeoJSON.Feature) {
     return (this.options.nameProperties || [])
-      .map(function(p) {
+      .map(p => {
         return f.properties[p];
       })
-      .filter(function(v) {
+      .filter(v => {
         return !!v;
       })
       .join(', ');

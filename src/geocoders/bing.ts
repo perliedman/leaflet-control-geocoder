@@ -12,7 +12,7 @@ export class Bing implements GeocoderAPI {
         query: query,
         key: this.key
       },
-      function(data) {
+      data => {
         var results = [];
         if (data.resourceSets.length > 0) {
           for (var i = data.resourceSets[0].resources.length - 1; i >= 0; i--) {
@@ -43,7 +43,7 @@ export class Bing implements GeocoderAPI {
       {
         key: this.key
       },
-      function(data) {
+      data => {
         var results = [];
         for (var i = data.resourceSets[0].resources.length - 1; i >= 0; i--) {
           var resource = data.resourceSets[0].resources[i],

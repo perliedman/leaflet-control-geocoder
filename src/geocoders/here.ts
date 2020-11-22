@@ -62,7 +62,7 @@ export class HERE implements GeocoderAPI {
   }
 
   getJSON(url: string, params: any, cb: (result: any) => void, context?: any) {
-    getJSON(url, params, function(data) {
+    getJSON(url, params, data => {
       var results = [],
         loc,
         latLng,

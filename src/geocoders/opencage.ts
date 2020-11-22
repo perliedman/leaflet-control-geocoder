@@ -25,7 +25,7 @@ export class OpenCage implements GeocoderAPI {
       q: query
     };
     params = L.Util.extend(params, this.options.geocodingQueryParams);
-    getJSON(this.options.serviceUrl, params, function(data) {
+    getJSON(this.options.serviceUrl, params, data => {
       var results = [],
         latLng,
         latLngBounds,
@@ -68,7 +68,7 @@ export class OpenCage implements GeocoderAPI {
       q: [location.lat, location.lng].join(',')
     };
     params = L.Util.extend(params, this.options.reverseQueryParams);
-    getJSON(this.options.serviceUrl, params, function(data) {
+    getJSON(this.options.serviceUrl, params, data => {
       var results = [],
         latLng,
         latLngBounds,
