@@ -44,7 +44,7 @@ export class OpenLocationCode implements GeocoderAPI {
       cb.call(context, []);
     }
   }
-  reverse?(location: L.LatLng, scale: number, cb: (result: any) => void, context?: any) {
+  reverse(location: L.LatLngLiteral, scale: number, cb: (result: any) => void, context?: any) {
     try {
       var code = this.options.OpenLocationCode.encode(
         location.lat,

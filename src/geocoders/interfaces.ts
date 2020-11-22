@@ -14,5 +14,5 @@ export type GeocodingCallback = (result: GeocodingResult[]) => void;
 export interface GeocoderAPI {
   geocode(query: string, cb: GeocodingCallback, context?: any): void;
   suggest?(query: string, cb: GeocodingCallback, context?: any): void;
-  reverse?(location: L.LatLng, scale: number, cb: (result: any) => void, context?: any): void;
+  reverse?(location: L.LatLngLiteral, scale: number, cb: (result: any) => void, context?: any): void;
 }
