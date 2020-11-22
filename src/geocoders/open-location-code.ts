@@ -29,8 +29,8 @@ export class OpenLocationCode implements GeocoderAPI {
 
   geocode(query: string, cb: GeocodingCallback, context?: any) {
     try {
-      var decoded = this.options.OpenLocationCode.decode(query);
-      var result: GeocodingResult = {
+      const decoded = this.options.OpenLocationCode.decode(query);
+      const result: GeocodingResult = {
         name: query,
         center: L.latLng(decoded.latitudeCenter, decoded.longitudeCenter),
         bbox: L.latLngBounds(
@@ -46,12 +46,12 @@ export class OpenLocationCode implements GeocoderAPI {
   }
   reverse(location: L.LatLngLiteral, scale: number, cb: (result: any) => void, context?: any) {
     try {
-      var code = this.options.OpenLocationCode.encode(
+      const code = this.options.OpenLocationCode.encode(
         location.lat,
         location.lng,
         this.options.codeLength
       );
-      var result = {
+      const result = {
         name: code,
         center: L.latLng(location.lat, location.lng),
         bbox: L.latLngBounds(

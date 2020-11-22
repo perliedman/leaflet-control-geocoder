@@ -1,6 +1,6 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import { GeocoderAPI, GeocodingCallback } from './interfaces';
+import { GeocoderAPI, GeocodingCallback, GeocodingResult } from './interfaces';
 
 export interface MapQuestOptions {
   serviceUrl: string;
@@ -35,17 +35,15 @@ export class MapQuest implements GeocoderAPI {
         outFormat: 'json'
       },
       L.Util.bind(function(data) {
-        var results = [],
-          loc,
-          latLng;
+        const results: GeocodingResult[] = [];
         if (data.results && data.results[0].locations) {
-          for (var i = data.results[0].locations.length - 1; i >= 0; i--) {
-            loc = data.results[0].locations[i];
-            latLng = L.latLng(loc.latLng);
+          for (let i = data.results[0].locations.length - 1; i >= 0; i--) {
+            const loc = data.results[0].locations[i];
+            const center = L.latLng(loc.latLng);
             results[i] = {
               name: this._formatName(loc.street, loc.adminArea4, loc.adminArea3, loc.adminArea1),
-              bbox: L.latLngBounds(latLng, latLng),
-              center: latLng
+              bbox: L.latLngBounds(center, center),
+              center: center
             };
           }
         }
@@ -69,17 +67,15 @@ export class MapQuest implements GeocoderAPI {
         outputFormat: 'json'
       },
       L.Util.bind(function(data) {
-        var results = [],
-          loc,
-          latLng;
+        const results: GeocodingResult[] = [];
         if (data.results && data.results[0].locations) {
-          for (var i = data.results[0].locations.length - 1; i >= 0; i--) {
-            loc = data.results[0].locations[i];
-            latLng = L.latLng(loc.latLng);
+          for (let i = data.results[0].locations.length - 1; i >= 0; i--) {
+            const loc = data.results[0].locations[i];
+            const center = L.latLng(loc.latLng);
             results[i] = {
               name: this._formatName(loc.street, loc.adminArea4, loc.adminArea3, loc.adminArea1),
-              bbox: L.latLngBounds(latLng, latLng),
-              center: latLng
+              bbox: L.latLngBounds(center, center),
+              center: center
             };
           }
         }

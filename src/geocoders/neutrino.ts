@@ -1,6 +1,6 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import { GeocoderAPI, GeocodingCallback } from './interfaces';
+import { GeocoderAPI, GeocodingCallback, GeocodingResult } from './interfaces';
 
 export interface NeutrinoOptions {
   userId: string;
@@ -30,17 +30,15 @@ export class Neutrino implements GeocoderAPI {
         address: query.split(/\s+/).join('.')
       },
       data => {
-        var results = [],
-          latLng,
-          latLngBounds;
+        const results: GeocodingResult[] = [];
         if (data.locations) {
           data.geometry = data.locations[0];
-          latLng = L.latLng(data.geometry['latitude'], data.geometry['longitude']);
-          latLngBounds = L.latLngBounds(latLng, latLng);
+          const center = L.latLng(data.geometry['latitude'], data.geometry['longitude']);
+          const bbox = L.latLngBounds(center, center);
           results[0] = {
             name: data.geometry.address,
-            bbox: latLngBounds,
-            center: latLng
+            bbox: bbox,
+            center: center
           };
         }
 
@@ -69,16 +67,14 @@ export class Neutrino implements GeocoderAPI {
         longitude: location.lng
       },
       data => {
-        var results = [],
-          latLng,
-          latLngBounds;
+        const results: GeocodingResult[] = [];
         if (data.status.status == 200 && data.found) {
-          latLng = L.latLng(location.lat, location.lng);
-          latLngBounds = L.latLngBounds(latLng, latLng);
+          const center = L.latLng(location.lat, location.lng);
+          const bbox = L.latLngBounds(center, center);
           results[0] = {
             name: data.address,
-            bbox: latLngBounds,
-            center: latLng
+            bbox: bbox,
+            center: center
           };
         }
         cb.call(context, results);

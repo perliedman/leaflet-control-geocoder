@@ -1,6 +1,6 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import { GeocoderAPI, GeocodingCallback } from './interfaces';
+import { GeocoderAPI, GeocodingCallback, GeocodingResult } from './interfaces';
 
 export interface MapboxOptions {
   serviceUrl: string;
@@ -22,7 +22,7 @@ export class Mapbox implements GeocoderAPI {
   }
 
   geocode(query: string, cb: GeocodingCallback, context?: any): void {
-    var params = this.options.geocodingQueryParams;
+    const params = this.options.geocodingQueryParams;
     if (
       params.proximity !== undefined &&
       params.proximity.lat !== undefined &&
@@ -31,30 +31,28 @@ export class Mapbox implements GeocoderAPI {
       params.proximity = params.proximity.lng + ',' + params.proximity.lat;
     }
     getJSON(this.options.serviceUrl + encodeURIComponent(query) + '.json', params, data => {
-      var results = [],
-        loc,
-        latLng,
-        latLngBounds;
+      const results: GeocodingResult[] = [];
       if (data.features && data.features.length) {
-        for (var i = 0; i <= data.features.length - 1; i++) {
-          loc = data.features[i];
-          latLng = L.latLng(loc.center.reverse());
+        for (let i = 0; i <= data.features.length - 1; i++) {
+          const loc = data.features[i];
+          const center = L.latLng(loc.center.reverse());
+          let bbox: L.LatLngBounds;
           if (loc.bbox) {
-            latLngBounds = L.latLngBounds(
+            bbox = L.latLngBounds(
               L.latLng(loc.bbox.slice(0, 2).reverse()),
               L.latLng(loc.bbox.slice(2, 4).reverse())
             );
           } else {
-            latLngBounds = L.latLngBounds(latLng, latLng);
+            bbox = L.latLngBounds(center, center);
           }
 
-          var properties = {
+          const properties = {
             text: loc.text,
             address: loc.address
           };
 
-          for (var j = 0; j < (loc.context || []).length; j++) {
-            var id = loc.context[j].id.split('.')[0];
+          for (let j = 0; j < (loc.context || []).length; j++) {
+            const id = loc.context[j].id.split('.')[0];
             properties[id] = loc.context[j].text;
 
             // Get country code when available
@@ -65,8 +63,8 @@ export class Mapbox implements GeocoderAPI {
 
           results[i] = {
             name: loc.place_name,
-            bbox: latLngBounds,
-            center: latLng,
+            bbox: bbox,
+            center: center,
             properties: properties
           };
         }
@@ -94,26 +92,24 @@ export class Mapbox implements GeocoderAPI {
         '.json',
       this.options.reverseQueryParams,
       data => {
-        var results = [],
-          loc,
-          latLng,
-          latLngBounds;
+        const results: GeocodingResult[] = [];
         if (data.features && data.features.length) {
-          for (var i = 0; i <= data.features.length - 1; i++) {
-            loc = data.features[i];
-            latLng = L.latLng(loc.center.reverse());
+          for (let i = 0; i <= data.features.length - 1; i++) {
+            const loc = data.features[i];
+            const center = L.latLng(loc.center.reverse());
+            let bbox: L.LatLngBounds;
             if (loc.bbox) {
-              latLngBounds = L.latLngBounds(
+              bbox = L.latLngBounds(
                 L.latLng(loc.bbox.slice(0, 2).reverse()),
                 L.latLng(loc.bbox.slice(2, 4).reverse())
               );
             } else {
-              latLngBounds = L.latLngBounds(latLng, latLng);
+              bbox = L.latLngBounds(center, center);
             }
             results[i] = {
               name: loc.place_name,
-              bbox: latLngBounds,
-              center: latLng
+              bbox: bbox,
+              center: center
             };
           }
         }

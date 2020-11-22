@@ -1,6 +1,6 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import { GeocoderAPI, GeocodingCallback } from './interfaces';
+import { GeocoderAPI, GeocodingCallback, GeocodingResult } from './interfaces';
 
 export interface PhotonOptions {
   serviceUrl: string;
@@ -23,7 +23,7 @@ export class Photon implements GeocoderAPI {
   }
 
   geocode(query: string, cb: GeocodingCallback, context?: any): void {
-    var params = L.Util.extend(
+    const params = L.Util.extend(
       {
         q: query
       },
@@ -44,7 +44,7 @@ export class Photon implements GeocoderAPI {
   }
 
   reverse(latLng: L.LatLngLiteral, scale: number, cb: (result: any) => void, context?: any): void {
-    var params = L.Util.extend(
+    const params = L.Util.extend(
       {
         lat: latLng.lat,
         lon: latLng.lng
@@ -62,31 +62,23 @@ export class Photon implements GeocoderAPI {
   }
 
   _decodeFeatures(data: GeoJSON.FeatureCollection<GeoJSON.Point>) {
-    var results = [],
-      i,
-      f,
-      c,
-      latLng,
-      extent,
-      bbox;
+    const results: GeocodingResult[] = [];
 
     if (data && data.features) {
-      for (i = 0; i < data.features.length; i++) {
-        f = data.features[i];
-        c = f.geometry.coordinates;
-        latLng = L.latLng(c[1], c[0]);
-        extent = f.properties.extent;
+      for (let i = 0; i < data.features.length; i++) {
+        const f = data.features[i];
+        const c = f.geometry.coordinates;
+        const center = L.latLng(c[1], c[0]);
+        const extent = f.properties.extent;
 
-        if (extent) {
-          bbox = L.latLngBounds([extent[1], extent[0]], [extent[3], extent[2]]);
-        } else {
-          bbox = L.latLngBounds(latLng, latLng);
-        }
+        const bbox = extent
+          ? L.latLngBounds([extent[1], extent[0]], [extent[3], extent[2]])
+          : L.latLngBounds(center, center);
 
         results.push({
           name: this._decodeFeatureName(f),
           html: this.options.htmlTemplate ? this.options.htmlTemplate(f) : undefined,
-          center: latLng,
+          center: center,
           bbox: bbox,
           properties: f.properties
         });

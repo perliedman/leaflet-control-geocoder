@@ -1,11 +1,11 @@
 import * as L from 'leaflet';
-var lastCallbackId = 0;
+let lastCallbackId = 0;
 
 // Adapted from handlebars.js
 // https://github.com/wycats/handlebars.js/
-var badChars = /[&<>"'`]/g;
-var possible = /[&<>"'`]/;
-var escape: Record<string, string> = {
+const badChars = /[&<>"'`]/g;
+const possible = /[&<>"'`]/;
+const escape: Record<string, string> = {
   '&': '&amp;',
   '<': '&lt;',
   '>': '&gt;',
@@ -43,10 +43,10 @@ export function jsonp(
   context: any,
   jsonpParam?: string
 ) {
-  var callbackId = '_l_geocoder_' + lastCallbackId++;
+  const callbackId = '_l_geocoder_' + lastCallbackId++;
   params[jsonpParam || 'callback'] = callbackId;
   (window as any)[callbackId] = L.Util.bind(callback, context);
-  var script = document.createElement('script');
+  const script = document.createElement('script');
   script.type = 'text/javascript';
   script.src = url + getParamString(params);
   script.id = callbackId;
@@ -58,12 +58,12 @@ export function getJSON(
   params: Record<string, unknown>,
   callback: (message: any) => void
 ): void {
-  var xmlHttp = new XMLHttpRequest();
+  const xmlHttp = new XMLHttpRequest();
   xmlHttp.onreadystatechange = function() {
     if (xmlHttp.readyState !== 4) {
       return;
     }
-    var message;
+    let message;
     if (xmlHttp.status !== 200 && xmlHttp.status !== 304) {
       message = '';
     } else if (typeof xmlHttp.response === 'string') {
@@ -87,7 +87,7 @@ export function getJSON(
 
 export function template(str: string, data: Record<string, any>): string {
   return str.replace(/\{ *([\w_]+) *\}/g, (str, key) => {
-    var value = data[key];
+    let value = data[key];
     if (value === undefined) {
       value = '';
     } else if (typeof value === 'function') {
@@ -102,14 +102,14 @@ export function getParamString(
   existingUrl?: string,
   uppercase?: boolean
 ): string {
-  var params = [];
-  for (var i in obj) {
-    var key = encodeURIComponent(uppercase ? i.toUpperCase() : i);
-    var value = obj[i];
+  const params = [];
+  for (const i in obj) {
+    const key = encodeURIComponent(uppercase ? i.toUpperCase() : i);
+    const value = obj[i];
     if (!Array.isArray(value)) {
       params.push(key + '=' + encodeURIComponent(String(value)));
     } else {
-      for (var j = 0; j < value.length; j++) {
+      for (let j = 0; j < value.length; j++) {
         params.push(key + '=' + encodeURIComponent(value[j]));
       }
     }

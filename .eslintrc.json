@@ -12,7 +12,6 @@
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "prefer-arrow-callback": "warn",
-    "no-var": "off",
     "prettier/prettier": "warn"
   }
 }
