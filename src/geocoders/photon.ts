@@ -43,7 +43,7 @@ export class Photon implements GeocoderAPI {
     return this.geocode(query, cb, context);
   }
 
-  reverse(latLng: L.LatLng, scale: number, cb: (result: any) => void, context?: any): void {
+  reverse(latLng: L.LatLngLiteral, scale: number, cb: (result: any) => void, context?: any): void {
     var params = L.Util.extend(
       {
         lat: latLng.lat,
