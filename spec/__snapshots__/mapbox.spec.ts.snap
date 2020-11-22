@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`L.Control.Geocoder.Mapbox geocodes Milwaukee Ave 1`] = `
+Array [
+  Array [
+    Array [
+      Object {
+        "bbox": Object {
+          "_northEast": Object {
+            "lat": 42.166602,
+            "lng": -87.921434,
+          },
+          "_southWest": Object {
+            "lat": 42.166602,
+            "lng": -87.921434,
+          },
+        },
+        "center": Object {
+          "lat": 42.166602,
+          "lng": -87.921434,
+        },
+        "name": "825 Milwaukee Ave, Deerfield, Illinois 60015, United States",
+        "properties": Object {
+          "address": "825",
+          "country": "United States",
+          "countryShortCode": "us",
+          "neighborhood": "Lake Cook Road",
+          "place": "Deerfield",
+          "postcode": "60015",
+          "region": "Illinois",
+          "text": "Milwaukee Ave",
+        },
+      },
+    ],
+  ],
+]
+`;
