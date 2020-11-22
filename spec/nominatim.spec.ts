@@ -1,18 +1,15 @@
-describe('L.Control.Geocoder.Nominatim', function() {
-  var server;
-  var geocoder = new L.Control.Geocoder.Nominatim();
+import { testXMLHttpRequest } from './mockXMLHttpRequest';
+import { Nominatim } from '../src/geocoders/nominatim';
 
-  beforeEach(function() {
-    server = sinon.fakeServer.create();
-  });
-  afterEach(function() {
-    server.restore();
-  });
+describe('L.Control.Geocoder.Nominatim', function() {
+  const geocoder = new Nominatim();
 
   it('geocodes Innsbruck', function() {
-    server.respondWith(
+    const callback = jest.fn();
+
+    testXMLHttpRequest(
       'https://nominatim.openstreetmap.org/search?q=innsbruck&limit=5&format=json&addressdetails=1',
-      JSON.stringify([
+      [
         {
           place_id: 199282228,
           licence: 'Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright',
@@ -36,21 +33,16 @@ describe('L.Control.Geocoder.Nominatim', function() {
             country_code: 'at'
           }
         }
-      ])
+      ],
+      () => geocoder.geocode('innsbruck', callback)
     );
 
-    var callback = sinon.fake();
-    geocoder.geocode('innsbruck', callback);
-    server.respond();
-
-    expect(callback.calledOnce).to.be.ok();
-    expect(callback.lastArg).to.be.ok();
-    expect(callback.lastArg.length).to.eql(1);
-    expect(callback.lastArg[0].name).to.eql('Innsbruck, Tyrol, Austria');
-    expect(callback.lastArg[0].html).to.eql(
+    const feature = callback.mock.calls[0][0][0];
+    expect(feature.name).toBe('Innsbruck, Tyrol, Austria');
+    expect(feature.html).toBe(
       '<span class=""> Innsbruck   </span><br/><span class="leaflet-control-geocoder-address-context">Tyrol Austria</span>'
     );
-    expect(callback.lastArg[0].properties.address).to.eql({
+    expect(feature.properties.address).toStrictEqual({
       city_district: 'Innsbruck',
       city: 'Innsbruck',
       county: 'Innsbruck',
@@ -58,12 +50,15 @@ describe('L.Control.Geocoder.Nominatim', function() {
       country: 'Austria',
       country_code: 'at'
     });
+    expect(callback.mock.calls).toMatchSnapshot();
   });
 
   it('reverse geocodes 47.3/11.3', function() {
-    server.respondWith(
+    const callback = jest.fn();
+
+    testXMLHttpRequest(
       'https://nominatim.openstreetmap.org/reverse?lat=47.3&lon=11.3&zoom=9&addressdetails=1&format=json',
-      JSON.stringify({
+      {
         place_id: 197718025,
         licence: 'Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright',
         osm_type: 'relation',
@@ -78,23 +73,19 @@ describe('L.Control.Geocoder.Nominatim', function() {
           country_code: 'at'
         },
         boundingbox: ['46.9624854', '47.4499229', '10.9896868', '11.7051742']
-      })
+      },
+      () => geocoder.reverse({ lat: 47.3, lng: 11.3 }, 131000, callback)
     );
 
-    var callback = sinon.fake();
-    geocoder.reverse({ lat: 47.3, lng: 11.3 }, 131000, callback);
-    server.respond();
-
-    expect(callback.calledOnce).to.be.ok();
-    expect(callback.lastArg).to.be.ok();
-    expect(callback.lastArg.length).to.eql(1);
-    expect(callback.lastArg[0].name).to.eql('Innsbruck-Land, Tyrol, Austria');
-    expect(callback.lastArg[0].html).to.eql('<span class="">Tyrol Austria</span>');
-    expect(callback.lastArg[0].properties.address).to.eql({
+    const feature = callback.mock.calls[0][0][0];
+    expect(feature.name).toBe('Innsbruck-Land, Tyrol, Austria');
+    expect(feature.html).toBe('<span class="">Tyrol Austria</span>');
+    expect(feature.properties.address).toStrictEqual({
       county: 'Innsbruck-Land',
       state: 'Tyrol',
       country: 'Austria',
       country_code: 'at'
     });
+    expect(callback.mock.calls).toMatchSnapshot();
   });
 });

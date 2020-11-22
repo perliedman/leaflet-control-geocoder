@@ -81,7 +81,7 @@ export class LatLng implements GeocoderAPI {
     sizeInMeters: 10000
   };
 
-  constructor(options: Partial<LatLngOptions>) {
+  constructor(options?: Partial<LatLngOptions>) {
     L.Util.setOptions(this, options);
   }
 

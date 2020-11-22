@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`L.Control.Geocoder.Openrouteservice geocodes Innsbruck 1`] = `
+Array [
+  Array [
+    Array [
+      Object {
+        "bbox": Object {
+          "_northEast": Object {
+            "lat": 47.29398,
+            "lng": 11.452584553,
+          },
+          "_southWest": Object {
+            "lat": 47.2470573997,
+            "lng": 11.3218091258,
+          },
+        },
+        "center": Object {
+          "lat": 47.272308,
+          "lng": 11.407851,
+        },
+        "name": "Innsbruck, Austria",
+        "properties": Object {
+          "accuracy": "centroid",
+          "confidence": 1,
+          "continent": "Europe",
+          "country": "Austria",
+          "country_a": "AUT",
+          "county": "Innsbruck",
+          "county_a": "IN",
+          "id": "101748061",
+          "label": "Innsbruck, Austria",
+          "layer": "locality",
+          "localadmin": "Innsbruck",
+          "locality": "Innsbruck",
+          "match_type": "exact",
+          "name": "Innsbruck",
+          "region": "Tirol",
+          "region_a": "TR",
+          "source_id": "101748061",
+        },
+      },
+    ],
+  ],
+]
+`;
