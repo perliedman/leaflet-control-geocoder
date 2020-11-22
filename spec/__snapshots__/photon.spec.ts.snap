@@ -1,0 +1,80 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`L.Control.Geocoder.Photon geocodes Innsbruck 1`] = `
+Array [
+  Array [
+    Array [
+      Object {
+        "bbox": Object {
+          "_northEast": Object {
+            "lat": 47.2808566,
+            "lng": 11.4181209,
+          },
+          "_southWest": Object {
+            "lat": 47.2583715,
+            "lng": 11.3811871,
+          },
+        },
+        "center": Object {
+          "lat": 47.2654296,
+          "lng": 11.3927685,
+        },
+        "html": undefined,
+        "name": "Innsbruck, Innsbruck, Tyrol, Austria",
+        "properties": Object {
+          "city": "Innsbruck",
+          "country": "Austria",
+          "countrycode": "AT",
+          "extent": Array [
+            11.3811871,
+            47.2808566,
+            11.4181209,
+            47.2583715,
+          ],
+          "name": "Innsbruck",
+          "osm_id": 8182617,
+          "osm_key": "place",
+          "osm_type": "R",
+          "osm_value": "city",
+          "state": "Tyrol",
+          "type": "locality",
+        },
+      },
+      Object {
+        "bbox": Object {
+          "_northEast": Object {
+            "lat": 47.2690806,
+            "lng": 11.3959095,
+          },
+          "_southWest": Object {
+            "lat": 47.2690806,
+            "lng": 11.3959095,
+          },
+        },
+        "center": Object {
+          "lat": 47.2690806,
+          "lng": 11.3959095,
+        },
+        "html": undefined,
+        "name": "Mozarteum Innsbruck, Universitätsstraße, Innsbruck, Tyrol, Austria",
+        "properties": Object {
+          "city": "Innsbruck",
+          "country": "Austria",
+          "countrycode": "AT",
+          "district": "Innenstadt",
+          "housenumber": "1",
+          "name": "Mozarteum Innsbruck",
+          "osm_id": 7323902269,
+          "osm_key": "amenity",
+          "osm_type": "N",
+          "osm_value": "music_school",
+          "postcode": "6020",
+          "state": "Tyrol",
+          "street": "Universitätsstraße",
+          "type": "house",
+        },
+      },
+    ],
+  ],
+]
+`;
