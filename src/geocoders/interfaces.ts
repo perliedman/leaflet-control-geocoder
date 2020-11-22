@@ -9,6 +9,13 @@ export interface GeocodingResult {
   properties?: any;
 }
 
+export interface ReverseGeocodingResult extends GeocodingResult {
+  /**
+   * @deprecated
+   */
+  bounds: L.LatLngBounds;
+}
+
 export type GeocodingCallback = (result: GeocodingResult[]) => void;
 
 export interface GeocoderAPI {
