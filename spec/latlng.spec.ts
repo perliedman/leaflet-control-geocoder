@@ -1,6 +1,9 @@
-describe('L.Control.Geocoder.LatLng', function() {
+import * as L from 'leaflet';
+import { LatLng } from '../src/geocoders/latlng';
+
+describe('LatLng', function() {
   // test cases from https://github.com/openstreetmap/openstreetmap-website/blob/master/test/controllers/geocoder_controller_test.rb
-  var expected;
+  let expected;
   beforeEach(function() {
     expected = L.latLng(50.06773, 14.37742);
   });
@@ -13,24 +16,20 @@ describe('L.Control.Geocoder.LatLng', function() {
   });
 
   it('does not geocode no-lat-lng', function() {
-    var geocoder = new L.Control.Geocoder.LatLng();
-    var callback = sinon.fake();
+    const geocoder = new LatLng();
+    const callback = jest.fn();
     geocoder.geocode('no-lat-lng', callback);
-    expect(callback.calledOnce).to.not.be.ok();
+    expect(callback).toHaveBeenCalledTimes(0);
   });
 
   it('passes unsupported queries to the next geocoder', function() {
-    var next = {
-      geocode: function(_query, cb) {
-        cb('XXX');
-      }
+    const next = {
+      geocode: (_query, cb) => cb('XXX')
     };
-    var geocoder = new L.Control.Geocoder.LatLng({ next: next });
-    var callback = sinon.fake();
+    const geocoder = new LatLng({ next: next });
+    const callback = jest.fn();
     geocoder.geocode('no-lat-lng', callback);
-    expect(callback.calledOnce).to.be.ok();
-    expect(callback.lastArg).to.be.ok();
-    expect(callback.lastArg).to.eql('XXX');
+    expect(callback).toHaveBeenCalledWith('XXX');
   });
 
   it('geocodes lat/lon pairs using N/E with degrees', function() {
@@ -139,14 +138,13 @@ describe('L.Control.Geocoder.LatLng', function() {
   });
 
   function geocode(query) {
-    var geocoder = new L.Control.Geocoder.LatLng();
-    var callback = sinon.fake();
+    const geocoder = new LatLng();
+    const callback = jest.fn();
     geocoder.geocode(query, callback);
-    expect(callback.calledOnce).to.be.ok();
-    expect(callback.lastArg).to.be.ok();
-    expect(callback.lastArg).to.have.length(1);
-    expect(callback.lastArg[0].name).to.eql(query);
-    expect(callback.lastArg[0].center.lat).to.be.within(expected.lat - 1e-6, expected.lat + 1e-6);
-    expect(callback.lastArg[0].center.lng).to.be.within(expected.lng - 1e-6, expected.lng + 1e-6);
+    expect(callback).toBeCalledTimes(1);
+    const feature = callback.mock.calls[0][0][0];
+    expect(feature.name).toBe(query);
+    expect(feature.center.lat).toBeCloseTo(expected.lat);
+    expect(feature.center.lng).toBeCloseTo(expected.lng);
   }
 });

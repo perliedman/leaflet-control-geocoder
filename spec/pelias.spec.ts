@@ -1,18 +1,14 @@
-describe('L.Control.Geocoder.Openrouteservice', function() {
-  var server;
-  var geocoder = new L.Control.Geocoder.Openrouteservice('0123');
+import { testXMLHttpRequest } from './mockXMLHttpRequest';
+import { Openrouteservice } from '../src/geocoders/pelias';
 
-  beforeEach(function() {
-    server = sinon.fakeServer.create();
-  });
-  afterEach(function() {
-    server.restore();
-  });
+describe('L.Control.Geocoder.Openrouteservice', function() {
+  const geocoder = new Openrouteservice('0123', {});
 
   it('geocodes Innsbruck', function() {
-    server.respondWith(
+    const callback = jest.fn();
+    testXMLHttpRequest(
       'https://api.openrouteservice.org/geocode/search?api_key=0123&text=innsbruck',
-      JSON.stringify({
+      {
         geocoding: {
           version: '0.2',
           attribution: 'openrouteservice.org | OpenStreetMap contributors | Geocoding by Pelias',
@@ -48,23 +44,17 @@ describe('L.Control.Geocoder.Openrouteservice', function() {
           }
         ],
         bbox: [10.9896885523, 46.9624806033, 11.7051690163, 47.4499185397]
-      })
+      },
+      () => geocoder.geocode('innsbruck', callback)
     );
 
-    var callback = sinon.fake();
-    geocoder.geocode('innsbruck', callback);
-    server.respond();
-
-    expect(callback.calledOnce).to.be.ok();
-    expect(callback.lastArg).to.be.ok();
-    expect(callback.lastArg.length).to.eql(1);
-    expect(callback.lastArg[0].name).to.eql('Innsbruck, Austria');
-    expect(callback.lastArg[0].center).to.eql({ lat: 47.272308, lng: 11.407851 });
-    expect(callback.lastArg[0].bbox).to.eql(
-      L.latLngBounds([
-        { lat: 47.2470573997, lng: 11.3218091258 },
-        { lat: 47.29398, lng: 11.452584553 }
-      ])
-    );
+    const feature = callback.mock.calls[0][0][0];
+    expect(feature.name).toBe('Innsbruck, Austria');
+    expect(feature.center).toStrictEqual({ lat: 47.272308, lng: 11.407851 });
+    expect(feature.bbox).toStrictEqual({
+      _southWest: { lat: 47.2470573997, lng: 11.3218091258 },
+      _northEast: { lat: 47.29398, lng: 11.452584553 }
+    });
+    expect(callback.mock.calls).toMatchSnapshot();
   });
 });
