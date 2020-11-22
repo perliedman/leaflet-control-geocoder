@@ -21,16 +21,8 @@ export class MapQuest implements GeocoderAPI {
     L.Util.setOptions(this, options);
   }
 
-  _formatName() {
-    var r = [],
-      i;
-    for (i = 0; i < arguments.length; i++) {
-      if (arguments[i]) {
-        r.push(arguments[i]);
-      }
-    }
-
-    return r.join(', ');
+  _formatName(...parts: string[]) {
+    return parts.filter(s => !!s).join(', ');
   }
 
   geocode(query: string, cb: GeocodingCallback, context?: any): void {
@@ -63,7 +55,12 @@ export class MapQuest implements GeocoderAPI {
     );
   }
 
-  reverse(location: L.LatLngLiteral, scale: number, cb: (result: any) => void, context?: any): void {
+  reverse(
+    location: L.LatLngLiteral,
+    scale: number,
+    cb: (result: any) => void,
+    context?: any
+  ): void {
     getJSON(
       this.options.serviceUrl + '/reverse',
       {

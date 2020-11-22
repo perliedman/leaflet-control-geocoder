@@ -6,8 +6,8 @@ export interface PhotonOptions {
   serviceUrl: string;
   reverseUrl: string;
   nameProperties: string[];
-  geocodingQueryParams?: object;
-  reverseQueryParams?: object;
+  geocodingQueryParams?: Record<string, unknown>;
+  reverseQueryParams?: Record<string, unknown>;
   htmlTemplate?: (r: any) => string;
 }
 

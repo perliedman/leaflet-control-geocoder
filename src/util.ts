@@ -53,7 +53,11 @@ export function jsonp(
   document.getElementsByTagName('head')[0].appendChild(script);
 }
 
-export function getJSON(url: string, params: object, callback: (message: any) => void): void {
+export function getJSON(
+  url: string,
+  params: Record<string, unknown>,
+  callback: (message: any) => void
+): void {
   var xmlHttp = new XMLHttpRequest();
   xmlHttp.onreadystatechange = function() {
     if (xmlHttp.readyState !== 4) {
@@ -94,7 +98,7 @@ export function template(str: string, data: Record<string, any>): string {
 }
 
 export function getParamString(
-  obj: Record<string, any>,
+  obj: Record<string, unknown | unknown[]>,
   existingUrl?: string,
   uppercase?: boolean
 ): string {
@@ -102,8 +106,8 @@ export function getParamString(
   for (var i in obj) {
     var key = encodeURIComponent(uppercase ? i.toUpperCase() : i);
     var value = obj[i];
-    if (!L.Util.isArray(value)) {
-      params.push(key + '=' + encodeURIComponent(value));
+    if (!Array.isArray(value)) {
+      params.push(key + '=' + encodeURIComponent(String(value)));
     } else {
       for (var j = 0; j < value.length; j++) {
         params.push(key + '=' + encodeURIComponent(value[j]));

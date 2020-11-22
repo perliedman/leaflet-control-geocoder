@@ -4,8 +4,8 @@ import { GeocoderAPI, GeocodingCallback } from './interfaces';
 
 export interface OpenCageOptions {
   serviceUrl: string;
-  geocodingQueryParams?: object;
-  reverseQueryParams?: object;
+  geocodingQueryParams?: Record<string, unknown>;
+  reverseQueryParams?: Record<string, unknown>;
 }
 
 export class OpenCage implements GeocoderAPI {
@@ -57,7 +57,12 @@ export class OpenCage implements GeocoderAPI {
     return this.geocode(query, cb, context);
   }
 
-  reverse(location: L.LatLngLiteral, scale: number, cb: (result: any) => void, context?: any): void {
+  reverse(
+    location: L.LatLngLiteral,
+    scale: number,
+    cb: (result: any) => void,
+    context?: any
+  ): void {
     var params = {
       key: this.apiKey,
       q: [location.lat, location.lng].join(',')

@@ -32,7 +32,12 @@ export class Bing implements GeocoderAPI {
     );
   }
 
-  reverse(location: L.LatLngLiteral, scale: number, cb: (result: any) => void, context?: any): void {
+  reverse(
+    location: L.LatLngLiteral,
+    scale: number,
+    cb: (result: any) => void,
+    context?: any
+  ): void {
     jsonp(
       '//dev.virtualearth.net/REST/v1/Locations/' + location.lat + ',' + location.lng,
       {

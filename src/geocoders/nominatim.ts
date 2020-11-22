@@ -38,8 +38,8 @@ export interface Address {
 
 export interface NominatimOptions {
   serviceUrl: string;
-  geocodingQueryParams?: object;
-  reverseQueryParams?: object;
+  geocodingQueryParams?: Record<string, unknown>;
+  reverseQueryParams?: Record<string, unknown>;
   htmlTemplate: (r: NominatimResult) => string;
 }
 

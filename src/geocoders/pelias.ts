@@ -4,8 +4,8 @@ import { GeocoderAPI, GeocodingCallback, GeocodingResult } from './interfaces';
 
 export interface PeliasOptions {
   serviceUrl: string;
-  geocodingQueryParams?: object;
-  reverseQueryParams?: object;
+  geocodingQueryParams?: Record<string, unknown>;
+  reverseQueryParams?: Record<string, unknown>;
 }
 
 export class Pelias implements GeocoderAPI {
@@ -58,7 +58,12 @@ export class Pelias implements GeocoderAPI {
     );
   }
 
-  reverse(location: L.LatLngLiteral, scale: number, cb: (result: any) => void, context?: any): void {
+  reverse(
+    location: L.LatLngLiteral,
+    scale: number,
+    cb: (result: any) => void,
+    context?: any
+  ): void {
     var _this = this;
     getJSON(
       this.options.serviceUrl + '/reverse',

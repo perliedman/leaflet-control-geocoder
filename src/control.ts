@@ -331,7 +331,7 @@ export class GeocoderControl extends L.Control {
         this._selection = this._selection[dir > 0 ? 'nextSibling' : 'previousSibling'];
       }
       if (!this._selection) {
-        this._selection = this._alts![dir > 0 ? 'firstChild' : 'lastChild'];
+        this._selection = this._alts[dir > 0 ? 'firstChild' : 'lastChild'];
       }
 
       if (this._selection) {

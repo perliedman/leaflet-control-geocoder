@@ -14,11 +14,7 @@
     "build:demo-webpack": "cd demo-rollup && npm install && npm run build",
     "changelog": "conventional-changelog --infile CHANGELOG.md --same-file --output-unreleased",
     "test": "jest",
-    "lint": "npm run lint:js && npm run lint:style",
-    "lint:js": "eslint .",
-    "lint:style": "prettier --check $(npm run ls-files)",
-    "fix:style": "prettier --write $(npm run ls-files)",
-    "ls-files": "git ls-files '*.js' '*.json' '*.css' '*.html' '*.yaml' '*.yml' '*.md'"
+    "lint": "eslint --ext .js,.ts ."
   },
   "repository": {
     "type": "git",
@@ -63,9 +59,11 @@
     "url": "https://github.com/perliedman/leaflet-control-geocoder/issues"
   },
   "devDependencies": {
-    "conventional-changelog-cli": "^2.1.0",
     "@rollup/plugin-typescript": "^4.1.1",
     "@types/leaflet": "^1.5.12",
+    "@typescript-eslint/eslint-plugin": "^4.8.1",
+    "@typescript-eslint/parser": "^4.8.1",
+    "conventional-changelog-cli": "^2.1.0",
     "cpr": "^3.0.1",
     "eslint": "^6.8.0",
     "eslint-plugin-prettier": "^3.1.2",

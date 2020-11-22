@@ -4,16 +4,16 @@ import { GeocoderAPI, GeocodingCallback } from './interfaces';
 
 export interface GoogleOptions {
   serviceUrl: string;
-  geocodingQueryParams?: object;
-  reverseQueryParams?: object;
+  geocodingQueryParams?: Record<string, unknown>;
+  reverseQueryParams?: Record<string, unknown>;
 }
 
-export class Google  implements GeocoderAPI{
-  options:GoogleOptions= {
+export class Google implements GeocoderAPI {
+  options: GoogleOptions = {
     serviceUrl: 'https://maps.googleapis.com/maps/api/geocode/json',
     geocodingQueryParams: {},
     reverseQueryParams: {}
-  }
+  };
 
   constructor(private key: string, options?: Partial<GoogleOptions>) {
     L.Util.setOptions(this, options);
@@ -55,7 +55,12 @@ export class Google  implements GeocoderAPI{
     });
   }
 
-  reverse(location: L.LatLngLiteral, scale: number, cb: (result: any) => void, context?: any): void {
+  reverse(
+    location: L.LatLngLiteral,
+    scale: number,
+    cb: (result: any) => void,
+    context?: any
+  ): void {
     var params = {
       key: this.key,
       latlng: encodeURIComponent(location.lat) + ',' + encodeURIComponent(location.lng)
@@ -89,6 +94,6 @@ export class Google  implements GeocoderAPI{
   }
 }
 
-export function google(key:string, options?: Partial<GoogleOptions>) {
+export function google(key: string, options?: Partial<GoogleOptions>) {
   return new Google(key, options);
 }

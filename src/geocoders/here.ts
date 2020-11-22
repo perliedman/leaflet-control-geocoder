@@ -7,8 +7,8 @@ export interface HereOptions {
   reverseGeocodeUrl: string;
   app_id: string;
   app_code: string;
-  geocodingQueryParams?: object;
-  reverseQueryParams?: object;
+  geocodingQueryParams?: Record<string, unknown>;
+  reverseQueryParams?: Record<string, unknown>;
   reverseGeocodeProxRadius: null;
 }
 
@@ -39,7 +39,12 @@ export class HERE implements GeocoderAPI {
     this.getJSON(this.options.geocodeUrl, params, cb, context);
   }
 
-  reverse(location: L.LatLngLiteral, scale: number, cb: (result: any) => void, context?: any): void {
+  reverse(
+    location: L.LatLngLiteral,
+    scale: number,
+    cb: (result: any) => void,
+    context?: any
+  ): void {
     var _proxRadius = this.options.reverseGeocodeProxRadius
       ? this.options.reverseGeocodeProxRadius
       : null;

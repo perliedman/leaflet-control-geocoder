@@ -60,7 +60,12 @@ export class ArcGis implements GeocoderAPI {
     return this.geocode(query, cb, context);
   }
 
-  reverse(location: L.LatLngLiteral, scale: number, cb: (result: any) => void, context?: any): void {
+  reverse(
+    location: L.LatLngLiteral,
+    scale: number,
+    cb: (result: any) => void,
+    context?: any
+  ): void {
     var params = {
       location: encodeURIComponent(location.lng) + ',' + encodeURIComponent(location.lat),
       distance: 100,
