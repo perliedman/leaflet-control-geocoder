@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`L.Control.Geocoder.ArcGis geocodes Innsbruck 1`] = `
+Array [
+  Array [
+    Array [
+      Object {
+        "bbox": Object {
+          "_northEast": Object {
+            "lat": 47.34400000000003,
+            "lng": 11.467300000000058,
+          },
+          "_southWest": Object {
+            "lat": 47.19200000000003,
+            "lng": 11.315300000000057,
+          },
+        },
+        "center": Object {
+          "lat": 47.26800000000003,
+          "lng": 11.391300000000058,
+        },
+        "name": "Innsbruck, Innsbruck-Stadt, Tirol",
+      },
+    ],
+  ],
+]
+`;
