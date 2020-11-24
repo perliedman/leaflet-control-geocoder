@@ -3,7 +3,7 @@ import { Mapbox } from '../src/geocoders/mapbox';
 
 describe('L.Control.Geocoder.Mapbox', () => {
   it('geocodes Milwaukee Ave', () => {
-    const geocoder = new Mapbox('0123');
+    const geocoder = new Mapbox({ apiKey: '0123' });
     const callback = jest.fn();
     testXMLHttpRequest(
       'https://api.mapbox.com/geocoding/v5/mapbox.places/Milwaukee%20Ave.json?access_token=0123',

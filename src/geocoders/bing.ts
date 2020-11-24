@@ -1,17 +1,26 @@
 import * as L from 'leaflet';
 import { jsonp } from '../util';
-import { GeocoderAPI, GeocodingCallback, GeocodingResult } from './interfaces';
+import { GeocoderAPI, GeocoderOptions, GeocodingCallback, GeocodingResult } from './interfaces';
+
+export interface BingOptions extends GeocoderOptions {}
 
 export class Bing implements GeocoderAPI {
-  constructor(private key: string) {}
+  options: BingOptions = {
+    serviceUrl: 'https://dev.virtualearth.net/REST/v1/Locations'
+  };
+
+  constructor(options?: Partial<BingOptions>) {
+    L.Util.setOptions(this, options);
+  }
 
   geocode(query: string, cb: GeocodingCallback, context?: any): void {
+    const params = {
+      query: query,
+      key: this.options.apiKey
+    };
     jsonp(
-      'https://dev.virtualearth.net/REST/v1/Locations',
-      {
-        query: query,
-        key: this.key
-      },
+      this.options.apiKey,
+      L.Util.extend(params, this.options.geocodingQueryParams),
       data => {
         const results: GeocodingResult[] = [];
         if (data.resourceSets.length > 0) {
@@ -38,11 +47,10 @@ export class Bing implements GeocoderAPI {
     cb: (result: any) => void,
     context?: any
   ): void {
+    const params = { key: this.options.apiKey };
     jsonp(
-      '//dev.virtualearth.net/REST/v1/Locations/' + location.lat + ',' + location.lng,
-      {
-        key: this.key
-      },
+      this.options.serviceUrl + location.lat + ',' + location.lng,
+      L.Util.extend(params, this.options.reverseQueryParams),
       data => {
         const results: GeocodingResult[] = [];
         for (let i = data.resourceSets[0].resources.length - 1; i >= 0; i--) {
@@ -62,6 +70,6 @@ export class Bing implements GeocoderAPI {
   }
 }
 
-export function bing(key: string) {
-  return new Bing(key);
+export function bing(options?: Partial<BingOptions>) {
+  return new Bing(options);
 }

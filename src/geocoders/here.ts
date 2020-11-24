@@ -1,30 +1,24 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import { GeocoderAPI, GeocodingCallback, GeocodingResult } from './interfaces';
+import { GeocoderAPI, GeocoderOptions, GeocodingCallback, GeocodingResult } from './interfaces';
 
-export interface HereOptions {
-  geocodeUrl: string;
-  reverseGeocodeUrl: string;
+export interface HereOptions extends GeocoderOptions {
   app_id: string;
   app_code: string;
-  geocodingQueryParams?: Record<string, unknown>;
-  reverseQueryParams?: Record<string, unknown>;
   reverseGeocodeProxRadius: null;
 }
 
 export class HERE implements GeocoderAPI {
   options: HereOptions = {
-    geocodeUrl: 'https://geocoder.api.here.com/6.2/geocode.json',
-    reverseGeocodeUrl: 'https://reverse.geocoder.api.here.com/6.2/reversegeocode.json',
-    app_id: '<insert your app_id here>',
-    app_code: '<insert your app_code here>',
-    geocodingQueryParams: {},
-    reverseQueryParams: {},
+    serviceUrl: 'https://geocoder.api.here.com/6.2/',
+    app_id: '',
+    app_code: '',
     reverseGeocodeProxRadius: null
   };
 
   constructor(options?: Partial<HereOptions>) {
     L.Util.setOptions(this, options);
+    if (options.apiKey) throw Error('apiKey is not supported, use app_id/app_code instead!');
   }
 
   geocode(query: string, cb: GeocodingCallback, context?: any): void {
@@ -36,7 +30,7 @@ export class HERE implements GeocoderAPI {
       jsonattributes: 1
     };
     params = L.Util.extend(params, this.options.geocodingQueryParams);
-    this.getJSON(this.options.geocodeUrl, params, cb, context);
+    this.getJSON(this.options.serviceUrl + 'geocode.json', params, cb, context);
   }
 
   reverse(
@@ -58,7 +52,7 @@ export class HERE implements GeocoderAPI {
       jsonattributes: 1
     };
     params = L.Util.extend(params, this.options.reverseQueryParams);
-    this.getJSON(this.options.reverseGeocodeUrl, params, cb, context);
+    this.getJSON(this.options.serviceUrl + 'reversegeocode.json', params, cb, context);
   }
 
   getJSON(url: string, params: any, cb: (result: any) => void, context?: any) {

@@ -1,23 +1,17 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import { GeocoderAPI, GeocodingCallback, GeocodingResult } from './interfaces';
+import { GeocoderAPI, GeocoderOptions, GeocodingCallback, GeocodingResult } from './interfaces';
 
-export interface PeliasOptions {
-  serviceUrl: string;
-  geocodingQueryParams?: Record<string, unknown>;
-  reverseQueryParams?: Record<string, unknown>;
-}
+export interface PeliasOptions extends GeocoderOptions {}
 
 export class Pelias implements GeocoderAPI {
   options: PeliasOptions = {
-    serviceUrl: 'https://api.geocode.earth/v1',
-    geocodingQueryParams: {},
-    reverseQueryParams: {}
+    serviceUrl: 'https://api.geocode.earth/v1'
   };
 
   private _lastSuggest = 0;
 
-  constructor(private apiKey: string, options?: Partial<PeliasOptions>) {
+  constructor(options?: Partial<PeliasOptions>) {
     L.Util.setOptions(this, options);
   }
 
@@ -26,7 +20,7 @@ export class Pelias implements GeocoderAPI {
       this.options.serviceUrl + '/search',
       L.Util.extend(
         {
-          api_key: this.apiKey,
+          api_key: this.options.apiKey,
           text: query
         },
         this.options.geocodingQueryParams
@@ -42,7 +36,7 @@ export class Pelias implements GeocoderAPI {
       this.options.serviceUrl + '/autocomplete',
       L.Util.extend(
         {
-          api_key: this.apiKey,
+          api_key: this.options.apiKey,
           text: query
         },
         this.options.geocodingQueryParams
@@ -66,7 +60,7 @@ export class Pelias implements GeocoderAPI {
       this.options.serviceUrl + '/reverse',
       L.Util.extend(
         {
-          api_key: this.apiKey,
+          api_key: this.options.apiKey,
           'point.lat': location.lat,
           'point.lon': location.lng
         },
@@ -114,8 +108,8 @@ export class Pelias implements GeocoderAPI {
   }
 }
 
-export function pelias(apiKey: string, options?: Partial<PeliasOptions>) {
-  return new Pelias(apiKey, options);
+export function pelias(options?: Partial<PeliasOptions>) {
+  return new Pelias(options);
 }
 export const GeocodeEarth = Pelias;
 export const geocodeEarth = pelias;
@@ -124,9 +118,8 @@ export const Mapzen = Pelias; // r.i.p.
 export const mapzen = pelias;
 
 export class Openrouteservice extends Mapzen {
-  constructor(apiKey: string, options?: Partial<PeliasOptions>) {
+  constructor(options?: Partial<PeliasOptions>) {
     super(
-      apiKey,
       L.Util.extend(
         {
           serviceUrl: 'https://api.openrouteservice.org/geocode'
@@ -136,6 +129,6 @@ export class Openrouteservice extends Mapzen {
     );
   }
 }
-export function openrouteservice(apiKey: string, options?: Partial<PeliasOptions>) {
-  return new Openrouteservice(apiKey, options);
+export function openrouteservice(options?: Partial<PeliasOptions>) {
+  return new Openrouteservice(options);
 }

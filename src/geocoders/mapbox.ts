@@ -1,24 +1,16 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import { GeocoderAPI, GeocodingCallback, GeocodingResult } from './interfaces';
+import { GeocoderAPI, GeocoderOptions, GeocodingCallback, GeocodingResult } from './interfaces';
 
-export interface MapboxOptions {
-  serviceUrl: string;
-  geocodingQueryParams: any;
-  reverseQueryParams: any;
-}
+export interface MapboxOptions extends GeocoderOptions {}
 
 export class Mapbox implements GeocoderAPI {
   options: MapboxOptions = {
-    serviceUrl: 'https://api.mapbox.com/geocoding/v5/mapbox.places/',
-    geocodingQueryParams: {},
-    reverseQueryParams: {}
+    serviceUrl: 'https://api.mapbox.com/geocoding/v5/mapbox.places/'
   };
 
-  constructor(accessToken: string, options?: Partial<MapboxOptions>) {
+  constructor(options?: Partial<MapboxOptions>) {
     L.Util.setOptions(this, options);
-    this.options.geocodingQueryParams.access_token = accessToken;
-    this.options.reverseQueryParams.access_token = accessToken;
   }
 
   _getProperties(loc) {
@@ -40,7 +32,10 @@ export class Mapbox implements GeocoderAPI {
   }
 
   geocode(query: string, cb: GeocodingCallback, context?: any): void {
-    const params = this.options.geocodingQueryParams;
+    const params: any = L.Util.extend(
+      { access_token: this.options.apiKey },
+      this.options.geocodingQueryParams
+    );
     if (
       params.proximity !== undefined &&
       params.proximity.lat !== undefined &&
@@ -87,13 +82,17 @@ export class Mapbox implements GeocoderAPI {
     cb: (result: any) => void,
     context?: any
   ): void {
+    const param = L.Util.extend(
+      { access_token: this.options.apiKey },
+      this.options.reverseQueryParams
+    );
     getJSON(
       this.options.serviceUrl +
         encodeURIComponent(location.lng) +
         ',' +
         encodeURIComponent(location.lat) +
         '.json',
-      this.options.reverseQueryParams,
+      param,
       data => {
         const results: GeocodingResult[] = [];
         if (data.features && data.features.length) {
@@ -124,6 +123,6 @@ export class Mapbox implements GeocoderAPI {
   }
 }
 
-export function mapbox(accessToken: string, options?: Partial<MapboxOptions>) {
-  return new Mapbox(accessToken, options);
+export function mapbox(options?: Partial<MapboxOptions>) {
+  return new Mapbox(options);
 }

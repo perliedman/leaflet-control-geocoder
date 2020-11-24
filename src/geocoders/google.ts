@@ -1,29 +1,21 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import { GeocoderAPI, GeocodingCallback, GeocodingResult } from './interfaces';
+import { GeocoderAPI, GeocoderOptions, GeocodingCallback, GeocodingResult } from './interfaces';
 
-export interface GoogleOptions {
-  serviceUrl: string;
-  geocodingQueryParams?: Record<string, unknown>;
-  reverseQueryParams?: Record<string, unknown>;
-}
+export interface GoogleOptions extends GeocoderOptions {}
 
 export class Google implements GeocoderAPI {
   options: GoogleOptions = {
-    serviceUrl: 'https://maps.googleapis.com/maps/api/geocode/json',
-    geocodingQueryParams: {},
-    reverseQueryParams: {}
+    serviceUrl: 'https://maps.googleapis.com/maps/api/geocode/json'
   };
 
-  constructor(private key: string, options?: Partial<GoogleOptions>) {
+  constructor(options?: Partial<GoogleOptions>) {
     L.Util.setOptions(this, options);
-    // Backwards compatibility
-    this.options.serviceUrl = (this.options as any).service_url || this.options.serviceUrl;
   }
 
   geocode(query: string, cb: GeocodingCallback, context?: any): void {
     let params = {
-      key: this.key,
+      key: this.options.apiKey,
       address: query
     };
 
@@ -59,7 +51,7 @@ export class Google implements GeocoderAPI {
     context?: any
   ): void {
     let params = {
-      key: this.key,
+      key: this.options.apiKey,
       latlng: encodeURIComponent(location.lat) + ',' + encodeURIComponent(location.lng)
     };
     params = L.Util.extend(params, this.options.reverseQueryParams);
@@ -88,6 +80,6 @@ export class Google implements GeocoderAPI {
   }
 }
 
-export function google(key: string, options?: Partial<GoogleOptions>) {
-  return new Google(key, options);
+export function google(options?: Partial<GoogleOptions>) {
+  return new Google(options);
 }

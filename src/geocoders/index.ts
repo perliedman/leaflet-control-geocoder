@@ -2,6 +2,7 @@ export * from './arcgis';
 export * from './bing';
 export * from './google';
 export * from './here';
+export * from './interfaces';
 export * from './latlng';
 export * from './mapbox';
 export * from './mapquest';

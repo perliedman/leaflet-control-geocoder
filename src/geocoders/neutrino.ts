@@ -1,11 +1,9 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import { GeocoderAPI, GeocodingCallback, GeocodingResult } from './interfaces';
+import { GeocoderAPI, GeocoderOptions, GeocodingCallback, GeocodingResult } from './interfaces';
 
-export interface NeutrinoOptions {
+export interface NeutrinoOptions extends GeocoderOptions {
   userId: string;
-  apiKey: string;
-  serviceUrl: string;
 }
 
 export class Neutrino implements GeocoderAPI {

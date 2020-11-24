@@ -1,24 +1,19 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import { GeocoderAPI, GeocodingCallback, GeocodingResult } from './interfaces';
+import { GeocoderAPI, GeocoderOptions, GeocodingCallback, GeocodingResult } from './interfaces';
 
-export interface MapQuestOptions {
-  serviceUrl: string;
-}
+export interface MapQuestOptions extends GeocoderOptions {}
 
 export class MapQuest implements GeocoderAPI {
   options: MapQuestOptions = {
     serviceUrl: 'https://www.mapquestapi.com/geocoding/v1'
   };
 
-  private _key: string;
-
-  constructor(key: string, options?: Partial<MapQuestOptions>) {
+  constructor(options?: Partial<MapQuestOptions>) {
+    L.Util.setOptions(this, options);
     // MapQuest seems to provide URI encoded API keys,
     // so to avoid encoding them twice, we decode them here
-    this._key = decodeURIComponent(key);
-
-    L.Util.setOptions(this, options);
+    this.options.apiKey = decodeURIComponent(this.options.apiKey);
   }
 
   _formatName(...parts: string[]) {
@@ -29,7 +24,7 @@ export class MapQuest implements GeocoderAPI {
     getJSON(
       this.options.serviceUrl + '/address',
       {
-        key: this._key,
+        key: this.options.apiKey,
         location: query,
         limit: 5,
         outFormat: 'json'
@@ -62,7 +57,7 @@ export class MapQuest implements GeocoderAPI {
     getJSON(
       this.options.serviceUrl + '/reverse',
       {
-        key: this._key,
+        key: this.options.apiKey,
         location: location.lat + ',' + location.lng,
         outputFormat: 'json'
       },
@@ -86,6 +81,6 @@ export class MapQuest implements GeocoderAPI {
   }
 }
 
-export function mapQuest(key: string, options?: Partial<MapQuestOptions>) {
-  return new MapQuest(key, options);
+export function mapQuest(options?: Partial<MapQuestOptions>) {
+  return new MapQuest(options);
 }

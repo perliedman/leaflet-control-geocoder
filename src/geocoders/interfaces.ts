@@ -28,3 +28,10 @@ export interface GeocoderAPI {
     context?: any
   ): void;
 }
+
+export interface GeocoderOptions {
+  serviceUrl: string;
+  geocodingQueryParams?: Record<string, unknown>;
+  reverseQueryParams?: Record<string, unknown>;
+  apiKey?: string;
+}
