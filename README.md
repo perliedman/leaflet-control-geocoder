@@ -157,9 +157,9 @@ Note that you need an API key to use this service.
 ### Constructor
 
 ```ts
-new L.Control.Geocoder.Bing(<String>key);
+new L.Control.Geocoder.Bing(options);
 // or
-L.Control.Geocoder.bing(<String>key);
+L.Control.Geocoder.bing(options);
 ```
 
 ## L.Control.Geocoder.OpenCage
@@ -171,9 +171,9 @@ Note that you need an API key to use this service.
 ### Constructor
 
 ```ts
-new L.Control.Geocoder.OpenCage(<String>key, options);
+new L.Control.Geocoder.OpenCage(options);
 // or
-L.Control.Geocoder.opencage(<String>key, options);
+L.Control.Geocoder.opencage(options);
 ```
 
 ### Options

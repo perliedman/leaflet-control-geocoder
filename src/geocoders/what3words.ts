@@ -1,20 +1,24 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import { GeocoderAPI, GeocodingCallback, GeocodingResult } from './interfaces';
+import { GeocoderAPI, GeocoderOptions, GeocodingCallback, GeocodingResult } from './interfaces';
+
+export interface What3WordsOptions extends GeocoderOptions {}
 
 export class What3Words implements GeocoderAPI {
-  options = {
+  options: What3WordsOptions = {
     serviceUrl: 'https://api.what3words.com/v2/'
   };
 
-  constructor(private accessToken: string) {}
+  constructor(options: Partial<What3WordsOptions>) {
+    L.Util.setOptions(this, options);
+  }
 
   geocode(query: string, cb: GeocodingCallback, context?: any): void {
     //get three words and make a dot based string
     getJSON(
       this.options.serviceUrl + 'forward',
       {
-        key: this.accessToken,
+        key: this.options.apiKey,
         addr: query.split(/\s+/).join('.')
       },
       data => {
@@ -47,7 +51,7 @@ export class What3Words implements GeocoderAPI {
     getJSON(
       this.options.serviceUrl + 'reverse',
       {
-        key: this.accessToken,
+        key: this.options.apiKey,
         coords: [location.lat, location.lng].join(',')
       },
       data => {
@@ -67,6 +71,6 @@ export class What3Words implements GeocoderAPI {
   }
 }
 
-export function what3words(accessToken: string) {
-  return new What3Words(accessToken);
+export function what3words(options: Partial<What3WordsOptions>) {
+  return new What3Words(options);
 }

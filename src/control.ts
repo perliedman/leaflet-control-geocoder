@@ -2,7 +2,7 @@ import * as L from 'leaflet';
 import { Nominatim } from './geocoders/index';
 import { GeocoderAPI, GeocodingResult } from './geocoders/interfaces';
 
-export interface GeocoderOptions extends L.ControlOptions {
+export interface GeocoderControlOptions extends L.ControlOptions {
   collapsed: boolean;
   expand: string;
   placeholder: string;
@@ -19,7 +19,7 @@ export interface GeocoderOptions extends L.ControlOptions {
 }
 
 export class GeocoderControl extends L.Control {
-  options: GeocoderOptions = {
+  options: GeocoderControlOptions = {
     showUniqueResult: true,
     showResultIcons: false,
     collapsed: true,
@@ -49,7 +49,7 @@ export class GeocoderControl extends L.Control {
   private _selection: any;
   private _suggestTimeout: any;
 
-  constructor(options?: Partial<GeocoderOptions>) {
+  constructor(options?: Partial<GeocoderControlOptions>) {
     super(options);
     L.Util.setOptions(this, options);
     if (!this.options.geocoder) {
@@ -384,6 +384,6 @@ export class GeocoderControl extends L.Control {
   }
 }
 
-export function geocoder(options?: Partial<GeocoderOptions>) {
+export function geocoder(options?: Partial<GeocoderControlOptions>) {
   return new GeocoderControl(options);
 }

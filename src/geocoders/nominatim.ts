@@ -2,6 +2,7 @@ import * as L from 'leaflet';
 import { template, getJSON } from '../util';
 import {
   GeocoderAPI,
+  GeocoderOptions,
   GeocodingCallback,
   GeocodingResult,
   ReverseGeocodingResult
@@ -41,18 +42,13 @@ export interface Address {
   village?: string;
 }
 
-export interface NominatimOptions {
-  serviceUrl: string;
-  geocodingQueryParams?: Record<string, unknown>;
-  reverseQueryParams?: Record<string, unknown>;
+export interface NominatimOptions extends GeocoderOptions {
   htmlTemplate: (r: NominatimResult) => string;
 }
 
 export class Nominatim implements GeocoderAPI {
   options: NominatimOptions = {
     serviceUrl: 'https://nominatim.openstreetmap.org/',
-    geocodingQueryParams: {},
-    reverseQueryParams: {},
     htmlTemplate: function(r: NominatimResult) {
       const address = r.address;
       let className: string;

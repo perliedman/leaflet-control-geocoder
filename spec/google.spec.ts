@@ -4,7 +4,7 @@ import { GeocodingResult } from '../src/geocoders/interfaces';
 
 describe('L.Control.Geocoder.Google', () => {
   it('geocodes Innsbruck', () => {
-    const geocoder = new Google('0123xyz');
+    const geocoder = new Google({ apiKey: '0123xyz' });
     const callback = jest.fn();
     testXMLHttpRequest(
       'https://maps.googleapis.com/maps/api/geocode/json?key=0123xyz&address=Innsbruck',

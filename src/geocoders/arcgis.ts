@@ -2,28 +2,27 @@ import * as L from 'leaflet';
 import { getJSON } from '../util';
 import {
   GeocoderAPI,
+  GeocoderOptions,
   GeocodingCallback,
   GeocodingResult,
   ReverseGeocodingResult
 } from './interfaces';
 
-export interface ArcGisOptions {
-  geocodingQueryParams?: any;
-  service_url: string;
-}
+export interface ArcGisOptions extends GeocoderOptions {}
 
 export class ArcGis implements GeocoderAPI {
   options: ArcGisOptions = {
-    service_url: 'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer'
+    serviceUrl: 'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer',
+    apiKey: ''
   };
 
-  constructor(private accessToken: string, options?: Partial<ArcGisOptions>) {
+  constructor(options?: Partial<ArcGisOptions>) {
     L.Util.setOptions(this, options);
   }
 
   geocode(query: string, cb: GeocodingCallback, context?: any): void {
     const params = {
-      token: this.accessToken,
+      token: this.options.apiKey,
       SingleLine: query,
       outFields: 'Addr_Type',
       forStorage: false,
@@ -32,7 +31,7 @@ export class ArcGis implements GeocoderAPI {
     };
 
     getJSON(
-      this.options.service_url + '/findAddressCandidates',
+      this.options.serviceUrl + '/findAddressCandidates',
       L.Util.extend(params, this.options.geocodingQueryParams),
       data => {
         const results: GeocodingResult[] = [];
@@ -73,7 +72,7 @@ export class ArcGis implements GeocoderAPI {
       f: 'json'
     };
 
-    getJSON(this.options.service_url + '/reverseGeocode', params, data => {
+    getJSON(this.options.serviceUrl + '/reverseGeocode', params, data => {
       const result: ReverseGeocodingResult[] = [];
       if (data && !data.error) {
         const center = L.latLng(data.location.y, data.location.x);
@@ -91,6 +90,6 @@ export class ArcGis implements GeocoderAPI {
   }
 }
 
-export function arcgis(accessToken: string, options?: Partial<ArcGisOptions>) {
-  return new ArcGis(accessToken, options);
+export function arcgis(options?: Partial<ArcGisOptions>) {
+  return new ArcGis(options);
 }

@@ -1,30 +1,23 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import { GeocoderAPI, GeocodingCallback, GeocodingResult } from './interfaces';
+import { GeocoderAPI, GeocoderOptions, GeocodingCallback, GeocodingResult } from './interfaces';
 
-export interface OpenCageOptions {
-  serviceUrl: string;
-  geocodingQueryParams?: Record<string, unknown>;
-  reverseQueryParams?: Record<string, unknown>;
-}
+export interface OpenCageOptions extends GeocoderOptions {}
 
 export class OpenCage implements GeocoderAPI {
   options: OpenCageOptions = {
-    serviceUrl: 'https://api.opencagedata.com/geocode/v1/json',
-    geocodingQueryParams: {},
-    reverseQueryParams: {}
+    serviceUrl: 'https://api.opencagedata.com/geocode/v1/json'
   };
 
-  constructor(private apiKey: string, options?: Partial<OpenCageOptions>) {
+  constructor(options?: Partial<OpenCageOptions>) {
     L.Util.setOptions(this, options);
   }
 
   geocode(query: string, cb: GeocodingCallback, context?: any): void {
-    let params = {
-      key: this.apiKey,
-      q: query
-    };
-    params = L.Util.extend(params, this.options.geocodingQueryParams);
+    const params = L.Util.extend(
+      { key: this.options.apiKey, q: query },
+      this.options.geocodingQueryParams
+    );
     getJSON(this.options.serviceUrl, params, data => {
       const results: GeocodingResult[] = [];
       if (data.results && data.results.length) {
@@ -62,7 +55,7 @@ export class OpenCage implements GeocoderAPI {
     context?: any
   ): void {
     let params = {
-      key: this.apiKey,
+      key: this.options.apiKey,
       q: [location.lat, location.lng].join(',')
     };
     params = L.Util.extend(params, this.options.reverseQueryParams);
@@ -93,6 +86,6 @@ export class OpenCage implements GeocoderAPI {
   }
 }
 
-export function opencage(apiKey: string, options?: Partial<OpenCageOptions>) {
-  return new OpenCage(apiKey, options);
+export function opencage(options?: Partial<OpenCageOptions>) {
+  return new OpenCage(options);
 }

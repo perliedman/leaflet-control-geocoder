@@ -1,13 +1,10 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import { GeocoderAPI, GeocodingCallback, GeocodingResult } from './interfaces';
+import { GeocoderAPI, GeocoderOptions, GeocodingCallback, GeocodingResult } from './interfaces';
 
-export interface PhotonOptions {
-  serviceUrl: string;
+export interface PhotonOptions extends GeocoderOptions {
   reverseUrl: string;
   nameProperties: string[];
-  geocodingQueryParams?: Record<string, unknown>;
-  reverseQueryParams?: Record<string, unknown>;
   htmlTemplate?: (r: any) => string;
 }
 
