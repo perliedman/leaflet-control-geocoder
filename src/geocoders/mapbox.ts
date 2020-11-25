@@ -1,6 +1,12 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import { GeocoderAPI, GeocoderOptions, GeocodingCallback, GeocodingResult } from './api';
+import {
+  GeocoderAPI,
+  GeocoderOptions,
+  GeocodingCallback,
+  geocodingParams,
+  GeocodingResult
+} from './api';
 
 export interface MapboxOptions extends GeocoderOptions {}
 
@@ -32,10 +38,9 @@ export class Mapbox implements GeocoderAPI {
   }
 
   geocode(query: string, cb: GeocodingCallback, context?: any): void {
-    const params: any = L.Util.extend(
-      { access_token: this.options.apiKey },
-      this.options.geocodingQueryParams
-    );
+    const params: any = geocodingParams(this.options, {
+      access_token: this.options.apiKey
+    });
     if (
       params.proximity !== undefined &&
       params.proximity.lat !== undefined &&

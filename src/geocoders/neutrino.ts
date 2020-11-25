@@ -1,6 +1,12 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import { GeocoderAPI, GeocoderOptions, GeocodingCallback, GeocodingResult } from './api';
+import {
+  GeocoderAPI,
+  GeocoderOptions,
+  GeocodingCallback,
+  geocodingParams,
+  GeocodingResult
+} from './api';
 
 export interface NeutrinoOptions extends GeocoderOptions {
   userId: string;
@@ -19,30 +25,27 @@ export class Neutrino implements GeocoderAPI {
 
   // https://www.neutrinoapi.com/api/geocode-address/
   geocode(query: string, cb: GeocodingCallback, context?: any): void {
-    getJSON(
-      this.options.serviceUrl + 'geocode-address',
-      {
-        apiKey: this.options.apiKey,
-        userId: this.options.userId,
-        //get three words and make a dot based string
-        address: query.split(/\s+/).join('.')
-      },
-      data => {
-        const results: GeocodingResult[] = [];
-        if (data.locations) {
-          data.geometry = data.locations[0];
-          const center = L.latLng(data.geometry['latitude'], data.geometry['longitude']);
-          const bbox = L.latLngBounds(center, center);
-          results[0] = {
-            name: data.geometry.address,
-            bbox: bbox,
-            center: center
-          };
-        }
-
-        cb.call(context, results);
+    const params = geocodingParams(this.options, {
+      apiKey: this.options.apiKey,
+      userId: this.options.userId,
+      //get three words and make a dot based string
+      address: query.split(/\s+/).join('.')
+    });
+    getJSON(this.options.serviceUrl + 'geocode-address', params, data => {
+      const results: GeocodingResult[] = [];
+      if (data.locations) {
+        data.geometry = data.locations[0];
+        const center = L.latLng(data.geometry['latitude'], data.geometry['longitude']);
+        const bbox = L.latLngBounds(center, center);
+        results[0] = {
+          name: data.geometry.address,
+          bbox: bbox,
+          center: center
+        };
       }
-    );
+
+      cb.call(context, results);
+    });
   }
 
   suggest(query: string, cb: GeocodingCallback, context?: any): void {

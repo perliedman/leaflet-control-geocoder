@@ -1,6 +1,12 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import { GeocoderAPI, GeocoderOptions, GeocodingCallback, GeocodingResult } from './api';
+import {
+  GeocoderAPI,
+  GeocoderOptions,
+  GeocodingCallback,
+  geocodingParams,
+  GeocodingResult
+} from './api';
 
 export interface PhotonOptions extends GeocoderOptions {
   reverseUrl: string;
@@ -20,13 +26,7 @@ export class Photon implements GeocoderAPI {
   }
 
   geocode(query: string, cb: GeocodingCallback, context?: any): void {
-    const params = L.Util.extend(
-      {
-        q: query
-      },
-      this.options.geocodingQueryParams
-    );
-
+    const params = geocodingParams(this.options, { q: query });
     getJSON(
       this.options.serviceUrl,
       params,

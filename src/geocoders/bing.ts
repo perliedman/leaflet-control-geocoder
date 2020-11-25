@@ -1,6 +1,12 @@
 import * as L from 'leaflet';
 import { jsonp } from '../util';
-import { GeocoderAPI, GeocoderOptions, GeocodingCallback, GeocodingResult } from './api';
+import {
+  GeocoderAPI,
+  GeocoderOptions,
+  GeocodingCallback,
+  geocodingParams,
+  GeocodingResult
+} from './api';
 
 export interface BingOptions extends GeocoderOptions {}
 
@@ -14,13 +20,13 @@ export class Bing implements GeocoderAPI {
   }
 
   geocode(query: string, cb: GeocodingCallback, context?: any): void {
-    const params = {
+    const params = geocodingParams(this.options, {
       query: query,
       key: this.options.apiKey
-    };
+    });
     jsonp(
       this.options.apiKey,
-      L.Util.extend(params, this.options.geocodingQueryParams),
+      params,
       data => {
         const results: GeocodingResult[] = [];
         if (data.resourceSets.length > 0) {
