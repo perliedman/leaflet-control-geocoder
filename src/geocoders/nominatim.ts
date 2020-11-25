@@ -6,7 +6,7 @@ import {
   GeocodingCallback,
   GeocodingResult,
   ReverseGeocodingResult
-} from './interfaces';
+} from './api';
 
 export interface NominatimResult {
   place_id: number;

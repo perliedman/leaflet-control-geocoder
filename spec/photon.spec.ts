@@ -1,6 +1,6 @@
 import { testXMLHttpRequest } from './mockXMLHttpRequest';
 import { Photon } from '../src/geocoders/photon';
-import { GeocodingResult } from '../src/geocoders/interfaces';
+import { GeocodingResult } from '../src/geocoders/api';
 
 describe('L.Control.Geocoder.Photon', () => {
   it('geocodes Innsbruck', () => {

@@ -1,6 +1,6 @@
 import * as L from 'leaflet';
 import { Nominatim } from './geocoders/index';
-import { GeocoderAPI, GeocodingResult } from './geocoders/interfaces';
+import { GeocoderAPI, GeocodingResult } from './geocoders/api';
 
 export interface GeocoderControlOptions extends L.ControlOptions {
   collapsed: boolean;
