@@ -42,3 +42,10 @@ export function geocodingParams(
 ): Record<string, unknown> {
   return L.Util.extend(params, options.geocodingQueryParams);
 }
+
+export function reverseParams(
+  options: GeocoderOptions,
+  params: Record<string, unknown>
+): Record<string, unknown> {
+  return L.Util.extend(params, options.reverseQueryParams);
+}

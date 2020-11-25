@@ -5,7 +5,8 @@ import {
   GeocoderOptions,
   GeocodingCallback,
   geocodingParams,
-  GeocodingResult
+  GeocodingResult,
+  reverseParams
 } from './api';
 
 export interface HereOptions extends GeocoderOptions {
@@ -48,15 +49,14 @@ export class HERE implements GeocoderAPI {
       ? this.options.reverseGeocodeProxRadius
       : null;
     const proxRadius = _proxRadius ? ',' + encodeURIComponent(_proxRadius) : '';
-    let params = {
+    const params = reverseParams(this.options, {
       prox: encodeURIComponent(location.lat) + ',' + encodeURIComponent(location.lng) + proxRadius,
       mode: 'retrieveAddresses',
       app_id: this.options.app_id,
       app_code: this.options.app_code,
       gen: 9,
       jsonattributes: 1
-    };
-    params = L.Util.extend(params, this.options.reverseQueryParams);
+    });
     this.getJSON(this.options.serviceUrl + 'reversegeocode.json', params, cb, context);
   }
 

@@ -5,7 +5,8 @@ import {
   GeocoderOptions,
   GeocodingCallback,
   geocodingParams,
-  GeocodingResult
+  GeocodingResult,
+  reverseParams
 } from './api';
 
 export interface MapboxOptions extends GeocoderOptions {}
@@ -87,10 +88,9 @@ export class Mapbox implements GeocoderAPI {
     cb: (result: any) => void,
     context?: any
   ): void {
-    const param = L.Util.extend(
-      { access_token: this.options.apiKey },
-      this.options.reverseQueryParams
-    );
+    const param = reverseParams(this.options, {
+      access_token: this.options.apiKey
+    });
     getJSON(
       this.options.serviceUrl +
         encodeURIComponent(location.lng) +

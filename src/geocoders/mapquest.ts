@@ -5,7 +5,8 @@ import {
   GeocoderOptions,
   GeocodingCallback,
   geocodingParams,
-  GeocodingResult
+  GeocodingResult,
+  reverseParams
 } from './api';
 
 export interface MapQuestOptions extends GeocoderOptions {}
@@ -61,13 +62,14 @@ export class MapQuest implements GeocoderAPI {
     cb: (result: any) => void,
     context?: any
   ): void {
+    const params = reverseParams(this.options, {
+      key: this.options.apiKey,
+      location: location.lat + ',' + location.lng,
+      outputFormat: 'json'
+    });
     getJSON(
       this.options.serviceUrl + '/reverse',
-      {
-        key: this.options.apiKey,
-        location: location.lat + ',' + location.lng,
-        outputFormat: 'json'
-      },
+      params,
       L.Util.bind(function(data) {
         const results: GeocodingResult[] = [];
         if (data.results && data.results[0].locations) {

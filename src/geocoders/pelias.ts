@@ -5,7 +5,8 @@ import {
   GeocoderOptions,
   GeocodingCallback,
   geocodingParams,
-  GeocodingResult
+  GeocodingResult,
+  reverseParams
 } from './api';
 
 export interface PeliasOptions extends GeocoderOptions {}
@@ -50,20 +51,14 @@ export class Pelias implements GeocoderAPI {
     cb: (result: any) => void,
     context?: any
   ): void {
-    getJSON(
-      this.options.serviceUrl + '/reverse',
-      L.Util.extend(
-        {
-          api_key: this.options.apiKey,
-          'point.lat': location.lat,
-          'point.lon': location.lng
-        },
-        this.options.reverseQueryParams
-      ),
-      data => {
-        cb.call(context, this._parseResults(data, 'bounds'));
-      }
-    );
+    const params = reverseParams(this.options, {
+      api_key: this.options.apiKey,
+      'point.lat': location.lat,
+      'point.lon': location.lng
+    });
+    getJSON(this.options.serviceUrl + '/reverse', params, data => {
+      cb.call(context, this._parseResults(data, 'bounds'));
+    });
   }
 
   _parseResults(data, bboxname) {

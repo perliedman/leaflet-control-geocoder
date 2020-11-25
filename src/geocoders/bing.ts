@@ -5,7 +5,8 @@ import {
   GeocoderOptions,
   GeocodingCallback,
   geocodingParams,
-  GeocodingResult
+  GeocodingResult,
+  reverseParams
 } from './api';
 
 export interface BingOptions extends GeocoderOptions {}
@@ -53,10 +54,12 @@ export class Bing implements GeocoderAPI {
     cb: (result: any) => void,
     context?: any
   ): void {
-    const params = { key: this.options.apiKey };
+    const params = reverseParams(this.options, {
+      key: this.options.apiKey
+    });
     jsonp(
       this.options.serviceUrl + location.lat + ',' + location.lng,
-      L.Util.extend(params, this.options.reverseQueryParams),
+      params,
       data => {
         const results: GeocodingResult[] = [];
         for (let i = data.resourceSets[0].resources.length - 1; i >= 0; i--) {
