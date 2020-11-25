@@ -1,6 +1,6 @@
 import * as L from 'leaflet';
 import { jsonp } from '../util';
-import { GeocoderAPI, GeocoderOptions, GeocodingCallback, GeocodingResult } from './interfaces';
+import { GeocoderAPI, GeocoderOptions, GeocodingCallback, GeocodingResult } from './api';
 
 export interface BingOptions extends GeocoderOptions {}
 

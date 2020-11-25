@@ -1,5 +1,5 @@
 import * as L from 'leaflet';
-import { GeocoderAPI, GeocodingCallback, GeocodingResult } from './interfaces';
+import { GeocoderAPI, GeocodingCallback, GeocodingResult } from './api';
 
 export interface LatLngOptions {
   /**

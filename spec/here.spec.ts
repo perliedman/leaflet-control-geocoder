@@ -1,6 +1,6 @@
 import { testXMLHttpRequest } from './mockXMLHttpRequest';
 import { HERE } from '../src/geocoders/here';
-import { GeocodingResult } from '../src/geocoders/interfaces';
+import { GeocodingResult } from '../src/geocoders/api';
 
 describe('L.Control.Geocoder.HERE', () => {
   it('geocodes Innsbruck', () => {

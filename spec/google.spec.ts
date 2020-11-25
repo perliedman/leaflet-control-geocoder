@@ -1,6 +1,6 @@
 import { testXMLHttpRequest } from './mockXMLHttpRequest';
 import { Google } from '../src/geocoders/google';
-import { GeocodingResult } from '../src/geocoders/interfaces';
+import { GeocodingResult } from '../src/geocoders/api';
 
 describe('L.Control.Geocoder.Google', () => {
   it('geocodes Innsbruck', () => {
