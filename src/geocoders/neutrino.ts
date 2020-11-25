@@ -5,7 +5,8 @@ import {
   GeocoderOptions,
   GeocodingCallback,
   geocodingParams,
-  GeocodingResult
+  GeocodingResult,
+  reverseParams
 } from './api';
 
 export interface NeutrinoOptions extends GeocoderOptions {
@@ -59,28 +60,25 @@ export class Neutrino implements GeocoderAPI {
     cb: (result: any) => void,
     context?: any
   ): void {
-    getJSON(
-      this.options.serviceUrl + 'geocode-reverse',
-      {
-        apiKey: this.options.apiKey,
-        userId: this.options.userId,
-        latitude: location.lat,
-        longitude: location.lng
-      },
-      data => {
-        const results: GeocodingResult[] = [];
-        if (data.status.status == 200 && data.found) {
-          const center = L.latLng(location.lat, location.lng);
-          const bbox = L.latLngBounds(center, center);
-          results[0] = {
-            name: data.address,
-            bbox: bbox,
-            center: center
-          };
-        }
-        cb.call(context, results);
+    const params = reverseParams(this.options, {
+      apiKey: this.options.apiKey,
+      userId: this.options.userId,
+      latitude: location.lat,
+      longitude: location.lng
+    });
+    getJSON(this.options.serviceUrl + 'geocode-reverse', params, data => {
+      const results: GeocodingResult[] = [];
+      if (data.status.status == 200 && data.found) {
+        const center = L.latLng(location.lat, location.lng);
+        const bbox = L.latLngBounds(center, center);
+        results[0] = {
+          name: data.address,
+          bbox: bbox,
+          center: center
+        };
       }
-    );
+      cb.call(context, results);
+    });
   }
 }
 

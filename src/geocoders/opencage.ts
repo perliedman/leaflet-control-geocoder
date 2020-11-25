@@ -5,7 +5,8 @@ import {
   GeocoderOptions,
   GeocodingCallback,
   geocodingParams,
-  GeocodingResult
+  GeocodingResult,
+  reverseParams
 } from './api';
 
 export interface OpenCageOptions extends GeocoderOptions {}
@@ -60,11 +61,10 @@ export class OpenCage implements GeocoderAPI {
     cb: (result: any) => void,
     context?: any
   ): void {
-    let params = {
+    const params = reverseParams(this.options, {
       key: this.options.apiKey,
       q: [location.lat, location.lng].join(',')
-    };
-    params = L.Util.extend(params, this.options.reverseQueryParams);
+    });
     getJSON(this.options.serviceUrl, params, data => {
       const results: GeocodingResult[] = [];
       if (data.results && data.results.length) {

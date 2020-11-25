@@ -6,7 +6,8 @@ import {
   GeocodingCallback,
   geocodingParams,
   GeocodingResult,
-  ReverseGeocodingResult
+  ReverseGeocodingResult,
+  reverseParams
 } from './api';
 
 export interface NominatimResult {
@@ -104,35 +105,29 @@ export class Nominatim implements GeocoderAPI {
   }
 
   reverse(location: L.LatLngLiteral, scale: number, cb: (result: any) => void, context?: any) {
-    getJSON(
-      this.options.serviceUrl + 'reverse',
-      L.Util.extend(
-        {
-          lat: location.lat,
-          lon: location.lng,
-          zoom: Math.round(Math.log(scale / 256) / Math.log(2)),
-          addressdetails: 1,
-          format: 'json'
-        },
-        this.options.reverseQueryParams
-      ),
-      data => {
-        const result: ReverseGeocodingResult[] = [];
-        if (data && data.lat && data.lon) {
-          const center = L.latLng(data.lat, data.lon);
-          const bbox = L.latLngBounds(center, center);
-          result.push({
-            name: data.display_name,
-            html: this.options.htmlTemplate ? this.options.htmlTemplate(data) : undefined,
-            center: center,
-            bbox: bbox,
-            bounds: bbox,
-            properties: data
-          });
-        }
-        cb.call(context, result);
+    const params = reverseParams(this.options, {
+      lat: location.lat,
+      lon: location.lng,
+      zoom: Math.round(Math.log(scale / 256) / Math.log(2)),
+      addressdetails: 1,
+      format: 'json'
+    });
+    getJSON(this.options.serviceUrl + 'reverse', params, data => {
+      const result: ReverseGeocodingResult[] = [];
+      if (data && data.lat && data.lon) {
+        const center = L.latLng(data.lat, data.lon);
+        const bbox = L.latLngBounds(center, center);
+        result.push({
+          name: data.display_name,
+          html: this.options.htmlTemplate ? this.options.htmlTemplate(data) : undefined,
+          center: center,
+          bbox: bbox,
+          bounds: bbox,
+          properties: data
+        });
       }
-    );
+      cb.call(context, result);
+    });
   }
 }
 

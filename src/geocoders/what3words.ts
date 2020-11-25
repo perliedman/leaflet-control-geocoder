@@ -5,7 +5,8 @@ import {
   GeocoderOptions,
   GeocodingCallback,
   geocodingParams,
-  GeocodingResult
+  GeocodingResult,
+  reverseParams
 } from './api';
 
 export interface What3WordsOptions extends GeocoderOptions {}
@@ -56,10 +57,10 @@ export class What3Words implements GeocoderAPI {
   ): void {
     getJSON(
       this.options.serviceUrl + 'reverse',
-      {
+      reverseParams(this.options, {
         key: this.options.apiKey,
         coords: [location.lat, location.lng].join(',')
-      },
+      }),
       data => {
         const results: GeocodingResult[] = [];
         if (data.status.status == 200) {

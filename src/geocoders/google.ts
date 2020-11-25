@@ -5,7 +5,8 @@ import {
   GeocoderOptions,
   GeocodingCallback,
   geocodingParams,
-  GeocodingResult
+  GeocodingResult,
+  reverseParams
 } from './api';
 
 export interface GoogleOptions extends GeocoderOptions {}
@@ -53,12 +54,10 @@ export class Google implements GeocoderAPI {
     cb: (result: any) => void,
     context?: any
   ): void {
-    let params = {
+    const params = reverseParams(this.options, {
       key: this.options.apiKey,
       latlng: encodeURIComponent(location.lat) + ',' + encodeURIComponent(location.lng)
-    };
-    params = L.Util.extend(params, this.options.reverseQueryParams);
-
+    });
     getJSON(this.options.serviceUrl, params, data => {
       const results: GeocodingResult[] = [];
       if (data.results && data.results.length) {

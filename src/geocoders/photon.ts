@@ -5,7 +5,8 @@ import {
   GeocoderOptions,
   GeocodingCallback,
   geocodingParams,
-  GeocodingResult
+  GeocodingResult,
+  reverseParams
 } from './api';
 
 export interface PhotonOptions extends GeocoderOptions {
@@ -41,14 +42,10 @@ export class Photon implements GeocoderAPI {
   }
 
   reverse(latLng: L.LatLngLiteral, scale: number, cb: (result: any) => void, context?: any): void {
-    const params = L.Util.extend(
-      {
-        lat: latLng.lat,
-        lon: latLng.lng
-      },
-      this.options.reverseQueryParams
-    );
-
+    const params = reverseParams(this.options, {
+      lat: latLng.lat,
+      lon: latLng.lng
+    });
     getJSON(
       this.options.reverseUrl,
       params,
