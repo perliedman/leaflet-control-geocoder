@@ -4,6 +4,7 @@ import {
   GeocoderAPI,
   GeocoderOptions,
   GeocodingCallback,
+  geocodingParams,
   GeocodingResult,
   ReverseGeocodingResult
 } from './api';
@@ -78,34 +79,28 @@ export class Nominatim implements GeocoderAPI {
   }
 
   geocode(query: string, cb: GeocodingCallback, context?: any) {
-    getJSON(
-      this.options.serviceUrl + 'search',
-      L.Util.extend(
-        {
-          q: query,
-          limit: 5,
-          format: 'json',
-          addressdetails: 1
-        },
-        this.options.geocodingQueryParams
-      ),
-      data => {
-        const results: GeocodingResult[] = [];
-        for (let i = data.length - 1; i >= 0; i--) {
-          const bbox = data[i].boundingbox;
-          for (let j = 0; j < 4; j++) bbox[j] = parseFloat(bbox[j]);
-          results[i] = {
-            icon: data[i].icon,
-            name: data[i].display_name,
-            html: this.options.htmlTemplate ? this.options.htmlTemplate(data[i]) : undefined,
-            bbox: L.latLngBounds([bbox[0], bbox[2]], [bbox[1], bbox[3]]),
-            center: L.latLng(data[i].lat, data[i].lon),
-            properties: data[i]
-          };
-        }
-        cb.call(context, results);
+    const params = geocodingParams(this.options, {
+      q: query,
+      limit: 5,
+      format: 'json',
+      addressdetails: 1
+    });
+    getJSON(this.options.serviceUrl + 'search', params, data => {
+      const results: GeocodingResult[] = [];
+      for (let i = data.length - 1; i >= 0; i--) {
+        const bbox = data[i].boundingbox;
+        for (let j = 0; j < 4; j++) bbox[j] = parseFloat(bbox[j]);
+        results[i] = {
+          icon: data[i].icon,
+          name: data[i].display_name,
+          html: this.options.htmlTemplate ? this.options.htmlTemplate(data[i]) : undefined,
+          bbox: L.latLngBounds([bbox[0], bbox[2]], [bbox[1], bbox[3]]),
+          center: L.latLng(data[i].lat, data[i].lon),
+          properties: data[i]
+        };
       }
-    );
+      cb.call(context, results);
+    });
   }
 
   reverse(location: L.LatLngLiteral, scale: number, cb: (result: any) => void, context?: any) {

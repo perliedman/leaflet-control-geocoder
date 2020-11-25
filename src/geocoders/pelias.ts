@@ -1,6 +1,12 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import { GeocoderAPI, GeocoderOptions, GeocodingCallback, GeocodingResult } from './api';
+import {
+  GeocoderAPI,
+  GeocoderOptions,
+  GeocodingCallback,
+  geocodingParams,
+  GeocodingResult
+} from './api';
 
 export interface PeliasOptions extends GeocoderOptions {}
 
@@ -16,38 +22,26 @@ export class Pelias implements GeocoderAPI {
   }
 
   geocode(query: string, cb: GeocodingCallback, context?: any): void {
-    getJSON(
-      this.options.serviceUrl + '/search',
-      L.Util.extend(
-        {
-          api_key: this.options.apiKey,
-          text: query
-        },
-        this.options.geocodingQueryParams
-      ),
-      data => {
-        cb.call(context, this._parseResults(data, 'bbox'));
-      }
-    );
+    const params = geocodingParams(this.options, {
+      api_key: this.options.apiKey,
+      text: query
+    });
+    getJSON(this.options.serviceUrl + '/search', params, data => {
+      cb.call(context, this._parseResults(data, 'bbox'));
+    });
   }
 
   suggest(query: string, cb: GeocodingCallback, context?: any): void {
-    getJSON(
-      this.options.serviceUrl + '/autocomplete',
-      L.Util.extend(
-        {
-          api_key: this.options.apiKey,
-          text: query
-        },
-        this.options.geocodingQueryParams
-      ),
-      data => {
-        if (data.geocoding.timestamp > this._lastSuggest) {
-          this._lastSuggest = data.geocoding.timestamp;
-          cb.call(context, this._parseResults(data, 'bbox'));
-        }
+    const params = geocodingParams(this.options, {
+      api_key: this.options.apiKey,
+      text: query
+    });
+    getJSON(this.options.serviceUrl + '/autocomplete', params, data => {
+      if (data.geocoding.timestamp > this._lastSuggest) {
+        this._lastSuggest = data.geocoding.timestamp;
+        cb.call(context, this._parseResults(data, 'bbox'));
       }
-    );
+    });
   }
 
   reverse(

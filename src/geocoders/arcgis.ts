@@ -4,6 +4,7 @@ import {
   GeocoderAPI,
   GeocoderOptions,
   GeocodingCallback,
+  geocodingParams,
   GeocodingResult,
   ReverseGeocodingResult
 } from './api';
@@ -21,39 +22,35 @@ export class ArcGis implements GeocoderAPI {
   }
 
   geocode(query: string, cb: GeocodingCallback, context?: any): void {
-    const params = {
+    const params = geocodingParams(this.options, {
       token: this.options.apiKey,
       SingleLine: query,
       outFields: 'Addr_Type',
       forStorage: false,
       maxLocations: 10,
       f: 'json'
-    };
+    });
 
-    getJSON(
-      this.options.serviceUrl + '/findAddressCandidates',
-      L.Util.extend(params, this.options.geocodingQueryParams),
-      data => {
-        const results: GeocodingResult[] = [];
-        if (data.candidates && data.candidates.length) {
-          for (let i = 0; i <= data.candidates.length - 1; i++) {
-            const loc = data.candidates[i];
-            const latLng = L.latLng(loc.location.y, loc.location.x);
-            const latLngBounds = L.latLngBounds(
-              L.latLng(loc.extent.ymax, loc.extent.xmax),
-              L.latLng(loc.extent.ymin, loc.extent.xmin)
-            );
-            results[i] = {
-              name: loc.address,
-              bbox: latLngBounds,
-              center: latLng
-            };
-          }
+    getJSON(this.options.serviceUrl + '/findAddressCandidates', params, data => {
+      const results: GeocodingResult[] = [];
+      if (data.candidates && data.candidates.length) {
+        for (let i = 0; i <= data.candidates.length - 1; i++) {
+          const loc = data.candidates[i];
+          const latLng = L.latLng(loc.location.y, loc.location.x);
+          const latLngBounds = L.latLngBounds(
+            L.latLng(loc.extent.ymax, loc.extent.xmax),
+            L.latLng(loc.extent.ymin, loc.extent.xmin)
+          );
+          results[i] = {
+            name: loc.address,
+            bbox: latLngBounds,
+            center: latLng
+          };
         }
-
-        cb.call(context, results);
       }
-    );
+
+      cb.call(context, results);
+    });
   }
 
   suggest(query: string, cb: GeocodingCallback, context?: any): void {

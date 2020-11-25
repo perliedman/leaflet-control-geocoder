@@ -1,6 +1,12 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import { GeocoderAPI, GeocoderOptions, GeocodingCallback, GeocodingResult } from './api';
+import {
+  GeocoderAPI,
+  GeocoderOptions,
+  GeocodingCallback,
+  geocodingParams,
+  GeocodingResult
+} from './api';
 
 export interface OpenCageOptions extends GeocoderOptions {}
 
@@ -14,10 +20,10 @@ export class OpenCage implements GeocoderAPI {
   }
 
   geocode(query: string, cb: GeocodingCallback, context?: any): void {
-    const params = L.Util.extend(
-      { key: this.options.apiKey, q: query },
-      this.options.geocodingQueryParams
-    );
+    const params = geocodingParams(this.options, {
+      key: this.options.apiKey,
+      q: query
+    });
     getJSON(this.options.serviceUrl, params, data => {
       const results: GeocodingResult[] = [];
       if (data.results && data.results.length) {

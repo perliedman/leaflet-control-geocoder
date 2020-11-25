@@ -1,6 +1,12 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import { GeocoderAPI, GeocoderOptions, GeocodingCallback, GeocodingResult } from './api';
+import {
+  GeocoderAPI,
+  GeocoderOptions,
+  GeocodingCallback,
+  geocodingParams,
+  GeocodingResult
+} from './api';
 
 export interface What3WordsOptions extends GeocoderOptions {}
 
@@ -17,10 +23,10 @@ export class What3Words implements GeocoderAPI {
     //get three words and make a dot based string
     getJSON(
       this.options.serviceUrl + 'forward',
-      {
+      geocodingParams(this.options, {
         key: this.options.apiKey,
         addr: query.split(/\s+/).join('.')
-      },
+      }),
       data => {
         const results: GeocodingResult[] = [];
         if (data.geometry) {

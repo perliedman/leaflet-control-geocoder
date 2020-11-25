@@ -1,6 +1,12 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import { GeocoderAPI, GeocoderOptions, GeocodingCallback, GeocodingResult } from './api';
+import {
+  GeocoderAPI,
+  GeocoderOptions,
+  GeocodingCallback,
+  geocodingParams,
+  GeocodingResult
+} from './api';
 
 export interface MapQuestOptions extends GeocoderOptions {}
 
@@ -21,14 +27,15 @@ export class MapQuest implements GeocoderAPI {
   }
 
   geocode(query: string, cb: GeocodingCallback, context?: any): void {
+    const params = geocodingParams(this.options, {
+      key: this.options.apiKey,
+      location: query,
+      limit: 5,
+      outFormat: 'json'
+    });
     getJSON(
       this.options.serviceUrl + '/address',
-      {
-        key: this.options.apiKey,
-        location: query,
-        limit: 5,
-        outFormat: 'json'
-      },
+      params,
       L.Util.bind(function(data) {
         const results: GeocodingResult[] = [];
         if (data.results && data.results[0].locations) {

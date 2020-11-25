@@ -35,3 +35,10 @@ export interface GeocoderOptions {
   reverseQueryParams?: Record<string, unknown>;
   apiKey?: string;
 }
+
+export function geocodingParams(
+  options: GeocoderOptions,
+  params: Record<string, unknown>
+): Record<string, unknown> {
+  return L.Util.extend(params, options.geocodingQueryParams);
+}
