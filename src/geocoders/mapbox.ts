@@ -11,6 +11,9 @@ import {
 
 export interface MapboxOptions extends GeocoderOptions {}
 
+/**
+ * Implementation of the [Mapbox Geocoding](https://www.mapbox.com/api-documentation/#geocoding)
+ */
 export class Mapbox implements IGeocoder {
   options: MapboxOptions = {
     serviceUrl: 'https://api.mapbox.com/geocoding/v5/mapbox.places/'
@@ -128,6 +131,10 @@ export class Mapbox implements IGeocoder {
   }
 }
 
+/**
+ * [Class factory method](https://leafletjs.com/reference.html#class-class-factories) for {@link Mapbox}
+ * @param options the options
+ */
 export function mapbox(options?: Partial<MapboxOptions>) {
   return new Mapbox(options);
 }

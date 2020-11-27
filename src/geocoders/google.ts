@@ -9,6 +9,9 @@ import {
   reverseParams
 } from './api';
 
+/**
+ * Implementation of the [Google Geocoding API](https://developers.google.com/maps/documentation/geocoding/)
+ */
 export interface GoogleOptions extends GeocoderOptions {}
 
 export class Google implements IGeocoder {
@@ -82,6 +85,10 @@ export class Google implements IGeocoder {
   }
 }
 
+/**
+ * [Class factory method](https://leafletjs.com/reference.html#class-class-factories) for {@link Google}
+ * @param options the options
+ */
 export function google(options?: Partial<GoogleOptions>) {
   return new Google(options);
 }

@@ -3,27 +3,69 @@ import { Nominatim } from './geocoders/index';
 import { IGeocoder, GeocodingResult } from './geocoders/api';
 
 export interface GeocoderControlOptions extends L.ControlOptions {
+  /**
+   * Collapse control unless hovered/clicked
+   */
   collapsed: boolean;
-  expand: string;
+  /**
+   * How to expand a collapsed control: `touch` or `click` or `hover`
+   */
+  expand: 'touch' | 'click' | 'hover';
+  /**
+   * Placeholder text for text input
+   */
   placeholder: string;
+  /**
+   * Message when no result found / geocoding error occurs
+   */
   errorMessage: string;
+  /**
+   * Accessibility label for the search icon used by screen readers
+   */
   iconLabel: string;
+  /**
+   * Object to perform the actual geocoding queries
+   */
   geocoder?: IGeocoder;
+  /**
+   * Immediately show the unique result without prompting for alternatives
+   */
   showUniqueResult: boolean;
+  /**
+   * Show icons for geocoding results (if available); supported by Nominatim
+   */
   showResultIcons: boolean;
+  /**
+   * Minimum number characters before suggest functionality is used (if available from geocoder)
+   */
   suggestMinLength: number;
+  /**
+   * Number of milliseconds after typing stopped before suggest functionality is used (if available from geocoder)
+   */
   suggestTimeout: number;
+  /**
+   * Initial query string for text input
+   */
   query: string;
+  /**
+   * Minimum number of characters in search text before performing a query
+   */
   queryMinLength: number;
+  /**
+   * Whether to mark a geocoding result on the map by default
+   */
   defaultMarkGeocode: boolean;
 }
 
+/**
+ * This is the geocoder control. It works like any other [Leaflet control](https://leafletjs.com/reference.html#control), and is added to the map.
+ */
 export class GeocoderControl extends L.Control {
   options: GeocoderControlOptions = {
     showUniqueResult: true,
     showResultIcons: false,
     collapsed: true,
-    expand: 'touch', // options: touch, click, anythingelse
+    expand: 'touch',
     position: 'topright',
     placeholder: 'Search...',
     errorMessage: 'Nothing found.',
@@ -49,6 +91,10 @@ export class GeocoderControl extends L.Control {
   private _selection: any;
   private _suggestTimeout: any;
 
+  /**
+   * Instantiates a geocoder control (to be invoked using `new`)
+   * @param options the options
+   */
   constructor(options?: Partial<GeocoderControlOptions>) {
     super(options);
     L.Util.setOptions(this, options);
@@ -57,16 +103,37 @@ export class GeocoderControl extends L.Control {
     }
   }
 
+  /**
+   * Adds a listener function to a particular event type of the object.
+   * @param type the event type
+   * @param fn the listener function
+   * @param context the this listener function context
+   * @see https://leafletjs.com/reference.html#evented-on
+   */
   on(type: string, fn: L.LeafletEventHandlerFn, context?: any): this {
     L.Evented.prototype.on(type, fn, context);
     return this;
   }
 
+  /**
+   * Removes a previously added listener function. If no function is specified, it will remove all the listeners of that particular event from the object.
+   * @param type the event type
+   * @param fn the listener function
+   * @param context the this listener function context
+   * @see https://leafletjs.com/reference.html#evented-off
+   */
   off(type: string, fn?: L.LeafletEventHandlerFn, context?: any): this {
     L.Evented.prototype.off(type, fn, context);
     return this;
   }
 
+  /**
+   * Fires an event of the specified type. You can optionally provide an data object.
+   * @param type the event type
+   * @param data the event data object
+   * @param propagate whether to propagate to event parents
+   * @see https://leafletjs.com/reference.html#evented-fire
+   */
   fire(type: string, data?: any, propagate?: boolean): this {
     L.Evented.prototype.fire(type, data, propagate);
     return this;
@@ -80,6 +147,11 @@ export class GeocoderControl extends L.Control {
     L.DomUtil.removeClass(this._container, 'leaflet-control-geocoder-throbber');
   }
 
+  /**
+   * Returns the container DOM element for the control and add listeners on relevant map events.
+   * @param map the map instance
+   * @see https://leafletjs.com/reference.html#control-onadd
+   */
   onAdd(map: L.Map) {
     const className = 'leaflet-control-geocoder';
     const container = L.DomUtil.create('div', className + ' leaflet-bar') as HTMLDivElement;
@@ -174,12 +246,16 @@ export class GeocoderControl extends L.Control {
     return container;
   }
 
+  /**
+   * Sets the query string on the text input
+   * @param string the query string
+   */
   setQuery(string: string): this {
     this._input.value = string;
     return this;
   }
 
-  _geocodeResult(results: GeocodingResult[], suggest: boolean) {
+  private _geocodeResult(results: GeocodingResult[], suggest: boolean) {
     if (!suggest && this.options.showUniqueResult && results.length === 1) {
       this._geocodeResultSelected(results[0]);
     } else if (results.length > 0) {
@@ -196,6 +272,10 @@ export class GeocoderControl extends L.Control {
     }
   }
 
+  /**
+   * Marks a geocoding result on the map
+   * @param result the geocoding result
+   */
   markGeocode(result: GeocodingResult) {
     result = (result as any).geocode || result;
 
@@ -213,7 +293,7 @@ export class GeocoderControl extends L.Control {
     return this;
   }
 
-  _geocode(suggest?: boolean) {
+  private _geocode(suggest?: boolean) {
     const value = this._input.value;
     if (!suggest && value.length < this.options.queryMinLength) {
       return;
@@ -240,11 +320,11 @@ export class GeocoderControl extends L.Control {
     }
   }
 
-  _geocodeResultSelected(result: GeocodingResult) {
+  private _geocodeResultSelected(result: GeocodingResult) {
     this.fire('markgeocode', { geocode: result });
   }
 
-  _toggle() {
+  private _toggle() {
     if (L.DomUtil.hasClass(this._container, 'leaflet-control-geocoder-expanded')) {
       this._collapse();
     } else {
@@ -252,13 +332,13 @@ export class GeocoderControl extends L.Control {
     }
   }
 
-  _expand() {
+  private _expand() {
     L.DomUtil.addClass(this._container, 'leaflet-control-geocoder-expanded');
     this._input.select();
     this.fire('expand');
   }
 
-  _collapse() {
+  private _collapse() {
     L.DomUtil.removeClass(this._container, 'leaflet-control-geocoder-expanded');
     L.DomUtil.addClass(this._alts, 'leaflet-control-geocoder-alternatives-minimized');
     L.DomUtil.removeClass(this._errorElement, 'leaflet-control-geocoder-error');
@@ -268,7 +348,7 @@ export class GeocoderControl extends L.Control {
     this.fire('collapse');
   }
 
-  _clearResults() {
+  private _clearResults() {
     L.DomUtil.addClass(this._alts, 'leaflet-control-geocoder-alternatives-minimized');
     this._selection = null;
     L.DomUtil.removeClass(this._errorElement, 'leaflet-control-geocoder-error');
@@ -276,7 +356,7 @@ export class GeocoderControl extends L.Control {
     L.DomUtil.removeClass(this._container, 'leaflet-control-geocoder-options-error');
   }
 
-  _createAlt(result: GeocodingResult, index: number) {
+  private _createAlt(result: GeocodingResult, index: number) {
     const li = L.DomUtil.create('li', ''),
       a = L.DomUtil.create('a', '', li),
       icon =
@@ -322,7 +402,7 @@ export class GeocoderControl extends L.Control {
     return li;
   }
 
-  _keydown(e: KeyboardEvent) {
+  private _keydown(e: KeyboardEvent) {
     const select = (dir: number) => {
       if (this._selection) {
         L.DomUtil.removeClass(this._selection, 'leaflet-control-geocoder-selected');
@@ -371,7 +451,7 @@ export class GeocoderControl extends L.Control {
     L.DomEvent.preventDefault(e);
   }
 
-  _change() {
+  private _change() {
     const v = this._input.value;
     if (v !== this._lastGeocode) {
       clearTimeout(this._suggestTimeout);
@@ -384,6 +464,10 @@ export class GeocoderControl extends L.Control {
   }
 }
 
+/**
+ * [Class factory method](https://leafletjs.com/reference.html#class-class-factories) for {@link GeocoderControl}
+ * @param options the options
+ */
 export function geocoder(options?: Partial<GeocoderControlOptions>) {
   return new GeocoderControl(options);
 }

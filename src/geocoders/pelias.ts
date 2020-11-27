@@ -11,6 +11,9 @@ import {
 
 export interface PeliasOptions extends GeocoderOptions {}
 
+/**
+ * Implementation of the [Pelias](https://pelias.io/), [geocode.earth](https://geocode.earth/) geocoder (formerly Mapzen Search)
+ */
 export class Pelias implements IGeocoder {
   options: PeliasOptions = {
     serviceUrl: 'https://api.geocode.earth/v1'
@@ -97,16 +100,32 @@ export class Pelias implements IGeocoder {
   }
 }
 
+/**
+ * [Class factory method](https://leafletjs.com/reference.html#class-class-factories) for {@link Pelias}
+ * @param options the options
+ */
 export function pelias(options?: Partial<PeliasOptions>) {
   return new Pelias(options);
 }
+
 export const GeocodeEarth = Pelias;
 export const geocodeEarth = pelias;
 
-export const Mapzen = Pelias; // r.i.p.
+/**
+ * r.i.p.
+ * @deprecated
+ */
+export const Mapzen = Pelias;
+/**
+ * r.i.p.
+ * @deprecated
+ */
 export const mapzen = pelias;
 
-export class Openrouteservice extends Mapzen {
+/**
+ * Implementation of the [Openrouteservice](https://openrouteservice.org/dev/#/api-docs/geocode) geocoder
+ */
+export class Openrouteservice extends Pelias {
   constructor(options?: Partial<PeliasOptions>) {
     super(
       L.Util.extend(
@@ -118,6 +137,11 @@ export class Openrouteservice extends Mapzen {
     );
   }
 }
+
+/**
+ * [Class factory method](https://leafletjs.com/reference.html#class-class-factories) for {@link Openrouteservice}
+ * @param options the options
+ */
 export function openrouteservice(options?: Partial<PeliasOptions>) {
   return new Openrouteservice(options);
 }

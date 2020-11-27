@@ -15,6 +15,9 @@ export interface PhotonOptions extends GeocoderOptions {
   htmlTemplate?: (r: any) => string;
 }
 
+/**
+ * Implementation of the [Photon](http://photon.komoot.de/) geocoder
+ */
 export class Photon implements IGeocoder {
   options: PhotonOptions = {
     serviceUrl: 'https://photon.komoot.io/api/',
@@ -94,6 +97,10 @@ export class Photon implements IGeocoder {
   }
 }
 
+/**
+ * [Class factory method](https://leafletjs.com/reference.html#class-class-factories) for {@link Photon}
+ * @param options the options
+ */
 export function photon(options?: Partial<PhotonOptions>) {
   return new Photon(options);
 }
