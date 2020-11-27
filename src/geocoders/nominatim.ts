@@ -1,7 +1,7 @@
 import * as L from 'leaflet';
 import { template, getJSON } from '../util';
 import {
-  GeocoderAPI,
+  IGeocoder,
   GeocoderOptions,
   GeocodingCallback,
   geocodingParams,
@@ -48,7 +48,7 @@ export interface NominatimOptions extends GeocoderOptions {
   htmlTemplate: (r: NominatimResult) => string;
 }
 
-export class Nominatim implements GeocoderAPI {
+export class Nominatim implements IGeocoder {
   options: NominatimOptions = {
     serviceUrl: 'https://nominatim.openstreetmap.org/',
     htmlTemplate: function(r: NominatimResult) {

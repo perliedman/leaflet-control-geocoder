@@ -1,7 +1,7 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
 import {
-  GeocoderAPI,
+  IGeocoder,
   GeocoderOptions,
   GeocodingCallback,
   geocodingParams,
@@ -11,7 +11,7 @@ import {
 
 export interface OpenCageOptions extends GeocoderOptions {}
 
-export class OpenCage implements GeocoderAPI {
+export class OpenCage implements IGeocoder {
   options: OpenCageOptions = {
     serviceUrl: 'https://api.opencagedata.com/geocode/v1/json'
   };

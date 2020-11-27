@@ -1,7 +1,7 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
 import {
-  GeocoderAPI,
+  IGeocoder,
   GeocoderOptions,
   GeocodingCallback,
   geocodingParams,
@@ -15,7 +15,7 @@ export interface PhotonOptions extends GeocoderOptions {
   htmlTemplate?: (r: any) => string;
 }
 
-export class Photon implements GeocoderAPI {
+export class Photon implements IGeocoder {
   options: PhotonOptions = {
     serviceUrl: 'https://photon.komoot.io/api/',
     reverseUrl: 'https://photon.komoot.io/reverse/',

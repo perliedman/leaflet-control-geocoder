@@ -18,7 +18,7 @@ export interface ReverseGeocodingResult extends GeocodingResult {
 
 export type GeocodingCallback = (result: GeocodingResult[]) => void;
 
-export interface GeocoderAPI {
+export interface IGeocoder {
   geocode(query: string, cb: GeocodingCallback, context?: any): void;
   suggest?(query: string, cb: GeocodingCallback, context?: any): void;
   reverse?(

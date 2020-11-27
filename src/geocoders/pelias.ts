@@ -1,7 +1,7 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
 import {
-  GeocoderAPI,
+  IGeocoder,
   GeocoderOptions,
   GeocodingCallback,
   geocodingParams,
@@ -11,7 +11,7 @@ import {
 
 export interface PeliasOptions extends GeocoderOptions {}
 
-export class Pelias implements GeocoderAPI {
+export class Pelias implements IGeocoder {
   options: PeliasOptions = {
     serviceUrl: 'https://api.geocode.earth/v1'
   };

@@ -1,7 +1,7 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
 import {
-  GeocoderAPI,
+  IGeocoder,
   GeocoderOptions,
   GeocodingCallback,
   geocodingParams,
@@ -11,7 +11,7 @@ import {
 
 export interface GoogleOptions extends GeocoderOptions {}
 
-export class Google implements GeocoderAPI {
+export class Google implements IGeocoder {
   options: GoogleOptions = {
     serviceUrl: 'https://maps.googleapis.com/maps/api/geocode/json'
   };

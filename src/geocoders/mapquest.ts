@@ -1,7 +1,7 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
 import {
-  GeocoderAPI,
+  IGeocoder,
   GeocoderOptions,
   GeocodingCallback,
   geocodingParams,
@@ -11,7 +11,7 @@ import {
 
 export interface MapQuestOptions extends GeocoderOptions {}
 
-export class MapQuest implements GeocoderAPI {
+export class MapQuest implements IGeocoder {
   options: MapQuestOptions = {
     serviceUrl: 'https://www.mapquestapi.com/geocoding/v1'
   };

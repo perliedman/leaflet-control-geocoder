@@ -1,7 +1,7 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
 import {
-  GeocoderAPI,
+  IGeocoder,
   GeocoderOptions,
   GeocodingCallback,
   geocodingParams,
@@ -12,7 +12,7 @@ import {
 
 export interface ArcGisOptions extends GeocoderOptions {}
 
-export class ArcGis implements GeocoderAPI {
+export class ArcGis implements IGeocoder {
   options: ArcGisOptions = {
     serviceUrl: 'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer',
     apiKey: ''
