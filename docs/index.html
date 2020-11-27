@@ -1,0 +1,246 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>leaflet-control-geocoder</title>
+	<meta name="description" content="Documentation for leaflet-control-geocoder">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">leaflet-control-geocoder</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1>leaflet-control-geocoder</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#a-few-words-on-diversity-in-tech" id="a-few-words-on-diversity-in-tech" style="color: inherit; text-decoration: none;">
+					<h2>A few words on diversity in tech</h2>
+				</a>
+				<p>I need to take some of your time. I can&#39;t believe we let shit like <a href="http://www.wired.com/2014/10/trolls-will-always-win/">the Kathy Sierra incident</a> or <a href="https://twitter.com/Spacekatgal/status/520739878993420290">what happened to Brianna Wu</a> happen over and over again. I can&#39;t believe we, the open source community, let <a href="http://geekfeminism.wikia.com/wiki/Timeline_of_incidents">sexist, misogynous shit happen over and over again</a>.</p>
+				<p>I strongly believe that it is my &mdash; and your &mdash; duty to make the open source community, as well as the tech community at large, a community where everyone feel welcome and is accepted. At the very minimum, that means making sure the community and its forums both <em>are</em> safe, and are perceived as safe. It means being friendly and inclusive, even when you disagree with people. It means not shrugging off discussions about sexism and inclusiveness with <a href="https://josm.openstreetmap.de/ticket/10568">handwaving about censorship and free speech</a>. For a more elaborate document on what that means, <a href="http://www.npmjs.com/policies/conduct">the NPM Code of Conduct</a> is a good start, <a href="http://geekfeminism.wikia.com/wiki/Resources_for_allies">Geek Feminism&#39;s resources for allies</a> contains much more.</p>
+				<p>While I can&#39;t force anyone to do anything, if you happen to disagree with this, I ask of you not to use any of the open source I have published. Nor am I interested in contributions from people who can&#39;t accept or act respectfully towards other humans regardless of gender identity, sexual orientation, disability, ethnicity, religion, age, physical appearance, body size, race, or similar personal characteristics. If you think feminism, anti-racism or the LGBT movement is somehow wrong, disturbing or irrelevant, I ask you to go elsewhere to find software.</p>
+				<a href="#leaflet-control-geocoder--" id="leaflet-control-geocoder--" style="color: inherit; text-decoration: none;">
+					<h1>Leaflet Control Geocoder <a href="https://www.npmjs.com/package/leaflet-control-geocoder"><img src="https://img.shields.io/npm/v/leaflet-control-geocoder.svg" alt="NPM version"></a> <img src="https://img.shields.io/badge/Leaflet%201.0.0-%E2%9C%93-1EB300.svg?style=flat" alt="Leaflet 1.0.0 compatible!"></h1>
+				</a>
+				<p>A simple geocoder for <a href="https://leafletjs.com/">Leaflet</a> that by default uses <a href="https://www.openstreetmap.org/">OSM</a>/<a href="https://wiki.openstreetmap.org/wiki/Nominatim">Nominatim</a>.</p>
+				<p>The plugin supports many different data providers:</p>
+				<ul>
+					<li>LatLng to parse basic latitude/longitude strings</li>
+					<li><a href="https://www.openstreetmap.org/">OSM</a>/<a href="https://wiki.openstreetmap.org/wiki/Nominatim">Nominatim</a></li>
+					<li><a href="http://msdn.microsoft.com/en-us/library/ff701715.aspx">Bing Locations API</a></li>
+					<li><a href="https://developers.google.com/maps/documentation/geocoding/">Google Geocoding API</a></li>
+					<li><a href="https://www.mapbox.com/api-documentation/#geocoding">Mapbox Geocoding</a></li>
+					<li><a href="http://developer.mapquest.com/web/products/dev-services/geocoding-ws">MapQuest Geocoding API</a></li>
+					<li><a href="http://what3words.com/">What3Words</a></li>
+					<li><a href="http://photon.komoot.de/">Photon</a></li>
+					<li><a href="https://pelias.io/">Pelias</a>, <a href="https://geocode.earth/">geocode.earth</a> (formerly Mapzen Search), <a href="https://openrouteservice.org/dev/#/api-docs/geocode">Openrouteservice</a></li>
+					<li><a href="https://developer.here.com/documentation/geocoder/topics/introduction.html">HERE Geocoder API</a></li>
+					<li><a href="https://www.neutrinoapi.com/api/geocode-address/">Neutrino API</a></li>
+					<li><a href="https://plus.codes/">Plus codes</a> (formerly OpenLocationCode) (requires <a href="https://www.npmjs.com/package/open-location-code">open-location-code</a>)</li>
+					<li><a href="https://developers.arcgis.com/features/geocoding/">ArcGIS</a></li>
+				</ul>
+				<p>The plugin can easily be extended to support other providers. Current extensions:</p>
+				<ul>
+					<li><a href="https://github.com/kjoller/leaflet-control-geocoder-dawa/tree/new">DAWA Geocoder</a> - support for Danish Address Web API by <a href="https://github.com/kjoller">Niels Kjøller Hansen</a></li>
+				</ul>
+				<a href="#demos" id="demos" style="color: inherit; text-decoration: none;">
+					<h1>Demos</h1>
+				</a>
+				<ul>
+					<li><a href="https://www.liedman.net/leaflet-control-geocoder/">Leaflet Control Geocoder Demo</a> hosted on liedman.net</li>
+					<li>See <a href="https://github.com/perliedman/leaflet-control-geocoder/tree/master/demo">demo/</a></li>
+					<li>See <a href="https://github.com/perliedman/leaflet-control-geocoder/tree/master/demo-rollup">demo-rollup/</a> using the <a href="https://rollupjs.org/">rollup.js</a> bundler</li>
+					<li>See <a href="https://github.com/perliedman/leaflet-control-geocoder/tree/master/demo-rollup">demo-webpack/</a> using the <a href="https://webpack.js.org/">webpack</a> bundler</li>
+				</ul>
+				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+					<h1>Usage</h1>
+				</a>
+				<p><a href="https://github.com/perliedman/leaflet-control-geocoder/releases">Download latest release</a>, or obtain the latest release via <a href="https://unpkg.com/">unpkg.com</a>:</p>
+				<pre><code class="language-HTML"><span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css&quot;</span> /&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre>
+				<p>Add the control to a map instance:</p>
+				<pre><code class="language-javascript"><span class="hljs-keyword">var</span> map = L.map(<span class="hljs-string">&#x27;map&#x27;</span>).setView([<span class="hljs-number">0</span>, <span class="hljs-number">0</span>], <span class="hljs-number">2</span>);
+L.tileLayer(<span class="hljs-string">&#x27;https://{s}.tile.osm.org/{z}/{x}/{y}.png&#x27;</span>, {
+  <span class="hljs-attr">attribution</span>: <span class="hljs-string">&#x27;&amp;copy; &lt;a href=&quot;https://osm.org/copyright&quot;&gt;OpenStreetMap&lt;/a&gt; contributors&#x27;</span>
+}).addTo(map);
+L.Control.geocoder().addTo(map);</code></pre>
+				<a href="#customizing" id="customizing" style="color: inherit; text-decoration: none;">
+					<h1>Customizing</h1>
+				</a>
+				<p>By default, when a geocoding result is found, the control will center the map on it and place
+					a marker at its location. This can be customized by listening to the control&#39;s <code>markgeocode</code>
+					event. To remove the control&#39;s default handler for marking a result, set the option
+				<code>defaultMarkGeocode</code> to <code>false</code>.</p>
+				<p>For example:</p>
+				<pre><code class="language-javascript"><span class="hljs-keyword">var</span> geocoder = L.Control.geocoder({
+  <span class="hljs-attr">defaultMarkGeocode</span>: <span class="hljs-literal">false</span>
+})
+  .on(<span class="hljs-string">&#x27;markgeocode&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>) </span>{
+    <span class="hljs-keyword">var</span> bbox = e.geocode.bbox;
+    <span class="hljs-keyword">var</span> poly = L.polygon([
+      bbox.getSouthEast(),
+      bbox.getNorthEast(),
+      bbox.getNorthWest(),
+      bbox.getSouthWest()
+    ]).addTo(map);
+    map.fitBounds(poly.getBounds());
+  })
+  .addTo(map);</code></pre>
+				<p>This will add a polygon representing the result&#39;s boundingbox when a result is selected.</p>
+				<a href="#api" id="api" style="color: inherit; text-decoration: none;">
+					<h1>API</h1>
+				</a>
+				<ul>
+					<li>latest → <a href="https://www.liedman.net/leaflet-control-geocoder/docs/">https://www.liedman.net/leaflet-control-geocoder/docs/</a></li>
+					<li>version 1.13.0 → <a href="https://github.com/perliedman/leaflet-control-geocoder/tree/1.13.0#api">https://github.com/perliedman/leaflet-control-geocoder/tree/1.13.0#api</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_control_.html">&quot;control&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_geocoders_api_.html">&quot;geocoders/api&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_geocoders_arcgis_.html">&quot;geocoders/arcgis&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_geocoders_bing_.html">&quot;geocoders/bing&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_geocoders_google_.html">&quot;geocoders/google&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_geocoders_here_.html">&quot;geocoders/here&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_geocoders_index_.html">&quot;geocoders/index&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_geocoders_latlng_.html">&quot;geocoders/latlng&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_geocoders_mapbox_.html">&quot;geocoders/mapbox&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_geocoders_mapquest_.html">&quot;geocoders/mapquest&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_geocoders_neutrino_.html">&quot;geocoders/neutrino&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_geocoders_nominatim_.html">&quot;geocoders/nominatim&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_geocoders_open_location_code_.html">&quot;geocoders/open-<wbr>location-<wbr>code&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_geocoders_opencage_.html">&quot;geocoders/opencage&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_geocoders_pelias_.html">&quot;geocoders/pelias&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_geocoders_photon_.html">&quot;geocoders/photon&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_geocoders_what3words_.html">&quot;geocoders/what3words&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_index_.html">&quot;index&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_util_.html">&quot;util&quot;</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
