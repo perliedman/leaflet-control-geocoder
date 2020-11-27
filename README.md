@@ -85,4 +85,6 @@ var geocoder = L.Control.geocoder({
 This will add a polygon representing the result's boundingbox when a result is selected.
 
 # API
-→ docs/
+
+- latest → https://www.liedman.net/leaflet-control-geocoder/docs/
+- version 1.13.0 → https://github.com/perliedman/leaflet-control-geocoder/tree/1.13.0#api
