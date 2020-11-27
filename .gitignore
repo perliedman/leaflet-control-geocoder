@@ -1,4 +1,5 @@
 bundle.js
 demo-*/package-lock.json
 dist/
+docs/
 node_modules/

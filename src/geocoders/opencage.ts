@@ -11,6 +11,9 @@ import {
 
 export interface OpenCageOptions extends GeocoderOptions {}
 
+/**
+ * Implementation of the [OpenCage Data API](https://opencagedata.com/)
+ */
 export class OpenCage implements IGeocoder {
   options: OpenCageOptions = {
     serviceUrl: 'https://api.opencagedata.com/geocode/v1/json'

@@ -1,10 +1,22 @@
 import * as L from 'leaflet';
+/**
+ * @internal
+ */
 let lastCallbackId = 0;
 
 // Adapted from handlebars.js
 // https://github.com/wycats/handlebars.js/
+/**
+ * @internal
+ */
 const badChars = /[&<>"'`]/g;
+/**
+ * @internal
+ */
 const possible = /[&<>"'`]/;
+/**
+ * @internal
+ */
 const escape: Record<string, string> = {
   '&': '&amp;',
   '<': '&lt;',
@@ -14,10 +26,16 @@ const escape: Record<string, string> = {
   '`': '&#x60;'
 };
 
+/**
+ * @internal
+ */
 function escapeChar(chr: string) {
   return escape[chr];
 }
 
+/**
+ * @internal
+ */
 export function htmlEscape(string?: string): string {
   if (string == null) {
     return '';
@@ -36,6 +54,9 @@ export function htmlEscape(string?: string): string {
   return string.replace(badChars, escapeChar);
 }
 
+/**
+ * @internal
+ */
 export function jsonp(
   url: string,
   params: Record<string, any>,
@@ -53,6 +74,9 @@ export function jsonp(
   document.getElementsByTagName('head')[0].appendChild(script);
 }
 
+/**
+ * @internal
+ */
 export function getJSON(
   url: string,
   params: Record<string, unknown>,
@@ -85,6 +109,9 @@ export function getJSON(
   xmlHttp.send(null);
 }
 
+/**
+ * @internal
+ */
 export function template(str: string, data: Record<string, any>): string {
   return str.replace(/\{ *([\w_]+) *\}/g, (str, key) => {
     let value = data[key];
@@ -97,6 +124,9 @@ export function template(str: string, data: Record<string, any>): string {
   });
 }
 
+/**
+ * @internal
+ */
 export function getParamString(
   obj: Record<string, unknown | unknown[]>,
   existingUrl?: string,

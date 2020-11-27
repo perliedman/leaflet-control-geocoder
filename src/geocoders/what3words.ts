@@ -11,6 +11,9 @@ import {
 
 export interface What3WordsOptions extends GeocoderOptions {}
 
+/**
+ * Implementation of the What3Words service
+ */
 export class What3Words implements IGeocoder {
   options: What3WordsOptions = {
     serviceUrl: 'https://api.what3words.com/v2/'
@@ -78,6 +81,10 @@ export class What3Words implements IGeocoder {
   }
 }
 
+/**
+ * [Class factory method](https://leafletjs.com/reference.html#class-class-factories) for {@link What3Words}
+ * @param options the options
+ */
 export function what3words(options: Partial<What3WordsOptions>) {
   return new What3Words(options);
 }

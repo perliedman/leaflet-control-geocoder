@@ -11,6 +11,9 @@ import {
 
 export interface MapQuestOptions extends GeocoderOptions {}
 
+/**
+ * Implementation of the [MapQuest Geocoding API](http://developer.mapquest.com/web/products/dev-services/geocoding-ws)
+ */
 export class MapQuest implements IGeocoder {
   options: MapQuestOptions = {
     serviceUrl: 'https://www.mapquestapi.com/geocoding/v1'
@@ -90,6 +93,10 @@ export class MapQuest implements IGeocoder {
   }
 }
 
+/**
+ * [Class factory method](https://leafletjs.com/reference.html#class-class-factories) for {@link MapQuest}
+ * @param options the options
+ */
 export function mapQuest(options?: Partial<MapQuestOptions>) {
   return new MapQuest(options);
 }

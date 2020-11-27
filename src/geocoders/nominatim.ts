@@ -45,9 +45,23 @@ export interface Address {
 }
 
 export interface NominatimOptions extends GeocoderOptions {
+  /**
+   * Additional URL parameters (strings) that will be added to geocoding requests; can be used to restrict results to a specific country for example, by providing the [`countrycodes`](https://wiki.openstreetmap.org/wiki/Nominatim#Parameters) parameter to Nominatim
+   */
+  geocodingQueryParams?: Record<string, unknown>;
+  /**
+   * A function that takes an GeocodingResult as argument and returns an HTML formatted string that represents the result. Default function breaks up address in parts from most to least specific, in attempt to increase readability compared to Nominatim's naming
+   */
   htmlTemplate: (r: NominatimResult) => string;
 }
 
+/**
+ * Implementation of the [Nominatim](https://wiki.openstreetmap.org/wiki/Nominatim) geocoder.
+ *
+ * This is the default geocoding service used by the control, unless otherwise specified in the options.
+ *
+ * Unless using your own Nominatim installation, please refer to the [Nominatim usage policy](https://operations.osmfoundation.org/policies/nominatim/).
+ */
 export class Nominatim implements IGeocoder {
   options: NominatimOptions = {
     serviceUrl: 'https://nominatim.openstreetmap.org/',
@@ -131,6 +145,10 @@ export class Nominatim implements IGeocoder {
   }
 }
 
+/**
+ * [Class factory method](https://leafletjs.com/reference.html#class-class-factories) for {@link Nominatim}
+ * @param options the options
+ */
 export function nominatim(options?: Partial<NominatimOptions>) {
   return new Nominatim(options);
 }

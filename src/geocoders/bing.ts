@@ -11,6 +11,9 @@ import {
 
 export interface BingOptions extends GeocoderOptions {}
 
+/**
+ * Implementation of the [Bing Locations API](https://docs.microsoft.com/en-us/bingmaps/rest-services/locations/)
+ */
 export class Bing implements IGeocoder {
   options: BingOptions = {
     serviceUrl: 'https://dev.virtualearth.net/REST/v1/Locations'
@@ -79,6 +82,10 @@ export class Bing implements IGeocoder {
   }
 }
 
+/**
+ * [Class factory method](https://leafletjs.com/reference.html#class-class-factories) for {@link Bing}
+ * @param options the options
+ */
 export function bing(options?: Partial<BingOptions>) {
   return new Bing(options);
 }

@@ -13,6 +13,9 @@ export interface NeutrinoOptions extends GeocoderOptions {
   userId: string;
 }
 
+/**
+ * Implementation of the [Neutrino API](https://www.neutrinoapi.com/api/geocode-address/)
+ */
 export class Neutrino implements IGeocoder {
   options: NeutrinoOptions = {
     userId: undefined,
@@ -82,6 +85,10 @@ export class Neutrino implements IGeocoder {
   }
 }
 
+/**
+ * [Class factory method](https://leafletjs.com/reference.html#class-class-factories) for {@link Neutrino}
+ * @param options the options
+ */
 export function neutrino(options?: Partial<NeutrinoOptions>) {
   return new Neutrino(options);
 }

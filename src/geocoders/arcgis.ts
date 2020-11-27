@@ -12,6 +12,9 @@ import {
 
 export interface ArcGisOptions extends GeocoderOptions {}
 
+/**
+ * Implementation of the [ArcGIS geocoder](https://developers.arcgis.com/features/geocoding/)
+ */
 export class ArcGis implements IGeocoder {
   options: ArcGisOptions = {
     serviceUrl: 'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer',
@@ -87,6 +90,10 @@ export class ArcGis implements IGeocoder {
   }
 }
 
+/**
+ * [Class factory method](https://leafletjs.com/reference.html#class-class-factories) for {@link ArcGis}
+ * @param options the options
+ */
 export function arcgis(options?: Partial<ArcGisOptions>) {
   return new ArcGis(options);
 }

@@ -1,41 +1,110 @@
 import * as L from 'leaflet';
 
+/**
+ * An object that represents a result from a geocoding query
+ */
 export interface GeocodingResult {
+  /**
+   * Name of found location
+   */
   name: string;
+  /**
+   * The bounds of the location
+   */
   bbox: L.LatLngBounds;
+  /**
+   * The center coordinate of the location
+   */
   center: L.LatLng;
+  /**
+   * URL for icon representing result; optional
+   */
   icon?: string;
+  /**
+   * HTML formatted representation of the name
+   */
   html?: string;
+  /**
+   * Additional properties returned by the geocoder
+   */
   properties?: any;
 }
 
+/**
+ * An object that represents a result from a reverse geocoding query
+ */
 export interface ReverseGeocodingResult extends GeocodingResult {
   /**
+   * @see {@link bbox}
    * @deprecated
    */
   bounds: L.LatLngBounds;
 }
 
+/**
+ * A callback function used in {@link IGeocoder.geocode} and {@link IGeocoder.suggest}
+ */
 export type GeocodingCallback = (result: GeocodingResult[]) => void;
+/**
+ * A callback function used in {@link IGeocoder.reverse}
+ */
+export type ReverseGeocodingCallback = (result: ReverseGeocodingResult[]) => void;
 
+/**
+ * An interface implemented to respond to geocoding queries
+ */
 export interface IGeocoder {
+  /**
+   * Performs a geocoding query and returns the results to the callback in the provided context
+   * @param query the query
+   * @param cb the callback function
+   * @param context the `this` context in the callback
+   */
   geocode(query: string, cb: GeocodingCallback, context?: any): void;
+  /**
+   * Performs a geocoding query suggestion (this happens while typing) and returns the results to the callback in the provided context
+   * @param query the query
+   * @param cb the callback function
+   * @param context the `this` context in the callback
+   */
   suggest?(query: string, cb: GeocodingCallback, context?: any): void;
+  /**
+   * Performs a reverse geocoding query and returns the results to the callback in the provided context
+   * @param location the coordinate to reverse geocode
+   * @param scale the map scale possibly used for reverse geocoding
+   * @param cb the callback function
+   * @param context the `this` context in the callback
+   */
   reverse?(
     location: L.LatLngLiteral,
     scale: number,
-    cb: (result: any) => void,
+    cb: ReverseGeocodingCallback,
     context?: any
   ): void;
 }
 
 export interface GeocoderOptions {
+  /**
+   * URL of the service
+   */
   serviceUrl: string;
+  /**
+   * Additional URL parameters (strings) that will be added to geocoding requests
+   */
   geocodingQueryParams?: Record<string, unknown>;
+  /**
+   * Additional URL parameters (strings) that will be added to reverse geocoding requests
+   */
   reverseQueryParams?: Record<string, unknown>;
+  /**
+   * API key to use this service
+   */
   apiKey?: string;
 }
 
+/**
+ * @internal
+ */
 export function geocodingParams(
   options: GeocoderOptions,
   params: Record<string, unknown>
@@ -43,6 +112,9 @@ export function geocodingParams(
   return L.Util.extend(params, options.geocodingQueryParams);
 }
 
+/**
+ * @internal
+ */
 export function reverseParams(
   options: GeocoderOptions,
   params: Record<string, unknown>

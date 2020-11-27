@@ -15,6 +15,9 @@ export interface HereOptions extends GeocoderOptions {
   reverseGeocodeProxRadius: null;
 }
 
+/**
+ * Implementation of the [HERE Geocoder API](https://developer.here.com/documentation/geocoder/topics/introduction.html)
+ */
 export class HERE implements IGeocoder {
   options: HereOptions = {
     serviceUrl: 'https://geocoder.api.here.com/6.2/',
@@ -84,6 +87,10 @@ export class HERE implements IGeocoder {
   }
 }
 
+/**
+ * [Class factory method](https://leafletjs.com/reference.html#class-class-factories) for {@link HERE}
+ * @param options the options
+ */
 export function here(options?: Partial<HereOptions>) {
   return new HERE(options);
 }

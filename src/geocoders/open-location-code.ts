@@ -21,6 +21,9 @@ export interface CodeArea {
   codeLength: number;
 }
 
+/**
+ * Implementation of the [Plus codes](https://plus.codes/) (formerly OpenLocationCode) (requires [open-location-code](https://www.npmjs.com/package/open-location-code))
+ */
 export class OpenLocationCode implements IGeocoder {
   options: OpenLocationCodeOptions;
   constructor(options?: Partial<OpenLocationCodeOptions>) {
@@ -67,6 +70,10 @@ export class OpenLocationCode implements IGeocoder {
   }
 }
 
+/**
+ * [Class factory method](https://leafletjs.com/reference.html#class-class-factories) for {@link OpenLocationCode}
+ * @param options the options
+ */
 export function openLocationCode(options?: Partial<OpenLocationCodeOptions>) {
   return new OpenLocationCode(options);
 }
