@@ -1,7 +1,7 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
 import {
-  GeocoderAPI,
+  IGeocoder,
   GeocoderOptions,
   GeocodingCallback,
   geocodingParams,
@@ -13,7 +13,7 @@ export interface NeutrinoOptions extends GeocoderOptions {
   userId: string;
 }
 
-export class Neutrino implements GeocoderAPI {
+export class Neutrino implements IGeocoder {
   options: NeutrinoOptions = {
     userId: undefined,
     apiKey: undefined,

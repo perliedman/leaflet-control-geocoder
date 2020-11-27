@@ -1,5 +1,5 @@
 import * as L from 'leaflet';
-import { GeocoderAPI, GeocodingCallback, GeocodingResult } from './api';
+import { IGeocoder, GeocodingCallback, GeocodingResult } from './api';
 
 export interface OpenLocationCodeOptions {
   OpenLocationCode: OpenLocationCodeApi;
@@ -21,7 +21,7 @@ export interface CodeArea {
   codeLength: number;
 }
 
-export class OpenLocationCode implements GeocoderAPI {
+export class OpenLocationCode implements IGeocoder {
   options: OpenLocationCodeOptions;
   constructor(options?: Partial<OpenLocationCodeOptions>) {
     L.Util.setOptions(this, options);

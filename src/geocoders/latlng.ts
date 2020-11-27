@@ -1,11 +1,11 @@
 import * as L from 'leaflet';
-import { GeocoderAPI, GeocodingCallback, GeocodingResult } from './api';
+import { IGeocoder, GeocodingCallback, GeocodingResult } from './api';
 
 export interface LatLngOptions {
   /**
    * The next geocoder to use
    */
-  next?: GeocoderAPI;
+  next?: IGeocoder;
   sizeInMeters: number;
 }
 
@@ -75,7 +75,7 @@ export function parseLatLng(query: string): L.LatLng | undefined {
   }
 }
 
-export class LatLng implements GeocoderAPI {
+export class LatLng implements IGeocoder {
   options: LatLngOptions = {
     next: undefined,
     sizeInMeters: 10000

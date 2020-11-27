@@ -1,7 +1,7 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
 import {
-  GeocoderAPI,
+  IGeocoder,
   GeocoderOptions,
   GeocodingCallback,
   geocodingParams,
@@ -11,7 +11,7 @@ import {
 
 export interface MapboxOptions extends GeocoderOptions {}
 
-export class Mapbox implements GeocoderAPI {
+export class Mapbox implements IGeocoder {
   options: MapboxOptions = {
     serviceUrl: 'https://api.mapbox.com/geocoding/v5/mapbox.places/'
   };

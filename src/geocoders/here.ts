@@ -1,7 +1,7 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
 import {
-  GeocoderAPI,
+  IGeocoder,
   GeocoderOptions,
   GeocodingCallback,
   geocodingParams,
@@ -15,7 +15,7 @@ export interface HereOptions extends GeocoderOptions {
   reverseGeocodeProxRadius: null;
 }
 
-export class HERE implements GeocoderAPI {
+export class HERE implements IGeocoder {
   options: HereOptions = {
     serviceUrl: 'https://geocoder.api.here.com/6.2/',
     app_id: '',

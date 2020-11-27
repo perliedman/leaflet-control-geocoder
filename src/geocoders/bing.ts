@@ -1,7 +1,7 @@
 import * as L from 'leaflet';
 import { jsonp } from '../util';
 import {
-  GeocoderAPI,
+  IGeocoder,
   GeocoderOptions,
   GeocodingCallback,
   geocodingParams,
@@ -11,7 +11,7 @@ import {
 
 export interface BingOptions extends GeocoderOptions {}
 
-export class Bing implements GeocoderAPI {
+export class Bing implements IGeocoder {
   options: BingOptions = {
     serviceUrl: 'https://dev.virtualearth.net/REST/v1/Locations'
   };

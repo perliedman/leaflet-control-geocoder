@@ -1,7 +1,7 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
 import {
-  GeocoderAPI,
+  IGeocoder,
   GeocoderOptions,
   GeocodingCallback,
   geocodingParams,
@@ -11,7 +11,7 @@ import {
 
 export interface What3WordsOptions extends GeocoderOptions {}
 
-export class What3Words implements GeocoderAPI {
+export class What3Words implements IGeocoder {
   options: What3WordsOptions = {
     serviceUrl: 'https://api.what3words.com/v2/'
   };
