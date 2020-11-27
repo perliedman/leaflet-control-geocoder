@@ -20,7 +20,15 @@ jobs:
         with:
           node-version: 12.x
       - run: npm ci
-      - run: npm run build --if-present
+      - run: npm run build
       - run: npm test
-        env:
-          CI: true
+      - run: npm run doc
+      - name: Deploy TypeDoc
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+          destination_dir: docs
+          keep_files: true
+          enable_jekyll: true
