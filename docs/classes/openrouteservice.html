@@ -133,7 +133,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="pelias.html">Pelias</a>.<a href="pelias.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/geocoders/pelias.ts#L128">src/geocoders/pelias.ts:128</a></li>
+									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/e8a319a/src/geocoders/pelias.ts#L123">src/geocoders/pelias.ts:123</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -160,7 +160,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="pelias.html">Pelias</a>.<a href="pelias.html#_parseresults">_parseResults</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/geocoders/pelias.ts#L67">src/geocoders/pelias.ts:67</a></li>
+									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/e8a319a/src/geocoders/pelias.ts#L62">src/geocoders/pelias.ts:62</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -188,7 +188,7 @@
 								<p>Implementation of <a href="../interfaces/igeocoder.html">IGeocoder</a>.<a href="../interfaces/igeocoder.html#geocode">geocode</a></p>
 								<p>Inherited from <a href="pelias.html">Pelias</a>.<a href="pelias.html#geocode">geocode</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/geocoders/pelias.ts#L28">src/geocoders/pelias.ts:28</a></li>
+									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/e8a319a/src/geocoders/pelias.ts#L28">src/geocoders/pelias.ts:28</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -211,14 +211,15 @@
 					<a name="reverse" class="tsd-anchor"></a>
 					<h3>reverse</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">reverse<span class="tsd-signature-symbol">(</span>location<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">LatLngLiteral</span>, scale<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, cb<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>result<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span>, context<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">reverse<span class="tsd-signature-symbol">(</span>location<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">LatLngLiteral</span>, scale<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, cb<span class="tsd-signature-symbol">: </span><a href="../globals.html#geocodingcallback" class="tsd-signature-type">GeocodingCallback</a>, context<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/igeocoder.html">IGeocoder</a>.<a href="../interfaces/igeocoder.html#reverse">reverse</a></p>
 								<p>Inherited from <a href="pelias.html">Pelias</a>.<a href="pelias.html#reverse">reverse</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/geocoders/pelias.ts#L51">src/geocoders/pelias.ts:51</a></li>
+									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/e8a319a/src/geocoders/pelias.ts#L51">src/geocoders/pelias.ts:51</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -230,25 +231,7 @@
 									<h5>scale: <span class="tsd-signature-type">number</span></h5>
 								</li>
 								<li>
-									<h5>cb: <span class="tsd-signature-symbol">(</span>result<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></h5>
-									<ul class="tsd-parameters">
-										<li class="tsd-parameter-signature">
-											<ul class="tsd-signatures tsd-kind-type-literal">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>result<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-											</ul>
-											<ul class="tsd-descriptions">
-												<li class="tsd-description">
-													<h4 class="tsd-parameters-title">Parameters</h4>
-													<ul class="tsd-parameters">
-														<li>
-															<h5>result: <span class="tsd-signature-type">any</span></h5>
-														</li>
-													</ul>
-													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-												</li>
-											</ul>
-										</li>
-									</ul>
+									<h5>cb: <a href="../globals.html#geocodingcallback" class="tsd-signature-type">GeocodingCallback</a></h5>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> context: <span class="tsd-signature-type">any</span></h5>
@@ -270,7 +253,7 @@
 								<p>Implementation of <a href="../interfaces/igeocoder.html">IGeocoder</a>.<a href="../interfaces/igeocoder.html#suggest">suggest</a></p>
 								<p>Inherited from <a href="pelias.html">Pelias</a>.<a href="pelias.html#suggest">suggest</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/geocoders/pelias.ts#L38">src/geocoders/pelias.ts:38</a></li>
+									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/e8a319a/src/geocoders/pelias.ts#L38">src/geocoders/pelias.ts:38</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -299,7 +282,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="pelias.html">Pelias</a>.<a href="pelias.html#options">options</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/geocoders/pelias.ts#L18">src/geocoders/pelias.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/e8a319a/src/geocoders/pelias.ts#L18">src/geocoders/pelias.ts:18</a></li>
 						</ul>
 					</aside>
 					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -308,7 +291,7 @@
 						<div class="tsd-signature tsd-kind-icon">service<wbr>Url<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;https://api.geocode.earth/v1&quot;</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/geocoders/pelias.ts#L19">src/geocoders/pelias.ts:19</a></li>
+								<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/e8a319a/src/geocoders/pelias.ts#L19">src/geocoders/pelias.ts:19</a></li>
 							</ul>
 						</aside>
 					</section>

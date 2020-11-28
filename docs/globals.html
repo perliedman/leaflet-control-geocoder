@@ -112,7 +112,6 @@
 								<li class="tsd-kind-interface"><a href="interfaces/openlocationcodeoptions.html" class="tsd-kind-icon">Open<wbr>Location<wbr>Code<wbr>Options</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/peliasoptions.html" class="tsd-kind-icon">Pelias<wbr>Options</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/photonoptions.html" class="tsd-kind-icon">Photon<wbr>Options</a></li>
-								<li class="tsd-kind-interface"><a href="interfaces/reversegeocodingresult.html" class="tsd-kind-icon">Reverse<wbr>Geocoding<wbr>Result</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/what3wordsoptions.html" class="tsd-kind-icon">What3<wbr>Words<wbr>Options</a></li>
 							</ul>
 						</section>
@@ -120,7 +119,6 @@
 							<h3>Type aliases</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-type-alias"><a href="globals.html#geocodingcallback" class="tsd-kind-icon">Geocoding<wbr>Callback</a></li>
-								<li class="tsd-kind-type-alias"><a href="globals.html#reversegeocodingcallback" class="tsd-kind-icon">Reverse<wbr>Geocoding<wbr>Callback</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -165,12 +163,12 @@
 					<div class="tsd-signature tsd-kind-icon">Geocoding<wbr>Callback<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>result<span class="tsd-signature-symbol">: </span><a href="interfaces/geocodingresult.html" class="tsd-signature-type">GeocodingResult</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/geocoders/api.ts#L47">src/geocoders/api.ts:47</a></li>
+							<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/e8a319a/src/geocoders/api.ts#L36">src/geocoders/api.ts:36</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>A callback function used in <a href="interfaces/igeocoder.html#geocode">IGeocoder.geocode</a> and <a href="interfaces/igeocoder.html#suggest">IGeocoder.suggest</a></p>
+							<p>A callback function used in <a href="interfaces/igeocoder.html#geocode">IGeocoder.geocode</a> and <a href="interfaces/igeocoder.html#suggest">IGeocoder.suggest</a> and <a href="interfaces/igeocoder.html#reverse">IGeocoder.reverse</a></p>
 						</div>
 					</div>
 					<div class="tsd-type-declaration">
@@ -195,42 +193,6 @@
 						</ul>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias">
-					<a name="reversegeocodingcallback" class="tsd-anchor"></a>
-					<h3>Reverse<wbr>Geocoding<wbr>Callback</h3>
-					<div class="tsd-signature tsd-kind-icon">Reverse<wbr>Geocoding<wbr>Callback<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>result<span class="tsd-signature-symbol">: </span><a href="interfaces/reversegeocodingresult.html" class="tsd-signature-type">ReverseGeocodingResult</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/geocoders/api.ts#L51">src/geocoders/api.ts:51</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>A callback function used in <a href="interfaces/igeocoder.html#reverse">IGeocoder.reverse</a></p>
-						</div>
-					</div>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-signature">
-								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>result<span class="tsd-signature-symbol">: </span><a href="interfaces/reversegeocodingresult.html" class="tsd-signature-type">ReverseGeocodingResult</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-								</ul>
-								<ul class="tsd-descriptions">
-									<li class="tsd-description">
-										<h4 class="tsd-parameters-title">Parameters</h4>
-										<ul class="tsd-parameters">
-											<li>
-												<h5>result: <a href="interfaces/reversegeocodingresult.html" class="tsd-signature-type">ReverseGeocodingResult</a><span class="tsd-signature-symbol">[]</span></h5>
-											</li>
-										</ul>
-										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</div>
-				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Variables</h2>
@@ -240,7 +202,7 @@
 					<div class="tsd-signature tsd-kind-icon">Geocode<wbr>Earth<span class="tsd-signature-symbol">:</span> <a href="classes/pelias.html" class="tsd-signature-type">Pelias</a><span class="tsd-signature-symbol"> = Pelias</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/geocoders/pelias.ts#L111">src/geocoders/pelias.ts:111</a></li>
+							<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/e8a319a/src/geocoders/pelias.ts#L106">src/geocoders/pelias.ts:106</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -250,7 +212,7 @@
 					<div class="tsd-signature tsd-kind-icon">Mapzen<span class="tsd-signature-symbol">:</span> <a href="classes/pelias.html" class="tsd-signature-type">Pelias</a><span class="tsd-signature-symbol"> = Pelias</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/geocoders/pelias.ts#L118">src/geocoders/pelias.ts:118</a></li>
+							<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/e8a319a/src/geocoders/pelias.ts#L113">src/geocoders/pelias.ts:113</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -269,7 +231,7 @@
 					<div class="tsd-signature tsd-kind-icon">geocode<wbr>Earth<span class="tsd-signature-symbol">:</span> <a href="globals.html#pelias" class="tsd-signature-type">pelias</a><span class="tsd-signature-symbol"> = pelias</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/geocoders/pelias.ts#L112">src/geocoders/pelias.ts:112</a></li>
+							<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/e8a319a/src/geocoders/pelias.ts#L107">src/geocoders/pelias.ts:107</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -279,7 +241,7 @@
 					<div class="tsd-signature tsd-kind-icon">mapzen<span class="tsd-signature-symbol">:</span> <a href="globals.html#pelias" class="tsd-signature-type">pelias</a><span class="tsd-signature-symbol"> = pelias</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/geocoders/pelias.ts#L123">src/geocoders/pelias.ts:123</a></li>
+							<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/e8a319a/src/geocoders/pelias.ts#L118">src/geocoders/pelias.ts:118</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -305,7 +267,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/geocoders/arcgis.ts#L97">src/geocoders/arcgis.ts:97</a></li>
+									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/e8a319a/src/geocoders/arcgis.ts#L90">src/geocoders/arcgis.ts:90</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -336,7 +298,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/geocoders/bing.ts#L89">src/geocoders/bing.ts:89</a></li>
+									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/e8a319a/src/geocoders/bing.ts#L84">src/geocoders/bing.ts:84</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -367,7 +329,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/control.ts#L471">src/control.ts:471</a></li>
+									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/e8a319a/src/control.ts#L471">src/control.ts:471</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -398,7 +360,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/geocoders/google.ts#L92">src/geocoders/google.ts:92</a></li>
+									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/e8a319a/src/geocoders/google.ts#L87">src/geocoders/google.ts:87</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -429,7 +391,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/geocoders/here.ts#L94">src/geocoders/here.ts:94</a></li>
+									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/e8a319a/src/geocoders/here.ts#L89">src/geocoders/here.ts:89</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -460,7 +422,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/geocoders/latlng.ts#L120">src/geocoders/latlng.ts:120</a></li>
+									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/e8a319a/src/geocoders/latlng.ts#L120">src/geocoders/latlng.ts:120</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -491,7 +453,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/geocoders/mapquest.ts#L100">src/geocoders/mapquest.ts:100</a></li>
+									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/e8a319a/src/geocoders/mapquest.ts#L95">src/geocoders/mapquest.ts:95</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -522,7 +484,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/geocoders/mapbox.ts#L138">src/geocoders/mapbox.ts:138</a></li>
+									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/e8a319a/src/geocoders/mapbox.ts#L133">src/geocoders/mapbox.ts:133</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -553,7 +515,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/geocoders/neutrino.ts#L92">src/geocoders/neutrino.ts:92</a></li>
+									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/e8a319a/src/geocoders/neutrino.ts#L87">src/geocoders/neutrino.ts:87</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -584,7 +546,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/geocoders/nominatim.ts#L152">src/geocoders/nominatim.ts:152</a></li>
+									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/e8a319a/src/geocoders/nominatim.ts#L150">src/geocoders/nominatim.ts:150</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -615,7 +577,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/geocoders/open-location-code.ts#L77">src/geocoders/open-location-code.ts:77</a></li>
+									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/e8a319a/src/geocoders/open-location-code.ts#L77">src/geocoders/open-location-code.ts:77</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -646,7 +608,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/geocoders/opencage.ts#L98">src/geocoders/opencage.ts:98</a></li>
+									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/e8a319a/src/geocoders/opencage.ts#L93">src/geocoders/opencage.ts:93</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -669,7 +631,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/geocoders/pelias.ts#L145">src/geocoders/pelias.ts:145</a></li>
+									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/e8a319a/src/geocoders/pelias.ts#L140">src/geocoders/pelias.ts:140</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -700,7 +662,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/geocoders/latlng.ts#L20">src/geocoders/latlng.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/e8a319a/src/geocoders/latlng.ts#L20">src/geocoders/latlng.ts:20</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -732,7 +694,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/geocoders/pelias.ts#L107">src/geocoders/pelias.ts:107</a></li>
+									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/e8a319a/src/geocoders/pelias.ts#L102">src/geocoders/pelias.ts:102</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -763,7 +725,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/geocoders/photon.ts#L104">src/geocoders/photon.ts:104</a></li>
+									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/e8a319a/src/geocoders/photon.ts#L104">src/geocoders/photon.ts:104</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -794,7 +756,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/geocoders/what3words.ts#L88">src/geocoders/what3words.ts:88</a></li>
+									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/e8a319a/src/geocoders/what3words.ts#L83">src/geocoders/what3words.ts:83</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -939,16 +901,10 @@
 						<a href="interfaces/photonoptions.html" class="tsd-kind-icon">Photon<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="interfaces/reversegeocodingresult.html" class="tsd-kind-icon">Reverse<wbr>Geocoding<wbr>Result</a>
-					</li>
-					<li class=" tsd-kind-interface">
 						<a href="interfaces/what3wordsoptions.html" class="tsd-kind-icon">What3<wbr>Words<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="globals.html#geocodingcallback" class="tsd-kind-icon">Geocoding<wbr>Callback</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#reversegeocodingcallback" class="tsd-kind-icon">Reverse<wbr>Geocoding<wbr>Callback</a>
 					</li>
 					<li class=" tsd-kind-variable">
 						<a href="globals.html#geocodeearth" class="tsd-kind-icon">Geocode<wbr>Earth</a>
