@@ -2,13 +2,16 @@
   "name": "leaflet-control-geocoder",
   "version": "1.13.0",
   "description": "Extendable geocoder with builtin support for OpenStreetMap Nominatim, Bing, Google, Mapbox, MapQuest, What3Words, Photon, Pelias, HERE, Neutrino, Plus codes",
+  "source": "src/index.ts",
   "main": "dist/Control.Geocoder.js",
-  "module": "src/index.js",
+  "module": "dist/Control.Geocoder.modern.js",
   "scripts": {
     "prepare": "npm run build",
-    "build": "npm run build:js && npm run build:css && npm run build:demo-esbuild && npm run build:demo-rollup && npm run build:demo-webpack",
-    "build:js": "rollup -c",
-    "build:css": "cpr Control.Geocoder.css dist/Control.Geocoder.css --overwrite",
+    "build": "npm run build:1 && npm run build:2 && npm run build:3",
+    "build:1": "microbundle --no-pkg-main --entry src/index.ts --format iife --globals leaflet=L --output dist/Control.Geocoder.js --no-compress",
+    "build:2": "microbundle --no-pkg-main --entry src/index.ts --format iife --globals leaflet=L --output dist/Control.Geocoder.min.js",
+    "build:3": "microbundle --no-pkg-main --entry src/index.ts --format modern --output dist/Control.Geocoder.modern.js --no-compress",
+    "build:demo": "npm run build:demo-esbuild && npm run build:demo-rollup && npm run build:demo-webpack",
     "build:demo-esbuild": "cd demo-esbuild && npm install && npm run build",
     "build:demo-rollup": "cd demo-rollup && npm install && npm run build",
     "build:demo-webpack": "cd demo-rollup && npm install && npm run build",
@@ -25,9 +28,7 @@
     "LICENCE",
     "dist/**",
     "demo/**",
-    "images/**",
-    "src/**",
-    "*.css"
+    "src/**"
   ],
   "keywords": [
     "leaflet",
@@ -60,23 +61,23 @@
     "url": "https://github.com/perliedman/leaflet-control-geocoder/issues"
   },
   "devDependencies": {
-    "@rollup/plugin-typescript": "^4.1.1",
     "@types/leaflet": "^1.5.12",
     "@typescript-eslint/eslint-plugin": "^4.8.1",
     "@typescript-eslint/parser": "^4.8.1",
     "conventional-changelog-cli": "^2.1.0",
-    "cpr": "^3.0.1",
     "eslint": "^6.8.0",
     "eslint-plugin-prettier": "^3.1.2",
     "jest": "^26.6.3",
     "leaflet": "^1.6.0",
+    "microbundle": "^0.12.4",
     "prettier": "^1.19.1",
-    "rollup": "^2.6.1",
-    "rollup-plugin-terser": "^5.3.0",
     "ts-jest": "^26.4.4",
     "tslib": "^1.11.1",
     "typedoc": "^0.19.2",
     "typescript": "^3.8.3"
+  },
+  "peerDependencies": {
+    "leaflet": "^1.6.0"
   },
   "optionalDependencies": {
     "open-location-code": "^1.0.0"
