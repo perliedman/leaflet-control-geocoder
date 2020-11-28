@@ -1,4 +1,4 @@
-## Unreleased (2020-11-28)
+## 2.0.0 (2020-11-28)
 
 - Migrate to TypeScript
 - Generate API documentation using TypeDoc ([756ae93](https://github.com/perliedman/leaflet-control-geocoder/commit/756ae93))
