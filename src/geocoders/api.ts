@@ -31,24 +31,9 @@ export interface GeocodingResult {
 }
 
 /**
- * An object that represents a result from a reverse geocoding query
- */
-export interface ReverseGeocodingResult extends GeocodingResult {
-  /**
-   * @see {@link bbox}
-   * @deprecated
-   */
-  bounds: L.LatLngBounds;
-}
-
-/**
- * A callback function used in {@link IGeocoder.geocode} and {@link IGeocoder.suggest}
+ * A callback function used in {@link IGeocoder.geocode} and {@link IGeocoder.suggest} and {@link IGeocoder.reverse}
  */
 export type GeocodingCallback = (result: GeocodingResult[]) => void;
-/**
- * A callback function used in {@link IGeocoder.reverse}
- */
-export type ReverseGeocodingCallback = (result: ReverseGeocodingResult[]) => void;
 
 /**
  * An interface implemented to respond to geocoding queries
@@ -75,12 +60,7 @@ export interface IGeocoder {
    * @param cb the callback function
    * @param context the `this` context in the callback
    */
-  reverse?(
-    location: L.LatLngLiteral,
-    scale: number,
-    cb: ReverseGeocodingCallback,
-    context?: any
-  ): void;
+  reverse?(location: L.LatLngLiteral, scale: number, cb: GeocodingCallback, context?: any): void;
 }
 
 export interface GeocoderOptions {

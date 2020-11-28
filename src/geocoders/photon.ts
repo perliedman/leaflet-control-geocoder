@@ -44,7 +44,7 @@ export class Photon implements IGeocoder {
     return this.geocode(query, cb, context);
   }
 
-  reverse(latLng: L.LatLngLiteral, scale: number, cb: (result: any) => void, context?: any): void {
+  reverse(latLng: L.LatLngLiteral, scale: number, cb: GeocodingCallback, context?: any): void {
     const params = reverseParams(this.options, {
       lat: latLng.lat,
       lon: latLng.lng
