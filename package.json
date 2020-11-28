@@ -16,7 +16,7 @@
     "build:demo-rollup": "cd demo-rollup && npm install && npm run build",
     "build:demo-webpack": "cd demo-rollup && npm install && npm run build",
     "changelog": "conventional-changelog --infile CHANGELOG.md --same-file --output-unreleased",
-    "doc": "typedoc --excludePrivate --stripInternal --moduleResolution node --out docs/ src/",
+    "doc": "typedoc --mode file --excludePrivate --stripInternal --moduleResolution node --out docs/ src/",
     "test": "jest",
     "lint": "eslint --ext .js,.ts ."
   },
