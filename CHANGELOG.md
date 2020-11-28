@@ -1,12 +1,24 @@
-## Unreleased (2020-10-28)
+## Unreleased (2020-11-28)
 
+- Migrate to TypeScript
+- Generate API documentation using TypeDoc ([756ae93](https://github.com/perliedman/leaflet-control-geocoder/commit/756ae93))
+- Harmonize options constructor for all geocoders ([e4659b5](https://github.com/perliedman/leaflet-control-geocoder/commit/e4659b5))
+- Use geocodingQueryParams in all geocoders ([84d764a](https://github.com/perliedman/leaflet-control-geocoder/commit/84d764a))
+- Use reverseQueryParams in all geocoders ([9240331](https://github.com/perliedman/leaflet-control-geocoder/commit/9240331))
+- Replace PNG and GIF files with SVG URIs (#298) ([1ec9ab5](https://github.com/perliedman/leaflet-control-geocoder/commit/1ec9ab5)), closes [#298](https://github.com/perliedman/leaflet-control-geocoder/issues/298)
 - photon: update to photon.komoot.io ([e4b3082](https://github.com/perliedman/leaflet-control-geocoder/commit/e4b3082))
+- mapbox: add location properties to reverse geocode (#286) ([3398c8c](https://github.com/perliedman/leaflet-control-geocoder/commit/3398c8c)), closes [#286](https://github.com/perliedman/leaflet-control-geocoder/issues/286)
 - demos: add unpkg.com demo ([2418679](https://github.com/perliedman/leaflet-control-geocoder/commit/2418679))
 - demos: add esbuild demo ([2e0553f](https://github.com/perliedman/leaflet-control-geocoder/commit/2e0553f))
 - demos: upgrade to webpack 5 ([b600cad](https://github.com/perliedman/leaflet-control-geocoder/commit/b600cad))
+- tests: Migrate unit tests to Jest ([5b64c34](https://github.com/perliedman/leaflet-control-geocoder/commit/5b64c34))
 - package: Enable compressed-size-action for PRs ([fdf6df0](https://github.com/perliedman/leaflet-control-geocoder/commit/fdf6df0)), closes [#283](https://github.com/perliedman/leaflet-control-geocoder/issues/283)
 - package: Enable GitHub Actions ([c98745e](https://github.com/perliedman/leaflet-control-geocoder/commit/c98745e))
-- package: upgrade rollup to 2.6.1, use terser ([ec7e38d](https://github.com/perliedman/leaflet-control-geocoder/commit/ec7e38d))
+- package: Migrate build to microbundle ([fc0eff9](https://github.com/perliedman/leaflet-control-geocoder/commit/fc0eff9))
+
+### BREAKING CHANGE
+
+- All geocoders accept a single `options` object as constructor parameter. The `options` objects extends the interface `GeocoderOptions`. The `apiKey` string constructors of some geocoders have been removed.
 
 ## 1.13.0 (2020-04-13)
 
