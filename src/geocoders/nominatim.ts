@@ -22,10 +22,10 @@ export interface NominatimResult {
   type: string;
   importance: number;
   icon?: string;
-  address: Address;
+  address: NominatimAddress;
 }
 
-export interface Address {
+export interface NominatimAddress {
   building?: string;
   city_district?: string;
   city?: string;
