@@ -1,0 +1,1008 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>GeocoderControl | leaflet-control-geocoder</title>
+	<meta name="description" content="Documentation for leaflet-control-geocoder">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">leaflet-control-geocoder</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../globals.html">Globals</a>
+				</li>
+				<li>
+					<a href="geocodercontrol.html">GeocoderControl</a>
+				</li>
+			</ul>
+			<h1>Class GeocoderControl</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>This is the geocoder control. It works like any other <a href="https://leafletjs.com/reference.html#control">Leaflet control</a>, and is added to the map.</p>
+					</div>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="tsd-signature-type">Control</span>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">GeocoderControl</span>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Classes</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-class tsd-parent-kind-class"><a href="geocodercontrol.attribution.html" class="tsd-kind-icon">Attribution</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-class"><a href="geocodercontrol.layers.html" class="tsd-kind-icon">Layers</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-class"><a href="geocodercontrol.scale.html" class="tsd-kind-icon">Scale</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-class"><a href="geocodercontrol.zoom.html" class="tsd-kind-icon">Zoom</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Interfaces</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/geocodercontrol.attributionoptions.html" class="tsd-kind-icon">Attribution<wbr>Options</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/geocodercontrol.layersobject.html" class="tsd-kind-icon">Layers<wbr>Object</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/geocodercontrol.layersoptions.html" class="tsd-kind-icon">Layers<wbr>Options</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/geocodercontrol.scaleoptions.html" class="tsd-kind-icon">Scale<wbr>Options</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/geocodercontrol.zoomoptions.html" class="tsd-kind-icon">Zoom<wbr>Options</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Constructors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="geocodercontrol.html#constructor" class="tsd-kind-icon">constructor</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="geocodercontrol.html#addthrobberclass" class="tsd-kind-icon">add<wbr>Throbber<wbr>Class</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="geocodercontrol.html#addto" class="tsd-kind-icon">add<wbr>To</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="geocodercontrol.html#fire" class="tsd-kind-icon">fire</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="geocodercontrol.html#getcontainer" class="tsd-kind-icon">get<wbr>Container</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="geocodercontrol.html#getposition" class="tsd-kind-icon">get<wbr>Position</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="geocodercontrol.html#markgeocode" class="tsd-kind-icon">mark<wbr>Geocode</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="geocodercontrol.html#off" class="tsd-kind-icon">off</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="geocodercontrol.html#on" class="tsd-kind-icon">on</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="geocodercontrol.html#onadd" class="tsd-kind-icon">on<wbr>Add</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="geocodercontrol.html#onremove" class="tsd-kind-icon">on<wbr>Remove</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="geocodercontrol.html#remove" class="tsd-kind-icon">remove</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="geocodercontrol.html#removethrobberclass" class="tsd-kind-icon">remove<wbr>Throbber<wbr>Class</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="geocodercontrol.html#setposition" class="tsd-kind-icon">set<wbr>Position</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="geocodercontrol.html#setquery" class="tsd-kind-icon">set<wbr>Query</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static"><a href="geocodercontrol.html#addinithook" class="tsd-kind-icon">add<wbr>Init<wbr>Hook</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-overwrite tsd-is-inherited tsd-is-static"><a href="geocodercontrol.html#extend" class="tsd-kind-icon">extend</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static"><a href="geocodercontrol.html#include" class="tsd-kind-icon">include</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static"><a href="geocodercontrol.html#mergeoptions" class="tsd-kind-icon">merge<wbr>Options</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Object literals</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-object-literal tsd-parent-kind-class tsd-is-overwrite"><a href="geocodercontrol.html#options" class="tsd-kind-icon">options</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3>constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Geocoder<wbr>Control<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/geocodercontroloptions.html" class="tsd-signature-type">GeocoderControlOptions</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="geocodercontrol.html" class="tsd-signature-type">GeocoderControl</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Overrides Control.__constructor</p>
+								<ul>
+									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/control.ts#L92">src/control.ts:92</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Instantiates a geocoder control (to be invoked using <code>new</code>)</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/geocodercontroloptions.html" class="tsd-signature-type">GeocoderControlOptions</a><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>the options</p>
+										</div>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="geocodercontrol.html" class="tsd-signature-type">GeocoderControl</a></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="addthrobberclass" class="tsd-anchor"></a>
+					<h3>add<wbr>Throbber<wbr>Class</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Throbber<wbr>Class<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/control.ts#L142">src/control.ts:142</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="addto" class="tsd-anchor"></a>
+					<h3>add<wbr>To</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>To<span class="tsd-signature-symbol">(</span>map<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="geocodercontrol.html">GeocoderControl</a>.<a href="geocodercontrol.html#addto">addTo</a></p>
+								<ul>
+									<li>Defined in node_modules/@types/leaflet/index.d.ts:1385</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>map: <span class="tsd-signature-type">Map</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="fire" class="tsd-anchor"></a>
+					<h3>fire</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">fire<span class="tsd-signature-symbol">(</span>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, data<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span>, propagate<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/control.ts#L137">src/control.ts:137</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Fires an event of the specified type. You can optionally provide an data object.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>see</dt>
+									<dd><p><a href="https://leafletjs.com/reference.html#evented-fire">https://leafletjs.com/reference.html#evented-fire</a></p>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>type: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the event type</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> data: <span class="tsd-signature-type">any</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the event data object</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> propagate: <span class="tsd-signature-type">boolean</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>whether to propagate to event parents</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="getcontainer" class="tsd-anchor"></a>
+					<h3>get<wbr>Container</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Container<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">HTMLElement</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="geocodercontrol.html">GeocoderControl</a>.<a href="geocodercontrol.html#getcontainer">getContainer</a></p>
+								<ul>
+									<li>Defined in node_modules/@types/leaflet/index.d.ts:1384</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">HTMLElement</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="getposition" class="tsd-anchor"></a>
+					<h3>get<wbr>Position</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Position<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ControlPosition</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="geocodercontrol.html">GeocoderControl</a>.<a href="geocodercontrol.html#getposition">getPosition</a></p>
+								<ul>
+									<li>Defined in node_modules/@types/leaflet/index.d.ts:1382</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">ControlPosition</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="markgeocode" class="tsd-anchor"></a>
+					<h3>mark<wbr>Geocode</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">mark<wbr>Geocode<span class="tsd-signature-symbol">(</span>result<span class="tsd-signature-symbol">: </span><a href="../interfaces/geocodingresult.html" class="tsd-signature-type">GeocodingResult</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/control.ts#L279">src/control.ts:279</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Marks a geocoding result on the map</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>result: <a href="../interfaces/geocodingresult.html" class="tsd-signature-type">GeocodingResult</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the geocoding result</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="off" class="tsd-anchor"></a>
+					<h3>off</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">off<span class="tsd-signature-symbol">(</span>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, fn<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">L.LeafletEventHandlerFn</span>, context<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/control.ts#L125">src/control.ts:125</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Removes a previously added listener function. If no function is specified, it will remove all the listeners of that particular event from the object.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>see</dt>
+									<dd><p><a href="https://leafletjs.com/reference.html#evented-off">https://leafletjs.com/reference.html#evented-off</a></p>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>type: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the event type</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> fn: <span class="tsd-signature-type">L.LeafletEventHandlerFn</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the listener function</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> context: <span class="tsd-signature-type">any</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the this listener function context</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="on" class="tsd-anchor"></a>
+					<h3>on</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">on<span class="tsd-signature-symbol">(</span>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, fn<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">L.LeafletEventHandlerFn</span>, context<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/control.ts#L113">src/control.ts:113</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Adds a listener function to a particular event type of the object.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>see</dt>
+									<dd><p><a href="https://leafletjs.com/reference.html#evented-on">https://leafletjs.com/reference.html#evented-on</a></p>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>type: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the event type</p>
+									</div>
+								</li>
+								<li>
+									<h5>fn: <span class="tsd-signature-type">L.LeafletEventHandlerFn</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the listener function</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> context: <span class="tsd-signature-type">any</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the this listener function context</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+					<a name="onadd" class="tsd-anchor"></a>
+					<h3>on<wbr>Add</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Add<span class="tsd-signature-symbol">(</span>map<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">HTMLDivElement</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Overrides Control.onAdd</p>
+								<ul>
+									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/control.ts#L155">src/control.ts:155</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns the container DOM element for the control and add listeners on relevant map events.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>see</dt>
+									<dd><p><a href="https://leafletjs.com/reference.html#control-onadd">https://leafletjs.com/reference.html#control-onadd</a></p>
+									</dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>map: <span class="tsd-signature-type">Map</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the map instance</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">HTMLDivElement</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="onremove" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Remove</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Remove<span class="tsd-signature-symbol">(</span>map<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="geocodercontrol.html">GeocoderControl</a>.<a href="geocodercontrol.html#onremove">onRemove</a></p>
+								<ul>
+									<li>Defined in node_modules/@types/leaflet/index.d.ts:1390</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>map: <span class="tsd-signature-type">Map</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="remove" class="tsd-anchor"></a>
+					<h3>remove</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">remove<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="geocodercontrol.html">GeocoderControl</a>.<a href="geocodercontrol.html#remove">remove</a></p>
+								<ul>
+									<li>Defined in node_modules/@types/leaflet/index.d.ts:1386</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="removethrobberclass" class="tsd-anchor"></a>
+					<h3>remove<wbr>Throbber<wbr>Class</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">remove<wbr>Throbber<wbr>Class<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/control.ts#L146">src/control.ts:146</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="setposition" class="tsd-anchor"></a>
+					<h3>set<wbr>Position</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Position<span class="tsd-signature-symbol">(</span>position<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ControlPosition</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="geocodercontrol.html">GeocoderControl</a>.<a href="geocodercontrol.html#setposition">setPosition</a></p>
+								<ul>
+									<li>Defined in node_modules/@types/leaflet/index.d.ts:1383</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>position: <span class="tsd-signature-type">ControlPosition</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="setquery" class="tsd-anchor"></a>
+					<h3>set<wbr>Query</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Query<span class="tsd-signature-symbol">(</span>string<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/control.ts#L253">src/control.ts:253</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Sets the query string on the text input</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>string: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the query string</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static">
+					<a name="addinithook" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> add<wbr>Init<wbr>Hook</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Init<wbr>Hook<span class="tsd-signature-symbol">(</span>initHookFn<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">typeof </span><span class="tsd-signature-type">Class</span></li>
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Init<wbr>Hook<span class="tsd-signature-symbol">(</span>methodName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, <span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">typeof </span><span class="tsd-signature-type">Class</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="geocodercontrol.html">GeocoderControl</a>.<a href="geocodercontrol.html#addinithook">addInitHook</a></p>
+								<ul>
+									<li>Defined in node_modules/@types/leaflet/index.d.ts:23</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>initHookFn: <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">typeof </span><span class="tsd-signature-type">Class</span></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="geocodercontrol.html">GeocoderControl</a>.<a href="geocodercontrol.html#addinithook">addInitHook</a></p>
+								<ul>
+									<li>Defined in node_modules/@types/leaflet/index.d.ts:24</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>methodName: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>args: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">typeof </span><span class="tsd-signature-type">Class</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-overwrite tsd-is-inherited tsd-is-static">
+					<a name="extend" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> extend</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-overwrite tsd-is-inherited tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">extend&lt;T&gt;<span class="tsd-signature-symbol">(</span>props<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>constructor<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">typeof </span><span class="tsd-signature-type">Control</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="geocodercontrol.html">GeocoderControl</a>.<a href="geocodercontrol.html#extend">extend</a></p>
+								<p>Overrides Class.extend</p>
+								<ul>
+									<li>Defined in node_modules/@types/leaflet/index.d.ts:1380</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>props: <span class="tsd-signature-type">T</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">{ </span>constructor<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">typeof </span><span class="tsd-signature-type">Control</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static">
+					<a name="include" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> include</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">include<span class="tsd-signature-symbol">(</span>props<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">typeof </span><span class="tsd-signature-type">Class</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="geocodercontrol.html">GeocoderControl</a>.<a href="geocodercontrol.html#include">include</a></p>
+								<ul>
+									<li>Defined in node_modules/@types/leaflet/index.d.ts:20</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>props: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">typeof </span><span class="tsd-signature-type">Class</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static">
+					<a name="mergeoptions" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> merge<wbr>Options</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">merge<wbr>Options<span class="tsd-signature-symbol">(</span>props<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">typeof </span><span class="tsd-signature-type">Class</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="geocodercontrol.html">GeocoderControl</a>.<a href="geocodercontrol.html#mergeoptions">mergeOptions</a></p>
+								<ul>
+									<li>Defined in node_modules/@types/leaflet/index.d.ts:21</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>props: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">typeof </span><span class="tsd-signature-type">Class</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Object literals</h2>
+				<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-class tsd-is-overwrite">
+					<a name="options" class="tsd-anchor"></a>
+					<h3>options</h3>
+					<div class="tsd-signature tsd-kind-icon">options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<aside class="tsd-sources">
+						<p>Overrides Control.options</p>
+						<ul>
+							<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/control.ts#L64">src/control.ts:64</a></li>
+						</ul>
+					</aside>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="options.collapsed" class="tsd-anchor"></a>
+						<h3>collapsed</h3>
+						<div class="tsd-signature tsd-kind-icon">collapsed<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">true</span><span class="tsd-signature-symbol"> = true</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/control.ts#L67">src/control.ts:67</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="options.defaultmarkgeocode" class="tsd-anchor"></a>
+						<h3>default<wbr>Mark<wbr>Geocode</h3>
+						<div class="tsd-signature tsd-kind-icon">default<wbr>Mark<wbr>Geocode<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">true</span><span class="tsd-signature-symbol"> = true</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/control.ts#L77">src/control.ts:77</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="options.errormessage" class="tsd-anchor"></a>
+						<h3>error<wbr>Message</h3>
+						<div class="tsd-signature tsd-kind-icon">error<wbr>Message<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;Nothing found.&quot;</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/control.ts#L71">src/control.ts:71</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="options.expand" class="tsd-anchor"></a>
+						<h3>expand</h3>
+						<div class="tsd-signature tsd-kind-icon">expand<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"touch"</span><span class="tsd-signature-symbol"> = &quot;touch&quot;</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/control.ts#L68">src/control.ts:68</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="options.iconlabel" class="tsd-anchor"></a>
+						<h3>icon<wbr>Label</h3>
+						<div class="tsd-signature tsd-kind-icon">icon<wbr>Label<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;Initiate a new search&quot;</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/control.ts#L72">src/control.ts:72</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="options.placeholder" class="tsd-anchor"></a>
+						<h3>placeholder</h3>
+						<div class="tsd-signature tsd-kind-icon">placeholder<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;Search...&quot;</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/control.ts#L70">src/control.ts:70</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="options.position" class="tsd-anchor"></a>
+						<h3>position</h3>
+						<div class="tsd-signature tsd-kind-icon">position<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"topright"</span><span class="tsd-signature-symbol"> = &quot;topright&quot;</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/control.ts#L69">src/control.ts:69</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="options.query" class="tsd-anchor"></a>
+						<h3>query</h3>
+						<div class="tsd-signature tsd-kind-icon">query<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;&quot;</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/control.ts#L73">src/control.ts:73</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="options.queryminlength" class="tsd-anchor"></a>
+						<h3>query<wbr>Min<wbr>Length</h3>
+						<div class="tsd-signature tsd-kind-icon">query<wbr>Min<wbr>Length<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 1</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/control.ts#L74">src/control.ts:74</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="options.showresulticons" class="tsd-anchor"></a>
+						<h3>show<wbr>Result<wbr>Icons</h3>
+						<div class="tsd-signature tsd-kind-icon">show<wbr>Result<wbr>Icons<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> = false</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/control.ts#L66">src/control.ts:66</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="options.showuniqueresult" class="tsd-anchor"></a>
+						<h3>show<wbr>Unique<wbr>Result</h3>
+						<div class="tsd-signature tsd-kind-icon">show<wbr>Unique<wbr>Result<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">true</span><span class="tsd-signature-symbol"> = true</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/control.ts#L65">src/control.ts:65</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="options.suggestminlength" class="tsd-anchor"></a>
+						<h3>suggest<wbr>Min<wbr>Length</h3>
+						<div class="tsd-signature tsd-kind-icon">suggest<wbr>Min<wbr>Length<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 3</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/control.ts#L75">src/control.ts:75</a></li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="options.suggesttimeout" class="tsd-anchor"></a>
+						<h3>suggest<wbr>Timeout</h3>
+						<div class="tsd-signature tsd-kind-icon">suggest<wbr>Timeout<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 250</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/06bb319/src/control.ts#L76">src/control.ts:76</a></li>
+							</ul>
+						</aside>
+					</section>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="../globals.html"><em>Globals</em></a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class">
+						<a href="geocodercontrol.html" class="tsd-kind-icon">Geocoder<wbr>Control</a>
+						<ul>
+							<li class=" tsd-kind-class tsd-parent-kind-class">
+								<a href="geocodercontrol.attribution.html" class="tsd-kind-icon">Attribution</a>
+							</li>
+							<li class=" tsd-kind-class tsd-parent-kind-class">
+								<a href="geocodercontrol.layers.html" class="tsd-kind-icon">Layers</a>
+							</li>
+							<li class=" tsd-kind-class tsd-parent-kind-class">
+								<a href="geocodercontrol.scale.html" class="tsd-kind-icon">Scale</a>
+							</li>
+							<li class=" tsd-kind-class tsd-parent-kind-class">
+								<a href="geocodercontrol.zoom.html" class="tsd-kind-icon">Zoom</a>
+							</li>
+							<li class=" tsd-kind-interface tsd-parent-kind-class">
+								<a href="../interfaces/geocodercontrol.attributionoptions.html" class="tsd-kind-icon">Attribution<wbr>Options</a>
+							</li>
+							<li class=" tsd-kind-interface tsd-parent-kind-class">
+								<a href="../interfaces/geocodercontrol.layersobject.html" class="tsd-kind-icon">Layers<wbr>Object</a>
+							</li>
+							<li class=" tsd-kind-interface tsd-parent-kind-class">
+								<a href="../interfaces/geocodercontrol.layersoptions.html" class="tsd-kind-icon">Layers<wbr>Options</a>
+							</li>
+							<li class=" tsd-kind-interface tsd-parent-kind-class">
+								<a href="../interfaces/geocodercontrol.scaleoptions.html" class="tsd-kind-icon">Scale<wbr>Options</a>
+							</li>
+							<li class=" tsd-kind-interface tsd-parent-kind-class">
+								<a href="../interfaces/geocodercontrol.zoomoptions.html" class="tsd-kind-icon">Zoom<wbr>Options</a>
+							</li>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+								<a href="geocodercontrol.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="geocodercontrol.html#addthrobberclass" class="tsd-kind-icon">add<wbr>Throbber<wbr>Class</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="geocodercontrol.html#addto" class="tsd-kind-icon">add<wbr>To</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="geocodercontrol.html#fire" class="tsd-kind-icon">fire</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="geocodercontrol.html#getcontainer" class="tsd-kind-icon">get<wbr>Container</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="geocodercontrol.html#getposition" class="tsd-kind-icon">get<wbr>Position</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="geocodercontrol.html#markgeocode" class="tsd-kind-icon">mark<wbr>Geocode</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="geocodercontrol.html#off" class="tsd-kind-icon">off</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="geocodercontrol.html#on" class="tsd-kind-icon">on</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+								<a href="geocodercontrol.html#onadd" class="tsd-kind-icon">on<wbr>Add</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="geocodercontrol.html#onremove" class="tsd-kind-icon">on<wbr>Remove</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="geocodercontrol.html#remove" class="tsd-kind-icon">remove</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="geocodercontrol.html#removethrobberclass" class="tsd-kind-icon">remove<wbr>Throbber<wbr>Class</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="geocodercontrol.html#setposition" class="tsd-kind-icon">set<wbr>Position</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="geocodercontrol.html#setquery" class="tsd-kind-icon">set<wbr>Query</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static">
+								<a href="geocodercontrol.html#addinithook" class="tsd-kind-icon">add<wbr>Init<wbr>Hook</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-overwrite tsd-is-inherited tsd-is-static">
+								<a href="geocodercontrol.html#extend" class="tsd-kind-icon">extend</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static">
+								<a href="geocodercontrol.html#include" class="tsd-kind-icon">include</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static">
+								<a href="geocodercontrol.html#mergeoptions" class="tsd-kind-icon">merge<wbr>Options</a>
+							</li>
+							<li class=" tsd-kind-object-literal tsd-parent-kind-class tsd-is-overwrite">
+								<a href="geocodercontrol.html#options" class="tsd-kind-icon">options</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
