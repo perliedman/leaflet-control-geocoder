@@ -48,12 +48,7 @@ export class Pelias implements IGeocoder {
     });
   }
 
-  reverse(
-    location: L.LatLngLiteral,
-    scale: number,
-    cb: (result: any) => void,
-    context?: any
-  ): void {
+  reverse(location: L.LatLngLiteral, scale: number, cb: GeocodingCallback, context?: any): void {
     const params = reverseParams(this.options, {
       api_key: this.options.apiKey,
       'point.lat': location.lat,

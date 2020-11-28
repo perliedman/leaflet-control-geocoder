@@ -58,12 +58,7 @@ export class OpenCage implements IGeocoder {
     return this.geocode(query, cb, context);
   }
 
-  reverse(
-    location: L.LatLngLiteral,
-    scale: number,
-    cb: (result: any) => void,
-    context?: any
-  ): void {
+  reverse(location: L.LatLngLiteral, scale: number, cb: GeocodingCallback, context?: any): void {
     const params = reverseParams(this.options, {
       key: this.options.apiKey,
       q: [location.lat, location.lng].join(',')

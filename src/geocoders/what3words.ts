@@ -52,12 +52,7 @@ export class What3Words implements IGeocoder {
     return this.geocode(query, cb, context);
   }
 
-  reverse(
-    location: L.LatLngLiteral,
-    scale: number,
-    cb: (result: any) => void,
-    context?: any
-  ): void {
+  reverse(location: L.LatLngLiteral, scale: number, cb: GeocodingCallback, context?: any): void {
     getJSON(
       this.options.serviceUrl + 'reverse',
       reverseParams(this.options, {

@@ -70,16 +70,6 @@ Array [
             "lng": 11.3836945900354,
           },
         },
-        "bounds": Object {
-          "_northEast": Object {
-            "lat": 47.2065094,
-            "lng": 11.3836945900354,
-          },
-          "_southWest": Object {
-            "lat": 47.2065094,
-            "lng": 11.3836945900354,
-          },
-        },
         "center": Object {
           "lat": 47.2065094,
           "lng": 11.3836945900354,

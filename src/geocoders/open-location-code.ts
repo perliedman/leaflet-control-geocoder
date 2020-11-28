@@ -47,7 +47,7 @@ export class OpenLocationCode implements IGeocoder {
       cb.call(context, []);
     }
   }
-  reverse(location: L.LatLngLiteral, scale: number, cb: (result: any) => void, context?: any) {
+  reverse(location: L.LatLngLiteral, scale: number, cb: GeocodingCallback, context?: any) {
     try {
       const code = this.options.OpenLocationCode.encode(
         location.lat,

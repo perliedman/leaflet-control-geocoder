@@ -6,7 +6,6 @@ import {
   GeocodingCallback,
   geocodingParams,
   GeocodingResult,
-  ReverseGeocodingResult,
   reverseParams
 } from './api';
 
@@ -118,7 +117,7 @@ export class Nominatim implements IGeocoder {
     });
   }
 
-  reverse(location: L.LatLngLiteral, scale: number, cb: (result: any) => void, context?: any) {
+  reverse(location: L.LatLngLiteral, scale: number, cb: GeocodingCallback, context?: any) {
     const params = reverseParams(this.options, {
       lat: location.lat,
       lon: location.lng,
@@ -127,7 +126,7 @@ export class Nominatim implements IGeocoder {
       format: 'json'
     });
     getJSON(this.options.serviceUrl + 'reverse', params, data => {
-      const result: ReverseGeocodingResult[] = [];
+      const result: GeocodingResult[] = [];
       if (data && data.lat && data.lon) {
         const center = L.latLng(data.lat, data.lon);
         const bbox = L.latLngBounds(center, center);
@@ -136,7 +135,6 @@ export class Nominatim implements IGeocoder {
           html: this.options.htmlTemplate ? this.options.htmlTemplate(data) : undefined,
           center: center,
           bbox: bbox,
-          bounds: bbox,
           properties: data
         });
       }

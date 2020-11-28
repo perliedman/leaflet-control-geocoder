@@ -57,12 +57,7 @@ export class Neutrino implements IGeocoder {
   }
 
   // https://www.neutrinoapi.com/api/geocode-reverse/
-  reverse(
-    location: L.LatLngLiteral,
-    scale: number,
-    cb: (result: any) => void,
-    context?: any
-  ): void {
+  reverse(location: L.LatLngLiteral, scale: number, cb: GeocodingCallback, context?: any): void {
     const params = reverseParams(this.options, {
       apiKey: this.options.apiKey,
       userId: this.options.userId,

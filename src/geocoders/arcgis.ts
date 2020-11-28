@@ -6,7 +6,6 @@ import {
   GeocodingCallback,
   geocodingParams,
   GeocodingResult,
-  ReverseGeocodingResult,
   reverseParams
 } from './api';
 
@@ -61,27 +60,21 @@ export class ArcGis implements IGeocoder {
     return this.geocode(query, cb, context);
   }
 
-  reverse(
-    location: L.LatLngLiteral,
-    scale: number,
-    cb: (result: any) => void,
-    context?: any
-  ): void {
+  reverse(location: L.LatLngLiteral, scale: number, cb: GeocodingCallback, context?: any): void {
     const params = reverseParams(this.options, {
       location: encodeURIComponent(location.lng) + ',' + encodeURIComponent(location.lat),
       distance: 100,
       f: 'json'
     });
     getJSON(this.options.serviceUrl + '/reverseGeocode', params, data => {
-      const result: ReverseGeocodingResult[] = [];
+      const result: GeocodingResult[] = [];
       if (data && !data.error) {
         const center = L.latLng(data.location.y, data.location.x);
         const bbox = L.latLngBounds(center, center);
         result.push({
           name: data.address.Match_addr,
           center: center,
-          bbox: bbox,
-          bounds: bbox
+          bbox: bbox
         });
       }
 

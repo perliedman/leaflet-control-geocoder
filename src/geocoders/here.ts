@@ -42,12 +42,7 @@ export class HERE implements IGeocoder {
     this.getJSON(this.options.serviceUrl + 'geocode.json', params, cb, context);
   }
 
-  reverse(
-    location: L.LatLngLiteral,
-    scale: number,
-    cb: (result: any) => void,
-    context?: any
-  ): void {
+  reverse(location: L.LatLngLiteral, scale: number, cb: GeocodingCallback, context?: any): void {
     const _proxRadius = this.options.reverseGeocodeProxRadius
       ? this.options.reverseGeocodeProxRadius
       : null;
@@ -63,7 +58,7 @@ export class HERE implements IGeocoder {
     this.getJSON(this.options.serviceUrl + 'reversegeocode.json', params, cb, context);
   }
 
-  getJSON(url: string, params: any, cb: (result: any) => void, context?: any) {
+  getJSON(url: string, params: any, cb: GeocodingCallback, context?: any) {
     getJSON(url, params, data => {
       const results: GeocodingResult[] = [];
       if (data.response.view && data.response.view.length) {

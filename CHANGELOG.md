@@ -19,6 +19,7 @@
 ### BREAKING CHANGE
 
 - All geocoders accept a single `options` object as constructor parameter. The `options` objects extends the interface `GeocoderOptions`. The `apiKey` string constructors of some geocoders have been removed.
+- `reverse` now returns bbox in field called `bbox` (previously `bounds`)
 
 ## 1.13.0 (2020-04-13)
 
