@@ -32,7 +32,7 @@
       var map = L.map('map').setView([0, 0], 2);
 
       var geocoder = L.Control.Geocoder.nominatim();
-      if (URLSearchParams && location.search) {
+      if (typeof URLSearchParams !== 'undefined' && location.search) {
         // parse /?geocoder=nominatim from URL
         var params = new URLSearchParams(location.search);
         var geocoderString = params.get('geocoder');
