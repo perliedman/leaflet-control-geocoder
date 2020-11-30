@@ -57,10 +57,30 @@ export interface GeocoderControlOptions extends L.ControlOptions {
   defaultMarkGeocode: boolean;
 }
 
+
+/**
+ * Leaflet mixins https://leafletjs.com/reference-1.7.1.html#class-includes
+ * for TypeScript https://www.typescriptlang.org/docs/handbook/mixins.html
+ * @internal
+ */
+class EventedControl {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  constructor(...args: any[]) {
+    // empty
+  }
+}
+
+/**
+ * @internal
+ */
+interface EventedControl extends L.Control, L.Evented {}
+L.Util.extend(EventedControl.prototype, L.Control.prototype);
+L.Util.extend(EventedControl.prototype, L.Evented.prototype);
+
 /**
  * This is the geocoder control. It works like any other [Leaflet control](https://leafletjs.com/reference.html#control), and is added to the map.
  */
-export class GeocoderControl extends L.Control {
+export class GeocoderControl extends EventedControl {
   options: GeocoderControlOptions = {
     showUniqueResult: true,
     showResultIcons: false,
@@ -101,42 +121,6 @@ export class GeocoderControl extends L.Control {
     if (!this.options.geocoder) {
       this.options.geocoder = new Nominatim();
     }
-  }
-
-  /**
-   * Adds a listener function to a particular event type of the object.
-   * @param type the event type
-   * @param fn the listener function
-   * @param context the this listener function context
-   * @see https://leafletjs.com/reference.html#evented-on
-   */
-  on(type: string, fn: L.LeafletEventHandlerFn, context?: any): this {
-    L.Evented.prototype.on(type, fn, context);
-    return this;
-  }
-
-  /**
-   * Removes a previously added listener function. If no function is specified, it will remove all the listeners of that particular event from the object.
-   * @param type the event type
-   * @param fn the listener function
-   * @param context the this listener function context
-   * @see https://leafletjs.com/reference.html#evented-off
-   */
-  off(type: string, fn?: L.LeafletEventHandlerFn, context?: any): this {
-    L.Evented.prototype.off(type, fn, context);
-    return this;
-  }
-
-  /**
-   * Fires an event of the specified type. You can optionally provide an data object.
-   * @param type the event type
-   * @param data the event data object
-   * @param propagate whether to propagate to event parents
-   * @see https://leafletjs.com/reference.html#evented-fire
-   */
-  fire(type: string, data?: any, propagate?: boolean): this {
-    L.Evented.prototype.fire(type, data, propagate);
-    return this;
   }
 
   addThrobberClass() {
