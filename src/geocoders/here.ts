@@ -13,7 +13,6 @@ export interface HereOptions extends GeocoderOptions {
   app_id: string;
   app_code: string;
   reverseGeocodeProxRadius: null;
-  reverseGeocodeUrl: string;
   apiKey: string;
 }
 
@@ -26,8 +25,7 @@ export class HERE implements IGeocoder {
     app_id: '',
     app_code: '',
     reverseGeocodeProxRadius: null,
-    apiKey: '',
-    reverseGeocodeUrl: ''
+    apiKey: ''
   };
 
   constructor(options?: Partial<HereOptions>) {
@@ -89,8 +87,7 @@ export class HERE implements IGeocoder {
 export class HEREv2 implements IGeocoder {
 
   options: HereOptions = {
-    serviceUrl: 'https://geocode.search.hereapi.com/v1/discover',
-    reverseGeocodeUrl: 'https://revgeocode.search.hereapi.com/v1/revgeocode',
+    serviceUrl: 'https://geocode.search.hereapi.com/v1',
     apiKey: '<insert your api key>',
     reverseGeocodeProxRadius: null,
     app_id: '',
@@ -112,7 +109,7 @@ export class HEREv2 implements IGeocoder {
       throw Error('at / in parameters not found. Please define coordinates (at=latitude,longitude) or other (in) in your geocodingQueryParams.');
     }
 
-    this.getJSON(this.options.serviceUrl, params, cb, context);
+    this.getJSON(this.options.serviceUrl + '/discover', params, cb, context);
   }
 
   reverse(location: L.LatLngLiteral, scale: number, cb: GeocodingCallback, context?: any): void {
@@ -129,7 +126,7 @@ export class HEREv2 implements IGeocoder {
       params.limit = proxRadius;
     }
 
-    this.getJSON(this.options.reverseGeocodeUrl, params, cb, context);
+    this.getJSON(this.options.serviceUrl + '/revgeocode', params, cb, context);
   }
 
   getJSON(url: string, params: any, cb: GeocodingCallback, context?: any) {
