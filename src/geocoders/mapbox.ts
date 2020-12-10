@@ -86,43 +86,36 @@ export class Mapbox implements IGeocoder {
   }
 
   reverse(location: L.LatLngLiteral, scale: number, cb: GeocodingCallback, context?: any): void {
+    const url = this.options.serviceUrl + location.lng + ',' + location.lat + '.json';
     const param = reverseParams(this.options, {
       access_token: this.options.apiKey
     });
-    getJSON(
-      this.options.serviceUrl +
-        encodeURIComponent(location.lng) +
-        ',' +
-        encodeURIComponent(location.lat) +
-        '.json',
-      param,
-      data => {
-        const results: GeocodingResult[] = [];
-        if (data.features && data.features.length) {
-          for (let i = 0; i <= data.features.length - 1; i++) {
-            const loc = data.features[i];
-            const center = L.latLng(loc.center.reverse());
-            let bbox: L.LatLngBounds;
-            if (loc.bbox) {
-              bbox = L.latLngBounds(
-                L.latLng(loc.bbox.slice(0, 2).reverse()),
-                L.latLng(loc.bbox.slice(2, 4).reverse())
-              );
-            } else {
-              bbox = L.latLngBounds(center, center);
-            }
-            results[i] = {
-              name: loc.place_name,
-              bbox: bbox,
-              center: center,
-              properties: this._getProperties(loc)
-            };
+    getJSON(url, param, data => {
+      const results: GeocodingResult[] = [];
+      if (data.features && data.features.length) {
+        for (let i = 0; i <= data.features.length - 1; i++) {
+          const loc = data.features[i];
+          const center = L.latLng(loc.center.reverse());
+          let bbox: L.LatLngBounds;
+          if (loc.bbox) {
+            bbox = L.latLngBounds(
+              L.latLng(loc.bbox.slice(0, 2).reverse()),
+              L.latLng(loc.bbox.slice(2, 4).reverse())
+            );
+          } else {
+            bbox = L.latLngBounds(center, center);
           }
+          results[i] = {
+            name: loc.place_name,
+            bbox: bbox,
+            center: center,
+            properties: this._getProperties(loc)
+          };
         }
-
-        cb.call(context, results);
       }
-    );
+
+      cb.call(context, results);
+    });
   }
 }
 

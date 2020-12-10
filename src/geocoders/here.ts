@@ -52,12 +52,12 @@ export class HERE implements IGeocoder {
   }
 
   reverse(location: L.LatLngLiteral, scale: number, cb: GeocodingCallback, context?: any): void {
-    const _proxRadius = this.options.reverseGeocodeProxRadius
-      ? this.options.reverseGeocodeProxRadius
-      : null;
-    const proxRadius = _proxRadius ? ',' + encodeURIComponent(_proxRadius) : '';
+    let prox = location.lat + ',' + location.lng;
+    if (this.options.reverseGeocodeProxRadius) {
+      prox += ',' + this.options.reverseGeocodeProxRadius;
+    }
     const params = reverseParams(this.options, {
-      prox: encodeURIComponent(location.lat) + ',' + encodeURIComponent(location.lng) + proxRadius,
+      prox,
       mode: 'retrieveAddresses',
       app_id: this.options.app_id,
       app_code: this.options.app_code,
@@ -122,19 +122,11 @@ export class HEREv2 implements IGeocoder {
   }
 
   reverse(location: L.LatLngLiteral, scale: number, cb: GeocodingCallback, context?: any): void {
-    const _proxRadius = this.options.reverseGeocodeProxRadius
-      ? this.options.reverseGeocodeProxRadius
-      : null;
-    const proxRadius = _proxRadius ? ',' + encodeURIComponent(_proxRadius) : '';
     const params = reverseParams(this.options, {
-      at: encodeURIComponent(location.lat) + ',' + encodeURIComponent(location.lng),
+      at: location.lat + ',' + location.lng,
+      limit: this.options.reverseGeocodeProxRadius,
       apiKey: this.options.apiKey
     });
-
-    if (proxRadius) {
-      params.limit = proxRadius;
-    }
-
     this.getJSON(this.options.serviceUrl + '/revgeocode', params, cb, context);
   }
 
