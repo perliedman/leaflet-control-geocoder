@@ -89,68 +89,74 @@ describe('L.Control.Geocoder.HERE', () => {
 
 describe('L.Control.Geocoder.HEREv2', () => {
   it('geocodes Innsbruck', () => {
-    let geocodingParams = {at:'50.62925,3.057256'};
+    const geocodingParams = { at: '50.62925,3.057256' };
     const geocoder = new HEREv2({ apiKey: 'xxx', geocodingQueryParams: geocodingParams });
     const callback = jest.fn();
     testXMLHttpRequest(
       'https://geocode.search.hereapi.com/v1/discover?q=Innsbruck&apiKey=xxx&at=50.62925%2C3.057256',
       {
-        "items": [
+        items: [
           {
-            "title": "Salumeria Italiana",
-            "id": "here:pds:place:840drt3p-898f6ee434794fe59895e71ccf9381e1",
-            "ontologyId": "here:cm:ontology:restaurant",
-            "resultType": "place",
-            "address": {
-              "label": "Salumeria Italiana, 151 Richmond St, Boston, MA 02109, United States",
-              "countryCode": "USA",
-              "countryName": "United States",
-              "stateCode": "MA",
-              "state": "Massachusetts",
-              "county": "Suffolk",
-              "city": "Boston",
-              "district": "North End",
-              "street": "Richmond St",
-              "postalCode": "02109",
-              "houseNumber": "151"
+            title: 'Salumeria Italiana',
+            id: 'here:pds:place:840drt3p-898f6ee434794fe59895e71ccf9381e1',
+            ontologyId: 'here:cm:ontology:restaurant',
+            resultType: 'place',
+            address: {
+              label: 'Salumeria Italiana, 151 Richmond St, Boston, MA 02109, United States',
+              countryCode: 'USA',
+              countryName: 'United States',
+              stateCode: 'MA',
+              state: 'Massachusetts',
+              county: 'Suffolk',
+              city: 'Boston',
+              district: 'North End',
+              street: 'Richmond St',
+              postalCode: '02109',
+              houseNumber: '151'
             },
-            "position": { "lat": 42.36355, "lng": -71.05439 },
-            "access": [{ "lat": 42.3635, "lng": -71.05448 }],
-            "distance": 11,
-            "categories": [
-              { "id": "600-6300-0066", "name": "Grocery", "primary": true },
-              { "id": "100-1000-0000", "name": "Restaurant" },
-              { "id": "100-1000-0006", "name": "Deli" },
-              { "id": "600-6300-0067", "name": "Specialty Food Store" }
+            position: { lat: 42.36355, lng: -71.05439 },
+            access: [{ lat: 42.3635, lng: -71.05448 }],
+            distance: 11,
+            categories: [
+              { id: '600-6300-0066', name: 'Grocery', primary: true },
+              { id: '100-1000-0000', name: 'Restaurant' },
+              { id: '100-1000-0006', name: 'Deli' },
+              { id: '600-6300-0067', name: 'Specialty Food Store' }
             ],
-            "references": [
-              { "supplier": { "id": "core" }, "id": "31213861" },
-              { "supplier": { "id": "tripadvisor" }, "id": "3172680" },
-              { "supplier": { "id": "yelp" }, "id": "JNx0DlfndRurT-8KhSym7g" },
-              { "supplier": { "id": "yelp" }, "id": "P44VNcZUUNZfiFy-c4SUJw" }
+            references: [
+              { supplier: { id: 'core' }, id: '31213861' },
+              { supplier: { id: 'tripadvisor' }, id: '3172680' },
+              { supplier: { id: 'yelp' }, id: 'JNx0DlfndRurT-8KhSym7g' },
+              { supplier: { id: 'yelp' }, id: 'P44VNcZUUNZfiFy-c4SUJw' }
             ],
-            "foodTypes": [
-              { "id": "304-000", "name": "Italian", "primary": true },
-              { "id": "800-057", "name": "Pizza" },
-              { "id": "800-060", "name": "Sandwich" }
+            foodTypes: [
+              { id: '304-000', name: 'Italian', primary: true },
+              { id: '800-057', name: 'Pizza' },
+              { id: '800-060', name: 'Sandwich' }
             ],
-            "contacts": [
+            contacts: [
               {
-                "phone": [{ "value": "+16175234946" }, { "value": "+16175238743" }, { "value": "+16177204243" }],
-                "fax": [{ "value": "+16175234946" }],
-                "www": [
-                  { "value": "http://www.salumeriaitaliana.com" }
+                phone: [
+                  { value: '+16175234946' },
+                  { value: '+16175238743' },
+                  { value: '+16177204243' }
                 ],
-                "email": [{ "value": "contact@salumeriaitaliana.com" }]
+                fax: [{ value: '+16175234946' }],
+                www: [{ value: 'http://www.salumeriaitaliana.com' }],
+                email: [{ value: 'contact@salumeriaitaliana.com' }]
               }
             ],
-            "openingHours": [
+            openingHours: [
               {
-                "text": ["Mon-Sat: 08:00 - 17:00", "Sun: 10:00 - 16:00"],
-                "isOpen": false,
-                "structured": [
-                  { "start": "T080000", "duration": "PT11H00M", "recurrence": "FREQ:DAILY;BYDAY:MO,TU,WE,TH,FR,SA" },
-                  { "start": "T100000", "duration": "PT06H00M", "recurrence": "FREQ:DAILY;BYDAY:SU" }
+                text: ['Mon-Sat: 08:00 - 17:00', 'Sun: 10:00 - 16:00'],
+                isOpen: false,
+                structured: [
+                  {
+                    start: 'T080000',
+                    duration: 'PT11H00M',
+                    recurrence: 'FREQ:DAILY;BYDAY:MO,TU,WE,TH,FR,SA'
+                  },
+                  { start: 'T100000', duration: 'PT06H00M', recurrence: 'FREQ:DAILY;BYDAY:SU' }
                 ]
               }
             ]
@@ -161,8 +167,10 @@ describe('L.Control.Geocoder.HEREv2', () => {
     );
 
     const feature: GeocodingResult = callback.mock.calls[0][0][0];
-    expect(feature.name).toBe('Salumeria Italiana, 151 Richmond St, Boston, MA 02109, United States');
-    expect(feature.center).toStrictEqual({ "lat": 42.36355, "lng": -71.05439 });
+    expect(feature.name).toBe(
+      'Salumeria Italiana, 151 Richmond St, Boston, MA 02109, United States'
+    );
+    expect(feature.center).toStrictEqual({ lat: 42.36355, lng: -71.05439 });
     expect(callback.mock.calls).toMatchSnapshot();
   });
 });
