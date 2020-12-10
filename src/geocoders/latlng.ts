@@ -23,16 +23,16 @@ export function parseLatLng(query: string): L.LatLng | undefined {
   if ((match = query.match(/^([NS])\s*(\d{1,3}(?:\.\d*)?)\W*([EW])\s*(\d{1,3}(?:\.\d*)?)$/))) {
     // [NSEW] decimal degrees
     return L.latLng(
-      (/N/i.test(match[1]) ? 1 : -1) * parseFloat(match[2]),
-      (/E/i.test(match[3]) ? 1 : -1) * parseFloat(match[4])
+      (/N/i.test(match[1]) ? 1 : -1) * +match[2],
+      (/E/i.test(match[3]) ? 1 : -1) * +match[4]
     );
   } else if (
     (match = query.match(/^(\d{1,3}(?:\.\d*)?)\s*([NS])\W*(\d{1,3}(?:\.\d*)?)\s*([EW])$/))
   ) {
     // decimal degrees [NSEW]
     return L.latLng(
-      (/N/i.test(match[2]) ? 1 : -1) * parseFloat(match[1]),
-      (/E/i.test(match[4]) ? 1 : -1) * parseFloat(match[3])
+      (/N/i.test(match[2]) ? 1 : -1) * +match[1],
+      (/E/i.test(match[4]) ? 1 : -1) * +match[3]
     );
   } else if (
     (match = query.match(
@@ -41,8 +41,8 @@ export function parseLatLng(query: string): L.LatLng | undefined {
   ) {
     // [NSEW] degrees, decimal minutes
     return L.latLng(
-      (/N/i.test(match[1]) ? 1 : -1) * (parseFloat(match[2]) + parseFloat(match[3]) / 60),
-      (/E/i.test(match[4]) ? 1 : -1) * (parseFloat(match[5]) + parseFloat(match[6]) / 60)
+      (/N/i.test(match[1]) ? 1 : -1) * (+match[2] + +match[3] / 60),
+      (/E/i.test(match[4]) ? 1 : -1) * (+match[5] + +match[6] / 60)
     );
   } else if (
     (match = query.match(
@@ -51,8 +51,8 @@ export function parseLatLng(query: string): L.LatLng | undefined {
   ) {
     // degrees, decimal minutes [NSEW]
     return L.latLng(
-      (/N/i.test(match[3]) ? 1 : -1) * (parseFloat(match[1]) + parseFloat(match[2]) / 60),
-      (/E/i.test(match[6]) ? 1 : -1) * (parseFloat(match[4]) + parseFloat(match[5]) / 60)
+      (/N/i.test(match[3]) ? 1 : -1) * (+match[1] + +match[2] / 60),
+      (/E/i.test(match[6]) ? 1 : -1) * (+match[4] + +match[5] / 60)
     );
   } else if (
     (match = query.match(
@@ -61,10 +61,8 @@ export function parseLatLng(query: string): L.LatLng | undefined {
   ) {
     // [NSEW] degrees, minutes, decimal seconds
     return L.latLng(
-      (/N/i.test(match[1]) ? 1 : -1) *
-        (parseFloat(match[2]) + parseFloat(match[3]) / 60 + parseFloat(match[4]) / 3600),
-      (/E/i.test(match[5]) ? 1 : -1) *
-        (parseFloat(match[6]) + parseFloat(match[7]) / 60 + parseFloat(match[8]) / 3600)
+      (/N/i.test(match[1]) ? 1 : -1) * (+match[2] + +match[3] / 60 + +match[4] / 3600),
+      (/E/i.test(match[5]) ? 1 : -1) * (+match[6] + +match[7] / 60 + +match[8] / 3600)
     );
   } else if (
     (match = query.match(
@@ -73,13 +71,11 @@ export function parseLatLng(query: string): L.LatLng | undefined {
   ) {
     // degrees, minutes, decimal seconds [NSEW]
     return L.latLng(
-      (/N/i.test(match[4]) ? 1 : -1) *
-        (parseFloat(match[1]) + parseFloat(match[2]) / 60 + parseFloat(match[3]) / 3600),
-      (/E/i.test(match[8]) ? 1 : -1) *
-        (parseFloat(match[5]) + parseFloat(match[6]) / 60 + parseFloat(match[7]) / 3600)
+      (/N/i.test(match[4]) ? 1 : -1) * (+match[1] + +match[2] / 60 + +match[3] / 3600),
+      (/E/i.test(match[8]) ? 1 : -1) * (+match[5] + +match[6] / 60 + +match[7] / 3600)
     );
   } else if ((match = query.match(/^\s*([+-]?\d+(?:\.\d*)?)\s*[\s,]\s*([+-]?\d+(?:\.\d*)?)\s*$/))) {
-    return L.latLng(parseFloat(match[1]), parseFloat(match[2]));
+    return L.latLng(+match[1], +match[2]);
   }
 }
 

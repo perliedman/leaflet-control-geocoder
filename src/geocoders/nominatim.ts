@@ -103,7 +103,7 @@ export class Nominatim implements IGeocoder {
       const results: GeocodingResult[] = [];
       for (let i = data.length - 1; i >= 0; i--) {
         const bbox = data[i].boundingbox;
-        for (let j = 0; j < 4; j++) bbox[j] = parseFloat(bbox[j]);
+        for (let j = 0; j < 4; j++) bbox[j] = +bbox[j];
         results[i] = {
           icon: data[i].icon,
           name: data[i].display_name,
