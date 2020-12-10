@@ -10,9 +10,17 @@ import {
 } from './api';
 
 export interface HereOptions extends GeocoderOptions {
+  /**
+   * Use `apiKey` and the new `HEREv2` geocoder
+   * @deprecated
+   */
   app_id: string;
+  /**
+   * Use `apiKey` and the new `HEREv2` geocoder
+   * @deprecated
+   */
   app_code: string;
-  reverseGeocodeProxRadius: null;
+  reverseGeocodeProxRadius?: any;
   apiKey: string;
 }
 
@@ -24,7 +32,6 @@ export class HERE implements IGeocoder {
     serviceUrl: 'https://geocoder.api.here.com/6.2/',
     app_id: '',
     app_code: '',
-    reverseGeocodeProxRadius: null,
     apiKey: ''
   };
 
@@ -84,29 +91,31 @@ export class HERE implements IGeocoder {
   }
 }
 
+/**
+ * Implementation of the new [HERE Geocoder API](https://developer.here.com/documentation/geocoding-search-api/api-reference-swagger.html)
+ */
 export class HEREv2 implements IGeocoder {
-
   options: HereOptions = {
     serviceUrl: 'https://geocode.search.hereapi.com/v1',
-    apiKey: '<insert your api key>',
-    reverseGeocodeProxRadius: null,
+    apiKey: '',
     app_id: '',
     app_code: ''
-  }
+  };
 
   constructor(options?: Partial<HereOptions>) {
     L.Util.setOptions(this, options);
   }
 
   geocode(query: string, cb: GeocodingCallback, context?: any): void {
-    
     const params = geocodingParams(this.options, {
       q: query,
       apiKey: this.options.apiKey
     });
 
     if (!params.at && !params.in) {
-      throw Error('at / in parameters not found. Please define coordinates (at=latitude,longitude) or other (in) in your geocodingQueryParams.');
+      throw Error(
+        'at / in parameters not found. Please define coordinates (at=latitude,longitude) or other (in) in your geocodingQueryParams.'
+      );
     }
 
     this.getJSON(this.options.serviceUrl + '/discover', params, cb, context);
@@ -135,18 +144,17 @@ export class HEREv2 implements IGeocoder {
 
       if (data.items && data.items.length) {
         for (let i = 0; i <= data.items.length - 1; i++) {
-          let item, latLng, latLngBounds;
-          item = data.items[i];
-          latLng = L.latLng(item.position.lat, item.position.lng);
-
+          const item = data.items[i];
+          const latLng = L.latLng(item.position.lat, item.position.lng);
+          let bbox: L.LatLngBounds;
           if (item.mapView) {
-            latLngBounds = L.latLngBounds(
+            bbox = L.latLngBounds(
               L.latLng(item.mapView.south, item.mapView.west),
               L.latLng(item.mapView.north, item.mapView.east)
             );
           } else {
             // Using only position when not provided
-            latLngBounds = L.latLngBounds(
+            bbox = L.latLngBounds(
               L.latLng(item.position.lat, item.position.lng),
               L.latLng(item.position.lat, item.position.lng)
             );
@@ -154,7 +162,7 @@ export class HEREv2 implements IGeocoder {
           results[i] = {
             name: item.address.label,
             properties: item.address,
-            bbox: latLngBounds,
+            bbox: bbox,
             center: latLng
           };
         }
@@ -164,7 +172,6 @@ export class HEREv2 implements IGeocoder {
   }
 }
 
-
 /**
  * [Class factory method](https://leafletjs.com/reference.html#class-class-factories) for {@link HERE}
  * @param options the options
@@ -173,7 +180,6 @@ export function here(options?: Partial<HereOptions>) {
   if (options.apiKey) {
     return new HEREv2(options);
   } else {
-    console.log('Using the api with app_code and app_id is deprecated. Check the docs to use an apiKey.')
     return new HERE(options);
   }
 }
