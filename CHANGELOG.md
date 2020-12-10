@@ -1,3 +1,7 @@
+## 2.1.0 (2020-12-10)
+
+- HERE Maps: new API ([9979da9](https://github.com/perliedman/leaflet-control-geocoder/commit/9979da9))
+
 ## 2.0.1 (2020-11-30)
 
 - Fixes usage of [`L.Evented`](https://leafletjs.com/reference-1.7.1.html#evented) [mixin](https://leafletjs.com/reference-1.7.1.html#class-includes) for [TypeScript](https://www.typescriptlang.org/docs/handbook/mixins.html) ([#312](https://github.com/perliedman/leaflet-control-geocoder/issues/312))
