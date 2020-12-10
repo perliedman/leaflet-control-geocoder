@@ -54,7 +54,7 @@ export class Google implements IGeocoder {
   reverse(location: L.LatLngLiteral, scale: number, cb: GeocodingCallback, context?: any): void {
     const params = reverseParams(this.options, {
       key: this.options.apiKey,
-      latlng: encodeURIComponent(location.lat) + ',' + encodeURIComponent(location.lng)
+      latlng: location.lat + ',' + location.lng
     });
     getJSON(this.options.serviceUrl, params, data => {
       const results: GeocodingResult[] = [];

@@ -62,7 +62,7 @@ export class ArcGis implements IGeocoder {
 
   reverse(location: L.LatLngLiteral, scale: number, cb: GeocodingCallback, context?: any): void {
     const params = reverseParams(this.options, {
-      location: encodeURIComponent(location.lng) + ',' + encodeURIComponent(location.lat),
+      location: location.lng + ',' + location.lat,
       distance: 100,
       f: 'json'
     });
