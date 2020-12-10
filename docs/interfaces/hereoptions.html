@@ -86,7 +86,7 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="hereoptions.html#apikey" class="tsd-kind-icon">api<wbr>Key</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite"><a href="hereoptions.html#apikey" class="tsd-kind-icon">api<wbr>Key</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="hereoptions.html#app_code" class="tsd-kind-icon">app_<wbr>code</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="hereoptions.html#app_id" class="tsd-kind-icon">app_<wbr>id</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="hereoptions.html#geocodingqueryparams" class="tsd-kind-icon">geocoding<wbr>Query<wbr>Params</a></li>
@@ -100,21 +100,16 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
 					<a name="apikey" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> api<wbr>Key</h3>
+					<h3>api<wbr>Key</h3>
 					<div class="tsd-signature tsd-kind-icon">api<wbr>Key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="geocoderoptions.html">GeocoderOptions</a>.<a href="geocoderoptions.html#apikey">apiKey</a></p>
+						<p>Overrides <a href="geocoderoptions.html">GeocoderOptions</a>.<a href="geocoderoptions.html#apikey">apiKey</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/4bdb0a4/src/geocoders/api.ts#L82">src/geocoders/api.ts:82</a></li>
+							<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/67b8362/src/geocoders/here.ts#L24">src/geocoders/here.ts:24</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>API key to use this service</p>
-						</div>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="app_code" class="tsd-anchor"></a>
@@ -122,9 +117,18 @@
 					<div class="tsd-signature tsd-kind-icon">app_<wbr>code<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/4bdb0a4/src/geocoders/here.ts#L14">src/geocoders/here.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/67b8362/src/geocoders/here.ts#L22">src/geocoders/here.ts:22</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Use <code>apiKey</code> and the new <code>HEREv2</code> geocoder</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>deprecated</dt>
+							<dd></dd>
+						</dl>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="app_id" class="tsd-anchor"></a>
@@ -132,9 +136,18 @@
 					<div class="tsd-signature tsd-kind-icon">app_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/4bdb0a4/src/geocoders/here.ts#L13">src/geocoders/here.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/67b8362/src/geocoders/here.ts#L17">src/geocoders/here.ts:17</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Use <code>apiKey</code> and the new <code>HEREv2</code> geocoder</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>deprecated</dt>
+							<dd></dd>
+						</dl>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="geocodingqueryparams" class="tsd-anchor"></a>
@@ -143,7 +156,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="geocoderoptions.html">GeocoderOptions</a>.<a href="geocoderoptions.html#geocodingqueryparams">geocodingQueryParams</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/4bdb0a4/src/geocoders/api.ts#L74">src/geocoders/api.ts:74</a></li>
+							<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/67b8362/src/geocoders/api.ts#L74">src/geocoders/api.ts:74</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -154,11 +167,11 @@
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="reversegeocodeproxradius" class="tsd-anchor"></a>
-					<h3>reverse<wbr>Geocode<wbr>Prox<wbr>Radius</h3>
-					<div class="tsd-signature tsd-kind-icon">reverse<wbr>Geocode<wbr>Prox<wbr>Radius<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">null</span></div>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> reverse<wbr>Geocode<wbr>Prox<wbr>Radius</h3>
+					<div class="tsd-signature tsd-kind-icon">reverse<wbr>Geocode<wbr>Prox<wbr>Radius<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/4bdb0a4/src/geocoders/here.ts#L15">src/geocoders/here.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/67b8362/src/geocoders/here.ts#L23">src/geocoders/here.ts:23</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -169,7 +182,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="geocoderoptions.html">GeocoderOptions</a>.<a href="geocoderoptions.html#reversequeryparams">reverseQueryParams</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/4bdb0a4/src/geocoders/api.ts#L78">src/geocoders/api.ts:78</a></li>
+							<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/67b8362/src/geocoders/api.ts#L78">src/geocoders/api.ts:78</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -185,7 +198,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="geocoderoptions.html">GeocoderOptions</a>.<a href="geocoderoptions.html#serviceurl">serviceUrl</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/4bdb0a4/src/geocoders/api.ts#L70">src/geocoders/api.ts:70</a></li>
+							<li>Defined in <a href="https://github.com/perliedman/leaflet-control-geocoder/blob/67b8362/src/geocoders/api.ts#L70">src/geocoders/api.ts:70</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -211,7 +224,7 @@
 					<li class="current tsd-kind-interface">
 						<a href="hereoptions.html" class="tsd-kind-icon">Here<wbr>Options</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
 								<a href="hereoptions.html#apikey" class="tsd-kind-icon">api<wbr>Key</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
