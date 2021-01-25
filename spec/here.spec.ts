@@ -8,7 +8,7 @@ describe('L.Control.Geocoder.HERE', () => {
     const geocoder = new HERE({ app_id: 'xxx', app_code: 'yyy' });
     const callback = jest.fn();
     testXMLHttpRequest(
-      'https://geocoder.api.here.com/6.2/geocode.json?searchtext=Innsbruck&gen=9&app_id=xxx&app_code=yyy&jsonattributes=1',
+      'https://geocoder.api.here.com/6.2/geocode.json?searchtext=Innsbruck&gen=9&app_id=xxx&app_code=yyy&jsonattributes=1&maxresults=5',
       {
         response: {
           view: [
@@ -93,7 +93,7 @@ describe('L.Control.Geocoder.HEREv2', () => {
     const geocoder = new HEREv2({ apiKey: 'xxx', geocodingQueryParams: geocodingParams });
     const callback = jest.fn();
     testXMLHttpRequest(
-      'https://geocode.search.hereapi.com/v1/discover?q=Innsbruck&apiKey=xxx&at=50.62925%2C3.057256',
+      'https://geocode.search.hereapi.com/v1/discover?q=Innsbruck&apiKey=xxx&limit=10&at=50.62925%2C3.057256',
       {
         items: [
           {
