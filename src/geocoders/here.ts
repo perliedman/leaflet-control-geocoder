@@ -22,6 +22,7 @@ export interface HereOptions extends GeocoderOptions {
   app_code: string;
   reverseGeocodeProxRadius?: any;
   apiKey: string;
+  maxResults: number;
 }
 
 /**
@@ -32,7 +33,8 @@ export class HERE implements IGeocoder {
     serviceUrl: 'https://geocoder.api.here.com/6.2/',
     app_id: '',
     app_code: '',
-    apiKey: ''
+    apiKey: '',
+    maxResults: 5
   };
 
   constructor(options?: Partial<HereOptions>) {
@@ -46,7 +48,8 @@ export class HERE implements IGeocoder {
       gen: 9,
       app_id: this.options.app_id,
       app_code: this.options.app_code,
-      jsonattributes: 1
+      jsonattributes: 1,
+      maxresults: this.options.maxResults
     });
     this.getJSON(this.options.serviceUrl + 'geocode.json', params, cb, context);
   }
@@ -62,7 +65,8 @@ export class HERE implements IGeocoder {
       app_id: this.options.app_id,
       app_code: this.options.app_code,
       gen: 9,
-      jsonattributes: 1
+      jsonattributes: 1,
+      maxresults: this.options.maxResults
     });
     this.getJSON(this.options.serviceUrl + 'reversegeocode.json', params, cb, context);
   }
@@ -70,6 +74,7 @@ export class HERE implements IGeocoder {
   getJSON(url: string, params: any, cb: GeocodingCallback, context?: any) {
     getJSON(url, params, data => {
       const results: GeocodingResult[] = [];
+
       if (data.response.view && data.response.view.length) {
         for (let i = 0; i <= data.response.view[0].result.length - 1; i++) {
           const loc = data.response.view[0].result[i].location;
@@ -99,7 +104,8 @@ export class HEREv2 implements IGeocoder {
     serviceUrl: 'https://geocode.search.hereapi.com/v1',
     apiKey: '',
     app_id: '',
-    app_code: ''
+    app_code: '',
+    maxResults: 10
   };
 
   constructor(options?: Partial<HereOptions>) {
@@ -109,7 +115,8 @@ export class HEREv2 implements IGeocoder {
   geocode(query: string, cb: GeocodingCallback, context?: any): void {
     const params = geocodingParams(this.options, {
       q: query,
-      apiKey: this.options.apiKey
+      apiKey: this.options.apiKey,
+      limit: this.options.maxResults
     });
 
     if (!params.at && !params.in) {
