@@ -57,6 +57,37 @@ export interface GeocoderControlOptions extends L.ControlOptions {
   defaultMarkGeocode: boolean;
 }
 
+/**
+ * Event is fired when selecting a geocode result.
+ * By default, the control will center the map on it and place a marker at its location.
+ * To remove the control's default handler for marking a result, set {@link GeocoderControlOptions.defaultMarkGeocode} to `false`.
+ */
+export type MarkGeocodeEvent = { geocode: GeocodingResult };
+export type MarkGeocodeEventHandlerFn = (event: MarkGeocodeEvent) => void;
+
+/**
+ * Event is fired before invoking {@link IGeocoder.geocode} (or {@link IGeocoder.suggest}).
+ * The event data contains the query string as `input`.
+ */
+export type StartGeocodeEvent = { input: string };
+export type StartGeocodeEventHandlerFn = (event: StartGeocodeEvent) => void;
+
+/**
+ * Event is fired before after receiving results from {@link IGeocoder.geocode} (or {@link IGeocoder.suggest}).
+ * The event data contains the query string as `input` and the geocoding `results`.
+ */
+export type FinishGeocodeEvent = { input: string; results: GeocodingResult[] };
+export type FinishGeocodeEventHandlerFn = (event: FinishGeocodeEvent) => void;
+
+declare module 'leaflet' {
+  interface Evented {
+    on(type: 'markgeocode', fn: MarkGeocodeEventHandlerFn, context?: any): this;
+    on(type: 'startgeocode', fn: StartGeocodeEventHandlerFn, context?: any): this;
+    on(type: 'startsuggest', fn: StartGeocodeEventHandlerFn, context?: any): this;
+    on(type: 'finishsuggest', fn: FinishGeocodeEventHandlerFn, context?: any): this;
+    on(type: 'finishgeocode', fn: FinishGeocodeEventHandlerFn, context?: any): this;
+  }
+}
 
 /**
  * Leaflet mixins https://leafletjs.com/reference-1.7.1.html#class-includes
@@ -217,7 +248,7 @@ export class GeocoderControl extends EventedControl {
     }
 
     if (this.options.defaultMarkGeocode) {
-      this.on('markgeocode', this.markGeocode as any, this);
+      this.on('markgeocode', this.markGeocode, this);
     }
 
     this.on('startgeocode', this.addThrobberClass, this);
@@ -260,8 +291,8 @@ export class GeocoderControl extends EventedControl {
    * Marks a geocoding result on the map
    * @param result the geocoding result
    */
-  markGeocode(result: GeocodingResult) {
-    result = (result as any).geocode || result;
+  markGeocode(event: MarkGeocodeEvent) {
+    const result = event.geocode;
 
     this._map.fitBounds(result.bbox);
 
@@ -286,7 +317,8 @@ export class GeocoderControl extends EventedControl {
     const requestCount = ++this._requestCount;
     const cb = (results: GeocodingResult[]) => {
       if (requestCount === this._requestCount) {
-        this.fire(suggest ? 'finishsuggest' : 'finishgeocode', { input: value, results });
+        const event: FinishGeocodeEvent = { input: value, results };
+        this.fire(suggest ? 'finishsuggest' : 'finishgeocode', event);
         this._geocodeResult(results, suggest);
       }
     };
@@ -296,7 +328,8 @@ export class GeocoderControl extends EventedControl {
       this._clearResults();
     }
 
-    this.fire(suggest ? 'startsuggest' : 'startgeocode', { input: value });
+    const event: StartGeocodeEvent = { input: value };
+    this.fire(suggest ? 'startsuggest' : 'startgeocode', event);
     if (suggest) {
       this.options.geocoder.suggest(value, cb);
     } else {
@@ -304,8 +337,9 @@ export class GeocoderControl extends EventedControl {
     }
   }
 
-  private _geocodeResultSelected(result: GeocodingResult) {
-    this.fire('markgeocode', { geocode: result });
+  private _geocodeResultSelected(geocode: GeocodingResult) {
+    const event: MarkGeocodeEvent = { geocode };
+    this.fire('markgeocode', event);
   }
 
   private _toggle() {
