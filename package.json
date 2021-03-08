@@ -1,6 +1,6 @@
 {
   "name": "leaflet-control-geocoder",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Extendable geocoder with builtin support for OpenStreetMap Nominatim, Bing, Google, Mapbox, MapQuest, What3Words, Photon, Pelias, HERE, Neutrino, Plus codes",
   "source": "src/index.ts",
   "main": "dist/Control.Geocoder.js",

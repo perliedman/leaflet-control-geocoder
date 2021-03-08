@@ -1,3 +1,8 @@
+## 2.2.0 (2021-03-08)
+
+- HERE: adding maxResults option (#317) ([3847008](https://github.com/perliedman/leaflet-control-geocoder/commit/3847008)), closes [#317](https://github.com/perliedman/leaflet-control-geocoder/issues/317)
+- TypeScript: add event handler types ([2ffacc3](https://github.com/perliedman/leaflet-control-geocoder/commit/2ffacc3))
+
 ## 2.1.0 (2020-12-10)
 
 - HERE Maps: new API ([9979da9](https://github.com/perliedman/leaflet-control-geocoder/commit/9979da9))
