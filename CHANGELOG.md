@@ -1,3 +1,7 @@
+## 2.3.0 (2021-05-25)
+
+* Specify TypeScript declaration file ([1183518](https://github.com/perliedman/leaflet-control-geocoder/commit/1183518))
+
 ## 2.2.0 (2021-03-08)
 
 - HERE: adding maxResults option (#317) ([3847008](https://github.com/perliedman/leaflet-control-geocoder/commit/3847008)), closes [#317](https://github.com/perliedman/leaflet-control-geocoder/issues/317)
