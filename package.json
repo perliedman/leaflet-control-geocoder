@@ -5,6 +5,7 @@
   "source": "src/index.ts",
   "main": "dist/Control.Geocoder.js",
   "module": "dist/Control.Geocoder.modern.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "prepare": "npm run build",
     "build": "npm run build:1 && npm run build:2 && npm run build:3",
