@@ -66,7 +66,7 @@ export class HERE implements IGeocoder {
 
   async getJSON(url: string, params: any): Promise<GeocodingResult[]> {
     const data = await getJSON<any>(url, params);
-    return (data.response.view?.[0]?.result || []).map((result): GeocodingResult => {
+    return (data?.response?.view?.[0]?.result || []).map((result): GeocodingResult => {
       const loc = result.location;
       const center = new L.LatLng(loc.displayPosition.latitude, loc.displayPosition.longitude);
       const bbox = new L.LatLngBounds(
