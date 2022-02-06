@@ -12,6 +12,7 @@ import * as geocoders from './geocoders/index';
 
 L.Util.extend(Geocoder, geocoders);
 export default Geocoder;
+export { Geocoder, geocoder, geocoders };
 
 L.Util.extend(L.Control, {
   Geocoder: Geocoder,
