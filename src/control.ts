@@ -185,7 +185,7 @@ export class GeocoderControl extends EventedControl {
     icon.setAttribute('aria-label', this.options.iconLabel);
 
     const input = (this._input = L.DomUtil.create('input', '', form) as HTMLInputElement);
-    input.type = 'text';
+    input.type = 'search';
     input.value = this.options.query;
     input.placeholder = this.options.placeholder;
     L.DomEvent.disableClickPropagation(input);
