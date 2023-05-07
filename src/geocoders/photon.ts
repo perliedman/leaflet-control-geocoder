@@ -30,7 +30,14 @@ export class Photon implements IGeocoder {
   }
 
   geocode(query: string, cb: GeocodingCallback, context?: any): void {
-    const params = geocodingParams(this.options, { q: query });
+    let center = context.map.getCenter();
+    let zoom = context.map.getZoom();
+    const params = geocodingParams(this.options, {
+      q: query,
+      lat: center.lat,
+      lon: center.lng,
+      zoom
+    });
     getJSON(
       this.options.serviceUrl,
       params,
