@@ -16,7 +16,7 @@ export interface BingOptions extends GeocoderOptions {}
  */
 export class Bing implements IGeocoder {
   options: BingOptions = {
-    serviceUrl: 'https://dev.virtualearth.net/REST/v1/Locations'
+    serviceUrl: 'https://dev.virtualearth.net/REST/v1/Locations/'
   };
 
   constructor(options?: Partial<BingOptions>) {
