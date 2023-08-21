@@ -330,10 +330,13 @@ export class GeocoderControl extends EventedControl {
 
     const event: StartGeocodeEvent = { input: value };
     this.fire(suggest ? 'startsuggest' : 'startgeocode', event);
+    const context : any = {
+      map: this._map
+    };
     if (suggest) {
-      this.options.geocoder.suggest(value, cb);
+      this.options.geocoder.suggest(value, cb, context);
     } else {
-      this.options.geocoder.geocode(value, cb);
+      this.options.geocoder.geocode(value, cb, context);
     }
   }
 
