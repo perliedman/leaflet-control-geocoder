@@ -1,10 +1,10 @@
 ## 2.4.0 (2022-02-06)
 
-* export { Geocoder, geocoder, geocoders } ([ec17333](https://github.com/perliedman/leaflet-control-geocoder/commit/ec17333))
+- export { Geocoder, geocoder, geocoders } ([ec17333](https://github.com/perliedman/leaflet-control-geocoder/commit/ec17333))
 
 ## 2.3.0 (2021-05-25)
 
-* Specify TypeScript declaration file ([1183518](https://github.com/perliedman/leaflet-control-geocoder/commit/1183518))
+- Specify TypeScript declaration file ([1183518](https://github.com/perliedman/leaflet-control-geocoder/commit/1183518))
 
 ## 2.2.0 (2021-03-08)
 

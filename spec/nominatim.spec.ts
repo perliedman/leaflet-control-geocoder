@@ -22,8 +22,7 @@ describe('L.Control.Geocoder.Nominatim', () => {
           class: 'boundary',
           type: 'administrative',
           importance: 0.763909048330467,
-          icon:
-            'https://nominatim.openstreetmap.org/images/mapicons/poi_boundary_administrative.p.20.png',
+          icon: 'https://nominatim.openstreetmap.org/images/mapicons/poi_boundary_administrative.p.20.png',
           address: {
             city_district: 'Innsbruck',
             city: 'Innsbruck',

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <title>Leaflet Control Geocoder</title>
@@ -51,7 +51,7 @@
       }).addTo(map);
       var marker;
 
-      setTimeout(function() {
+      setTimeout(function () {
         control.setQuery('Earth');
       }, 12000);
 
@@ -59,8 +59,8 @@
         attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
       }).addTo(map);
 
-      map.on('click', function(e) {
-        geocoder.reverse(e.latlng, map.options.crs.scale(map.getZoom()), function(results) {
+      map.on('click', function (e) {
+        geocoder.reverse(e.latlng, map.options.crs.scale(map.getZoom()), function (results) {
           var r = results[0];
           if (r) {
             if (marker) {
@@ -69,10 +69,7 @@
                 .setPopupContent(r.html || r.name)
                 .openPopup();
             } else {
-              marker = L.marker(r.center)
-                .bindPopup(r.name)
-                .addTo(map)
-                .openPopup();
+              marker = L.marker(r.center).bindPopup(r.name).addTo(map).openPopup();
             }
           }
         });

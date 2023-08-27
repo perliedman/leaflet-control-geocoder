@@ -28,7 +28,7 @@ export class Google implements IGeocoder {
       key: this.options.apiKey,
       address: query
     });
-    getJSON(this.options.serviceUrl, params, data => {
+    getJSON(this.options.serviceUrl, params, (data) => {
       const results: GeocodingResult[] = [];
       if (data.results && data.results.length) {
         for (let i = 0; i <= data.results.length - 1; i++) {
@@ -56,7 +56,7 @@ export class Google implements IGeocoder {
       key: this.options.apiKey,
       latlng: location.lat + ',' + location.lng
     });
-    getJSON(this.options.serviceUrl, params, data => {
+    getJSON(this.options.serviceUrl, params, (data) => {
       const results: GeocodingResult[] = [];
       if (data.results && data.results.length) {
         for (let i = 0; i <= data.results.length - 1; i++) {

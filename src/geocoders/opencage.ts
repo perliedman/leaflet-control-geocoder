@@ -28,7 +28,7 @@ export class OpenCage implements IGeocoder {
       key: this.options.apiKey,
       q: query
     });
-    getJSON(this.options.serviceUrl, params, data => {
+    getJSON(this.options.serviceUrl, params, (data) => {
       const results: GeocodingResult[] = [];
       if (data.results && data.results.length) {
         for (let i = 0; i < data.results.length; i++) {
@@ -63,7 +63,7 @@ export class OpenCage implements IGeocoder {
       key: this.options.apiKey,
       q: [location.lat, location.lng].join(',')
     });
-    getJSON(this.options.serviceUrl, params, data => {
+    getJSON(this.options.serviceUrl, params, (data) => {
       const results: GeocodingResult[] = [];
       if (data.results && data.results.length) {
         for (let i = 0; i < data.results.length; i++) {

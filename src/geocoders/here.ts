@@ -72,7 +72,7 @@ export class HERE implements IGeocoder {
   }
 
   getJSON(url: string, params: any, cb: GeocodingCallback, context?: any) {
-    getJSON(url, params, data => {
+    getJSON(url, params, (data) => {
       const results: GeocodingResult[] = [];
 
       if (data.response.view && data.response.view.length) {
@@ -138,7 +138,7 @@ export class HEREv2 implements IGeocoder {
   }
 
   getJSON(url: string, params: any, cb: GeocodingCallback, context?: any) {
-    getJSON(url, params, data => {
+    getJSON(url, params, (data) => {
       const results: GeocodingResult[] = [];
 
       if (data.items && data.items.length) {

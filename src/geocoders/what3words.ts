@@ -31,7 +31,7 @@ export class What3Words implements IGeocoder {
         key: this.options.apiKey,
         addr: query.split(/\s+/).join('.')
       }),
-      data => {
+      (data) => {
         const results: GeocodingResult[] = [];
         if (data.geometry) {
           const latLng = L.latLng(data.geometry['lat'], data.geometry['lng']);
@@ -59,7 +59,7 @@ export class What3Words implements IGeocoder {
         key: this.options.apiKey,
         coords: [location.lat, location.lng].join(',')
       }),
-      data => {
+      (data) => {
         const results: GeocodingResult[] = [];
         if (data.status.status == 200) {
           const center = L.latLng(data.geometry['lat'], data.geometry['lng']);

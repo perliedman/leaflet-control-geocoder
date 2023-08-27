@@ -83,7 +83,7 @@ export function getJSON(
   callback: (message: any) => void
 ): void {
   const xmlHttp = new XMLHttpRequest();
-  xmlHttp.onreadystatechange = function() {
+  xmlHttp.onreadystatechange = function () {
     if (xmlHttp.readyState !== 4) {
       return;
     }

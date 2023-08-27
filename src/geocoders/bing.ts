@@ -31,7 +31,7 @@ export class Bing implements IGeocoder {
     jsonp(
       this.options.apiKey,
       params,
-      data => {
+      (data) => {
         const results: GeocodingResult[] = [];
         if (data.resourceSets.length > 0) {
           for (let i = data.resourceSets[0].resources.length - 1; i >= 0; i--) {
@@ -58,7 +58,7 @@ export class Bing implements IGeocoder {
     jsonp(
       this.options.serviceUrl + location.lat + ',' + location.lng,
       params,
-      data => {
+      (data) => {
         const results: GeocodingResult[] = [];
         for (let i = data.resourceSets[0].resources.length - 1; i >= 0; i--) {
           const resource = data.resourceSets[0].resources[i],

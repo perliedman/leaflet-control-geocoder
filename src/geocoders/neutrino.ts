@@ -35,7 +35,7 @@ export class Neutrino implements IGeocoder {
       //get three words and make a dot based string
       address: query.split(/\s+/).join('.')
     });
-    getJSON(this.options.serviceUrl + 'geocode-address', params, data => {
+    getJSON(this.options.serviceUrl + 'geocode-address', params, (data) => {
       const results: GeocodingResult[] = [];
       if (data.locations) {
         data.geometry = data.locations[0];
@@ -64,7 +64,7 @@ export class Neutrino implements IGeocoder {
       latitude: location.lat,
       longitude: location.lng
     });
-    getJSON(this.options.serviceUrl + 'geocode-reverse', params, data => {
+    getJSON(this.options.serviceUrl + 'geocode-reverse', params, (data) => {
       const results: GeocodingResult[] = [];
       if (data.status.status == 200 && data.found) {
         const center = L.latLng(location.lat, location.lng);
