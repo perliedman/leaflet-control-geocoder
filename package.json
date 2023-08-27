@@ -17,7 +17,7 @@
     "build:demo-rollup": "cd demo-rollup && yarn install && yarn run build",
     "build:demo-webpack": "cd demo-rollup && yarn install && yarn run build",
     "changelog": "conventional-changelog --infile CHANGELOG.md --same-file --output-unreleased",
-    "doc": "typedoc --mode file --excludePrivate --stripInternal --moduleResolution node --out docs/ src/",
+    "doc": "typedoc --skipErrorChecking --excludePrivate --excludeInternal --out docs/ src/",
     "test": "vitest --environment jsdom",
     "lint": "eslint --ext .js,.ts ."
   },
@@ -72,7 +72,7 @@
     "leaflet": "^1.6.0",
     "microbundle": "^0.13.0",
     "prettier": "^3.0.2",
-    "typedoc": "^0.19.2",
+    "typedoc": "^0.25.0",
     "typescript": "^5.2.2",
     "vitest": "^0.34.3"
   },
