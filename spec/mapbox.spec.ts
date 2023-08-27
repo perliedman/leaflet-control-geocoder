@@ -1,10 +1,11 @@
 import { testXMLHttpRequest } from './mockXMLHttpRequest';
 import { Mapbox } from '../src/geocoders/mapbox';
+import { describe, expect, it, vi } from 'vitest';
 
 describe('L.Control.Geocoder.Mapbox', () => {
   it('geocodes Milwaukee Ave', () => {
     const geocoder = new Mapbox({ apiKey: '0123' });
-    const callback = jest.fn();
+    const callback = vi.fn();
     testXMLHttpRequest(
       'https://api.mapbox.com/geocoding/v5/mapbox.places/Milwaukee%20Ave.json?access_token=0123',
       {

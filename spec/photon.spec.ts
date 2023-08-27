@@ -1,11 +1,12 @@
 import { testXMLHttpRequest } from './mockXMLHttpRequest';
 import { Photon } from '../src/geocoders/photon';
 import { GeocodingResult } from '../src/geocoders/api';
+import { describe, expect, it, vi } from 'vitest';
 
 describe('L.Control.Geocoder.Photon', () => {
   it('geocodes Innsbruck', () => {
     const geocoder = new Photon();
-    const callback = jest.fn();
+    const callback = vi.fn();
     testXMLHttpRequest(
       'https://photon.komoot.io/api/?q=Innsbruck',
       {

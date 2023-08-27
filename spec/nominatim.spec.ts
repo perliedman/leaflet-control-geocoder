@@ -1,11 +1,12 @@
 import { testXMLHttpRequest } from './mockXMLHttpRequest';
 import { Nominatim } from '../src/geocoders/nominatim';
+import { describe, expect, it, vi } from 'vitest';
 
 describe('L.Control.Geocoder.Nominatim', () => {
   const geocoder = new Nominatim();
 
   it('geocodes Innsbruck', () => {
-    const callback = jest.fn();
+    const callback = vi.fn();
 
     testXMLHttpRequest(
       'https://nominatim.openstreetmap.org/search?q=innsbruck&limit=5&format=json&addressdetails=1',
@@ -53,7 +54,7 @@ describe('L.Control.Geocoder.Nominatim', () => {
   });
 
   it('reverse geocodes 47.3/11.3', () => {
-    const callback = jest.fn();
+    const callback = vi.fn();
 
     testXMLHttpRequest(
       'https://nominatim.openstreetmap.org/reverse?lat=47.3&lon=11.3&zoom=9&addressdetails=1&format=json',

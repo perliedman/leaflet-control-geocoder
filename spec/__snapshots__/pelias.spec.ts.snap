@@ -1,26 +1,26 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`L.Control.Geocoder.Openrouteservice geocodes Innsbruck 1`] = `
-Array [
-  Array [
-    Array [
-      Object {
-        "bbox": Object {
-          "_northEast": Object {
+exports[`L.Control.Geocoder.Openrouteservice > geocodes Innsbruck 1`] = `
+[
+  [
+    [
+      {
+        "bbox": {
+          "_northEast": {
             "lat": 47.29398,
             "lng": 11.452584553,
           },
-          "_southWest": Object {
+          "_southWest": {
             "lat": 47.2470573997,
             "lng": 11.3218091258,
           },
         },
-        "center": Object {
+        "center": {
           "lat": 47.272308,
           "lng": 11.407851,
         },
         "name": "Innsbruck, Austria",
-        "properties": Object {
+        "properties": {
           "accuracy": "centroid",
           "confidence": 1,
           "continent": "Europe",
