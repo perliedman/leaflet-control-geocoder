@@ -1,26 +1,26 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`L.Control.Geocoder.Mapbox geocodes Milwaukee Ave 1`] = `
-Array [
-  Array [
-    Array [
-      Object {
-        "bbox": Object {
-          "_northEast": Object {
+exports[`L.Control.Geocoder.Mapbox > geocodes Milwaukee Ave 1`] = `
+[
+  [
+    [
+      {
+        "bbox": {
+          "_northEast": {
             "lat": 42.166602,
             "lng": -87.921434,
           },
-          "_southWest": Object {
+          "_southWest": {
             "lat": 42.166602,
             "lng": -87.921434,
           },
         },
-        "center": Object {
+        "center": {
           "lat": 42.166602,
           "lng": -87.921434,
         },
         "name": "825 Milwaukee Ave, Deerfield, Illinois 60015, United States",
-        "properties": Object {
+        "properties": {
           "address": "825",
           "country": "United States",
           "countryShortCode": "us",

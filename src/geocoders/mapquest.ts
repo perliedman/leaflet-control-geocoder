@@ -27,7 +27,7 @@ export class MapQuest implements IGeocoder {
   }
 
   _formatName(...parts: string[]) {
-    return parts.filter(s => !!s).join(', ');
+    return parts.filter((s) => !!s).join(', ');
   }
 
   geocode(query: string, cb: GeocodingCallback, context?: any): void {
@@ -40,7 +40,7 @@ export class MapQuest implements IGeocoder {
     getJSON(
       this.options.serviceUrl + '/address',
       params,
-      L.Util.bind(function(data) {
+      L.Util.bind(function (data) {
         const results: GeocodingResult[] = [];
         if (data.results && data.results[0].locations) {
           for (let i = data.results[0].locations.length - 1; i >= 0; i--) {
@@ -68,7 +68,7 @@ export class MapQuest implements IGeocoder {
     getJSON(
       this.options.serviceUrl + '/reverse',
       params,
-      L.Util.bind(function(data) {
+      L.Util.bind(function (data) {
         const results: GeocodingResult[] = [];
         if (data.results && data.results[0].locations) {
           for (let i = data.results[0].locations.length - 1; i >= 0; i--) {

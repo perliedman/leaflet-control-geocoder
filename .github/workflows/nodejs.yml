@@ -14,15 +14,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js 12.x
-        uses: actions/setup-node@v1
+      - uses: actions/checkout@v3
+      - name: Use Node.js 16
+        uses: actions/setup-node@v3
         with:
-          node-version: 12.x
-      - run: npm ci
-      - run: npm run build
-      - run: npm test
-      - run: npm run doc
+          node-version: 16
+      - run: yarn install --frozen-lockfile
+      - run: yarn run build
+      - run: yarn run test
+      - run: yarn run doc
       - name: Deploy TypeDoc
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         uses: peaceiris/actions-gh-pages@v3

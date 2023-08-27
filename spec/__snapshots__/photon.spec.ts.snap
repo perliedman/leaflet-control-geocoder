@@ -1,31 +1,31 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`L.Control.Geocoder.Photon geocodes Innsbruck 1`] = `
-Array [
-  Array [
-    Array [
-      Object {
-        "bbox": Object {
-          "_northEast": Object {
+exports[`L.Control.Geocoder.Photon > geocodes Innsbruck 1`] = `
+[
+  [
+    [
+      {
+        "bbox": {
+          "_northEast": {
             "lat": 47.2808566,
             "lng": 11.4181209,
           },
-          "_southWest": Object {
+          "_southWest": {
             "lat": 47.2583715,
             "lng": 11.3811871,
           },
         },
-        "center": Object {
+        "center": {
           "lat": 47.2654296,
           "lng": 11.3927685,
         },
         "html": undefined,
         "name": "Innsbruck, Innsbruck, Tyrol, Austria",
-        "properties": Object {
+        "properties": {
           "city": "Innsbruck",
           "country": "Austria",
           "countrycode": "AT",
-          "extent": Array [
+          "extent": [
             11.3811871,
             47.2808566,
             11.4181209,
@@ -40,24 +40,24 @@ Array [
           "type": "locality",
         },
       },
-      Object {
-        "bbox": Object {
-          "_northEast": Object {
+      {
+        "bbox": {
+          "_northEast": {
             "lat": 47.2690806,
             "lng": 11.3959095,
           },
-          "_southWest": Object {
+          "_southWest": {
             "lat": 47.2690806,
             "lng": 11.3959095,
           },
         },
-        "center": Object {
+        "center": {
           "lat": 47.2690806,
           "lng": 11.3959095,
         },
         "html": undefined,
         "name": "Mozarteum Innsbruck, Universitätsstraße, Innsbruck, Tyrol, Austria",
-        "properties": Object {
+        "properties": {
           "city": "Innsbruck",
           "country": "Austria",
           "countrycode": "AT",

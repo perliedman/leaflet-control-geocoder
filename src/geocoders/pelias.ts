@@ -30,7 +30,7 @@ export class Pelias implements IGeocoder {
       api_key: this.options.apiKey,
       text: query
     });
-    getJSON(this.options.serviceUrl + '/search', params, data => {
+    getJSON(this.options.serviceUrl + '/search', params, (data) => {
       cb.call(context, this._parseResults(data, 'bbox'));
     });
   }
@@ -40,7 +40,7 @@ export class Pelias implements IGeocoder {
       api_key: this.options.apiKey,
       text: query
     });
-    getJSON(this.options.serviceUrl + '/autocomplete', params, data => {
+    getJSON(this.options.serviceUrl + '/autocomplete', params, (data) => {
       if (data.geocoding.timestamp > this._lastSuggest) {
         this._lastSuggest = data.geocoding.timestamp;
         cb.call(context, this._parseResults(data, 'bbox'));
@@ -54,7 +54,7 @@ export class Pelias implements IGeocoder {
       'point.lat': location.lat,
       'point.lon': location.lng
     });
-    getJSON(this.options.serviceUrl + '/reverse', params, data => {
+    getJSON(this.options.serviceUrl + '/reverse', params, (data) => {
       cb.call(context, this._parseResults(data, 'bounds'));
     });
   }
@@ -62,10 +62,10 @@ export class Pelias implements IGeocoder {
   _parseResults(data, bboxname) {
     const results: GeocodingResult[] = [];
     L.geoJSON(data, {
-      pointToLayer: function(feature, latlng) {
+      pointToLayer: function (feature, latlng) {
         return L.circleMarker(latlng);
       },
-      onEachFeature: function(feature, layer: any) {
+      onEachFeature: function (feature, layer: any) {
         const result = {} as GeocodingResult;
         let bbox;
         let center;

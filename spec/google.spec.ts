@@ -1,11 +1,12 @@
 import { testXMLHttpRequest } from './mockXMLHttpRequest';
 import { Google } from '../src/geocoders/google';
 import { GeocodingResult } from '../src/geocoders/api';
+import { describe, expect, it, vi } from 'vitest';
 
 describe('L.Control.Geocoder.Google', () => {
   it('geocodes Innsbruck', () => {
     const geocoder = new Google({ apiKey: '0123xyz' });
-    const callback = jest.fn();
+    const callback = vi.fn();
     testXMLHttpRequest(
       'https://maps.googleapis.com/maps/api/geocode/json?key=0123xyz&address=Innsbruck',
       {

@@ -34,7 +34,7 @@ export class ArcGis implements IGeocoder {
       f: 'json'
     });
 
-    getJSON(this.options.serviceUrl + '/findAddressCandidates', params, data => {
+    getJSON(this.options.serviceUrl + '/findAddressCandidates', params, (data) => {
       const results: GeocodingResult[] = [];
       if (data.candidates && data.candidates.length) {
         for (let i = 0; i <= data.candidates.length - 1; i++) {
@@ -66,7 +66,7 @@ export class ArcGis implements IGeocoder {
       distance: 100,
       f: 'json'
     });
-    getJSON(this.options.serviceUrl + '/reverseGeocode', params, data => {
+    getJSON(this.options.serviceUrl + '/reverseGeocode', params, (data) => {
       const result: GeocodingResult[] = [];
       if (data && !data.error) {
         const center = L.latLng(data.location.y, data.location.x);

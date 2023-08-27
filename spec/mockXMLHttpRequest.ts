@@ -1,13 +1,15 @@
+import { expect, vi } from 'vitest';
+
 export function mockXMLHttpRequest<T>(response: T): XMLHttpRequest {
   const xhrMock: Partial<XMLHttpRequest> = {
-    open: jest.fn(),
-    send: jest.fn(),
-    setRequestHeader: jest.fn(),
+    open: vi.fn(),
+    send: vi.fn(),
+    setRequestHeader: vi.fn(),
     readyState: 4,
     status: 200,
     response
   };
-  jest.spyOn(window, 'XMLHttpRequest').mockImplementation(() => xhrMock as XMLHttpRequest);
+  vi.spyOn(window, 'XMLHttpRequest').mockImplementation(() => xhrMock as XMLHttpRequest);
   return xhrMock as XMLHttpRequest;
 }
 

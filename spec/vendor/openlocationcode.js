@@ -56,11 +56,11 @@
  *   var code = OpenLocationCode.recoverNearest('9G8F+6X', 47.4, 8.6);
  *   var code = OpenLocationCode.recoverNearest('8F+6X', 47.4, 8.6);
  */
-(function(root, factory) {
+(function (root, factory) {
   /* global define, module */
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['b'], function(b) {
+    define(['b'], function (b) {
       return (root.returnExportsGlobal = factory(b));
     });
   } else if (typeof module === 'object' && module.exports) {
@@ -72,7 +72,7 @@
     // Browser globals
     root.OpenLocationCode = factory();
   }
-})(this, function() {
+})(this, function () {
   var OpenLocationCode = {};
 
   /**
@@ -133,7 +133,7 @@
   /**
     Returns the OLC alphabet.
    */
-  var getAlphabet = (OpenLocationCode.getAlphabet = function() {
+  var getAlphabet = (OpenLocationCode.getAlphabet = function () {
     return CODE_ALPHABET_;
   });
 
@@ -147,7 +147,7 @@
    * @param {string} code The string to check.
    * @return {boolean} True if the string is a valid code.
    */
-  var isValid = (OpenLocationCode.isValid = function(code) {
+  var isValid = (OpenLocationCode.isValid = function (code) {
     if (!code || typeof code !== 'string') {
       return false;
     }
@@ -214,7 +214,7 @@
    * @return {boolean} True if the string can be produced by removing four or
    *     more characters from the start of a valid code.
    */
-  var isShort = (OpenLocationCode.isShort = function(code) {
+  var isShort = (OpenLocationCode.isShort = function (code) {
     // Check it's valid.
     if (!isValid(code)) {
       return false;
@@ -233,7 +233,7 @@
    * @return {boolean} True if the code represents a valid latitude and
    *     longitude combination.
    */
-  var isFull = (OpenLocationCode.isFull = function(code) {
+  var isFull = (OpenLocationCode.isFull = function (code) {
     if (!isValid(code)) {
       return false;
     }
@@ -273,7 +273,7 @@
    * @return {string} The code.
    * @throws {Exception} if any of the input values are not numbers.
    */
-  var encode = (OpenLocationCode.encode = function(latitude, longitude, codeLength) {
+  var encode = (OpenLocationCode.encode = function (latitude, longitude, codeLength) {
     latitude = Number(latitude);
     longitude = Number(longitude);
     if (typeof codeLength == 'undefined') {
@@ -314,11 +314,11 @@
    *     area of the code.
    * @throws {Exception} If the code is not valid.
    */
-  var decode = (OpenLocationCode.decode = function(code) {
+  var decode = (OpenLocationCode.decode = function (code) {
     if (!isFull(code)) {
-      throw 'IllegalArgumentException: ' +
-        'Passed Open Location Code is not a valid full code: ' +
-        code;
+      throw (
+        'IllegalArgumentException: ' + 'Passed Open Location Code is not a valid full code: ' + code
+      );
     }
     // Strip out separator character (we've already established the code is
     // valid so the maximum is one), padding characters and convert to upper
@@ -357,7 +357,7 @@
    * @throws {Exception} if the short code is not valid, or the reference
    *     position values are not numbers.
    */
-  var recoverNearest = (OpenLocationCode.recoverNearest = function(
+  var recoverNearest = (OpenLocationCode.recoverNearest = function (
     shortCode,
     referenceLatitude,
     referenceLongitude
@@ -431,7 +431,7 @@
    * @throws {Exception} if the passed code is not a valid full code or the
    *     reference location values are not numbers.
    */
-  var shorten = (OpenLocationCode.shorten = function(code, latitude, longitude) {
+  var shorten = (OpenLocationCode.shorten = function (code, latitude, longitude) {
     if (!isFull(code)) {
       throw 'ValueError: Passed code is not valid and full: ' + code;
     }
@@ -474,7 +474,7 @@
    * @param {number} latitude
    * @return {number} The latitude value clipped to be in the range.
    */
-  var clipLatitude = function(latitude) {
+  var clipLatitude = function (latitude) {
     return Math.min(90, Math.max(-90, latitude));
   };
 
@@ -486,7 +486,7 @@
    * @param {number} codeLength
    * @return {number} The latitude precision in degrees.
    */
-  var computeLatitudePrecision = function(codeLength) {
+  var computeLatitudePrecision = function (codeLength) {
     if (codeLength <= 10) {
       return Math.pow(20, Math.floor(codeLength / -2 + 2));
     }
@@ -499,7 +499,7 @@
    * @param {number} longitude
    * @return {number} Normalized into the range -180 to 180.
    */
-  var normalizeLongitude = function(longitude) {
+  var normalizeLongitude = function (longitude) {
     while (longitude < -180) {
       longitude = longitude + 360;
     }
@@ -523,7 +523,7 @@
    * @param {number} codeLength Requested code length.
    * @return {string} The up to 10-digit OLC code for the location.
    */
-  var encodePairs = function(latitude, longitude, codeLength) {
+  var encodePairs = function (latitude, longitude, codeLength) {
     var code = '';
     // Adjust latitude and longitude so they fall into positive ranges.
     var adjustedLatitude = latitude + LATITUDE_MAX_;
@@ -574,7 +574,7 @@
    * @param {number} codeLength Requested code length.
    * @return {string} The OLC code digits from the 11th digit on.
    */
-  var encodeGrid = function(latitude, longitude, codeLength) {
+  var encodeGrid = function (latitude, longitude, codeLength) {
     var code = '';
     var latPlaceValue = GRID_SIZE_DEGREES_;
     var lngPlaceValue = GRID_SIZE_DEGREES_;
@@ -605,7 +605,7 @@
    *     but with the separator removed.
    * @return {OpenLocationCode.CodeArea} The code area object.
    */
-  var decodePairs = function(code) {
+  var decodePairs = function (code) {
     // Get the latitude and longitude values. These will need correcting from
     // positive ranges.
     var latitude = decodePairsSequence(code, 0);
@@ -633,7 +633,7 @@
    *     upper range in decimal degrees. These are in positive ranges and will
    *     need to be corrected appropriately.
    */
-  var decodePairsSequence = function(code, offset) {
+  var decodePairsSequence = function (code, offset) {
     var i = 0;
     var value = 0;
     while (i * 2 + offset < code.length) {
@@ -649,7 +649,7 @@
    * @param {string} code The grid refinement section of a code.
    * @return {OpenLocationCode.CodeArea} The area of the code.
    */
-  var decodeGrid = function(code) {
+  var decodeGrid = function (code) {
     var latitudeLo = 0.0;
     var longitudeLo = 0.0;
     var latPlaceValue = GRID_SIZE_DEGREES_;
@@ -685,7 +685,7 @@
    *
    * @constructor
    */
-  var CodeArea = (OpenLocationCode.CodeArea = function(
+  var CodeArea = (OpenLocationCode.CodeArea = function (
     latitudeLo,
     longitudeLo,
     latitudeHi,
@@ -701,7 +701,7 @@
     );
   });
   CodeArea.fn = CodeArea.prototype = {
-    init: function(latitudeLo, longitudeLo, latitudeHi, longitudeHi, codeLength) {
+    init: function (latitudeLo, longitudeLo, latitudeHi, longitudeHi, codeLength) {
       /**
        * The latitude of the SW corner.
        * @type {number}

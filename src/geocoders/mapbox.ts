@@ -52,7 +52,7 @@ export class Mapbox implements IGeocoder {
     ) {
       params.proximity = params.proximity.lng + ',' + params.proximity.lat;
     }
-    getJSON(this.options.serviceUrl + encodeURIComponent(query) + '.json', params, data => {
+    getJSON(this.options.serviceUrl + encodeURIComponent(query) + '.json', params, (data) => {
       const results: GeocodingResult[] = [];
       if (data.features && data.features.length) {
         for (let i = 0; i <= data.features.length - 1; i++) {
@@ -90,7 +90,7 @@ export class Mapbox implements IGeocoder {
     const param = reverseParams(this.options, {
       access_token: this.options.apiKey
     });
-    getJSON(url, param, data => {
+    getJSON(url, param, (data) => {
       const results: GeocodingResult[] = [];
       if (data.features && data.features.length) {
         for (let i = 0; i <= data.features.length - 1; i++) {

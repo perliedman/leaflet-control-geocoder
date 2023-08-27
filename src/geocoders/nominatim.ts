@@ -64,7 +64,7 @@ export interface NominatimOptions extends GeocoderOptions {
 export class Nominatim implements IGeocoder {
   options: NominatimOptions = {
     serviceUrl: 'https://nominatim.openstreetmap.org/',
-    htmlTemplate: function(r: NominatimResult) {
+    htmlTemplate: function (r: NominatimResult) {
       const address = r.address;
       let className: string;
       const parts = [];
@@ -99,7 +99,7 @@ export class Nominatim implements IGeocoder {
       format: 'json',
       addressdetails: 1
     });
-    getJSON(this.options.serviceUrl + 'search', params, data => {
+    getJSON(this.options.serviceUrl + 'search', params, (data) => {
       const results: GeocodingResult[] = [];
       for (let i = data.length - 1; i >= 0; i--) {
         const bbox = data[i].boundingbox;
@@ -125,7 +125,7 @@ export class Nominatim implements IGeocoder {
       addressdetails: 1,
       format: 'json'
     });
-    getJSON(this.options.serviceUrl + 'reverse', params, data => {
+    getJSON(this.options.serviceUrl + 'reverse', params, (data) => {
       const result: GeocodingResult[] = [];
       if (data && data.lat && data.lon) {
         const center = L.latLng(data.lat, data.lon);

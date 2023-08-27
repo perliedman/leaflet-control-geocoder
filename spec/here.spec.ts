@@ -2,11 +2,12 @@ import { testXMLHttpRequest } from './mockXMLHttpRequest';
 import { HERE } from '../src/geocoders/here';
 import { HEREv2 } from '../src/geocoders/here';
 import { GeocodingResult } from '../src/geocoders/api';
+import { describe, expect, it, vi } from 'vitest';
 
 describe('L.Control.Geocoder.HERE', () => {
   it('geocodes Innsbruck', () => {
     const geocoder = new HERE({ app_id: 'xxx', app_code: 'yyy' });
-    const callback = jest.fn();
+    const callback = vi.fn();
     testXMLHttpRequest(
       'https://geocoder.api.here.com/6.2/geocode.json?searchtext=Innsbruck&gen=9&app_id=xxx&app_code=yyy&jsonattributes=1&maxresults=5',
       {
@@ -91,7 +92,7 @@ describe('L.Control.Geocoder.HEREv2', () => {
   it('geocodes Innsbruck', () => {
     const geocodingParams = { at: '50.62925,3.057256' };
     const geocoder = new HEREv2({ apiKey: 'xxx', geocodingQueryParams: geocodingParams });
-    const callback = jest.fn();
+    const callback = vi.fn();
     testXMLHttpRequest(
       'https://geocode.search.hereapi.com/v1/discover?q=Innsbruck&apiKey=xxx&limit=10&at=50.62925%2C3.057256',
       {
