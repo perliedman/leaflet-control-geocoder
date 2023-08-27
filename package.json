@@ -70,7 +70,7 @@
     "eslint-plugin-prettier": "^5.0.0",
     "jsdom": "^22.1.0",
     "leaflet": "^1.6.0",
-    "microbundle": "^0.13.0",
+    "microbundle": "^0.15.1",
     "prettier": "^3.0.2",
     "typedoc": "^0.25.0",
     "typescript": "^5.2.2",
