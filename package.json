@@ -63,17 +63,17 @@
   },
   "devDependencies": {
     "@types/leaflet": "^1.5.12",
-    "@typescript-eslint/eslint-plugin": "^4.8.1",
-    "@typescript-eslint/parser": "^4.8.1",
+    "@typescript-eslint/eslint-plugin": "^6.4.1",
+    "@typescript-eslint/parser": "^6.4.1",
     "conventional-changelog-cli": "^2.1.0",
-    "eslint": "^6.8.0",
-    "eslint-plugin-prettier": "^3.1.2",
+    "eslint": "^8.48.0",
+    "eslint-plugin-prettier": "^5.0.0",
     "jsdom": "^22.1.0",
     "leaflet": "^1.6.0",
     "microbundle": "^0.13.0",
     "prettier": "^3.0.2",
     "typedoc": "^0.19.2",
-    "typescript": "^3.8.3",
+    "typescript": "^5.2.2",
     "vitest": "^0.34.3"
   },
   "peerDependencies": {

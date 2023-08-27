@@ -94,6 +94,7 @@ declare module 'leaflet' {
  * for TypeScript https://www.typescriptlang.org/docs/handbook/mixins.html
  * @internal
  */
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 class EventedControl {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   constructor(...args: any[]) {
@@ -104,6 +105,7 @@ class EventedControl {
 /**
  * @internal
  */
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 interface EventedControl extends L.Control, L.Evented {}
 L.Util.extend(EventedControl.prototype, L.Control.prototype);
 L.Util.extend(EventedControl.prototype, L.Evented.prototype);
