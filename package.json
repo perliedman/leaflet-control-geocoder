@@ -18,7 +18,7 @@
     "build:demo-webpack": "cd demo-rollup && npm install && npm run build",
     "changelog": "conventional-changelog --infile CHANGELOG.md --same-file --output-unreleased",
     "doc": "typedoc --mode file --excludePrivate --stripInternal --moduleResolution node --out docs/ src/",
-    "test": "jest",
+    "test": "vitest run --dom",
     "lint": "eslint --ext .js,.ts ."
   },
   "repository": {
@@ -68,14 +68,14 @@
     "conventional-changelog-cli": "^2.1.0",
     "eslint": "^6.8.0",
     "eslint-plugin-prettier": "^3.1.2",
-    "jest": "^26.6.3",
+    "happy-dom": "^15.11.7",
     "leaflet": "^1.6.0",
     "microbundle": "^0.13.0",
     "prettier": "^1.19.1",
-    "ts-jest": "^26.4.4",
     "tslib": "^1.11.1",
     "typedoc": "^0.19.2",
-    "typescript": "^3.8.3"
+    "typescript": "^3.8.3",
+    "vitest": "^2.1.8"
   },
   "peerDependencies": {
     "leaflet": "^1.6.0"

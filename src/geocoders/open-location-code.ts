@@ -25,7 +25,7 @@ export interface CodeArea {
  * Implementation of the [Plus codes](https://plus.codes/) (formerly OpenLocationCode) (requires [open-location-code](https://www.npmjs.com/package/open-location-code))
  */
 export class OpenLocationCode implements IGeocoder {
-  options: OpenLocationCodeOptions;
+  options = {} as OpenLocationCodeOptions;
   constructor(options?: Partial<OpenLocationCodeOptions>) {
     L.Util.setOptions(this, options);
   }
