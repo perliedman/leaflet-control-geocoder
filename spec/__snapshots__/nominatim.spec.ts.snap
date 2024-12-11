@@ -1,29 +1,29 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`L.Control.Geocoder.Nominatim geocodes Innsbruck 1`] = `
-Array [
-  Array [
-    Array [
-      Object {
-        "bbox": Object {
-          "_northEast": Object {
+exports[`L.Control.Geocoder.Nominatim > geocodes Innsbruck 1`] = `
+[
+  [
+    [
+      {
+        "bbox": {
+          "_northEast": {
             "lat": 47.2808566,
             "lng": 11.418183,
           },
-          "_southWest": Object {
+          "_southWest": {
             "lat": 47.2583715,
             "lng": 11.3811871,
           },
         },
-        "center": Object {
+        "center": {
           "lat": 47.26951525,
           "lng": 11.3971372042211,
         },
-        "html": "<span class=\\"\\"> Innsbruck   </span><br/><span class=\\"leaflet-control-geocoder-address-context\\">Tyrol Austria</span>",
+        "html": "<span class=""> Innsbruck   </span><br/><span class="leaflet-control-geocoder-address-context">Tyrol Austria</span>",
         "icon": "https://nominatim.openstreetmap.org/images/mapicons/poi_boundary_administrative.p.20.png",
         "name": "Innsbruck, Tyrol, Austria",
-        "properties": Object {
-          "address": Object {
+        "properties": {
+          "address": {
             "city": "Innsbruck",
             "city_district": "Innsbruck",
             "country": "Austria",
@@ -31,7 +31,7 @@ Array [
             "county": "Innsbruck",
             "state": "Tyrol",
           },
-          "boundingbox": Array [
+          "boundingbox": [
             47.2583715,
             47.2808566,
             11.3811871,
@@ -55,35 +55,35 @@ Array [
 ]
 `;
 
-exports[`L.Control.Geocoder.Nominatim reverse geocodes 47.3/11.3 1`] = `
-Array [
-  Array [
-    Array [
-      Object {
-        "bbox": Object {
-          "_northEast": Object {
+exports[`L.Control.Geocoder.Nominatim > reverse geocodes 47.3/11.3 1`] = `
+[
+  [
+    [
+      {
+        "bbox": {
+          "_northEast": {
             "lat": 47.2065094,
             "lng": 11.3836945900354,
           },
-          "_southWest": Object {
+          "_southWest": {
             "lat": 47.2065094,
             "lng": 11.3836945900354,
           },
         },
-        "center": Object {
+        "center": {
           "lat": 47.2065094,
           "lng": 11.3836945900354,
         },
-        "html": "<span class=\\"\\">Tyrol Austria</span>",
+        "html": "<span class="">Tyrol Austria</span>",
         "name": "Innsbruck-Land, Tyrol, Austria",
-        "properties": Object {
-          "address": Object {
+        "properties": {
+          "address": {
             "country": "Austria",
             "country_code": "at",
             "county": "Innsbruck-Land",
             "state": "Tyrol",
           },
-          "boundingbox": Array [
+          "boundingbox": [
             "46.9624854",
             "47.4499229",
             "10.9896868",

@@ -1,10 +1,11 @@
+import { describe, expect, it, vi } from 'vitest';
 import { testXMLHttpRequest } from './mockXMLHttpRequest';
 import { ArcGis } from '../src/geocoders/arcgis';
 
 describe('L.Control.Geocoder.ArcGis', () => {
   it('geocodes Innsbruck', () => {
     const geocoder = new ArcGis();
-    const callback = jest.fn();
+    const callback = vi.fn();
     testXMLHttpRequest(
       'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?token=&SingleLine=Innsbruck&outFields=Addr_Type&forStorage=false&maxLocations=10&f=json',
       {

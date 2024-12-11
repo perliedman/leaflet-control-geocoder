@@ -1,3 +1,4 @@
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import * as L from 'leaflet';
 import { LatLng } from '../src/geocoders/latlng';
 
@@ -17,7 +18,7 @@ describe('LatLng', () => {
 
   it('does not geocode no-lat-lng', () => {
     const geocoder = new LatLng();
-    const callback = jest.fn();
+    const callback = vi.fn();
     geocoder.geocode('no-lat-lng', callback);
     expect(callback).toHaveBeenCalledTimes(0);
   });
@@ -27,7 +28,7 @@ describe('LatLng', () => {
       geocode: (_query, cb) => cb('XXX')
     };
     const geocoder = new LatLng({ next: next });
-    const callback = jest.fn();
+    const callback = vi.fn();
     geocoder.geocode('no-lat-lng', callback);
     expect(callback).toHaveBeenCalledWith('XXX');
   });
@@ -139,7 +140,7 @@ describe('LatLng', () => {
 
   function geocode(query) {
     const geocoder = new LatLng();
-    const callback = jest.fn();
+    const callback = vi.fn();
     geocoder.geocode(query, callback);
     expect(callback).toBeCalledTimes(1);
     const feature = callback.mock.calls[0][0][0];
