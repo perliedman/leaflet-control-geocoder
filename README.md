@@ -25,6 +25,7 @@ The plugin supports many different data providers:
 - [Neutrino API](https://www.neutrinoapi.com/api/geocode-address/)
 - [Plus codes](https://plus.codes/) (formerly OpenLocationCode) (requires [open-location-code](https://www.npmjs.com/package/open-location-code))
 - [ArcGIS](https://developers.arcgis.com/features/geocoding/)
+- [Azure Maps Geocoding](https://www.microsoft.com/en-us/maps/azure/location-services/geocoding)
 
 The plugin can easily be extended to support other providers. Current extensions:
 
