@@ -29,7 +29,7 @@ export class Bing implements IGeocoder {
       key: this.options.apiKey
     });
     jsonp(
-      this.options.apiKey,
+      this.options.serviceUrl,
       params,
       data => {
         const results: GeocodingResult[] = [];
