@@ -131,7 +131,6 @@ export class GeocoderControl extends EventedControl {
   private _alts: HTMLUListElement;
   private _container: HTMLDivElement;
   private _errorElement: HTMLDivElement;
-  private _form: HTMLDivElement;
   private _geocodeMarker: L.Marker;
   private _input: HTMLInputElement;
   private _lastGeocode: string;
@@ -171,11 +170,11 @@ export class GeocoderControl extends EventedControl {
     const className = 'leaflet-control-geocoder';
     const container = L.DomUtil.create('div', className + ' leaflet-bar') as HTMLDivElement;
     const icon = L.DomUtil.create('button', className + '-icon', container) as HTMLButtonElement;
-    const form = (this._form = L.DomUtil.create(
+    const form = L.DomUtil.create(
       'div',
       className + '-form',
       container
-    ) as HTMLDivElement);
+    ) as HTMLDivElement;
 
     this._map = map;
     this._container = container;
