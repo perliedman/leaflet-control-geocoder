@@ -56,31 +56,10 @@ export function getJSON(
   params: Record<string, unknown>,
   callback: (message: any) => void
 ): void {
-  const xmlHttp = new XMLHttpRequest();
-  xmlHttp.onreadystatechange = () => {
-    if (xmlHttp.readyState !== 4) {
-      return;
-    }
-    let message;
-    if (xmlHttp.status !== 200 && xmlHttp.status !== 304) {
-      message = '';
-    } else if (typeof xmlHttp.response === 'string') {
-      // IE doesn't parse JSON responses even with responseType: 'json'.
-      try {
-        message = JSON.parse(xmlHttp.response);
-      } catch (e) {
-        // Not a JSON response
-        message = xmlHttp.response;
-      }
-    } else {
-      message = xmlHttp.response;
-    }
-    callback(message);
-  };
-  xmlHttp.open('GET', url + getParamString(params), true);
-  xmlHttp.responseType = 'json';
-  xmlHttp.setRequestHeader('Accept', 'application/json');
-  xmlHttp.send(null);
+  const headers = { Accept: 'application/json' };
+  fetch(url + getParamString(params), { headers })
+    .then(response => response.json())
+    .then(j => callback(j));
 }
 
 /**

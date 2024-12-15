@@ -1,13 +1,14 @@
-import { describe, expect, it, vi } from 'vitest';
-import { testXMLHttpRequest } from './mockXMLHttpRequest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import { mockFetchRequest } from './mockFetchRequest';
 import { Google } from '../src/geocoders/google';
 import { GeocodingResult } from '../src/geocoders/api';
 
 describe('L.Control.Geocoder.Google', () => {
-  it('geocodes Innsbruck', () => {
+  afterEach(() => vi.clearAllMocks());
+  it('geocodes Innsbruck', async () => {
     const geocoder = new Google({ apiKey: '0123xyz' });
     const callback = vi.fn();
-    testXMLHttpRequest(
+    mockFetchRequest(
       'https://maps.googleapis.com/maps/api/geocode/json?key=0123xyz&address=Innsbruck',
       {
         results: [
@@ -71,6 +72,7 @@ describe('L.Control.Geocoder.Google', () => {
       () => geocoder.geocode('Innsbruck', callback)
     );
 
+    await vi.waitUntil(() => callback.mock.calls.length);
     const feature: GeocodingResult = callback.mock.calls[0][0][0];
     expect(feature.name).toBe('Innsbruck, Austria');
     expect(feature.center).toStrictEqual({ lat: 47.2692124, lng: 11.4041024 });

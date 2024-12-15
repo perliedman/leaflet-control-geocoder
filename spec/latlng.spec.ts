@@ -1,8 +1,9 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import * as L from 'leaflet';
 import { LatLng } from '../src/geocoders/latlng';
 
 describe('LatLng', () => {
+  afterEach(() =>vi.clearAllMocks())
   // test cases from https://github.com/openstreetmap/openstreetmap-website/blob/master/test/controllers/geocoder_controller_test.rb
   let expected;
   beforeEach(() => {
