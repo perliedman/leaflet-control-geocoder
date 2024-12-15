@@ -1,9 +1,10 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import * as L from 'leaflet';
 import { LatLng } from '../src/geocoders/latlng';
+import { IGeocoder } from '../src/geocoders/api';
 
 describe('LatLng', () => {
-  afterEach(() =>vi.clearAllMocks())
+  afterEach(() => vi.clearAllMocks());
   // test cases from https://github.com/openstreetmap/openstreetmap-website/blob/master/test/controllers/geocoder_controller_test.rb
   let expected;
   beforeEach(() => {
@@ -17,21 +18,20 @@ describe('LatLng', () => {
     geocode('+50.06773, +14.37742');
   });
 
-  it('does not geocode no-lat-lng', () => {
+  it('does not geocode no-lat-lng', async () => {
     const geocoder = new LatLng();
-    const callback = vi.fn();
-    geocoder.geocode('no-lat-lng', callback);
-    expect(callback).toHaveBeenCalledTimes(0);
+    const result = await geocoder.geocode('no-lat-lng');
+    expect(result).toHaveLength(0);
   });
 
-  it('passes unsupported queries to the next geocoder', () => {
+  it('passes unsupported queries to the next geocoder', async () => {
+    const xxx = [Symbol()] as any;
     const next = {
-      geocode: (_query, cb) => cb('XXX')
-    };
+      geocode: _query => xxx
+    } as IGeocoder;
     const geocoder = new LatLng({ next: next });
-    const callback = vi.fn();
-    geocoder.geocode('no-lat-lng', callback);
-    expect(callback).toHaveBeenCalledWith('XXX');
+    const result = await geocoder.geocode('no-lat-lng');
+    expect(result).toBe(xxx);
   });
 
   it('geocodes lat/lon pairs using N/E with degrees', () => {
@@ -139,12 +139,10 @@ describe('LatLng', () => {
     geocode('50°4\'3.828"S 14°22\'38.712"W');
   });
 
-  function geocode(query) {
+  async function geocode(query) {
     const geocoder = new LatLng();
-    const callback = vi.fn();
-    geocoder.geocode(query, callback);
-    expect(callback).toBeCalledTimes(1);
-    const feature = callback.mock.calls[0][0][0];
+    const result = await geocoder.geocode(query);
+    const feature = result[0];
     expect(feature.name).toBe(query);
     expect(feature.center.lat).toBeCloseTo(expected.lat);
     expect(feature.center.lng).toBeCloseTo(expected.lng);

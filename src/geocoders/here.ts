@@ -1,13 +1,6 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import {
-  IGeocoder,
-  GeocoderOptions,
-  GeocodingCallback,
-  geocodingParams,
-  GeocodingResult,
-  reverseParams
-} from './api';
+import { IGeocoder, GeocoderOptions, geocodingParams, GeocodingResult, reverseParams } from './api';
 
 export interface HereOptions extends GeocoderOptions {
   /**
@@ -39,10 +32,10 @@ export class HERE implements IGeocoder {
 
   constructor(options?: Partial<HereOptions>) {
     L.Util.setOptions(this, options);
-    if (options.apiKey) throw Error('apiKey is not supported, use app_id/app_code instead!');
+    if (options?.apiKey) throw Error('apiKey is not supported, use app_id/app_code instead!');
   }
 
-  geocode(query: string, cb: GeocodingCallback, context?: any): void {
+  geocode(query: string): Promise<GeocodingResult[]> {
     const params = geocodingParams(this.options, {
       searchtext: query,
       gen: 9,
@@ -51,10 +44,10 @@ export class HERE implements IGeocoder {
       jsonattributes: 1,
       maxresults: this.options.maxResults
     });
-    this.getJSON(this.options.serviceUrl + 'geocode.json', params, cb, context);
+    return this.getJSON(this.options.serviceUrl + 'geocode.json', params);
   }
 
-  reverse(location: L.LatLngLiteral, scale: number, cb: GeocodingCallback, context?: any): void {
+  reverse(location: L.LatLngLiteral, scale: number): Promise<GeocodingResult[]> {
     let prox = location.lat + ',' + location.lng;
     if (this.options.reverseGeocodeProxRadius) {
       prox += ',' + this.options.reverseGeocodeProxRadius;
@@ -68,31 +61,30 @@ export class HERE implements IGeocoder {
       jsonattributes: 1,
       maxresults: this.options.maxResults
     });
-    this.getJSON(this.options.serviceUrl + 'reversegeocode.json', params, cb, context);
+    return this.getJSON(this.options.serviceUrl + 'reversegeocode.json', params);
   }
 
-  getJSON(url: string, params: any, cb: GeocodingCallback, context?: any) {
-    getJSON(url, params, data => {
-      const results: GeocodingResult[] = [];
+  async getJSON(url: string, params: any): Promise<GeocodingResult[]> {
+    const data = await getJSON<any>(url, params);
+    const results: GeocodingResult[] = [];
 
-      if (data.response.view && data.response.view.length) {
-        for (let i = 0; i <= data.response.view[0].result.length - 1; i++) {
-          const loc = data.response.view[0].result[i].location;
-          const center = L.latLng(loc.displayPosition.latitude, loc.displayPosition.longitude);
-          const bbox = L.latLngBounds(
-            L.latLng(loc.mapView.topLeft.latitude, loc.mapView.topLeft.longitude),
-            L.latLng(loc.mapView.bottomRight.latitude, loc.mapView.bottomRight.longitude)
-          );
-          results[i] = {
-            name: loc.address.label,
-            properties: loc.address,
-            bbox: bbox,
-            center: center
-          };
-        }
+    if (data.response.view && data.response.view.length) {
+      for (let i = 0; i <= data.response.view[0].result.length - 1; i++) {
+        const loc = data.response.view[0].result[i].location;
+        const center = L.latLng(loc.displayPosition.latitude, loc.displayPosition.longitude);
+        const bbox = L.latLngBounds(
+          L.latLng(loc.mapView.topLeft.latitude, loc.mapView.topLeft.longitude),
+          L.latLng(loc.mapView.bottomRight.latitude, loc.mapView.bottomRight.longitude)
+        );
+        results[i] = {
+          name: loc.address.label,
+          properties: loc.address,
+          bbox: bbox,
+          center: center
+        };
       }
-      cb.call(context, results);
-    });
+    }
+    return results;
   }
 }
 
@@ -112,7 +104,7 @@ export class HEREv2 implements IGeocoder {
     L.Util.setOptions(this, options);
   }
 
-  geocode(query: string, cb: GeocodingCallback, context?: any): void {
+  geocode(query: string): Promise<GeocodingResult[]> {
     const params = geocodingParams(this.options, {
       q: query,
       apiKey: this.options.apiKey,
@@ -125,49 +117,48 @@ export class HEREv2 implements IGeocoder {
       );
     }
 
-    this.getJSON(this.options.serviceUrl + '/discover', params, cb, context);
+    return this.getJSON(this.options.serviceUrl + '/discover', params);
   }
 
-  reverse(location: L.LatLngLiteral, scale: number, cb: GeocodingCallback, context?: any): void {
+  reverse(location: L.LatLngLiteral, scale: number): Promise<GeocodingResult[]> {
     const params = reverseParams(this.options, {
       at: location.lat + ',' + location.lng,
       limit: this.options.reverseGeocodeProxRadius,
       apiKey: this.options.apiKey
     });
-    this.getJSON(this.options.serviceUrl + '/revgeocode', params, cb, context);
+    return this.getJSON(this.options.serviceUrl + '/revgeocode', params);
   }
 
-  getJSON(url: string, params: any, cb: GeocodingCallback, context?: any) {
-    getJSON(url, params, data => {
-      const results: GeocodingResult[] = [];
+  async getJSON(url: string, params: any): Promise<GeocodingResult[]> {
+    const data = await getJSON<any>(url, params);
+    const results: GeocodingResult[] = [];
 
-      if (data.items && data.items.length) {
-        for (let i = 0; i <= data.items.length - 1; i++) {
-          const item = data.items[i];
-          const latLng = L.latLng(item.position.lat, item.position.lng);
-          let bbox: L.LatLngBounds;
-          if (item.mapView) {
-            bbox = L.latLngBounds(
-              L.latLng(item.mapView.south, item.mapView.west),
-              L.latLng(item.mapView.north, item.mapView.east)
-            );
-          } else {
-            // Using only position when not provided
-            bbox = L.latLngBounds(
-              L.latLng(item.position.lat, item.position.lng),
-              L.latLng(item.position.lat, item.position.lng)
-            );
-          }
-          results[i] = {
-            name: item.address.label,
-            properties: item.address,
-            bbox: bbox,
-            center: latLng
-          };
+    if (data.items && data.items.length) {
+      for (let i = 0; i <= data.items.length - 1; i++) {
+        const item = data.items[i];
+        const latLng = L.latLng(item.position.lat, item.position.lng);
+        let bbox: L.LatLngBounds;
+        if (item.mapView) {
+          bbox = L.latLngBounds(
+            L.latLng(item.mapView.south, item.mapView.west),
+            L.latLng(item.mapView.north, item.mapView.east)
+          );
+        } else {
+          // Using only position when not provided
+          bbox = L.latLngBounds(
+            L.latLng(item.position.lat, item.position.lng),
+            L.latLng(item.position.lat, item.position.lng)
+          );
         }
+        results[i] = {
+          name: item.address.label,
+          properties: item.address,
+          bbox: bbox,
+          center: latLng
+        };
       }
-      cb.call(context, results);
-    });
+    }
+    return results;
   }
 }
 
@@ -176,7 +167,7 @@ export class HEREv2 implements IGeocoder {
  * @param options the options
  */
 export function here(options?: Partial<HereOptions>) {
-  if (options.apiKey) {
+  if (options?.apiKey) {
     return new HEREv2(options);
   } else {
     return new HERE(options);

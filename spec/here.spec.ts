@@ -8,8 +8,7 @@ describe('L.Control.Geocoder.HERE', () => {
   afterEach(() => vi.clearAllMocks());
   it('geocodes Innsbruck', async () => {
     const geocoder = new HERE({ app_id: 'xxx', app_code: 'yyy' });
-    const callback = vi.fn();
-    mockFetchRequest(
+    const result = await mockFetchRequest(
       'https://geocoder.api.here.com/6.2/geocode.json?searchtext=Innsbruck&gen=9&app_id=xxx&app_code=yyy&jsonattributes=1&maxresults=5',
       {
         response: {
@@ -75,18 +74,17 @@ describe('L.Control.Geocoder.HERE', () => {
           ]
         }
       },
-      () => geocoder.geocode('Innsbruck', callback)
+      () => geocoder.geocode('Innsbruck')
     );
 
-    await vi.waitUntil(() => callback.mock.calls.length);
-    const feature: GeocodingResult = callback.mock.calls[0][0][0];
+    const feature: GeocodingResult = result[0];
     expect(feature.name).toBe('Innsbruck, Tirol, Österreich');
     expect(feature.center).toStrictEqual({ lat: 47.268, lng: 11.3913 });
     expect(feature.bbox).toStrictEqual({
       _northEast: { lat: 47.35922, lng: 11.45587 },
       _southWest: { lat: 47.21082, lng: 11.30194 }
     });
-    expect(callback.mock.calls).toMatchSnapshot();
+    expect([[result]]).toMatchSnapshot();
   });
 });
 
@@ -94,8 +92,7 @@ describe('L.Control.Geocoder.HEREv2', () => {
   it('geocodes Innsbruck', async () => {
     const geocodingParams = { at: '50.62925,3.057256' };
     const geocoder = new HEREv2({ apiKey: 'xxx', geocodingQueryParams: geocodingParams });
-    const callback = vi.fn();
-    mockFetchRequest(
+    const result = await mockFetchRequest(
       'https://geocode.search.hereapi.com/v1/discover?q=Innsbruck&apiKey=xxx&limit=10&at=50.62925%2C3.057256',
       {
         items: [
@@ -166,15 +163,14 @@ describe('L.Control.Geocoder.HEREv2', () => {
           }
         ]
       },
-      () => geocoder.geocode('Innsbruck', callback)
+      () => geocoder.geocode('Innsbruck')
     );
 
-    await vi.waitUntil(() => callback.mock.calls.length);
-    const feature: GeocodingResult = callback.mock.calls[0][0][0];
+    const feature: GeocodingResult = result[0];
     expect(feature.name).toBe(
       'Salumeria Italiana, 151 Richmond St, Boston, MA 02109, United States'
     );
     expect(feature.center).toStrictEqual({ lat: 42.36355, lng: -71.05439 });
-    expect(callback.mock.calls).toMatchSnapshot();
+    expect([[result]]).toMatchSnapshot();
   });
 });

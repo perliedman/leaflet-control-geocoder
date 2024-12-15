@@ -51,11 +51,7 @@ export function htmlEscape(string?: string): string {
 /**
  * @internal
  */
-export function getJSON(
-  url: string,
-  params: Record<string, unknown>,
-  callback: (message: any) => void
-): void {
+export function getJSON<T>(url: string, params: Record<string, unknown>): Promise<T> {
   const headers = { Accept: 'application/json' };
   const request = new URL(url);
   Object.entries(params).forEach(([key, value]) => {
@@ -63,9 +59,7 @@ export function getJSON(
       request.searchParams.append(key, v);
     });
   });
-  fetch(request.toString(), { headers })
-    .then(response => response.json())
-    .then(j => callback(j));
+  return fetch(request.toString(), { headers }).then(response => response.json());
 }
 
 /**
