@@ -57,7 +57,13 @@ export function getJSON(
   callback: (message: any) => void
 ): void {
   const headers = { Accept: 'application/json' };
-  fetch(url + getParamString(params), { headers })
+  const request = new URL(url);
+  Object.entries(params).forEach(([key, value]) => {
+    (Array.isArray(value) ? value : [value]).forEach(v => {
+      request.searchParams.append(key, v);
+    });
+  });
+  fetch(request.toString(), { headers })
     .then(response => response.json())
     .then(j => callback(j));
 }
@@ -75,27 +81,4 @@ export function template(str: string, data: Record<string, any>): string {
     }
     return htmlEscape(value);
   });
-}
-
-/**
- * @internal
- */
-export function getParamString(
-  obj: Record<string, unknown | unknown[]>,
-  existingUrl?: string,
-  uppercase?: boolean
-): string {
-  const params = [];
-  for (const i in obj) {
-    const key = encodeURIComponent(uppercase ? i.toUpperCase() : i);
-    const value = obj[i];
-    if (!Array.isArray(value)) {
-      params.push(key + '=' + encodeURIComponent(String(value)));
-    } else {
-      for (let j = 0; j < value.length; j++) {
-        params.push(key + '=' + encodeURIComponent(value[j]));
-      }
-    }
-  }
-  return (!existingUrl || existingUrl.indexOf('?') === -1 ? '?' : '&') + params.join('&');
 }
