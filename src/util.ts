@@ -1,9 +1,3 @@
-import * as L from 'leaflet';
-/**
- * @internal
- */
-let lastCallbackId = 0;
-
 // Adapted from handlebars.js
 // https://github.com/wycats/handlebars.js/
 /**
@@ -57,56 +51,15 @@ export function htmlEscape(string?: string): string {
 /**
  * @internal
  */
-export function jsonp(
-  url: string,
-  params: Record<string, any>,
-  callback: (message: any) => void,
-  context: any,
-  jsonpParam?: string
-) {
-  const callbackId = '_l_geocoder_' + lastCallbackId++;
-  params[jsonpParam || 'callback'] = callbackId;
-  (window as any)[callbackId] = L.Util.bind(callback, context);
-  const script = document.createElement('script');
-  script.type = 'text/javascript';
-  script.src = url + getParamString(params);
-  script.id = callbackId;
-  document.getElementsByTagName('head')[0].appendChild(script);
-}
-
-/**
- * @internal
- */
-export function getJSON(
-  url: string,
-  params: Record<string, unknown>,
-  callback: (message: any) => void
-): void {
-  const xmlHttp = new XMLHttpRequest();
-  xmlHttp.onreadystatechange = function() {
-    if (xmlHttp.readyState !== 4) {
-      return;
-    }
-    let message;
-    if (xmlHttp.status !== 200 && xmlHttp.status !== 304) {
-      message = '';
-    } else if (typeof xmlHttp.response === 'string') {
-      // IE doesn't parse JSON responses even with responseType: 'json'.
-      try {
-        message = JSON.parse(xmlHttp.response);
-      } catch (e) {
-        // Not a JSON response
-        message = xmlHttp.response;
-      }
-    } else {
-      message = xmlHttp.response;
-    }
-    callback(message);
-  };
-  xmlHttp.open('GET', url + getParamString(params), true);
-  xmlHttp.responseType = 'json';
-  xmlHttp.setRequestHeader('Accept', 'application/json');
-  xmlHttp.send(null);
+export function getJSON<T>(url: string, params: Record<string, unknown>): Promise<T> {
+  const headers = { Accept: 'application/json' };
+  const request = new URL(url);
+  Object.entries(params).forEach(([key, value]) => {
+    (Array.isArray(value) ? value : [value]).forEach(v => {
+      request.searchParams.append(key, v);
+    });
+  });
+  return fetch(request.toString(), { headers }).then(response => response.json());
 }
 
 /**
@@ -122,27 +75,4 @@ export function template(str: string, data: Record<string, any>): string {
     }
     return htmlEscape(value);
   });
-}
-
-/**
- * @internal
- */
-export function getParamString(
-  obj: Record<string, unknown | unknown[]>,
-  existingUrl?: string,
-  uppercase?: boolean
-): string {
-  const params = [];
-  for (const i in obj) {
-    const key = encodeURIComponent(uppercase ? i.toUpperCase() : i);
-    const value = obj[i];
-    if (!Array.isArray(value)) {
-      params.push(key + '=' + encodeURIComponent(String(value)));
-    } else {
-      for (let j = 0; j < value.length; j++) {
-        params.push(key + '=' + encodeURIComponent(value[j]));
-      }
-    }
-  }
-  return (!existingUrl || existingUrl.indexOf('?') === -1 ? '?' : '&') + params.join('&');
 }

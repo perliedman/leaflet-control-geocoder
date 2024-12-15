@@ -1,15 +1,10 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import {
-  IGeocoder,
-  GeocoderOptions,
-  GeocodingCallback,
-  geocodingParams,
-  GeocodingResult,
-  reverseParams
-} from './api';
+import { IGeocoder, GeocoderOptions, geocodingParams, GeocodingResult, reverseParams } from './api';
 
 export interface ArcGisOptions extends GeocoderOptions {}
+
+
 
 /**
  * Implementation of the [ArcGIS geocoder](https://developers.arcgis.com/features/geocoding/)
@@ -24,7 +19,7 @@ export class ArcGis implements IGeocoder {
     L.Util.setOptions(this, options);
   }
 
-  geocode(query: string, cb: GeocodingCallback, context?: any): void {
+  async geocode(query: string): Promise<GeocodingResult[]> {
     const params = geocodingParams(this.options, {
       token: this.options.apiKey,
       SingleLine: query,
@@ -34,52 +29,53 @@ export class ArcGis implements IGeocoder {
       f: 'json'
     });
 
-    getJSON(this.options.serviceUrl + '/findAddressCandidates', params, data => {
-      const results: GeocodingResult[] = [];
-      if (data.candidates && data.candidates.length) {
-        for (let i = 0; i <= data.candidates.length - 1; i++) {
-          const loc = data.candidates[i];
-          const latLng = L.latLng(loc.location.y, loc.location.x);
-          const latLngBounds = L.latLngBounds(
-            L.latLng(loc.extent.ymax, loc.extent.xmax),
-            L.latLng(loc.extent.ymin, loc.extent.xmin)
-          );
-          results[i] = {
-            name: loc.address,
-            bbox: latLngBounds,
-            center: latLng
-          };
-        }
+    const data = await getJSON<ArcGisResponse>(
+      this.options.serviceUrl + '/findAddressCandidates',
+      params
+    );
+    const results: GeocodingResult[] = [];
+    if (data.candidates && data.candidates.length) {
+      for (let i = 0; i <= data.candidates.length - 1; i++) {
+        const loc = data.candidates[i];
+        const latLng = L.latLng(loc.location.y, loc.location.x);
+        const latLngBounds = L.latLngBounds(
+          L.latLng(loc.extent.ymax, loc.extent.xmax),
+          L.latLng(loc.extent.ymin, loc.extent.xmin)
+        );
+        results[i] = {
+          name: loc.address,
+          bbox: latLngBounds,
+          center: latLng
+        };
       }
+    }
 
-      cb.call(context, results);
-    });
+    return results;
   }
 
-  suggest(query: string, cb: GeocodingCallback, context?: any): void {
-    return this.geocode(query, cb, context);
+  suggest(query: string): Promise<GeocodingResult[]> {
+    return this.geocode(query);
   }
 
-  reverse(location: L.LatLngLiteral, scale: number, cb: GeocodingCallback, context?: any): void {
+  async reverse(location: L.LatLngLiteral, scale: number): Promise<GeocodingResult[]> {
     const params = reverseParams(this.options, {
       location: location.lng + ',' + location.lat,
       distance: 100,
       f: 'json'
     });
-    getJSON(this.options.serviceUrl + '/reverseGeocode', params, data => {
-      const result: GeocodingResult[] = [];
-      if (data && !data.error) {
-        const center = L.latLng(data.location.y, data.location.x);
-        const bbox = L.latLngBounds(center, center);
-        result.push({
-          name: data.address.Match_addr,
-          center: center,
-          bbox: bbox
-        });
-      }
+    const data = await getJSON<any>(this.options.serviceUrl + '/reverseGeocode', params);
+    const result: GeocodingResult[] = [];
+    if (data && !data.error) {
+      const center = L.latLng(data.location.y, data.location.x);
+      const bbox = L.latLngBounds(center, center);
+      result.push({
+        name: data.address.Match_addr,
+        center: center,
+        bbox: bbox
+      });
+    }
 
-      cb.call(context, result);
-    });
+    return result;
   }
 }
 
@@ -90,3 +86,33 @@ export class ArcGis implements IGeocoder {
 export function arcgis(options?: Partial<ArcGisOptions>) {
   return new ArcGis(options);
 }
+
+/**
+ * @internal
+ */
+export interface ArcGisResponse {
+  spatialReference: {
+    wkid: number;
+    latestWkid: number;
+  };
+  candidates: Candidate[];
+}
+
+interface Candidate {
+  address: string;
+  location: {
+    x: number;
+    y: number;
+  };
+  score: number;
+  attributes: {
+    Addr_Type: string;
+  };
+  extent: {
+    xmin: number;
+    ymin: number;
+    xmax: number;
+    ymax: number;
+  };
+}
+

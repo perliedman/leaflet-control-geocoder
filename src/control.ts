@@ -131,7 +131,6 @@ export class GeocoderControl extends EventedControl {
   private _alts: HTMLUListElement;
   private _container: HTMLDivElement;
   private _errorElement: HTMLDivElement;
-  private _form: HTMLDivElement;
   private _geocodeMarker: L.Marker;
   private _input: HTMLInputElement;
   private _lastGeocode: string;
@@ -171,11 +170,7 @@ export class GeocoderControl extends EventedControl {
     const className = 'leaflet-control-geocoder';
     const container = L.DomUtil.create('div', className + ' leaflet-bar') as HTMLDivElement;
     const icon = L.DomUtil.create('button', className + '-icon', container) as HTMLButtonElement;
-    const form = (this._form = L.DomUtil.create(
-      'div',
-      className + '-form',
-      container
-    ) as HTMLDivElement);
+    const form = L.DomUtil.create('div', className + '-form', container) as HTMLDivElement;
 
     this._map = map;
     this._container = container;
@@ -205,7 +200,7 @@ export class GeocoderControl extends EventedControl {
     L.DomEvent.disableClickPropagation(this._alts);
 
     L.DomEvent.addListener(input, 'keydown', this._keydown, this);
-    if (this.options.geocoder.suggest) {
+    if (this.options.geocoder?.suggest) {
       L.DomEvent.addListener(input, 'input', this._change, this);
     }
     L.DomEvent.addListener(input, 'blur', () => {
@@ -308,21 +303,13 @@ export class GeocoderControl extends EventedControl {
     return this;
   }
 
-  private _geocode(suggest?: boolean) {
+  private async _geocode(suggest: boolean = false) {
     const value = this._input.value;
     if (!suggest && value.length < this.options.queryMinLength) {
       return;
     }
 
     const requestCount = ++this._requestCount;
-    const cb = (results: GeocodingResult[]) => {
-      if (requestCount === this._requestCount) {
-        const event: FinishGeocodeEvent = { input: value, results };
-        this.fire(suggest ? 'finishsuggest' : 'finishgeocode', event);
-        this._geocodeResult(results, suggest);
-      }
-    };
-
     this._lastGeocode = value;
     if (!suggest) {
       this._clearResults();
@@ -330,10 +317,15 @@ export class GeocoderControl extends EventedControl {
 
     const event: StartGeocodeEvent = { input: value };
     this.fire(suggest ? 'startsuggest' : 'startgeocode', event);
-    if (suggest) {
-      this.options.geocoder.suggest(value, cb);
-    } else {
-      this.options.geocoder.geocode(value, cb);
+
+    const results = suggest
+      ? await this.options.geocoder!.suggest!(value)
+      : await this.options.geocoder!.geocode(value);
+
+    if (requestCount === this._requestCount) {
+      const event: FinishGeocodeEvent = { input: value, results };
+      this.fire(suggest ? 'finishsuggest' : 'finishgeocode', event);
+      this._geocodeResult(results, suggest);
     }
   }
 
@@ -401,7 +393,7 @@ export class GeocoderControl extends EventedControl {
       };
 
     if (icon) {
-      icon.src = result.icon;
+      icon.src = result.icon!;
     }
 
     li.setAttribute('data-result-index', String(index));

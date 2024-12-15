@@ -1,12 +1,13 @@
-import { testXMLHttpRequest } from './mockXMLHttpRequest';
-import { Photon } from '../src/geocoders/photon';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import { mockFetchRequest } from './mockFetchRequest';
+import { Photon, PhotonResponse } from '../src/geocoders/photon';
 import { GeocodingResult } from '../src/geocoders/api';
 
 describe('L.Control.Geocoder.Photon', () => {
-  it('geocodes Innsbruck', () => {
+  afterEach(() => vi.clearAllMocks());
+  it('geocodes Innsbruck', async () => {
     const geocoder = new Photon();
-    const callback = jest.fn();
-    testXMLHttpRequest(
+    const result = await mockFetchRequest(
       'https://photon.komoot.io/api/?q=Innsbruck',
       {
         features: [
@@ -49,17 +50,17 @@ describe('L.Control.Geocoder.Photon', () => {
           }
         ],
         type: 'FeatureCollection'
-      },
-      () => geocoder.geocode('Innsbruck', callback)
+      } satisfies PhotonResponse,
+      () => geocoder.geocode('Innsbruck')
     );
 
-    const feature: GeocodingResult = callback.mock.calls[0][0][0];
+    const feature: GeocodingResult = result[0];
     expect(feature.name).toBe('Innsbruck, Innsbruck, Tyrol, Austria');
     expect(feature.center).toStrictEqual({ lat: 47.2654296, lng: 11.3927685 });
     expect(feature.bbox).toStrictEqual({
       _northEast: { lat: 47.2808566, lng: 11.4181209 },
       _southWest: { lat: 47.2583715, lng: 11.3811871 }
     });
-    expect(callback.mock.calls).toMatchSnapshot();
+    expect([[result]]).toMatchSnapshot();
   });
 });

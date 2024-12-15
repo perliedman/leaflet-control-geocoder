@@ -1,11 +1,12 @@
-import { testXMLHttpRequest } from './mockXMLHttpRequest';
-import { Mapbox } from '../src/geocoders/mapbox';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import { mockFetchRequest } from './mockFetchRequest';
+import { Mapbox, MapboxResponse } from '../src/geocoders/mapbox';
 
 describe('L.Control.Geocoder.Mapbox', () => {
-  it('geocodes Milwaukee Ave', () => {
+  afterEach(() => vi.clearAllMocks());
+  it('geocodes Milwaukee Ave', async () => {
     const geocoder = new Mapbox({ apiKey: '0123' });
-    const callback = jest.fn();
-    testXMLHttpRequest(
+    const result = await mockFetchRequest(
       'https://api.mapbox.com/geocoding/v5/mapbox.places/Milwaukee%20Ave.json?access_token=0123',
       {
         type: 'FeatureCollection',
@@ -61,17 +62,17 @@ describe('L.Control.Geocoder.Mapbox', () => {
         ],
         attribution:
           'NOTICE: © 2018 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service (https://www.mapbox.com/about/maps/). This response and the information it contains may not be retained. POI(s) provided by Foursquare.'
-      },
-      () => geocoder.geocode('Milwaukee Ave', callback)
+      } satisfies MapboxResponse,
+      () => geocoder.geocode('Milwaukee Ave')
     );
 
-    const feature = callback.mock.calls[0][0][0];
+    const feature = result[0];
     expect(feature.name).toBe('825 Milwaukee Ave, Deerfield, Illinois 60015, United States');
     expect(feature.center).toStrictEqual({ lat: 42.166602, lng: -87.921434 });
     expect(feature.bbox).toStrictEqual({
       _northEast: { lat: 42.166602, lng: -87.921434 },
       _southWest: { lat: 42.166602, lng: -87.921434 }
     });
-    expect(callback.mock.calls).toMatchSnapshot();
+    expect([[result]]).toMatchSnapshot();
   });
 });

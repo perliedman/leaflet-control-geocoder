@@ -1,13 +1,6 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import {
-  IGeocoder,
-  GeocoderOptions,
-  GeocodingCallback,
-  geocodingParams,
-  GeocodingResult,
-  reverseParams
-} from './api';
+import { IGeocoder, GeocoderOptions, geocodingParams, GeocodingResult, reverseParams } from './api';
 
 export interface PhotonOptions extends GeocoderOptions {
   reverseUrl: string;
@@ -29,36 +22,26 @@ export class Photon implements IGeocoder {
     L.Util.setOptions(this, options);
   }
 
-  geocode(query: string, cb: GeocodingCallback, context?: any): void {
+  async geocode(query: string): Promise<GeocodingResult[]> {
     const params = geocodingParams(this.options, { q: query });
-    getJSON(
-      this.options.serviceUrl,
-      params,
-      L.Util.bind(function(data) {
-        cb.call(context, this._decodeFeatures(data));
-      }, this)
-    );
+    const data = await getJSON<any>(this.options.serviceUrl, params);
+    return this._parseResults(data);
   }
 
-  suggest(query: string, cb: GeocodingCallback, context?: any): void {
-    return this.geocode(query, cb, context);
+  suggest(query: string): Promise<GeocodingResult[]> {
+    return this.geocode(query);
   }
 
-  reverse(latLng: L.LatLngLiteral, scale: number, cb: GeocodingCallback, context?: any): void {
+  async reverse(latLng: L.LatLngLiteral, scale: number): Promise<GeocodingResult[]> {
     const params = reverseParams(this.options, {
       lat: latLng.lat,
       lon: latLng.lng
     });
-    getJSON(
-      this.options.reverseUrl,
-      params,
-      L.Util.bind(function(data) {
-        cb.call(context, this._decodeFeatures(data));
-      }, this)
-    );
+    const data = await getJSON<any>(this.options.reverseUrl, params);
+    return this._parseResults(data);
   }
 
-  _decodeFeatures(data: GeoJSON.FeatureCollection<GeoJSON.Point>) {
+  _parseResults(data: GeoJSON.FeatureCollection<GeoJSON.Point>): GeocodingResult[] {
     const results: GeocodingResult[] = [];
 
     if (data && data.features) {
@@ -66,7 +49,7 @@ export class Photon implements IGeocoder {
         const f = data.features[i];
         const c = f.geometry.coordinates;
         const center = L.latLng(c[1], c[0]);
-        const extent = f.properties.extent;
+        const extent = f.properties?.extent;
 
         const bbox = extent
           ? L.latLngBounds([extent[1], extent[0]], [extent[3], extent[2]])
@@ -87,12 +70,8 @@ export class Photon implements IGeocoder {
 
   _decodeFeatureName(f: GeoJSON.Feature) {
     return (this.options.nameProperties || [])
-      .map(p => {
-        return f.properties[p];
-      })
-      .filter(v => {
-        return !!v;
-      })
+      .map(p => f.properties?.[p])
+      .filter(v => !!v)
       .join(', ');
   }
 }
@@ -103,4 +82,27 @@ export class Photon implements IGeocoder {
  */
 export function photon(options?: Partial<PhotonOptions>) {
   return new Photon(options);
+}
+
+/**
+ * @internal
+ */
+export type PhotonResponse = GeoJSON.FeatureCollection<GeoJSON.Geometry, PhotonProperties>;
+
+interface PhotonProperties {
+  osm_id: number;
+  osm_type: string;
+  extent?: number[];
+  country: string;
+  osm_key: string;
+  city: string;
+  countrycode: string;
+  osm_value: string;
+  name: string;
+  state: string;
+  type: string;
+  postcode?: string;
+  housenumber?: string;
+  street?: string;
+  district?: string;
 }

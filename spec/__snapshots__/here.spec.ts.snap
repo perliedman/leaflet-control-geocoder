@@ -1,36 +1,36 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`L.Control.Geocoder.HERE geocodes Innsbruck 1`] = `
-Array [
-  Array [
-    Array [
-      Object {
-        "bbox": Object {
-          "_northEast": Object {
+exports[`L.Control.Geocoder.HERE > geocodes Innsbruck 1`] = `
+[
+  [
+    [
+      {
+        "bbox": {
+          "_northEast": {
             "lat": 47.35922,
             "lng": 11.45587,
           },
-          "_southWest": Object {
+          "_southWest": {
             "lat": 47.21082,
             "lng": 11.30194,
           },
         },
-        "center": Object {
+        "center": {
           "lat": 47.268,
           "lng": 11.3913,
         },
         "name": "Innsbruck, Tirol, Österreich",
-        "properties": Object {
-          "additionalData": Array [
-            Object {
+        "properties": {
+          "additionalData": [
+            {
               "key": "CountryName",
               "value": "Österreich",
             },
-            Object {
+            {
               "key": "StateName",
               "value": "Tirol",
             },
-            Object {
+            {
               "key": "CountyName",
               "value": "Innsbruck-Stadt",
             },
@@ -48,27 +48,27 @@ Array [
 ]
 `;
 
-exports[`L.Control.Geocoder.HEREv2 geocodes Innsbruck 1`] = `
-Array [
-  Array [
-    Array [
-      Object {
-        "bbox": Object {
-          "_northEast": Object {
+exports[`L.Control.Geocoder.HEREv2 > geocodes Innsbruck 1`] = `
+[
+  [
+    [
+      {
+        "bbox": {
+          "_northEast": {
             "lat": 42.36355,
             "lng": -71.05439,
           },
-          "_southWest": Object {
+          "_southWest": {
             "lat": 42.36355,
             "lng": -71.05439,
           },
         },
-        "center": Object {
+        "center": {
           "lat": 42.36355,
           "lng": -71.05439,
         },
         "name": "Salumeria Italiana, 151 Richmond St, Boston, MA 02109, United States",
-        "properties": Object {
+        "properties": {
           "city": "Boston",
           "countryCode": "USA",
           "countryName": "United States",

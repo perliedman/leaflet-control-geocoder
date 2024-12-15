@@ -9,6 +9,7 @@
 import * as L from 'leaflet';
 import { GeocoderControl as Geocoder, geocoder } from './control';
 import * as geocoders from './geocoders/index';
+import './style.css';
 
 L.Util.extend(Geocoder, geocoders);
 export default Geocoder;
