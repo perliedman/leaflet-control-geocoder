@@ -1,13 +1,14 @@
-import { describe, expect, it, vi } from 'vitest';
-import { testXMLHttpRequest } from './mockXMLHttpRequest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import { mockFetchRequest } from './mockFetchRequest';
 import { Openrouteservice } from '../src/geocoders/pelias';
 
 describe('L.Control.Geocoder.Openrouteservice', () => {
+  afterEach(() => vi.clearAllMocks());
   const geocoder = new Openrouteservice({ apiKey: '0123' });
 
-  it('geocodes Innsbruck', () => {
+  it('geocodes Innsbruck', async () => {
     const callback = vi.fn();
-    testXMLHttpRequest(
+    mockFetchRequest(
       'https://api.openrouteservice.org/geocode/search?api_key=0123&text=innsbruck',
       {
         geocoding: {
@@ -49,6 +50,7 @@ describe('L.Control.Geocoder.Openrouteservice', () => {
       () => geocoder.geocode('innsbruck', callback)
     );
 
+    await vi.waitUntil(() => callback.mock.calls.length);
     const feature = callback.mock.calls[0][0][0];
     expect(feature.name).toBe('Innsbruck, Austria');
     expect(feature.center).toStrictEqual({ lat: 47.272308, lng: 11.407851 });

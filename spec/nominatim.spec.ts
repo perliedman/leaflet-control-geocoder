@@ -1,14 +1,15 @@
-import { describe, expect, it, vi } from 'vitest';
-import { testXMLHttpRequest } from './mockXMLHttpRequest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import { mockFetchRequest } from './mockFetchRequest';
 import { Nominatim } from '../src/geocoders/nominatim';
 
 describe('L.Control.Geocoder.Nominatim', () => {
+  afterEach(() => vi.clearAllMocks());
   const geocoder = new Nominatim();
 
-  it('geocodes Innsbruck', () => {
+  it('geocodes Innsbruck', async () => {
     const callback = vi.fn();
 
-    testXMLHttpRequest(
+    mockFetchRequest(
       'https://nominatim.openstreetmap.org/search?q=innsbruck&limit=5&format=json&addressdetails=1',
       [
         {
@@ -23,8 +24,7 @@ describe('L.Control.Geocoder.Nominatim', () => {
           class: 'boundary',
           type: 'administrative',
           importance: 0.763909048330467,
-          icon:
-            'https://nominatim.openstreetmap.org/images/mapicons/poi_boundary_administrative.p.20.png',
+          icon: 'https://nominatim.openstreetmap.org/images/mapicons/poi_boundary_administrative.p.20.png',
           address: {
             city_district: 'Innsbruck',
             city: 'Innsbruck',
@@ -38,6 +38,7 @@ describe('L.Control.Geocoder.Nominatim', () => {
       () => geocoder.geocode('innsbruck', callback)
     );
 
+    await vi.waitUntil(() => callback.mock.calls.length);
     const feature = callback.mock.calls[0][0][0];
     expect(feature.name).toBe('Innsbruck, Tyrol, Austria');
     expect(feature.html).toBe(
@@ -54,10 +55,10 @@ describe('L.Control.Geocoder.Nominatim', () => {
     expect(callback.mock.calls).toMatchSnapshot();
   });
 
-  it('reverse geocodes 47.3/11.3', () => {
+  it('reverse geocodes 47.3/11.3', async () => {
     const callback = vi.fn();
 
-    testXMLHttpRequest(
+    mockFetchRequest(
       'https://nominatim.openstreetmap.org/reverse?lat=47.3&lon=11.3&zoom=9&addressdetails=1&format=json',
       {
         place_id: 197718025,
@@ -78,6 +79,7 @@ describe('L.Control.Geocoder.Nominatim', () => {
       () => geocoder.reverse({ lat: 47.3, lng: 11.3 }, 131000, callback)
     );
 
+    await vi.waitUntil(() => callback.mock.calls.length);
     const feature = callback.mock.calls[0][0][0];
     expect(feature.name).toBe('Innsbruck-Land, Tyrol, Austria');
     expect(feature.html).toBe('<span class="">Tyrol Austria</span>');

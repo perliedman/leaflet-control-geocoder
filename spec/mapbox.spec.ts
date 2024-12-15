@@ -1,12 +1,13 @@
-import { describe, expect, it, vi } from 'vitest';
-import { testXMLHttpRequest } from './mockXMLHttpRequest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import { mockFetchRequest } from './mockFetchRequest';
 import { Mapbox } from '../src/geocoders/mapbox';
 
 describe('L.Control.Geocoder.Mapbox', () => {
-  it('geocodes Milwaukee Ave', () => {
+  afterEach(() => vi.clearAllMocks());
+  it('geocodes Milwaukee Ave', async () => {
     const geocoder = new Mapbox({ apiKey: '0123' });
     const callback = vi.fn();
-    testXMLHttpRequest(
+    mockFetchRequest(
       'https://api.mapbox.com/geocoding/v5/mapbox.places/Milwaukee%20Ave.json?access_token=0123',
       {
         type: 'FeatureCollection',
@@ -66,6 +67,7 @@ describe('L.Control.Geocoder.Mapbox', () => {
       () => geocoder.geocode('Milwaukee Ave', callback)
     );
 
+    await vi.waitUntil(() => callback.mock.calls.length);
     const feature = callback.mock.calls[0][0][0];
     expect(feature.name).toBe('825 Milwaukee Ave, Deerfield, Illinois 60015, United States');
     expect(feature.center).toStrictEqual({ lat: 42.166602, lng: -87.921434 });
