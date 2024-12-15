@@ -2,6 +2,8 @@ import * as L from 'leaflet';
 import { template, getJSON } from '../util';
 import { IGeocoder, GeocoderOptions, geocodingParams, GeocodingResult, reverseParams } from './api';
 
+export type NominatimResponse = NominatimResult[];
+
 export interface NominatimResult {
   place_id: number;
   licence: string;
@@ -11,9 +13,9 @@ export interface NominatimResult {
   lat: string;
   lon: string;
   display_name: string;
-  class: string;
-  type: string;
-  importance: number;
+  class?: string;
+  type?: string;
+  importance?: number;
   icon?: string;
   address: NominatimAddress;
 }

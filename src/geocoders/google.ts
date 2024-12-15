@@ -21,7 +21,7 @@ export class Google implements IGeocoder {
       key: this.options.apiKey,
       address: query
     });
-    const data = await getJSON<any>(this.options.serviceUrl, params);
+    const data = await getJSON<GoogleResponse>(this.options.serviceUrl, params);
     const results: GeocodingResult[] = [];
     if (data.results && data.results.length) {
       for (let i = 0; i <= data.results.length - 1; i++) {
@@ -77,4 +77,43 @@ export class Google implements IGeocoder {
  */
 export function google(options?: Partial<GoogleOptions>) {
   return new Google(options);
+}
+
+/**
+ * @internal
+ */
+export interface GoogleResponse {
+  results: Result[];
+  status: string;
+}
+
+interface Result {
+  address_components: AddressComponent[];
+  formatted_address: string;
+  geometry: Geometry;
+  place_id: string;
+  types: string[];
+}
+
+interface AddressComponent {
+  long_name: string;
+  short_name: string;
+  types: string[];
+}
+
+interface Geometry {
+  bounds: Bounds;
+  location: Location;
+  location_type: string;
+  viewport: Bounds;
+}
+
+interface Bounds {
+  northeast: Location;
+  southwest: Location;
+}
+
+interface Location {
+  lat: number;
+  lng: number;
 }

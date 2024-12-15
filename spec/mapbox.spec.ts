@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { mockFetchRequest } from './mockFetchRequest';
-import { Mapbox } from '../src/geocoders/mapbox';
+import { Mapbox, MapboxResponse } from '../src/geocoders/mapbox';
 
 describe('L.Control.Geocoder.Mapbox', () => {
   afterEach(() => vi.clearAllMocks());
@@ -62,7 +62,7 @@ describe('L.Control.Geocoder.Mapbox', () => {
         ],
         attribution:
           'NOTICE: © 2018 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service (https://www.mapbox.com/about/maps/). This response and the information it contains may not be retained. POI(s) provided by Foursquare.'
-      },
+      } satisfies MapboxResponse,
       () => geocoder.geocode('Milwaukee Ave')
     );
 

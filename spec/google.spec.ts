@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { mockFetchRequest } from './mockFetchRequest';
-import { Google } from '../src/geocoders/google';
+import { Google, GoogleResponse } from '../src/geocoders/google';
 import { GeocodingResult } from '../src/geocoders/api';
 
 describe('L.Control.Geocoder.Google', () => {
@@ -67,7 +67,7 @@ describe('L.Control.Geocoder.Google', () => {
           }
         ],
         status: 'OK'
-      },
+      } satisfies GoogleResponse,
       () => geocoder.geocode('Innsbruck')
     );
 

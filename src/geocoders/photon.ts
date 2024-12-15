@@ -83,3 +83,26 @@ export class Photon implements IGeocoder {
 export function photon(options?: Partial<PhotonOptions>) {
   return new Photon(options);
 }
+
+/**
+ * @internal
+ */
+export type PhotonResponse = GeoJSON.FeatureCollection<GeoJSON.Geometry, PhotonProperties>;
+
+interface PhotonProperties {
+  osm_id: number;
+  osm_type: string;
+  extent?: number[];
+  country: string;
+  osm_key: string;
+  city: string;
+  countrycode: string;
+  osm_value: string;
+  name: string;
+  state: string;
+  type: string;
+  postcode?: string;
+  housenumber?: string;
+  street?: string;
+  district?: string;
+}

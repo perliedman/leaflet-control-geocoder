@@ -125,3 +125,47 @@ export class Openrouteservice extends Pelias {
 export function openrouteservice(options?: Partial<PeliasOptions>) {
   return new Openrouteservice(options);
 }
+
+/**
+ * @internal
+ */
+export type PeliasResponse = GeoJSON.FeatureCollection<GeoJSON.Geometry, Properties> & {
+  geocoding: Geocoding;
+};
+
+interface Properties {
+  id:         string;
+  layer:      string;
+  source_id:  string;
+  name:       string;
+  confidence: number;
+  match_type: string;
+  accuracy:   string;
+  country:    string;
+  country_a:  string;
+  region:     string;
+  region_a:   string;
+  county:     string;
+  county_a:   string;
+  localadmin: string;
+  locality:   string;
+  continent:  string;
+  label:      string;
+}
+
+interface Geocoding {
+  version:     string;
+  attribution: string;
+  query:       Query;
+  warnings:    string[];
+  engine:      Engine;
+}
+
+interface Engine {
+  name:    string;
+  author:  string;
+  version: string;
+}
+
+interface Query {
+}
