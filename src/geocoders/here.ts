@@ -74,8 +74,8 @@ export class HERE implements IGeocoder {
   getJSON(url: string, params: any, cb: GeocodingCallback, context?: any) {
     getJSON(url, params, data => {
       const results: GeocodingResult[] = [];
-
-      if (data.response.view && data.response.view.length) {
+      
+      if (data && data.response && data.response.view && data.response.view.length) {
         for (let i = 0; i <= data.response.view[0].result.length - 1; i++) {
           const loc = data.response.view[0].result[i].location;
           const center = L.latLng(loc.displayPosition.latitude, loc.displayPosition.longitude);
