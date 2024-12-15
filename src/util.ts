@@ -1,9 +1,3 @@
-import * as L from 'leaflet';
-/**
- * @internal
- */
-let lastCallbackId = 0;
-
 // Adapted from handlebars.js
 // https://github.com/wycats/handlebars.js/
 /**
@@ -52,26 +46,6 @@ export function htmlEscape(string?: string): string {
     return string;
   }
   return string.replace(badChars, escapeChar);
-}
-
-/**
- * @internal
- */
-export function jsonp(
-  url: string,
-  params: Record<string, any>,
-  callback: (message: any) => void,
-  context: any,
-  jsonpParam?: string
-) {
-  const callbackId = '_l_geocoder_' + lastCallbackId++;
-  params[jsonpParam || 'callback'] = callbackId;
-  (window as any)[callbackId] = L.Util.bind(callback, context);
-  const script = document.createElement('script');
-  script.type = 'text/javascript';
-  script.src = url + getParamString(params);
-  script.id = callbackId;
-  document.getElementsByTagName('head')[0].appendChild(script);
 }
 
 /**
