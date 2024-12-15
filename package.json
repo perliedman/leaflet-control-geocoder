@@ -3,7 +3,6 @@
   "version": "2.4.0",
   "description": "Extendable geocoder with builtin support for OpenStreetMap Nominatim, Bing, Google, Mapbox, MapQuest, What3Words, Photon, Pelias, HERE, Neutrino, Plus codes",
   "type": "module",
-
   "source": "src/index.ts",
   "main": "dist/Control.Geocoder.umd.js",
   "module": "dist/Control.Geocoder.js",
@@ -25,7 +24,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "prepare": "npm run build",
-    "build": "vite build",
+    "build": "vite build && tsc --declaration --emitDeclarationOnly --outDir dist/ src/index.ts",
     "build:demo": "npm run build:demo-esbuild && npm run build:demo-rollup && npm run build:demo-webpack",
     "build:demo-esbuild": "cd demo-esbuild && npm install && npm run build",
     "build:demo-rollup": "cd demo-rollup && npm install && npm run build",
@@ -83,7 +82,6 @@
     "typedoc": "^0.27.5",
     "typescript": "^5.7.2",
     "vite": "^6.0.3",
-    "vite-plugin-dts": "^4.3.0",
     "vitest": "^2.1.8"
   },
   "peerDependencies": {

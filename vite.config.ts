@@ -1,5 +1,4 @@
 import { defineConfig } from 'vite';
-import dts from 'vite-plugin-dts';
 
 // https://vite.dev/guide/build.html#library-mode
 export default defineConfig({
@@ -23,6 +22,5 @@ export default defineConfig({
         }
       }
     }
-  },
-  plugins: [dts()]
+  }
 });
