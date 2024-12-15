@@ -8,7 +8,9 @@ export interface AzureMapsOptions {
 }
 
 /**
- * Azure Maps Geocoder class
+ * Implementation of [Azure Maps Geocoding](https://www.microsoft.com/en-us/maps/azure/location-services/geocoding)
+ *
+ * https://learn.microsoft.com/en-us/rest/api/maps/search?view=rest-maps-1.0
  */
 export class AzureMaps implements IGeocoder {
   private options: AzureMapsOptions = {
@@ -23,6 +25,10 @@ export class AzureMaps implements IGeocoder {
     }
   }
 
+  /**
+   * {@inheritdoc}
+   * https://learn.microsoft.com/en-us/rest/api/maps/search/get-search-address?view=rest-maps-1.0&tabs=HTTP
+   */
   async geocode(query: string): Promise<GeocodingResult[]> {
     const params = {
       'api-version': '1.0',
@@ -30,7 +36,7 @@ export class AzureMaps implements IGeocoder {
       'subscription-key': this.options.apiKey
     };
     const url = this.options.serviceUrl + '/address/json';
-    const data = await getJSON<any>(url, params);
+    const data = await getJSON<AzureMapsResponse>(url, params);
 
     const results: GeocodingResult[] = [];
     if (data.results && data.results.length > 0) {
@@ -48,6 +54,10 @@ export class AzureMaps implements IGeocoder {
     return results;
   }
 
+  /**
+   * {@inheritdoc}
+   * https://learn.microsoft.com/en-us/rest/api/maps/search/get-search-address-reverse?view=rest-maps-1.0&tabs=HTTP
+   */
   async reverse(location: L.LatLngLiteral, scale: number): Promise<GeocodingResult[]> {
     const params = {
       'api-version': '1.0',
@@ -80,4 +90,64 @@ export class AzureMaps implements IGeocoder {
  */
 export function azure(options: AzureMapsOptions) {
   return new AzureMaps(options);
+}
+
+/**
+ * @internal
+ */
+export interface AzureMapsResponse {
+  summary: Summary;
+  results: Result[];
+}
+
+interface Result {
+  type: string;
+  id: string;
+  score: number;
+  address: Address;
+  position: Position;
+  viewport: Viewport;
+  entryPoints: EntryPoint[];
+}
+
+interface Address {
+  streetNumber: string;
+  streetName: string;
+  municipalitySubdivision: string;
+  municipality: string;
+  countrySecondarySubdivision: string;
+  countryTertiarySubdivision: string;
+  countrySubdivisionCode: string;
+  postalCode: string;
+  extendedPostalCode: string;
+  countryCode: string;
+  country: string;
+  countryCodeISO3: string;
+  freeformAddress: string;
+  countrySubdivisionName: string;
+}
+
+interface EntryPoint {
+  type: string;
+  position: Position;
+}
+
+interface Position {
+  lat: number;
+  lon: number;
+}
+
+interface Viewport {
+  topLeftPoint: Position;
+  btmRightPoint: Position;
+}
+
+interface Summary {
+  query: string;
+  queryType: string;
+  queryTime: number;
+  numResults: number;
+  offset: number;
+  totalResults: number;
+  fuzzyLevel: number;
 }

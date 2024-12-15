@@ -1,0 +1,27 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`L.Control.Geocoder.AzureMaps > geocodes 1`] = `
+[
+  [
+    [
+      {
+        "bbox": {
+          "_northEast": {
+            "lat": 47.6317,
+            "lng": -122.13717,
+          },
+          "_southWest": {
+            "lat": 47.6299,
+            "lng": -122.13983,
+          },
+        },
+        "center": {
+          "lat": 47.6308,
+          "lng": -122.1385,
+        },
+        "name": "15127 NE 24th St, Redmond, WA 980525544",
+      },
+    ],
+  ],
+]
+`;
