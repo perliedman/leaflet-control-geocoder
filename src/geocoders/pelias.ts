@@ -62,10 +62,10 @@ export class Pelias implements IGeocoder {
   _parseResults(data, bboxname) {
     const results: GeocodingResult[] = [];
     L.geoJSON(data, {
-      pointToLayer: function (feature, latlng) {
+      pointToLayer(feature, latlng) {
         return L.circleMarker(latlng);
       },
-      onEachFeature: function (feature, layer: any) {
+      onEachFeature(feature, layer: any) {
         const result = {} as GeocodingResult;
         let bbox;
         let center;
