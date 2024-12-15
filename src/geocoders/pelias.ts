@@ -1,13 +1,6 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import {
-  IGeocoder,
-  GeocoderOptions,
-  GeocodingCallback,
-  geocodingParams,
-  GeocodingResult,
-  reverseParams
-} from './api';
+import { IGeocoder, GeocoderOptions, geocodingParams, GeocodingResult, reverseParams } from './api';
 
 export interface PeliasOptions extends GeocoderOptions {}
 
@@ -19,47 +12,39 @@ export class Pelias implements IGeocoder {
     serviceUrl: 'https://api.geocode.earth/v1'
   };
 
-  private _lastSuggest = 0;
-
   constructor(options?: Partial<PeliasOptions>) {
     L.Util.setOptions(this, options);
   }
 
-  geocode(query: string, cb: GeocodingCallback, context?: any): void {
+  async geocode(query: string): Promise<GeocodingResult[]> {
     const params = geocodingParams(this.options, {
       api_key: this.options.apiKey,
       text: query
     });
-    getJSON(this.options.serviceUrl + '/search', params, data => {
-      cb.call(context, this._parseResults(data, 'bbox'));
-    });
+    const data = await getJSON<any>(this.options.serviceUrl + '/search', params);
+    return this._parseResults(data, 'bbox');
   }
 
-  suggest(query: string, cb: GeocodingCallback, context?: any): void {
+  async suggest(query: string): Promise<GeocodingResult[]> {
     const params = geocodingParams(this.options, {
       api_key: this.options.apiKey,
       text: query
     });
-    getJSON(this.options.serviceUrl + '/autocomplete', params, data => {
-      if (data.geocoding.timestamp > this._lastSuggest) {
-        this._lastSuggest = data.geocoding.timestamp;
-        cb.call(context, this._parseResults(data, 'bbox'));
-      }
-    });
+    const data = await getJSON<any>(this.options.serviceUrl + '/autocomplete', params);
+    return this._parseResults(data, 'bbox');
   }
 
-  reverse(location: L.LatLngLiteral, scale: number, cb: GeocodingCallback, context?: any): void {
+  async reverse(location: L.LatLngLiteral, scale: number): Promise<GeocodingResult[]> {
     const params = reverseParams(this.options, {
       api_key: this.options.apiKey,
       'point.lat': location.lat,
       'point.lon': location.lng
     });
-    getJSON(this.options.serviceUrl + '/reverse', params, data => {
-      cb.call(context, this._parseResults(data, 'bounds'));
-    });
+    const data = await getJSON<any>(this.options.serviceUrl + '/reverse', params);
+    return this._parseResults(data, 'bounds');
   }
 
-  _parseResults(data, bboxname) {
+  _parseResults(data, bboxname): GeocodingResult[] {
     const results: GeocodingResult[] = [];
     L.geoJSON(data, {
       pointToLayer(feature, latlng) {

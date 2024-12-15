@@ -6,8 +6,7 @@ describe('L.Control.Geocoder.ArcGis', () => {
   afterEach(() => vi.clearAllMocks());
   it('geocodes Innsbruck', async () => {
     const geocoder = new ArcGis();
-    const callback = vi.fn();
-    mockFetchRequest(
+    const result = await mockFetchRequest(
       'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?token=&SingleLine=Innsbruck&outFields=Addr_Type&forStorage=false&maxLocations=10&f=json',
       {
         spatialReference: { wkid: 4326, latestWkid: 4326 },
@@ -26,17 +25,16 @@ describe('L.Control.Geocoder.ArcGis', () => {
           }
         ]
       },
-      () => geocoder.geocode('Innsbruck', callback)
+      () => geocoder.geocode('Innsbruck')
     );
 
-    await vi.waitUntil(() => callback.mock.calls.length);
-    const feature = callback.mock.calls[0][0][0];
+    const feature = result[0];
     expect(feature.name).toBe('Innsbruck, Innsbruck-Stadt, Tirol');
     expect(feature.center).toStrictEqual({ lat: 47.26800000000003, lng: 11.391300000000058 });
     expect(feature.bbox).toStrictEqual({
       _northEast: { lat: 47.34400000000003, lng: 11.467300000000058 },
       _southWest: { lat: 47.19200000000003, lng: 11.315300000000057 }
     });
-    expect(callback.mock.calls).toMatchSnapshot();
+    expect([[result]]).toMatchSnapshot();
   });
 });

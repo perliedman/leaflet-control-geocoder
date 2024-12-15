@@ -1,5 +1,5 @@
 import * as L from 'leaflet';
-import { IGeocoder, GeocodingCallback, GeocodingResult } from './api';
+import { IGeocoder, GeocodingResult } from './api';
 
 export interface OpenLocationCodeOptions {
   OpenLocationCode: OpenLocationCodeApi;
@@ -30,7 +30,7 @@ export class OpenLocationCode implements IGeocoder {
     L.Util.setOptions(this, options);
   }
 
-  geocode(query: string, cb: GeocodingCallback, context?: any) {
+  async geocode(query: string) {
     try {
       const decoded = this.options.OpenLocationCode.decode(query);
       const result: GeocodingResult = {
@@ -41,13 +41,13 @@ export class OpenLocationCode implements IGeocoder {
           L.latLng(decoded.latitudeHi, decoded.longitudeHi)
         )
       };
-      cb.call(context, [result]);
+      return [result];
     } catch (e) {
       console.warn(e); // eslint-disable-line no-console
-      cb.call(context, []);
+      return [];
     }
   }
-  reverse(location: L.LatLngLiteral, scale: number, cb: GeocodingCallback, context?: any) {
+  async reverse(location: L.LatLngLiteral, scale: number) {
     try {
       const code = this.options.OpenLocationCode.encode(
         location.lat,
@@ -62,10 +62,10 @@ export class OpenLocationCode implements IGeocoder {
           L.latLng(location.lat, location.lng)
         )
       };
-      cb.call(context, [result]);
+      return [result];
     } catch (e) {
       console.warn(e); // eslint-disable-line no-console
-      cb.call(context, []);
+      return [];
     }
   }
 }

@@ -1,13 +1,6 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import {
-  IGeocoder,
-  GeocoderOptions,
-  GeocodingCallback,
-  geocodingParams,
-  GeocodingResult,
-  reverseParams
-} from './api';
+import { IGeocoder, GeocoderOptions, geocodingParams, GeocodingResult, reverseParams } from './api';
 
 export interface NeutrinoOptions extends GeocoderOptions {
   userId: string;
@@ -18,8 +11,8 @@ export interface NeutrinoOptions extends GeocoderOptions {
  */
 export class Neutrino implements IGeocoder {
   options: NeutrinoOptions = {
-    userId: undefined,
-    apiKey: undefined,
+    userId: '',
+    apiKey: '',
     serviceUrl: 'https://neutrinoapi.com/'
   };
 
@@ -28,55 +21,53 @@ export class Neutrino implements IGeocoder {
   }
 
   // https://www.neutrinoapi.com/api/geocode-address/
-  geocode(query: string, cb: GeocodingCallback, context?: any): void {
+  async geocode(query: string): Promise<GeocodingResult[]> {
     const params = geocodingParams(this.options, {
       apiKey: this.options.apiKey,
       userId: this.options.userId,
       //get three words and make a dot based string
       address: query.split(/\s+/).join('.')
     });
-    getJSON(this.options.serviceUrl + 'geocode-address', params, data => {
-      const results: GeocodingResult[] = [];
-      if (data.locations) {
-        data.geometry = data.locations[0];
-        const center = L.latLng(data.geometry['latitude'], data.geometry['longitude']);
-        const bbox = L.latLngBounds(center, center);
-        results[0] = {
-          name: data.geometry.address,
-          bbox: bbox,
-          center: center
-        };
-      }
+    const data = await getJSON<any>(this.options.serviceUrl + 'geocode-address', params);
+    const results: GeocodingResult[] = [];
+    if (data.locations) {
+      data.geometry = data.locations[0];
+      const center = L.latLng(data.geometry['latitude'], data.geometry['longitude']);
+      const bbox = L.latLngBounds(center, center);
+      results[0] = {
+        name: data.geometry.address,
+        bbox: bbox,
+        center: center
+      };
+    }
 
-      cb.call(context, results);
-    });
+    return results;
   }
 
-  suggest(query: string, cb: GeocodingCallback, context?: any): void {
-    return this.geocode(query, cb, context);
+  suggest(query: string): Promise<GeocodingResult[]> {
+    return this.geocode(query);
   }
 
   // https://www.neutrinoapi.com/api/geocode-reverse/
-  reverse(location: L.LatLngLiteral, scale: number, cb: GeocodingCallback, context?: any): void {
+  async reverse(location: L.LatLngLiteral, scale: number): Promise<GeocodingResult[]> {
     const params = reverseParams(this.options, {
       apiKey: this.options.apiKey,
       userId: this.options.userId,
       latitude: location.lat,
       longitude: location.lng
     });
-    getJSON(this.options.serviceUrl + 'geocode-reverse', params, data => {
-      const results: GeocodingResult[] = [];
-      if (data.status.status == 200 && data.found) {
-        const center = L.latLng(location.lat, location.lng);
-        const bbox = L.latLngBounds(center, center);
-        results[0] = {
-          name: data.address,
-          bbox: bbox,
-          center: center
-        };
-      }
-      cb.call(context, results);
-    });
+    const data = await getJSON<any>(this.options.serviceUrl + 'geocode-reverse', params);
+    const results: GeocodingResult[] = [];
+    if (data.status.status == 200 && data.found) {
+      const center = L.latLng(location.lat, location.lng);
+      const bbox = L.latLngBounds(center, center);
+      results[0] = {
+        name: data.address,
+        bbox: bbox,
+        center: center
+      };
+    }
+    return results;
   }
 }
 

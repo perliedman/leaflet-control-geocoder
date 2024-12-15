@@ -1,13 +1,6 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import {
-  IGeocoder,
-  GeocoderOptions,
-  GeocodingCallback,
-  geocodingParams,
-  GeocodingResult,
-  reverseParams
-} from './api';
+import { IGeocoder, GeocoderOptions, geocodingParams, GeocodingResult, reverseParams } from './api';
 
 export interface MapboxOptions extends GeocoderOptions {}
 
@@ -41,7 +34,8 @@ export class Mapbox implements IGeocoder {
     return properties;
   }
 
-  geocode(query: string, cb: GeocodingCallback, context?: any): void {
+  async geocode(query: string): Promise<GeocodingResult[]> {
+    const url = this.options.serviceUrl + encodeURIComponent(query) + '.json';
     const params: any = geocodingParams(this.options, {
       access_token: this.options.apiKey
     });
@@ -52,70 +46,49 @@ export class Mapbox implements IGeocoder {
     ) {
       params.proximity = params.proximity.lng + ',' + params.proximity.lat;
     }
-    getJSON(this.options.serviceUrl + encodeURIComponent(query) + '.json', params, data => {
-      const results: GeocodingResult[] = [];
-      if (data.features && data.features.length) {
-        for (let i = 0; i <= data.features.length - 1; i++) {
-          const loc = data.features[i];
-          const center = L.latLng(loc.center.reverse());
-          let bbox: L.LatLngBounds;
-          if (loc.bbox) {
-            bbox = L.latLngBounds(
-              L.latLng(loc.bbox.slice(0, 2).reverse()),
-              L.latLng(loc.bbox.slice(2, 4).reverse())
-            );
-          } else {
-            bbox = L.latLngBounds(center, center);
-          }
-
-          results[i] = {
-            name: loc.place_name,
-            bbox: bbox,
-            center: center,
-            properties: this._getProperties(loc)
-          };
-        }
-      }
-
-      cb.call(context, results);
-    });
+    const data = await getJSON<any>(url, params);
+    return this._parseResults(data);
   }
 
-  suggest(query: string, cb: GeocodingCallback, context?: any): void {
-    return this.geocode(query, cb, context);
+  suggest(query: string): Promise<GeocodingResult[]> {
+    return this.geocode(query);
   }
 
-  reverse(location: L.LatLngLiteral, scale: number, cb: GeocodingCallback, context?: any): void {
+  async reverse(location: L.LatLngLiteral, scale: number): Promise<GeocodingResult[]> {
     const url = this.options.serviceUrl + location.lng + ',' + location.lat + '.json';
     const param = reverseParams(this.options, {
       access_token: this.options.apiKey
     });
-    getJSON(url, param, data => {
-      const results: GeocodingResult[] = [];
-      if (data.features && data.features.length) {
-        for (let i = 0; i <= data.features.length - 1; i++) {
-          const loc = data.features[i];
-          const center = L.latLng(loc.center.reverse());
-          let bbox: L.LatLngBounds;
-          if (loc.bbox) {
-            bbox = L.latLngBounds(
-              L.latLng(loc.bbox.slice(0, 2).reverse()),
-              L.latLng(loc.bbox.slice(2, 4).reverse())
-            );
-          } else {
-            bbox = L.latLngBounds(center, center);
-          }
-          results[i] = {
-            name: loc.place_name,
-            bbox: bbox,
-            center: center,
-            properties: this._getProperties(loc)
-          };
-        }
-      }
+    const data = await getJSON<any>(url, param);
+    return this._parseResults(data);
+  }
 
-      cb.call(context, results);
-    });
+  private _parseResults(data): any[] | GeocodingResult[] {
+    if (!data.features?.length) {
+      return [];
+    }
+    const results: GeocodingResult[] = [];
+    for (let i = 0; i <= data.features.length - 1; i++) {
+      const loc = data.features[i];
+      const center = L.latLng(loc.center.reverse());
+      let bbox: L.LatLngBounds;
+      if (loc.bbox) {
+        bbox = L.latLngBounds(
+          L.latLng(loc.bbox.slice(0, 2).reverse()),
+          L.latLng(loc.bbox.slice(2, 4).reverse())
+        );
+      } else {
+        bbox = L.latLngBounds(center, center);
+      }
+      results[i] = {
+        name: loc.place_name,
+        bbox: bbox,
+        center: center,
+        properties: this._getProperties(loc)
+      };
+    }
+
+    return results;
   }
 }
 

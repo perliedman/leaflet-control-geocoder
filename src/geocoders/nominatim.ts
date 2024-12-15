@@ -1,13 +1,6 @@
 import * as L from 'leaflet';
 import { template, getJSON } from '../util';
-import {
-  IGeocoder,
-  GeocoderOptions,
-  GeocodingCallback,
-  geocodingParams,
-  GeocodingResult,
-  reverseParams
-} from './api';
+import { IGeocoder, GeocoderOptions, geocodingParams, GeocodingResult, reverseParams } from './api';
 
 export interface NominatimResult {
   place_id: number;
@@ -67,7 +60,7 @@ export class Nominatim implements IGeocoder {
     htmlTemplate: function (r: NominatimResult) {
       const address = r.address;
       let className: string;
-      const parts = [];
+      const parts: string[] = [];
       if (address.road || address.building) {
         parts.push('{building} {road} {house_number}');
       }
@@ -92,32 +85,30 @@ export class Nominatim implements IGeocoder {
     L.Util.setOptions(this, options || {});
   }
 
-  geocode(query: string, cb: GeocodingCallback, context?: any) {
+  async geocode(query: string) {
     const params = geocodingParams(this.options, {
       q: query,
       limit: 5,
       format: 'json',
       addressdetails: 1
     });
-    getJSON(this.options.serviceUrl + 'search', params, data => {
-      const results: GeocodingResult[] = [];
-      for (let i = data.length - 1; i >= 0; i--) {
-        const bbox = data[i].boundingbox;
-        for (let j = 0; j < 4; j++) bbox[j] = +bbox[j];
-        results[i] = {
-          icon: data[i].icon,
-          name: data[i].display_name,
-          html: this.options.htmlTemplate ? this.options.htmlTemplate(data[i]) : undefined,
-          bbox: L.latLngBounds([bbox[0], bbox[2]], [bbox[1], bbox[3]]),
-          center: L.latLng(data[i].lat, data[i].lon),
-          properties: data[i]
-        };
-      }
-      cb.call(context, results);
-    });
+    const data = await getJSON<NominatimResult[]>(this.options.serviceUrl + 'search', params);
+    const results: GeocodingResult[] = [];
+    for (let i = data.length - 1; i >= 0; i--) {
+      const bbox = data[i].boundingbox;
+      results[i] = {
+        icon: data[i].icon,
+        name: data[i].display_name,
+        html: this.options.htmlTemplate ? this.options.htmlTemplate(data[i]) : undefined,
+        bbox: L.latLngBounds([+bbox[0], +bbox[2]], [+bbox[1], +bbox[3]]),
+        center: L.latLng(+data[i].lat, +data[i].lon),
+        properties: data[i]
+      };
+    }
+    return results;
   }
 
-  reverse(location: L.LatLngLiteral, scale: number, cb: GeocodingCallback, context?: any) {
+  async reverse(location: L.LatLngLiteral, scale: number) {
     const params = reverseParams(this.options, {
       lat: location.lat,
       lon: location.lng,
@@ -125,21 +116,20 @@ export class Nominatim implements IGeocoder {
       addressdetails: 1,
       format: 'json'
     });
-    getJSON(this.options.serviceUrl + 'reverse', params, data => {
-      const result: GeocodingResult[] = [];
-      if (data && data.lat && data.lon) {
-        const center = L.latLng(data.lat, data.lon);
-        const bbox = L.latLngBounds(center, center);
-        result.push({
-          name: data.display_name,
-          html: this.options.htmlTemplate ? this.options.htmlTemplate(data) : undefined,
-          center: center,
-          bbox: bbox,
-          properties: data
-        });
-      }
-      cb.call(context, result);
-    });
+    const data = await getJSON<NominatimResult>(this.options.serviceUrl + 'reverse', params);
+    const results: GeocodingResult[] = [];
+    if (data && data.lat && data.lon) {
+      const center = L.latLng(+data.lat, +data.lon);
+      const bbox = L.latLngBounds(center, center);
+      results.push({
+        name: data.display_name,
+        html: this.options.htmlTemplate ? this.options.htmlTemplate(data) : undefined,
+        center: center,
+        bbox: bbox,
+        properties: data
+      });
+    }
+    return results;
   }
 }
 

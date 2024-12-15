@@ -7,9 +7,7 @@ describe('L.Control.Geocoder.Nominatim', () => {
   const geocoder = new Nominatim();
 
   it('geocodes Innsbruck', async () => {
-    const callback = vi.fn();
-
-    mockFetchRequest(
+    const result = await mockFetchRequest(
       'https://nominatim.openstreetmap.org/search?q=innsbruck&limit=5&format=json&addressdetails=1',
       [
         {
@@ -35,11 +33,10 @@ describe('L.Control.Geocoder.Nominatim', () => {
           }
         }
       ],
-      () => geocoder.geocode('innsbruck', callback)
+      () => geocoder.geocode('innsbruck')
     );
 
-    await vi.waitUntil(() => callback.mock.calls.length);
-    const feature = callback.mock.calls[0][0][0];
+    const feature = result[0];
     expect(feature.name).toBe('Innsbruck, Tyrol, Austria');
     expect(feature.html).toBe(
       '<span class=""> Innsbruck   </span><br/><span class="leaflet-control-geocoder-address-context">Tyrol Austria</span>'
@@ -52,13 +49,11 @@ describe('L.Control.Geocoder.Nominatim', () => {
       country: 'Austria',
       country_code: 'at'
     });
-    expect(callback.mock.calls).toMatchSnapshot();
+    expect([[result]]).toMatchSnapshot();
   });
 
   it('reverse geocodes 47.3/11.3', async () => {
-    const callback = vi.fn();
-
-    mockFetchRequest(
+    const result = await mockFetchRequest(
       'https://nominatim.openstreetmap.org/reverse?lat=47.3&lon=11.3&zoom=9&addressdetails=1&format=json',
       {
         place_id: 197718025,
@@ -76,11 +71,10 @@ describe('L.Control.Geocoder.Nominatim', () => {
         },
         boundingbox: ['46.9624854', '47.4499229', '10.9896868', '11.7051742']
       },
-      () => geocoder.reverse({ lat: 47.3, lng: 11.3 }, 131000, callback)
+      () => geocoder.reverse({ lat: 47.3, lng: 11.3 }, 131000)
     );
 
-    await vi.waitUntil(() => callback.mock.calls.length);
-    const feature = callback.mock.calls[0][0][0];
+    const feature = result[0];
     expect(feature.name).toBe('Innsbruck-Land, Tyrol, Austria');
     expect(feature.html).toBe('<span class="">Tyrol Austria</span>');
     expect(feature.properties.address).toStrictEqual({
@@ -89,6 +83,6 @@ describe('L.Control.Geocoder.Nominatim', () => {
       country: 'Austria',
       country_code: 'at'
     });
-    expect(callback.mock.calls).toMatchSnapshot();
+    expect([[result]]).toMatchSnapshot();
   });
 });
