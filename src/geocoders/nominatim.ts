@@ -64,7 +64,7 @@ export interface NominatimOptions extends GeocoderOptions {
 export class Nominatim implements IGeocoder {
   options: NominatimOptions = {
     serviceUrl: 'https://nominatim.openstreetmap.org/',
-    htmlTemplate: function(r: NominatimResult) {
+    htmlTemplate: function (r: NominatimResult) {
       const address = r.address;
       let className: string;
       const parts = [];
