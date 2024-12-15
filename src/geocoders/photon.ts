@@ -34,7 +34,7 @@ export class Photon implements IGeocoder {
     getJSON(
       this.options.serviceUrl,
       params,
-      L.Util.bind(function(data) {
+      L.Util.bind(function (data) {
         cb.call(context, this._decodeFeatures(data));
       }, this)
     );
@@ -52,7 +52,7 @@ export class Photon implements IGeocoder {
     getJSON(
       this.options.reverseUrl,
       params,
-      L.Util.bind(function(data) {
+      L.Util.bind(function (data) {
         cb.call(context, this._decodeFeatures(data));
       }, this)
     );
