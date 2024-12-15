@@ -1,99 +1,76 @@
 import * as L from 'leaflet';
-import { GeocodingCallback, GeocodingResult, IGeocoder } from './api';
+import { getJSON } from '../util';
+import { GeocodingResult, IGeocoder } from './api';
 
 export interface AzureMapsOptions {
   apiKey: string; // Azure Maps API Key
-  serviceUrl?: string; // Optional: Base URL for the Azure Maps API
+  serviceUrl: string; // Optional: Base URL for the Azure Maps API
 }
 
 /**
  * Azure Maps Geocoder class
  */
-export class AzureMapsGeocoder implements IGeocoder {
-  private options: AzureMapsOptions;
+export class AzureMaps implements IGeocoder {
+  private options: AzureMapsOptions = {
+    apiKey: '',
+    serviceUrl: 'https://atlas.microsoft.com/search'
+  };
 
-  constructor(options: AzureMapsOptions) {
-    this.options = {
-      serviceUrl: 'https://atlas.microsoft.com/search',
-      ...options,
-    };
-
+  constructor(options: Partial<AzureMapsOptions>) {
+    L.Util.setOptions(this, options);
     if (!this.options.apiKey) {
       throw new Error('Azure Maps Geocoder requires an API key.');
     }
   }
 
-  geocode(query: string, cb: GeocodingCallback, context?: any): void {
+  async geocode(query: string): Promise<GeocodingResult[]> {
     const params = {
       'api-version': '1.0',
-      query: query,
-      'subscription-key': this.options.apiKey,
+      query,
+      'subscription-key': this.options.apiKey
     };
+    const url = this.options.serviceUrl + '/address/json';
+    const data = await getJSON<any>(url, params);
 
-    const url = `${this.options.serviceUrl}/address/json?${new URLSearchParams(params).toString()}`;
-
-    fetch(url)
-      .then(response => response.json())
-      .then(data => {
-        const results: GeocodingResult[] = [];
-
-        if (data.results && data.results.length > 0) {
-          for (const result of data.results) {
-            console.log(result);
-            results.push({
-              name: result.address.freeformAddress,
-              bbox: L.latLngBounds(
-                [result.viewport.topLeftPoint.lat, result.viewport.topLeftPoint.lon],
-                [result.viewport.btmRightPoint.lat, result.viewport.btmRightPoint.lon]
-              ),
-              center: L.latLng(result.position.lat, result.position.lon),
-            });
-          }
-        }
-
-        cb.call(context, results);
-      })
-      .catch(error => {
-        console.error('Geocoding error:', error);
-        cb.call(context, []);
-      });
+    const results: GeocodingResult[] = [];
+    if (data.results && data.results.length > 0) {
+      for (const result of data.results) {
+        results.push({
+          name: result.address.freeformAddress,
+          bbox: L.latLngBounds(
+            [result.viewport.topLeftPoint.lat, result.viewport.topLeftPoint.lon],
+            [result.viewport.btmRightPoint.lat, result.viewport.btmRightPoint.lon]
+          ),
+          center: L.latLng(result.position.lat, result.position.lon)
+        });
+      }
+    }
+    return results;
   }
 
-  reverse(location: L.LatLngLiteral, scale: number, cb: GeocodingCallback, context?: any): void {
+  async reverse(location: L.LatLngLiteral, scale: number): Promise<GeocodingResult[]> {
     const params = {
       'api-version': '1.0',
-      query: `${location.lat},${location.lng}`,
-      'subscription-key': this.options.apiKey,
+      query: location.lat + ',' + location.lng,
+      'subscription-key': this.options.apiKey
     };
+    const url = this.options.serviceUrl + '/address/reverse/json';
+    const data = await getJSON<any>(url, params);
 
-    const url = `${this.options.serviceUrl}/address/reverse/json?${new URLSearchParams(
-      params
-    ).toString()}`;
-
-    fetch(url)
-      .then(response => response.json())
-      .then(data => {
-        const results: GeocodingResult[] = [];
-
-        if (data.addresses && data.addresses.length > 0) {
-          for (const address of data.addresses) {
-            results.push({
-              name: address.address.freeformAddress,
-              bbox: L.latLngBounds(
-                [address.viewport.topLeftPoint.lat, address.viewport.topLeftPoint.lon],
-                [address.viewport.btmRightPoint.lat, address.viewport.btmRightPoint.lon]
-              ),
-              center: L.latLng(location.lat, location.lng),
-            });
-          }
-        }
-
-        cb.call(context, results);
-      })
-      .catch(error => {
-        console.error('Reverse geocoding error:', error);
-        cb.call(context, []);
-      });
+    const results: GeocodingResult[] = [];
+    if (data.addresses && data.addresses.length > 0) {
+      for (const address of data.addresses) {
+        results.push({
+          name: address.address.freeformAddress,
+          bbox: L.latLngBounds(
+            [address.viewport.topLeftPoint.lat, address.viewport.topLeftPoint.lon],
+            [address.viewport.btmRightPoint.lat, address.viewport.btmRightPoint.lon]
+          ),
+          center: L.latLng(location.lat, location.lng)
+        });
+      }
+    }
+    return results;
   }
 }
 
@@ -102,5 +79,5 @@ export class AzureMapsGeocoder implements IGeocoder {
  * @param options the options
  */
 export function azure(options: AzureMapsOptions) {
-  return new AzureMapsGeocoder(options);
+  return new AzureMaps(options);
 }
