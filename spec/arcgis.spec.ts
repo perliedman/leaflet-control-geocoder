@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { mockFetchRequest } from './mockFetchRequest';
-import { ArcGis } from '../src/geocoders/arcgis';
+import { ArcGis, ArcGisResponse } from '../src/geocoders/arcgis';
 
 describe('L.Control.Geocoder.ArcGis', () => {
   afterEach(() => vi.clearAllMocks());
@@ -24,7 +24,7 @@ describe('L.Control.Geocoder.ArcGis', () => {
             }
           }
         ]
-      },
+      } satisfies ArcGisResponse,
       () => geocoder.geocode('Innsbruck')
     );
 

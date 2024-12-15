@@ -46,7 +46,7 @@ export class Mapbox implements IGeocoder {
     ) {
       params.proximity = params.proximity.lng + ',' + params.proximity.lat;
     }
-    const data = await getJSON<any>(url, params);
+    const data = await getJSON<MapboxResponse>(url, params);
     return this._parseResults(data);
   }
 
@@ -59,23 +59,23 @@ export class Mapbox implements IGeocoder {
     const param = reverseParams(this.options, {
       access_token: this.options.apiKey
     });
-    const data = await getJSON<any>(url, param);
+    const data = await getJSON<MapboxResponse>(url, param);
     return this._parseResults(data);
   }
 
-  private _parseResults(data): any[] | GeocodingResult[] {
+  private _parseResults(data: MapboxResponse): any[] | GeocodingResult[] {
     if (!data.features?.length) {
       return [];
     }
     const results: GeocodingResult[] = [];
     for (let i = 0; i <= data.features.length - 1; i++) {
       const loc = data.features[i];
-      const center = L.latLng(loc.center.reverse());
+      const center = L.latLng(loc.center.reverse() as [number, number]);
       let bbox: L.LatLngBounds;
       if (loc.bbox) {
         bbox = L.latLngBounds(
-          L.latLng(loc.bbox.slice(0, 2).reverse()),
-          L.latLng(loc.bbox.slice(2, 4).reverse())
+          L.latLng(loc.bbox.slice(0, 2).reverse() as [number, number]),
+          L.latLng(loc.bbox.slice(2, 4).reverse() as [number, number])
         );
       } else {
         bbox = L.latLngBounds(center, center);
@@ -99,3 +99,46 @@ export class Mapbox implements IGeocoder {
 export function mapbox(options?: Partial<MapboxOptions>) {
   return new Mapbox(options);
 }
+
+/**
+ * @internal
+ */
+export interface MapboxResponse {
+  type: string;
+  query: string[];
+  features: Feature[];
+  attribution: string;
+}
+
+interface Feature {
+  id: string;
+  type: string;
+  place_type: string[];
+  relevance: number;
+  properties: Properties;
+  text: string;
+  place_name: string;
+  matching_text: string;
+  matching_place_name: string;
+  center: [number, number];
+  bbox?: [number, number, number, number];
+  geometry: Geometry;
+  address: string;
+  context: Context[];
+}
+
+interface Context {
+  id: string;
+  text: string;
+  wikidata?: string;
+  short_code?: string;
+}
+
+interface Geometry {
+  type: string;
+  coordinates: number[];
+  interpolated: boolean;
+  omitted: boolean;
+}
+
+interface Properties {}

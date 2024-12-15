@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { mockFetchRequest } from './mockFetchRequest';
-import { HERE } from '../src/geocoders/here';
+import { HERE, HEREv2Response } from '../src/geocoders/here';
 import { HEREv2 } from '../src/geocoders/here';
 import { GeocodingResult } from '../src/geocoders/api';
 
@@ -162,7 +162,7 @@ describe('L.Control.Geocoder.HEREv2', () => {
             ]
           }
         ]
-      },
+      } satisfies HEREv2Response,
       () => geocoder.geocode('Innsbruck')
     );
 

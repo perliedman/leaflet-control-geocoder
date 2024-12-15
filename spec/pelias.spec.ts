@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { mockFetchRequest } from './mockFetchRequest';
-import { Openrouteservice } from '../src/geocoders/pelias';
+import { Openrouteservice, PeliasResponse } from '../src/geocoders/pelias';
 
 describe('L.Control.Geocoder.Openrouteservice', () => {
   afterEach(() => vi.clearAllMocks());
@@ -45,7 +45,7 @@ describe('L.Control.Geocoder.Openrouteservice', () => {
           }
         ],
         bbox: [10.9896885523, 46.9624806033, 11.7051690163, 47.4499185397]
-      },
+      } satisfies PeliasResponse,
       () => geocoder.geocode('innsbruck')
     );
 

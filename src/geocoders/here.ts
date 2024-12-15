@@ -130,7 +130,7 @@ export class HEREv2 implements IGeocoder {
   }
 
   async getJSON(url: string, params: any): Promise<GeocodingResult[]> {
-    const data = await getJSON<any>(url, params);
+    const data = await getJSON<HEREv2Response>(url, params);
     const results: GeocodingResult[] = [];
 
     if (data.items && data.items.length) {
@@ -172,4 +172,92 @@ export function here(options?: Partial<HereOptions>) {
   } else {
     return new HERE(options);
   }
+}
+
+/**
+ * @internal
+ */
+export interface HEREv2Response {
+  items: Item[];
+}
+
+interface Item {
+  title: string;
+  id: string;
+  ontologyId: string;
+  resultType: string;
+  address: Address;
+  mapView?: MapView;
+  position: Position;
+  access: Position[];
+  distance: number;
+  categories: Category[];
+  references: Reference[];
+  foodTypes: Category[];
+  contacts: Contact[];
+  openingHours: OpeningHour[];
+}
+
+interface MapView {
+  east: number;
+  north: number;
+  south: number;
+  west: number;
+}
+
+interface Position {
+  lat: number;
+  lng: number;
+}
+
+interface Address {
+  label: string;
+  countryCode: string;
+  countryName: string;
+  stateCode: string;
+  state: string;
+  county: string;
+  city: string;
+  district: string;
+  street: string;
+  postalCode: string;
+  houseNumber: string;
+}
+
+interface Category {
+  id: string;
+  name: string;
+  primary?: boolean;
+}
+
+interface Contact {
+  phone: Email[];
+  fax: Email[];
+  www: Email[];
+  email: Email[];
+}
+
+interface Email {
+  value: string;
+}
+
+interface OpeningHour {
+  text: string[];
+  isOpen: boolean;
+  structured: Structured[];
+}
+
+interface Structured {
+  start: string;
+  duration: string;
+  recurrence: string;
+}
+
+interface Reference {
+  supplier: Supplier;
+  id: string;
+}
+
+interface Supplier {
+  id: string;
 }

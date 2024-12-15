@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { mockFetchRequest } from './mockFetchRequest';
-import { Photon } from '../src/geocoders/photon';
+import { Photon, PhotonResponse } from '../src/geocoders/photon';
 import { GeocodingResult } from '../src/geocoders/api';
 
 describe('L.Control.Geocoder.Photon', () => {
@@ -50,7 +50,7 @@ describe('L.Control.Geocoder.Photon', () => {
           }
         ],
         type: 'FeatureCollection'
-      },
+      } satisfies PhotonResponse,
       () => geocoder.geocode('Innsbruck')
     );
 

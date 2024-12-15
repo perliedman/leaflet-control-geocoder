@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { mockFetchRequest } from './mockFetchRequest';
-import { Nominatim } from '../src/geocoders/nominatim';
+import { Nominatim, NominatimResponse } from '../src/geocoders/nominatim';
 
 describe('L.Control.Geocoder.Nominatim', () => {
   afterEach(() => vi.clearAllMocks());
@@ -32,7 +32,7 @@ describe('L.Control.Geocoder.Nominatim', () => {
             country_code: 'at'
           }
         }
-      ],
+      ] satisfies NominatimResponse,
       () => geocoder.geocode('innsbruck')
     );
 
@@ -70,7 +70,7 @@ describe('L.Control.Geocoder.Nominatim', () => {
           country_code: 'at'
         },
         boundingbox: ['46.9624854', '47.4499229', '10.9896868', '11.7051742']
-      },
+      } satisfies NominatimResponse[number],
       () => geocoder.reverse({ lat: 47.3, lng: 11.3 }, 131000)
     );
 

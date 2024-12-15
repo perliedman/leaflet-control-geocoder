@@ -4,6 +4,8 @@ import { IGeocoder, GeocoderOptions, geocodingParams, GeocodingResult, reversePa
 
 export interface ArcGisOptions extends GeocoderOptions {}
 
+
+
 /**
  * Implementation of the [ArcGIS geocoder](https://developers.arcgis.com/features/geocoding/)
  */
@@ -27,7 +29,10 @@ export class ArcGis implements IGeocoder {
       f: 'json'
     });
 
-    const data = await getJSON<any>(this.options.serviceUrl + '/findAddressCandidates', params);
+    const data = await getJSON<ArcGisResponse>(
+      this.options.serviceUrl + '/findAddressCandidates',
+      params
+    );
     const results: GeocodingResult[] = [];
     if (data.candidates && data.candidates.length) {
       for (let i = 0; i <= data.candidates.length - 1; i++) {
@@ -81,3 +86,33 @@ export class ArcGis implements IGeocoder {
 export function arcgis(options?: Partial<ArcGisOptions>) {
   return new ArcGis(options);
 }
+
+/**
+ * @internal
+ */
+export interface ArcGisResponse {
+  spatialReference: {
+    wkid: number;
+    latestWkid: number;
+  };
+  candidates: Candidate[];
+}
+
+interface Candidate {
+  address: string;
+  location: {
+    x: number;
+    y: number;
+  };
+  score: number;
+  attributes: {
+    Addr_Type: string;
+  };
+  extent: {
+    xmin: number;
+    ymin: number;
+    xmax: number;
+    ymax: number;
+  };
+}
+
