@@ -37,26 +37,22 @@ export class MapQuest implements IGeocoder {
       limit: 5,
       outFormat: 'json'
     });
-    getJSON(
-      this.options.serviceUrl + '/address',
-      params,
-      L.Util.bind(function (data) {
-        const results: GeocodingResult[] = [];
-        if (data.results && data.results[0].locations) {
-          for (let i = data.results[0].locations.length - 1; i >= 0; i--) {
-            const loc = data.results[0].locations[i];
-            const center = L.latLng(loc.latLng);
-            results[i] = {
-              name: this._formatName(loc.street, loc.adminArea4, loc.adminArea3, loc.adminArea1),
-              bbox: L.latLngBounds(center, center),
-              center: center
-            };
-          }
+    getJSON(this.options.serviceUrl + '/address', params, data => {
+      const results: GeocodingResult[] = [];
+      if (data.results && data.results[0].locations) {
+        for (let i = data.results[0].locations.length - 1; i >= 0; i--) {
+          const loc = data.results[0].locations[i];
+          const center = L.latLng(loc.latLng);
+          results[i] = {
+            name: this._formatName(loc.street, loc.adminArea4, loc.adminArea3, loc.adminArea1),
+            bbox: L.latLngBounds(center, center),
+            center: center
+          };
         }
+      }
 
-        cb.call(context, results);
-      }, this)
-    );
+      cb.call(context, results);
+    });
   }
 
   reverse(location: L.LatLngLiteral, scale: number, cb: GeocodingCallback, context?: any): void {
@@ -65,26 +61,22 @@ export class MapQuest implements IGeocoder {
       location: location.lat + ',' + location.lng,
       outputFormat: 'json'
     });
-    getJSON(
-      this.options.serviceUrl + '/reverse',
-      params,
-      L.Util.bind(function (data) {
-        const results: GeocodingResult[] = [];
-        if (data.results && data.results[0].locations) {
-          for (let i = data.results[0].locations.length - 1; i >= 0; i--) {
-            const loc = data.results[0].locations[i];
-            const center = L.latLng(loc.latLng);
-            results[i] = {
-              name: this._formatName(loc.street, loc.adminArea4, loc.adminArea3, loc.adminArea1),
-              bbox: L.latLngBounds(center, center),
-              center: center
-            };
-          }
+    getJSON(this.options.serviceUrl + '/reverse', params, data => {
+      const results: GeocodingResult[] = [];
+      if (data.results && data.results[0].locations) {
+        for (let i = data.results[0].locations.length - 1; i >= 0; i--) {
+          const loc = data.results[0].locations[i];
+          const center = L.latLng(loc.latLng);
+          results[i] = {
+            name: this._formatName(loc.street, loc.adminArea4, loc.adminArea3, loc.adminArea1),
+            bbox: L.latLngBounds(center, center),
+            center: center
+          };
         }
+      }
 
-        cb.call(context, results);
-      }, this)
-    );
+      cb.call(context, results);
+    });
   }
 }
 

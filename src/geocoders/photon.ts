@@ -31,13 +31,9 @@ export class Photon implements IGeocoder {
 
   geocode(query: string, cb: GeocodingCallback, context?: any): void {
     const params = geocodingParams(this.options, { q: query });
-    getJSON(
-      this.options.serviceUrl,
-      params,
-      L.Util.bind(function (data) {
-        cb.call(context, this._decodeFeatures(data));
-      }, this)
-    );
+    getJSON(this.options.serviceUrl, params, data => {
+      cb.call(context, this._decodeFeatures(data));
+    });
   }
 
   suggest(query: string, cb: GeocodingCallback, context?: any): void {
@@ -49,13 +45,9 @@ export class Photon implements IGeocoder {
       lat: latLng.lat,
       lon: latLng.lng
     });
-    getJSON(
-      this.options.reverseUrl,
-      params,
-      L.Util.bind(function (data) {
-        cb.call(context, this._decodeFeatures(data));
-      }, this)
-    );
+    getJSON(this.options.reverseUrl, params, data => {
+      cb.call(context, this._decodeFeatures(data));
+    });
   }
 
   _decodeFeatures(data: GeoJSON.FeatureCollection<GeoJSON.Point>) {
