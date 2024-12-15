@@ -1,10 +1,32 @@
+## 3.0.0 (2024-12-15)
+
+- GitHub Actions: Node.js 20.x ([89bb618](https://github.com/perliedman/leaflet-control-geocoder/commit/89bb618))
+- **Migrate from callbacks to async-await** ([6f7ccf5](https://github.com/perliedman/leaflet-control-geocoder/commit/6f7ccf5))
+- **Migrate from XMLHttpRequest to fetch API** ([fe751be](https://github.com/perliedman/leaflet-control-geocoder/commit/fe751be))
+- **Migrate to URLSearchParams** ([fa13fcb](https://github.com/perliedman/leaflet-control-geocoder/commit/fa13fcb))
+- **package: Migrate build to vite** ([0e6ed14](https://github.com/perliedman/leaflet-control-geocoder/commit/0e6ed14))
+- **package: build types using tsc** ([2211a73](https://github.com/perliedman/leaflet-control-geocoder/commit/2211a73))
+- Add response types to geocoders ([2232046](https://github.com/perliedman/leaflet-control-geocoder/commit/2232046))
+- npm i --lockfile-version 3 --frozen-lockfile ([471932c](https://github.com/perliedman/leaflet-control-geocoder/commit/471932c))
+- Run Prettier on codebase ([fbcdad6](https://github.com/perliedman/leaflet-control-geocoder/commit/fbcdad6))
+- Use a more precise input type (#331) ([44cd093](https://github.com/perliedman/leaflet-control-geocoder/commit/44cd093)), closes [#331](https://github.com/perliedman/leaflet-control-geocoder/issues/331)
+- bing: deprecated notice ([ce88eab](https://github.com/perliedman/leaflet-control-geocoder/commit/ce88eab))
+- bing: fix serviceUrl ([053e5a2](https://github.com/perliedman/leaflet-control-geocoder/commit/053e5a2))
+- bing: replace jsonp with AJAX ([09f6a4e](https://github.com/perliedman/leaflet-control-geocoder/commit/09f6a4e))
+- ESLint: prefer-arrow-callback ([b41a7fb](https://github.com/perliedman/leaflet-control-geocoder/commit/b41a7fb))
+- build: remove bower.json file ([6259608](https://github.com/perliedman/leaflet-control-geocoder/commit/6259608))
+- package: npm audit fix ([5032da9](https://github.com/perliedman/leaflet-control-geocoder/commit/5032da9))
+- package: update devDependencies ([dee11f3](https://github.com/perliedman/leaflet-control-geocoder/commit/dee11f3))
+- tests: Migrate unit tests to Vitest ([d997740](https://github.com/perliedman/leaflet-control-geocoder/commit/d997740))
+- fix: bingMaps uri (#342) ([be056ab](https://github.com/perliedman/leaflet-control-geocoder/commit/be056ab)), closes [#342](https://github.com/perliedman/leaflet-control-geocoder/issues/342)
+
 ## 2.4.0 (2022-02-06)
 
-* export { Geocoder, geocoder, geocoders } ([ec17333](https://github.com/perliedman/leaflet-control-geocoder/commit/ec17333))
+- export { Geocoder, geocoder, geocoders } ([ec17333](https://github.com/perliedman/leaflet-control-geocoder/commit/ec17333))
 
 ## 2.3.0 (2021-05-25)
 
-* Specify TypeScript declaration file ([1183518](https://github.com/perliedman/leaflet-control-geocoder/commit/1183518))
+- Specify TypeScript declaration file ([1183518](https://github.com/perliedman/leaflet-control-geocoder/commit/1183518))
 
 ## 2.2.0 (2021-03-08)
 
