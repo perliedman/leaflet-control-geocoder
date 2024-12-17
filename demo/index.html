@@ -60,7 +60,7 @@
       }).addTo(map);
 
       map.on('click', function(e) {
-        geocoder.reverse(e.latlng, map.options.crs.scale(map.getZoom()), function(results) {
+        geocoder.reverse(e.latlng, map.options.crs.scale(map.getZoom())).then(function(results) {
           var r = results[0];
           if (r) {
             if (marker) {
