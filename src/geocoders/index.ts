@@ -1,6 +1,7 @@
 export * from './api';
 export * from './arcgis';
 export * from './bing';
+export * from './azure';
 export * from './google';
 export * from './here';
 export * from './latlng';
