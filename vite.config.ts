@@ -7,6 +7,7 @@ export default defineConfig({
       entry: 'src/index.ts',
       name: 'leaflet-control-geocoder',
       formats: ['es', 'umd'],
+      cssFileName: 'Control.Geocoder',
       fileName: format =>
         ({
           es: `Control.Geocoder.modern.js`,

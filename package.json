@@ -17,9 +17,9 @@
         "default": "./dist/Control.Geocoder.cjs"
       }
     },
-    "./dist/Control.Geocoder.css": "./dist/leaflet-control-geocoder.css",
-    "./Control.Geocoder.css": "./dist/leaflet-control-geocoder.css",
-    "./style.css": "./dist/leaflet-control-geocoder.css"
+    "./dist/Control.Geocoder.css": "./dist/Control.Geocoder.css",
+    "./Control.Geocoder.css": "./dist/Control.Geocoder.css",
+    "./style.css": "./dist/Control.Geocoder.css"
   },
   "types": "dist/index.d.ts",
   "scripts": {
