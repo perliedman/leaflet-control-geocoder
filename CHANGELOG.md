@@ -1,3 +1,8 @@
+## <small>3.0.1 (2024-12-17)</small>
+
+- build: fix Control.Geocoder.css ([9bfaa0f](https://github.com/perliedman/leaflet-control-geocoder/commit/9bfaa0f)), closes [#355](https://github.com/perliedman/leaflet-control-geocoder/issues/355)
+- demo: fix geocoder.reverse usage ([503e6fc](https://github.com/perliedman/leaflet-control-geocoder/commit/503e6fc))
+
 ## 3.0.0 (2024-12-15)
 
 - GitHub Actions: Node.js 20.x ([89bb618](https://github.com/perliedman/leaflet-control-geocoder/commit/89bb618))
