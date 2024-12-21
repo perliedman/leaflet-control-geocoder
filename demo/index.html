@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <title>Leaflet Control Geocoder</title>
@@ -14,7 +14,7 @@
 
     <script src="https://unpkg.com/leaflet@latest/dist/leaflet-src.js"></script>
     <script src="../dist/Control.Geocoder.js"></script>
-    <style type="text/css">
+    <style>
       body {
         margin: 0;
       }
@@ -28,52 +28,48 @@
   <body>
     <div id="map"></div>
 
-    <script type="text/javascript">
-      var map = L.map('map').setView([0, 0], 2);
+    <script>
+      const map = L.map('map').setView([0, 0], 2);
 
-      var geocoder = L.Control.Geocoder.nominatim();
-      if (typeof URLSearchParams !== 'undefined' && location.search) {
-        // parse /?geocoder=nominatim from URL
-        var params = new URLSearchParams(location.search);
-        var geocoderString = params.get('geocoder');
-        if (geocoderString && L.Control.Geocoder[geocoderString]) {
-          console.log('Using geocoder', geocoderString);
-          geocoder = L.Control.Geocoder[geocoderString]();
-        } else if (geocoderString) {
-          console.warn('Unsupported geocoder', geocoderString);
-        }
+      let geocoder = L.Control.Geocoder.nominatim();
+      // parse /?geocoder=nominatim from URL
+      let params = new URL(document.location.toString()).searchParams;
+      const geocoderString = params.get('geocoder');
+      if (geocoderString && L.Control.Geocoder[geocoderString]) {
+        console.log('Using geocoder', geocoderString);
+        geocoder = L.Control.Geocoder[geocoderString]();
+      } else if (geocoderString) {
+        console.warn('Unsupported geocoder', geocoderString);
       }
 
-      var control = L.Control.geocoder({
+      const control = L.Control.geocoder({
         query: 'Moon',
         placeholder: 'Search here...',
-        geocoder: geocoder
+        geocoder
       }).addTo(map);
-      var marker;
 
-      setTimeout(function() {
+      setTimeout(() => {
         control.setQuery('Earth');
       }, 12000);
 
-      L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+      L.tileLayer('https://tile.osm.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
       }).addTo(map);
 
-      map.on('click', function(e) {
-        geocoder.reverse(e.latlng, map.options.crs.scale(map.getZoom())).then(function(results) {
-          var r = results[0];
-          if (r) {
-            if (marker) {
-              marker
-                .setLatLng(r.center)
-                .setPopupContent(r.html || r.name)
-                .openPopup();
-            } else {
-              marker = L.marker(r.center)
-                .bindPopup(r.name)
-                .addTo(map)
-                .openPopup();
-            }
+      let marker;
+      map.on('click', e => {
+        geocoder.reverse(e.latlng, map.options.crs.scale(map.getZoom())).then(results => {
+          const r = results[0];
+          if (!r) {
+            return;
+          }
+          if (marker) {
+            marker
+              .setLatLng(r.center)
+              .setPopupContent(r.html || r.name)
+              .openPopup();
+          } else {
+            marker = L.marker(r.center).bindPopup(r.name).addTo(map).openPopup();
           }
         });
       });
