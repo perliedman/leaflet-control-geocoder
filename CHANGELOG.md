@@ -1,3 +1,16 @@
+## 3.1.0 (2024-12-21)
+
+- **Implement Azure Maps Geocoder** (#351) ([bf04a88](https://github.com/perliedman/leaflet-control-geocoder/commit/bf04a88)), closes [#351](https://github.com/perliedman/leaflet-control-geocoder/issues/351)
+- azure: add to README ([8e1da50](https://github.com/perliedman/leaflet-control-geocoder/commit/8e1da50))
+- azure: add types, add unit test ([d1183f4](https://github.com/perliedman/leaflet-control-geocoder/commit/d1183f4))
+- azure: update to leaflet-control-geocoder 3.0.0 ([0951831](https://github.com/perliedman/leaflet-control-geocoder/commit/0951831))
+- build: fix tsc --target ES2020 ([51ed3ea](https://github.com/perliedman/leaflet-control-geocoder/commit/51ed3ea))
+- CHANGELOG: clarify "Migrate from callbacks to async-await" ([6e869c8](https://github.com/perliedman/leaflet-control-geocoder/commit/6e869c8))
+- demo: modernize code ([756dc27](https://github.com/perliedman/leaflet-control-geocoder/commit/756dc27))
+- GitHub Actions: Node.js 22 ([9ba93ff](https://github.com/perliedman/leaflet-control-geocoder/commit/9ba93ff))
+- nominatim: use shorthand property for htmlTemplate ([04031ac](https://github.com/perliedman/leaflet-control-geocoder/commit/04031ac))
+- tsc: --skipLibCheck ([4edf909](https://github.com/perliedman/leaflet-control-geocoder/commit/4edf909))
+
 ## <small>3.0.1 (2024-12-17)</small>
 
 - build: fix Control.Geocoder.css ([9bfaa0f](https://github.com/perliedman/leaflet-control-geocoder/commit/9bfaa0f)), closes [#355](https://github.com/perliedman/leaflet-control-geocoder/issues/355)
