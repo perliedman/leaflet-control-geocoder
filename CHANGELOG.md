@@ -25,6 +25,24 @@
 - tests: Migrate unit tests to Vitest ([d997740](https://github.com/perliedman/leaflet-control-geocoder/commit/d997740))
 - fix: bingMaps uri (#342) ([be056ab](https://github.com/perliedman/leaflet-control-geocoder/commit/be056ab)), closes [#342](https://github.com/perliedman/leaflet-control-geocoder/issues/342)
 
+```diff
+Migrate from callbacks to Promise
+
+-geocoder.geocode(query, callback);
++geocoder.geocode(query).then(callback);
+
+-geocoder.reverse(latlng, scale, callback);
++geocoder.reverse(latlng, scale).then(callback);
+
+Migrate from callbacks to async-await
+
+-geocoder.geocode(query, callback);
++const results = await geocoder.geocode(query);
+
+-geocoder.reverse(latlng, scale, callback);
++const results = await geocoder.reverse(latlng, scale);
+```
+
 ## 2.4.0 (2022-02-06)
 
 - export { Geocoder, geocoder, geocoders } ([ec17333](https://github.com/perliedman/leaflet-control-geocoder/commit/ec17333))
