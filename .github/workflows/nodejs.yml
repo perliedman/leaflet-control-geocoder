@@ -14,14 +14,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js 20.x
-        uses: actions/setup-node@v1
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 20.x
+          node-version: 22.x
       - run: npm ci
       - run: npm run build
-      - run: npm test
+      - run: npm run test
       - run: npm run doc
       - name: Deploy TypeDoc
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
