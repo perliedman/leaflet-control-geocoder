@@ -24,7 +24,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "prepare": "npm run build",
-    "build": "vite build && tsc --target ES2020 --declaration --emitDeclarationOnly --outDir dist/ src/index.ts",
+    "build": "vite build && tsc --target ES2020 --declaration --emitDeclarationOnly --skipLibCheck --outDir dist/ src/index.ts",
     "build:demo": "npm run build:demo-esbuild && npm run build:demo-rollup && npm run build:demo-webpack",
     "build:demo-esbuild": "cd demo-esbuild && npm install && npm run build",
     "build:demo-rollup": "cd demo-rollup && npm install && npm run build",
