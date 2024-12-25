@@ -9,7 +9,7 @@ export interface PhotonOptions extends GeocoderOptions {
 }
 
 /**
- * Implementation of the [Photon](http://photon.komoot.de/) geocoder
+ * Implementation of the [Photon](http://photon.komoot.io/) geocoder
  */
 export class Photon implements IGeocoder {
   options: PhotonOptions = {
