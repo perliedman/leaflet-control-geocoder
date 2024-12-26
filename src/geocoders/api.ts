@@ -1,6 +1,16 @@
 import * as L from 'leaflet';
 
 /**
+ * Context for geocoding operations
+ */
+export interface GeocodingContext {
+  /**
+   * The map instance
+   */
+  map: L.Map;
+}
+
+/**
  * An object that represents a result from a geocoding query
  */
 export interface GeocodingResult {
@@ -38,12 +48,12 @@ export interface IGeocoder {
    * Performs a geocoding query and returns the results as promise
    * @param query the query
    */
-  geocode(query: string): Promise<GeocodingResult[]>;
+  geocode(query: string, context?: GeocodingContext): Promise<GeocodingResult[]>;
   /**
    * Performs a geocoding query suggestion (this happens while typing) and returns the results as promise
    * @param query the query
    */
-  suggest?(query: string): Promise<GeocodingResult[]>;
+  suggest?(query: string, context?: GeocodingContext): Promise<GeocodingResult[]>;
   /**
    * Performs a reverse geocoding query and returns the results as promise
    * @param location the coordinate to reverse geocode

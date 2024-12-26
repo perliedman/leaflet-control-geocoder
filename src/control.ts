@@ -1,6 +1,6 @@
 import * as L from 'leaflet';
 import { Nominatim } from './geocoders/index';
-import { IGeocoder, GeocodingResult } from './geocoders/api';
+import { IGeocoder, GeocodingResult, GeocodingContext } from './geocoders/api';
 
 export interface GeocoderControlOptions extends L.ControlOptions {
   /**
@@ -316,7 +316,7 @@ export class GeocoderControl extends EventedControl {
     const event: StartGeocodeEvent = { input: value };
     this.fire(suggest ? 'startsuggest' : 'startgeocode', event);
 
-    const context = { map: this._map };
+    const context: GeocodingContext = { map: this._map };
     const results = suggest
       ? await this.options.geocoder!.suggest!(value, context)
       : await this.options.geocoder!.geocode(value, context);
