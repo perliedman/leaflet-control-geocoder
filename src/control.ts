@@ -168,9 +168,9 @@ export class GeocoderControl extends EventedControl {
    */
   onAdd(map: L.Map) {
     const className = 'leaflet-control-geocoder';
-    const container = L.DomUtil.create('div', className + ' leaflet-bar') as HTMLDivElement;
-    const icon = L.DomUtil.create('button', className + '-icon', container) as HTMLButtonElement;
-    const form = L.DomUtil.create('div', className + '-form', container) as HTMLDivElement;
+    const container = L.DomUtil.create('div', className + ' leaflet-bar');
+    const icon = L.DomUtil.create('button', className + '-icon', container);
+    const form = L.DomUtil.create('div', className + '-form', container);
 
     this._map = map;
     this._container = container;
@@ -179,24 +179,20 @@ export class GeocoderControl extends EventedControl {
     icon.type = 'button';
     icon.setAttribute('aria-label', this.options.iconLabel);
 
-    const input = (this._input = L.DomUtil.create('input', '', form) as HTMLInputElement);
+    const input = (this._input = L.DomUtil.create('input', '', form));
     input.type = 'search';
     input.value = this.options.query;
     input.placeholder = this.options.placeholder;
     L.DomEvent.disableClickPropagation(input);
 
-    this._errorElement = L.DomUtil.create(
-      'div',
-      className + '-form-no-error',
-      container
-    ) as HTMLDivElement;
+    this._errorElement = L.DomUtil.create('div', className + '-form-no-error', container);
     this._errorElement.innerHTML = this.options.errorMessage;
 
     this._alts = L.DomUtil.create(
       'ul',
       className + '-alternatives leaflet-control-geocoder-alternatives-minimized',
       container
-    ) as HTMLUListElement;
+    );
     L.DomEvent.disableClickPropagation(this._alts);
 
     L.DomEvent.addListener(input, 'keydown', this._keydown, this);
@@ -368,10 +364,7 @@ export class GeocoderControl extends EventedControl {
   private _createAlt(result: GeocodingResult, index: number) {
     const li = L.DomUtil.create('li', ''),
       a = L.DomUtil.create('a', '', li),
-      icon =
-        this.options.showResultIcons && result.icon
-          ? (L.DomUtil.create('img', '', a) as HTMLImageElement)
-          : null,
+      icon = this.options.showResultIcons && result.icon ? L.DomUtil.create('img', '', a) : null,
       text = result.html ? undefined : document.createTextNode(result.name),
       mouseDownHandler = (e: Event) => {
         // In some browsers, a click will fire on the map if the control is
