@@ -47,11 +47,13 @@ export interface IGeocoder {
   /**
    * Performs a geocoding query and returns the results as promise
    * @param query the query
+   * @param context the context for the query
    */
   geocode(query: string, context?: GeocodingContext): Promise<GeocodingResult[]>;
   /**
    * Performs a geocoding query suggestion (this happens while typing) and returns the results as promise
    * @param query the query
+   * @param context the context for the query
    */
   suggest?(query: string, context?: GeocodingContext): Promise<GeocodingResult[]>;
   /**
