@@ -56,7 +56,8 @@ export class OpenCage implements IGeocoder {
         results.push({
           name: loc.formatted,
           bbox: bbox,
-          center: center
+          center: center,
+          properties: loc
         });
       }
     }
