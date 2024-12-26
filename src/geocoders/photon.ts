@@ -22,8 +22,17 @@ export class Photon implements IGeocoder {
     L.Util.setOptions(this, options);
   }
 
-  async geocode(query: string): Promise<GeocodingResult[]> {
+  async geocode(query: string, context?: { map?: L.Map }): Promise<GeocodingResult[]> {
     const params = geocodingParams(this.options, { q: query });
+    const center = context?.map?.getCenter?.();
+    if (center) {
+      params.lat = center.lat;
+      params.lon = center.lng;
+    }
+    const zoom = context?.map?.getZoom?.();
+    if (zoom) {
+      params.zoom = zoom;
+    }
     const data = await getJSON<any>(this.options.serviceUrl, params);
     return this._parseResults(data);
   }

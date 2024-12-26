@@ -316,9 +316,10 @@ export class GeocoderControl extends EventedControl {
     const event: StartGeocodeEvent = { input: value };
     this.fire(suggest ? 'startsuggest' : 'startgeocode', event);
 
+    const context = { map: this._map };
     const results = suggest
-      ? await this.options.geocoder!.suggest!(value)
-      : await this.options.geocoder!.geocode(value);
+      ? await this.options.geocoder!.suggest!(value, context)
+      : await this.options.geocoder!.geocode(value, context);
 
     if (requestCount === this._requestCount) {
       const event: FinishGeocodeEvent = { input: value, results };
