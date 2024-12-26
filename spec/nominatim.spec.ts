@@ -52,6 +52,48 @@ describe('L.Control.Geocoder.Nominatim', () => {
     expect([[result]]).toMatchSnapshot();
   });
 
+  it('geocodes Innsbruck using a custom htmlTemplate', async () => {
+    const geocoder2 = new Nominatim({
+      htmlTemplate(result) {
+        const osm = [result.osm_type, result.osm_id].join('/');
+        return `${result.display_name} <a href="https://www.openstreetmap.org/${osm}">${osm}</a>`;
+      }
+    });
+    const result = await mockFetchRequest(
+      'https://nominatim.openstreetmap.org/search?q=innsbruck&limit=5&format=json&addressdetails=1',
+      [
+        {
+          place_id: 199282228,
+          licence: 'Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright',
+          osm_type: 'relation',
+          osm_id: 8182617,
+          boundingbox: ['47.2583715', '47.2808566', '11.3811871', '11.418183'],
+          lat: '47.26951525',
+          lon: '11.3971372042211',
+          display_name: 'Innsbruck, Tyrol, Austria',
+          class: 'boundary',
+          type: 'administrative',
+          importance: 0.763909048330467,
+          icon: 'https://nominatim.openstreetmap.org/images/mapicons/poi_boundary_administrative.p.20.png',
+          address: {
+            city_district: 'Innsbruck',
+            city: 'Innsbruck',
+            county: 'Innsbruck',
+            state: 'Tyrol',
+            country: 'Austria',
+            country_code: 'at'
+          }
+        }
+      ] satisfies NominatimResponse,
+      () => geocoder2.geocode('innsbruck')
+    );
+    const feature = result[0];
+    expect(feature.html).toBe(
+      'Innsbruck, Tyrol, Austria <a href="https://www.openstreetmap.org/relation/8182617">relation/8182617</a>'
+    );
+    expect([[result]]).toMatchSnapshot();
+  });
+
   it('reverse geocodes 47.3/11.3', async () => {
     const result = await mockFetchRequest(
       'https://nominatim.openstreetmap.org/reverse?lat=47.3&lon=11.3&zoom=9&addressdetails=1&format=json',
