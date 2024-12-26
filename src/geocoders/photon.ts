@@ -42,30 +42,23 @@ export class Photon implements IGeocoder {
   }
 
   _parseResults(data: GeoJSON.FeatureCollection<GeoJSON.Point>): GeocodingResult[] {
-    const results: GeocodingResult[] = [];
+    return (data.features || []).map((f): GeocodingResult => {
+      const c = f.geometry.coordinates;
+      const center = L.latLng(c[1], c[0]);
+      const extent = f.properties?.extent;
 
-    if (data && data.features) {
-      for (let i = 0; i < data.features.length; i++) {
-        const f = data.features[i];
-        const c = f.geometry.coordinates;
-        const center = L.latLng(c[1], c[0]);
-        const extent = f.properties?.extent;
+      const bbox = extent
+        ? L.latLngBounds([extent[1], extent[0]], [extent[3], extent[2]])
+        : L.latLngBounds(center, center);
 
-        const bbox = extent
-          ? L.latLngBounds([extent[1], extent[0]], [extent[3], extent[2]])
-          : L.latLngBounds(center, center);
-
-        results.push({
-          name: this._decodeFeatureName(f),
-          html: this.options.htmlTemplate ? this.options.htmlTemplate(f) : undefined,
-          center: center,
-          bbox: bbox,
-          properties: f.properties
-        });
-      }
-    }
-
-    return results;
+      return {
+        name: this._decodeFeatureName(f),
+        html: this.options.htmlTemplate ? this.options.htmlTemplate(f) : undefined,
+        center,
+        bbox,
+        properties: f.properties
+      };
+    });
   }
 
   _decodeFeatureName(f: GeoJSON.Feature) {

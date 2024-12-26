@@ -45,19 +45,15 @@ export class MapQuest implements IGeocoder {
   }
 
   private _parseResults(data): GeocodingResult[] {
-    const results: GeocodingResult[] = [];
-    if (data.results && data.results[0].locations) {
-      for (let i = data.results[0].locations.length - 1; i >= 0; i--) {
-        const loc = data.results[0].locations[i];
-        const center = L.latLng(loc.latLng);
-        results[i] = {
-          name: this._formatName(loc.street, loc.adminArea4, loc.adminArea3, loc.adminArea1),
-          bbox: L.latLngBounds(center, center),
-          center: center
-        };
-      }
-    }
-    return results;
+    const locations = data.results?.[0]?.locations || [];
+    return locations.map((loc): GeocodingResult => {
+      const center = L.latLng(loc.latLng);
+      return {
+        name: this._formatName(loc.street, loc.adminArea4, loc.adminArea3, loc.adminArea1),
+        bbox: L.latLngBounds(center, center),
+        center
+      };
+    });
   }
 }
 

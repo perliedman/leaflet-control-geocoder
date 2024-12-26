@@ -29,19 +29,19 @@ export class Neutrino implements IGeocoder {
       address: query.split(/\s+/).join('.')
     });
     const data = await getJSON<any>(this.options.serviceUrl + 'geocode-address', params);
-    const results: GeocodingResult[] = [];
-    if (data.locations) {
-      data.geometry = data.locations[0];
-      const center = L.latLng(data.geometry['latitude'], data.geometry['longitude']);
-      const bbox = L.latLngBounds(center, center);
-      results[0] = {
-        name: data.geometry.address,
-        bbox: bbox,
-        center: center
-      };
+    if (!data.locations) {
+      return [];
     }
-
-    return results;
+    data.geometry = data.locations[0];
+    const center = L.latLng(data.geometry['latitude'], data.geometry['longitude']);
+    const bbox = L.latLngBounds(center, center);
+    return [
+      {
+        name: data.geometry.address,
+        bbox,
+        center
+      }
+    ];
   }
 
   suggest(query: string): Promise<GeocodingResult[]> {
@@ -57,17 +57,18 @@ export class Neutrino implements IGeocoder {
       longitude: location.lng
     });
     const data = await getJSON<any>(this.options.serviceUrl + 'geocode-reverse', params);
-    const results: GeocodingResult[] = [];
-    if (data.status.status == 200 && data.found) {
-      const center = L.latLng(location.lat, location.lng);
-      const bbox = L.latLngBounds(center, center);
-      results[0] = {
-        name: data.address,
-        bbox: bbox,
-        center: center
-      };
+    if (data.status.status !== 200 || !data.found) {
+      return [];
     }
-    return results;
+    const center = L.latLng(location.lat, location.lng);
+    const bbox = L.latLngBounds(center, center);
+    return [
+      {
+        name: data.address,
+        bbox,
+        center
+      }
+    ];
   }
 }
 

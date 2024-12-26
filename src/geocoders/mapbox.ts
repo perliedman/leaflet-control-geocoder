@@ -16,21 +16,21 @@ export class Mapbox implements IGeocoder {
     L.Util.setOptions(this, options);
   }
 
-  _getProperties(loc) {
+  _getProperties(loc: Feature) {
     const properties = {
       text: loc.text,
       address: loc.address
     };
 
-    for (let j = 0; j < (loc.context || []).length; j++) {
-      const id = loc.context[j].id.split('.')[0];
-      properties[id] = loc.context[j].text;
+    (loc.context || []).forEach(context => {
+      const id = context.id.split('.')[0];
+      properties[id] = context.text;
 
       // Get country code when available
-      if (loc.context[j].short_code) {
-        properties['countryShortCode'] = loc.context[j].short_code;
+      if (context.short_code) {
+        properties['countryShortCode'] = context.short_code;
       }
-    }
+    });
     return properties;
   }
 
@@ -67,9 +67,7 @@ export class Mapbox implements IGeocoder {
     if (!data.features?.length) {
       return [];
     }
-    const results: GeocodingResult[] = [];
-    for (let i = 0; i <= data.features.length - 1; i++) {
-      const loc = data.features[i];
+    return data.features.map((loc): GeocodingResult => {
       const center = L.latLng(loc.center.reverse() as [number, number]);
       let bbox: L.LatLngBounds;
       if (loc.bbox) {
@@ -80,15 +78,13 @@ export class Mapbox implements IGeocoder {
       } else {
         bbox = L.latLngBounds(center, center);
       }
-      results[i] = {
+      return {
         name: loc.place_name,
-        bbox: bbox,
-        center: center,
+        bbox,
+        center,
         properties: this._getProperties(loc)
       };
-    }
-
-    return results;
+    });
   }
 }
 

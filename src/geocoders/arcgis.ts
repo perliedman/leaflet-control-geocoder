@@ -4,8 +4,6 @@ import { IGeocoder, GeocoderOptions, geocodingParams, GeocodingResult, reversePa
 
 export interface ArcGisOptions extends GeocoderOptions {}
 
-
-
 /**
  * Implementation of the [ArcGIS geocoder](https://developers.arcgis.com/features/geocoding/)
  */
@@ -33,24 +31,18 @@ export class ArcGis implements IGeocoder {
       this.options.serviceUrl + '/findAddressCandidates',
       params
     );
-    const results: GeocodingResult[] = [];
-    if (data.candidates && data.candidates.length) {
-      for (let i = 0; i <= data.candidates.length - 1; i++) {
-        const loc = data.candidates[i];
-        const latLng = L.latLng(loc.location.y, loc.location.x);
-        const latLngBounds = L.latLngBounds(
-          L.latLng(loc.extent.ymax, loc.extent.xmax),
-          L.latLng(loc.extent.ymin, loc.extent.xmin)
-        );
-        results[i] = {
-          name: loc.address,
-          bbox: latLngBounds,
-          center: latLng
-        };
-      }
-    }
-
-    return results;
+    return data.candidates.map((loc): GeocodingResult => {
+      const center = L.latLng(loc.location.y, loc.location.x);
+      const bbox = L.latLngBounds(
+        L.latLng(loc.extent.ymax, loc.extent.xmax),
+        L.latLng(loc.extent.ymin, loc.extent.xmin)
+      );
+      return {
+        name: loc.address,
+        bbox,
+        center
+      };
+    });
   }
 
   suggest(query: string): Promise<GeocodingResult[]> {
@@ -64,18 +56,18 @@ export class ArcGis implements IGeocoder {
       f: 'json'
     });
     const data = await getJSON<any>(this.options.serviceUrl + '/reverseGeocode', params);
-    const result: GeocodingResult[] = [];
-    if (data && !data.error) {
-      const center = L.latLng(data.location.y, data.location.x);
-      const bbox = L.latLngBounds(center, center);
-      result.push({
-        name: data.address.Match_addr,
-        center: center,
-        bbox: bbox
-      });
+    if (!data || data.error) {
+      return [];
     }
-
-    return result;
+    const center = L.latLng(data.location.y, data.location.x);
+    const bbox = L.latLngBounds(center, center);
+    return [
+      {
+        name: data.address.Match_addr,
+        center,
+        bbox
+      }
+    ];
   }
 }
 
@@ -115,4 +107,3 @@ interface Candidate {
     ymax: number;
   };
 }
-

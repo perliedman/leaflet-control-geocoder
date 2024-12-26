@@ -66,25 +66,20 @@ export class HERE implements IGeocoder {
 
   async getJSON(url: string, params: any): Promise<GeocodingResult[]> {
     const data = await getJSON<any>(url, params);
-    const results: GeocodingResult[] = [];
-
-    if (data.response.view && data.response.view.length) {
-      for (let i = 0; i <= data.response.view[0].result.length - 1; i++) {
-        const loc = data.response.view[0].result[i].location;
-        const center = L.latLng(loc.displayPosition.latitude, loc.displayPosition.longitude);
-        const bbox = L.latLngBounds(
-          L.latLng(loc.mapView.topLeft.latitude, loc.mapView.topLeft.longitude),
-          L.latLng(loc.mapView.bottomRight.latitude, loc.mapView.bottomRight.longitude)
-        );
-        results[i] = {
-          name: loc.address.label,
-          properties: loc.address,
-          bbox: bbox,
-          center: center
-        };
-      }
-    }
-    return results;
+    return (data.response.view?.[0]?.result || []).map((result): GeocodingResult => {
+      const loc = result.location;
+      const center = L.latLng(loc.displayPosition.latitude, loc.displayPosition.longitude);
+      const bbox = L.latLngBounds(
+        L.latLng(loc.mapView.topLeft.latitude, loc.mapView.topLeft.longitude),
+        L.latLng(loc.mapView.bottomRight.latitude, loc.mapView.bottomRight.longitude)
+      );
+      return {
+        name: loc.address.label,
+        properties: loc.address,
+        bbox,
+        center
+      };
+    });
   }
 }
 
@@ -131,34 +126,28 @@ export class HEREv2 implements IGeocoder {
 
   async getJSON(url: string, params: any): Promise<GeocodingResult[]> {
     const data = await getJSON<HEREv2Response>(url, params);
-    const results: GeocodingResult[] = [];
-
-    if (data.items && data.items.length) {
-      for (let i = 0; i <= data.items.length - 1; i++) {
-        const item = data.items[i];
-        const latLng = L.latLng(item.position.lat, item.position.lng);
-        let bbox: L.LatLngBounds;
-        if (item.mapView) {
-          bbox = L.latLngBounds(
-            L.latLng(item.mapView.south, item.mapView.west),
-            L.latLng(item.mapView.north, item.mapView.east)
-          );
-        } else {
-          // Using only position when not provided
-          bbox = L.latLngBounds(
-            L.latLng(item.position.lat, item.position.lng),
-            L.latLng(item.position.lat, item.position.lng)
-          );
-        }
-        results[i] = {
-          name: item.address.label,
-          properties: item.address,
-          bbox: bbox,
-          center: latLng
-        };
+    return (data.items || []).map((item): GeocodingResult => {
+      const center = L.latLng(item.position.lat, item.position.lng);
+      let bbox: L.LatLngBounds;
+      if (item.mapView) {
+        bbox = L.latLngBounds(
+          L.latLng(item.mapView.south, item.mapView.west),
+          L.latLng(item.mapView.north, item.mapView.east)
+        );
+      } else {
+        // Using only position when not provided
+        bbox = L.latLngBounds(
+          L.latLng(item.position.lat, item.position.lng),
+          L.latLng(item.position.lat, item.position.lng)
+        );
       }
-    }
-    return results;
+      return {
+        name: item.address.label,
+        properties: item.address,
+        bbox,
+        center
+      };
+    });
   }
 }
 

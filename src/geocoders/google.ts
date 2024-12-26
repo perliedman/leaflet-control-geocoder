@@ -22,25 +22,7 @@ export class Google implements IGeocoder {
       address: query
     });
     const data = await getJSON<GoogleResponse>(this.options.serviceUrl, params);
-    const results: GeocodingResult[] = [];
-    if (data.results && data.results.length) {
-      for (let i = 0; i <= data.results.length - 1; i++) {
-        const loc = data.results[i];
-        const latLng = L.latLng(loc.geometry.location);
-        const latLngBounds = L.latLngBounds(
-          L.latLng(loc.geometry.viewport.northeast),
-          L.latLng(loc.geometry.viewport.southwest)
-        );
-        results[i] = {
-          name: loc.formatted_address,
-          bbox: latLngBounds,
-          center: latLng,
-          properties: loc.address_components
-        };
-      }
-    }
-
-    return results;
+    return this._parseResults(data);
   }
 
   async reverse(location: L.LatLngLiteral, scale: number): Promise<GeocodingResult[]> {
@@ -49,25 +31,23 @@ export class Google implements IGeocoder {
       latlng: location.lat + ',' + location.lng
     });
     const data = await getJSON<any>(this.options.serviceUrl, params);
-    const results: GeocodingResult[] = [];
-    if (data.results && data.results.length) {
-      for (let i = 0; i <= data.results.length - 1; i++) {
-        const loc = data.results[i];
-        const center = L.latLng(loc.geometry.location);
-        const bbox = L.latLngBounds(
-          L.latLng(loc.geometry.viewport.northeast),
-          L.latLng(loc.geometry.viewport.southwest)
-        );
-        results[i] = {
-          name: loc.formatted_address,
-          bbox: bbox,
-          center: center,
-          properties: loc.address_components
-        };
-      }
-    }
+    return this._parseResults(data);
+  }
 
-    return results;
+  private _parseResults(data: GoogleResponse) {
+    return (data.results || [])?.map((loc): GeocodingResult => {
+      const center = L.latLng(loc.geometry.location);
+      const bbox = L.latLngBounds(
+        L.latLng(loc.geometry.viewport.northeast),
+        L.latLng(loc.geometry.viewport.southwest)
+      );
+      return {
+        name: loc.formatted_address,
+        bbox,
+        center,
+        properties: loc.address_components
+      };
+    });
   }
 }
 

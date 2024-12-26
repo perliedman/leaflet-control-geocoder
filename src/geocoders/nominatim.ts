@@ -95,19 +95,17 @@ export class Nominatim implements IGeocoder {
       addressdetails: 1
     });
     const data = await getJSON<NominatimResult[]>(this.options.serviceUrl + 'search', params);
-    const results: GeocodingResult[] = [];
-    for (let i = data.length - 1; i >= 0; i--) {
-      const bbox = data[i].boundingbox;
-      results[i] = {
-        icon: data[i].icon,
-        name: data[i].display_name,
-        html: this.options.htmlTemplate ? this.options.htmlTemplate(data[i]) : undefined,
+    return data.map((item): GeocodingResult => {
+      const bbox = item.boundingbox;
+      return {
+        icon: item.icon,
+        name: item.display_name,
+        html: this.options.htmlTemplate ? this.options.htmlTemplate(item) : undefined,
         bbox: L.latLngBounds([+bbox[0], +bbox[2]], [+bbox[1], +bbox[3]]),
-        center: L.latLng(+data[i].lat, +data[i].lon),
-        properties: data[i]
+        center: L.latLng(+item.lat, +item.lon),
+        properties: item
       };
-    }
-    return results;
+    });
   }
 
   async reverse(location: L.LatLngLiteral, scale: number) {
@@ -119,19 +117,20 @@ export class Nominatim implements IGeocoder {
       format: 'json'
     });
     const data = await getJSON<NominatimResult>(this.options.serviceUrl + 'reverse', params);
-    const results: GeocodingResult[] = [];
-    if (data && data.lat && data.lon) {
-      const center = L.latLng(+data.lat, +data.lon);
-      const bbox = L.latLngBounds(center, center);
-      results.push({
+    if (!data?.lat || !data?.lon) {
+      return [];
+    }
+    const center = L.latLng(+data.lat, +data.lon);
+    const bbox = L.latLngBounds(center, center);
+    return [
+      {
         name: data.display_name,
         html: this.options.htmlTemplate ? this.options.htmlTemplate(data) : undefined,
-        center: center,
-        bbox: bbox,
+        center,
+        bbox,
         properties: data
-      });
-    }
-    return results;
+      }
+    ];
   }
 }
 

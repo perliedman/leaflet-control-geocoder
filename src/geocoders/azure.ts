@@ -38,20 +38,16 @@ export class AzureMaps implements IGeocoder {
     const url = this.options.serviceUrl + '/address/json';
     const data = await getJSON<AzureMapsResponse>(url, params);
 
-    const results: GeocodingResult[] = [];
-    if (data.results && data.results.length > 0) {
-      for (const result of data.results) {
-        results.push({
-          name: result.address.freeformAddress,
-          bbox: L.latLngBounds(
-            [result.viewport.topLeftPoint.lat, result.viewport.topLeftPoint.lon],
-            [result.viewport.btmRightPoint.lat, result.viewport.btmRightPoint.lon]
-          ),
-          center: L.latLng(result.position.lat, result.position.lon)
-        });
-      }
-    }
-    return results;
+    return (data.results || []).map(
+      (result): GeocodingResult => ({
+        name: result.address.freeformAddress,
+        bbox: L.latLngBounds(
+          [result.viewport.topLeftPoint.lat, result.viewport.topLeftPoint.lon],
+          [result.viewport.btmRightPoint.lat, result.viewport.btmRightPoint.lon]
+        ),
+        center: L.latLng(result.position.lat, result.position.lon)
+      })
+    );
   }
 
   /**
@@ -67,20 +63,16 @@ export class AzureMaps implements IGeocoder {
     const url = this.options.serviceUrl + '/address/reverse/json';
     const data = await getJSON<any>(url, params);
 
-    const results: GeocodingResult[] = [];
-    if (data.addresses && data.addresses.length > 0) {
-      for (const address of data.addresses) {
-        results.push({
-          name: address.address.freeformAddress,
-          bbox: L.latLngBounds(
-            [address.viewport.topLeftPoint.lat, address.viewport.topLeftPoint.lon],
-            [address.viewport.btmRightPoint.lat, address.viewport.btmRightPoint.lon]
-          ),
-          center: L.latLng(location.lat, location.lng)
-        });
-      }
-    }
-    return results;
+    return (data.addresses || []).map(
+      (address): GeocodingResult => ({
+        name: address.address.freeformAddress,
+        bbox: L.latLngBounds(
+          [address.viewport.topLeftPoint.lat, address.viewport.topLeftPoint.lon],
+          [address.viewport.btmRightPoint.lat, address.viewport.btmRightPoint.lon]
+        ),
+        center: L.latLng(location.lat, location.lng)
+      })
+    );
   }
 }
 

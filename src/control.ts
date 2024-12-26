@@ -273,9 +273,7 @@ export class GeocoderControl extends EventedControl {
       this._results = results;
       L.DomUtil.removeClass(this._alts, 'leaflet-control-geocoder-alternatives-minimized');
       L.DomUtil.addClass(this._container, 'leaflet-control-geocoder-options-open');
-      for (let i = 0; i < results.length; i++) {
-        this._alts.appendChild(this._createAlt(results[i], i));
-      }
+      this._results.forEach((result, i) => this._alts.appendChild(this._createAlt(result, i)));
     } else {
       L.DomUtil.addClass(this._container, 'leaflet-control-geocoder-options-error');
       L.DomUtil.addClass(this._errorElement, 'leaflet-control-geocoder-error');
