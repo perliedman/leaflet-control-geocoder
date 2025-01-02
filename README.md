@@ -30,6 +30,7 @@ The plugin supports many different data providers:
 The plugin can easily be extended to support other providers. Current extensions:
 
 - [DAWA Geocoder](https://github.com/kjoller/leaflet-control-geocoder-dawa/tree/new) - support for Danish Address Web API by [Niels Kjøller Hansen](https://github.com/kjoller)
+- [BAN Geocoder](https://cyrille37.github.io/leaflet-control-geocoder-banfrance/) - support for french address API : [Base Adresse Nationale (BAN)](https://adresse.data.gouv.fr)
 
 # Demos
 
