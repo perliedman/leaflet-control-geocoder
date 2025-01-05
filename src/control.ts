@@ -419,25 +419,21 @@ export class GeocoderControl extends EventedControl {
       }
     };
 
-    switch (e.keyCode) {
-      // Escape
-      case 27:
+    switch (e.key) {
+      case 'Escape':
         if (this.options.collapsed) {
           this._collapse();
         } else {
           this._clearResults();
         }
         break;
-      // Up
-      case 38:
+      case 'ArrowUp':
         select(-1);
         break;
-      // Up
-      case 40:
+      case 'ArrowDown':
         select(1);
         break;
-      // Enter
-      case 13:
+      case 'Enter':
         if (this._selection) {
           const index = parseInt(this._selection.getAttribute('data-result-index'), 10);
           this._geocodeResultSelected(this._results[index]);
