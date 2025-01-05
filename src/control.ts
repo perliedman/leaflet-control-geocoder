@@ -154,11 +154,11 @@ export class GeocoderControl extends EventedControl {
   }
 
   addThrobberClass() {
-    L.DomUtil.addClass(this._container, 'leaflet-control-geocoder-throbber');
+    this._container.classList.add('leaflet-control-geocoder-throbber');
   }
 
   removeThrobberClass() {
-    L.DomUtil.removeClass(this._container, 'leaflet-control-geocoder-throbber');
+    this._container.classList.remove('leaflet-control-geocoder-throbber');
   }
 
   /**
@@ -267,12 +267,12 @@ export class GeocoderControl extends EventedControl {
     } else if (results.length > 0) {
       this._alts.innerHTML = '';
       this._results = results;
-      L.DomUtil.removeClass(this._alts, 'leaflet-control-geocoder-alternatives-minimized');
-      L.DomUtil.addClass(this._container, 'leaflet-control-geocoder-options-open');
+      this._alts.classList.remove('leaflet-control-geocoder-alternatives-minimized');
+      this._container.classList.add('leaflet-control-geocoder-options-open');
       this._results.forEach((result, i) => this._alts.appendChild(this._createAlt(result, i)));
     } else {
-      L.DomUtil.addClass(this._container, 'leaflet-control-geocoder-options-error');
-      L.DomUtil.addClass(this._errorElement, 'leaflet-control-geocoder-error');
+      this._container.classList.add('leaflet-control-geocoder-options-error');
+      this._errorElement.classList.add('leaflet-control-geocoder-error');
     }
   }
 
@@ -330,7 +330,7 @@ export class GeocoderControl extends EventedControl {
   }
 
   private _toggle() {
-    if (L.DomUtil.hasClass(this._container, 'leaflet-control-geocoder-expanded')) {
+    if (this._container.classList.contains('leaflet-control-geocoder-expanded')) {
       this._collapse();
     } else {
       this._expand();
@@ -338,27 +338,27 @@ export class GeocoderControl extends EventedControl {
   }
 
   private _expand() {
-    L.DomUtil.addClass(this._container, 'leaflet-control-geocoder-expanded');
+    this._container.classList.add('leaflet-control-geocoder-expanded');
     this._input.select();
     this.fire('expand');
   }
 
   private _collapse() {
-    L.DomUtil.removeClass(this._container, 'leaflet-control-geocoder-expanded');
-    L.DomUtil.addClass(this._alts, 'leaflet-control-geocoder-alternatives-minimized');
-    L.DomUtil.removeClass(this._errorElement, 'leaflet-control-geocoder-error');
-    L.DomUtil.removeClass(this._container, 'leaflet-control-geocoder-options-open');
-    L.DomUtil.removeClass(this._container, 'leaflet-control-geocoder-options-error');
+    this._container.classList.remove('leaflet-control-geocoder-expanded');
+    this._alts.classList.add('leaflet-control-geocoder-alternatives-minimized');
+    this._errorElement.classList.remove('leaflet-control-geocoder-error');
+    this._container.classList.remove('leaflet-control-geocoder-options-open');
+    this._container.classList.remove('leaflet-control-geocoder-options-error');
     this._input.blur(); // mobile: keyboard shouldn't stay expanded
     this.fire('collapse');
   }
 
   private _clearResults() {
-    L.DomUtil.addClass(this._alts, 'leaflet-control-geocoder-alternatives-minimized');
+    this._alts.classList.add('leaflet-control-geocoder-alternatives-minimized');
     this._selection = null;
-    L.DomUtil.removeClass(this._errorElement, 'leaflet-control-geocoder-error');
-    L.DomUtil.removeClass(this._container, 'leaflet-control-geocoder-options-open');
-    L.DomUtil.removeClass(this._container, 'leaflet-control-geocoder-options-error');
+    this._errorElement.classList.remove('leaflet-control-geocoder-error');
+    this._container.classList.remove('leaflet-control-geocoder-options-open');
+    this._container.classList.remove('leaflet-control-geocoder-options-error');
   }
 
   private _createAlt(result: GeocodingResult, index: number) {
@@ -407,7 +407,7 @@ export class GeocoderControl extends EventedControl {
   private _keydown(e: KeyboardEvent) {
     const select = (dir: number) => {
       if (this._selection) {
-        L.DomUtil.removeClass(this._selection, 'leaflet-control-geocoder-selected');
+        this._selection.classList.remove('leaflet-control-geocoder-selected');
         this._selection = this._selection[dir > 0 ? 'nextSibling' : 'previousSibling'];
       }
       if (!this._selection) {
@@ -415,7 +415,7 @@ export class GeocoderControl extends EventedControl {
       }
 
       if (this._selection) {
-        L.DomUtil.addClass(this._selection, 'leaflet-control-geocoder-selected');
+        this._selection.classList.add('leaflet-control-geocoder-selected');
       }
     };
 
