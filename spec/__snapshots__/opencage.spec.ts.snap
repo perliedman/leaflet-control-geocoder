@@ -1,0 +1,80 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`L.Control.Geocoder.OpenCage > geocodes Eiffel Tower 1`] = `
+[
+  [
+    [
+      {
+        "bbox": {
+          "_northEast": {
+            "lat": 48.85826,
+            "lng": 2.294499,
+          },
+          "_southWest": {
+            "lat": 48.85826,
+            "lng": 2.294499,
+          },
+        },
+        "center": {
+          "lat": 48.85826,
+          "lng": 2.294499,
+        },
+        "name": "Eiffel Tower, Paris, Ile-de-France, France",
+        "properties": {
+          "bounds": {
+            "northeast": {
+              "lat": "48.859830",
+              "lng": "2.296873",
+            },
+            "southwest": {
+              "lat": "48.856690",
+              "lng": "2.292125",
+            },
+          },
+          "formatted": "Eiffel Tower, Paris, Ile-de-France, France",
+          "geometry": {
+            "lat": "48.858260",
+            "lng": "2.294499",
+          },
+          "name": "Eiffel Tower",
+        },
+      },
+      {
+        "bbox": {
+          "_northEast": {
+            "lat": 36.112463,
+            "lng": -115.172168,
+          },
+          "_southWest": {
+            "lat": 36.112463,
+            "lng": -115.172168,
+          },
+        },
+        "center": {
+          "lat": 36.112463,
+          "lng": -115.172168,
+        },
+        "name": "Eiffel Tower Restaurant, Clark County, Nevada, USA",
+        "properties": {
+          "bounds": {
+            "northeast": {
+              "lat": "36.112760",
+              "lng": "-115.171728",
+            },
+            "southwest": {
+              "lat": "36.112166",
+              "lng": "-115.172608",
+            },
+          },
+          "formatted": "Eiffel Tower Restaurant, Clark County, Nevada, USA",
+          "geometry": {
+            "lat": "36.112463",
+            "lng": "-115.172168",
+          },
+          "name": "Eiffel Tower Restaurant",
+        },
+      },
+    ],
+  ],
+]
+`;
