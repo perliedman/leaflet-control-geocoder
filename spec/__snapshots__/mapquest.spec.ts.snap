@@ -1,0 +1,27 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`L.Control.Geocoder.MapQuest > geocodes Washington 1`] = `
+[
+  [
+    [
+      {
+        "bbox": {
+          "_northEast": {
+            "lat": 38.892062,
+            "lng": -77.019912,
+          },
+          "_southWest": {
+            "lat": 38.892062,
+            "lng": -77.019912,
+          },
+        },
+        "center": {
+          "lat": 38.892062,
+          "lng": -77.019912,
+        },
+        "name": "District of Columbia, DC, US",
+      },
+    ],
+  ],
+]
+`;
