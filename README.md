@@ -51,11 +51,11 @@ The plugin can easily be extended to support other providers. Current extensions
 Add the control to a map instance:
 
 ```javascript
-var map = L.map('map').setView([0, 0], 2);
-L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+const map = new L.Map('map').setView([0, 0], 2);
+new L.TileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
   attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
-L.Control.geocoder().addTo(map);
+new L.Control.Geocoder().addTo(map);
 ```
 
 # Customizing
@@ -73,7 +73,7 @@ var geocoder = L.Control.geocoder({
 })
   .on('markgeocode', function(e) {
     var bbox = e.geocode.bbox;
-    var poly = L.polygon([
+    var poly = new L.Polygon([
       bbox.getSouthEast(),
       bbox.getNorthEast(),
       bbox.getNorthWest(),

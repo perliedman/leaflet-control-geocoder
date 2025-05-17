@@ -28,8 +28,8 @@ export class What3Words implements IGeocoder {
     if (!data.geometry) {
       return [];
     }
-    const center = L.latLng(data.geometry['lat'], data.geometry['lng']);
-    const bbox = L.latLngBounds(center, center);
+    const center = new L.LatLng(data.geometry['lat'], data.geometry['lng']);
+    const bbox = new L.LatLngBounds(center, center);
     return [
       {
         name: data.words,
@@ -54,8 +54,8 @@ export class What3Words implements IGeocoder {
     if (data.status.status != 200) {
       return [];
     }
-    const center = L.latLng(data.geometry['lat'], data.geometry['lng']);
-    const bbox = L.latLngBounds(center, center);
+    const center = new L.LatLng(data.geometry['lat'], data.geometry['lng']);
+    const bbox = new L.LatLngBounds(center, center);
     return [
       {
         name: data.words,

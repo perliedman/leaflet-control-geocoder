@@ -68,15 +68,15 @@ export class Mapbox implements IGeocoder {
       return [];
     }
     return data.features.map((loc): GeocodingResult => {
-      const center = L.latLng(loc.center.reverse() as [number, number]);
+      const center = new L.LatLng(...loc.center.reverse() as [number, number]);
       let bbox: L.LatLngBounds;
       if (loc.bbox) {
-        bbox = L.latLngBounds(
-          L.latLng(loc.bbox.slice(0, 2).reverse() as [number, number]),
-          L.latLng(loc.bbox.slice(2, 4).reverse() as [number, number])
+        bbox = new L.LatLngBounds(
+          new L.LatLng(...loc.bbox.slice(0, 2).reverse() as [number, number]),
+          new L.LatLng(...loc.bbox.slice(2, 4).reverse() as [number, number])
         );
       } else {
-        bbox = L.latLngBounds(center, center);
+        bbox = new L.LatLngBounds(center, center);
       }
       return {
         name: loc.place_name,

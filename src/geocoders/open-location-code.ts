@@ -35,10 +35,10 @@ export class OpenLocationCode implements IGeocoder {
       const decoded = this.options.OpenLocationCode.decode(query);
       const result: GeocodingResult = {
         name: query,
-        center: L.latLng(decoded.latitudeCenter, decoded.longitudeCenter),
-        bbox: L.latLngBounds(
-          L.latLng(decoded.latitudeLo, decoded.longitudeLo),
-          L.latLng(decoded.latitudeHi, decoded.longitudeHi)
+        center: new L.LatLng(decoded.latitudeCenter, decoded.longitudeCenter),
+        bbox: new L.LatLngBounds(
+          new L.LatLng(decoded.latitudeLo, decoded.longitudeLo),
+          new L.LatLng(decoded.latitudeHi, decoded.longitudeHi)
         )
       };
       return [result];
@@ -56,10 +56,10 @@ export class OpenLocationCode implements IGeocoder {
       );
       const result = {
         name: code,
-        center: L.latLng(location.lat, location.lng),
-        bbox: L.latLngBounds(
-          L.latLng(location.lat, location.lng),
-          L.latLng(location.lat, location.lng)
+        center: new L.LatLng(location.lat, location.lng),
+        bbox: new L.LatLngBounds(
+          new L.LatLng(location.lat, location.lng),
+          new L.LatLng(location.lat, location.lng)
         )
       };
       return [result];

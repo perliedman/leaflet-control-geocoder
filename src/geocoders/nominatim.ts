@@ -101,8 +101,8 @@ export class Nominatim implements IGeocoder {
         icon: item.icon,
         name: item.display_name,
         html: this.options.htmlTemplate ? this.options.htmlTemplate(item) : undefined,
-        bbox: L.latLngBounds([+bbox[0], +bbox[2]], [+bbox[1], +bbox[3]]),
-        center: L.latLng(+item.lat, +item.lon),
+        bbox: new L.LatLngBounds([+bbox[0], +bbox[2]], [+bbox[1], +bbox[3]]),
+        center: new L.LatLng(+item.lat, +item.lon),
         properties: item
       };
     });
@@ -120,8 +120,8 @@ export class Nominatim implements IGeocoder {
     if (!data?.lat || !data?.lon) {
       return [];
     }
-    const center = L.latLng(+data.lat, +data.lon);
-    const bbox = L.latLngBounds(center, center);
+    const center = new L.LatLng(+data.lat, +data.lon);
+    const bbox = new L.LatLngBounds(center, center);
     return [
       {
         name: data.display_name,

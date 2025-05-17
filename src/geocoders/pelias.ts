@@ -46,9 +46,9 @@ export class Pelias implements IGeocoder {
 
   _parseResults(data, bboxname): GeocodingResult[] {
     const results: GeocodingResult[] = [];
-    L.geoJSON(data, {
+    new L.GeoJSON(data, {
       pointToLayer(feature, latlng) {
-        return L.circleMarker(latlng);
+        return new L.CircleMarker(latlng, {radius: 10});
       },
       onEachFeature(feature, layer: any) {
         const result = {} as GeocodingResult;
@@ -60,13 +60,13 @@ export class Pelias implements IGeocoder {
           center = bbox.getCenter();
         } else if (layer.feature.bbox) {
           center = layer.getLatLng();
-          bbox = L.latLngBounds(
+          bbox = new L.LatLngBounds(
             L.GeoJSON.coordsToLatLng(layer.feature.bbox.slice(0, 2)),
             L.GeoJSON.coordsToLatLng(layer.feature.bbox.slice(2, 4))
           );
         } else {
           center = layer.getLatLng();
-          bbox = L.latLngBounds(center, center);
+          bbox = new L.LatLngBounds(center, center);
         }
 
         result.name = layer.feature.properties.label;

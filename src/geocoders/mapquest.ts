@@ -47,10 +47,10 @@ export class MapQuest implements IGeocoder {
   private _parseResults(data): GeocodingResult[] {
     const locations = data.results?.[0]?.locations || [];
     return locations.map((loc): GeocodingResult => {
-      const center = L.latLng(loc.latLng);
+      const center = new L.LatLng(loc.latLng.lat, loc.latLng.lng);
       return {
         name: this._formatName(loc.street, loc.adminArea4, loc.adminArea3, loc.adminArea1),
-        bbox: L.latLngBounds(center, center),
+        bbox: new L.LatLngBounds(center, center),
         center
       };
     });

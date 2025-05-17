@@ -8,7 +8,7 @@ describe('LatLng', () => {
   // test cases from https://github.com/openstreetmap/openstreetmap-website/blob/master/test/controllers/geocoder_controller_test.rb
   let expected;
   beforeEach(() => {
-    expected = L.latLng(50.06773, 14.37742);
+    expected = new L.LatLng(50.06773, 14.37742);
   });
 
   it('geocodes basic lat/lon pairs', () => {
@@ -41,21 +41,21 @@ describe('LatLng', () => {
     geocode('50.06773N, 14.37742E');
   });
   it('geocodes lat/lon pairs using N/W with degrees', () => {
-    expected = L.latLng(50.06773, -14.37742);
+    expected = new L.LatLng(50.06773, -14.37742);
     geocode('N50.06773 W14.37742');
     geocode('N50.06773, W14.37742');
     geocode('50.06773N 14.37742W');
     geocode('50.06773N, 14.37742W');
   });
   it('geocodes lat/lon pairs using S/E with degrees', () => {
-    expected = L.latLng(-50.06773, 14.37742);
+    expected = new L.LatLng(-50.06773, 14.37742);
     geocode('S50.06773 E14.37742');
     geocode('S50.06773, E14.37742');
     geocode('50.06773S 14.37742E');
     geocode('50.06773S, 14.37742E');
   });
   it('geocodes lat/lon pairs using S/W with degrees', () => {
-    expected = L.latLng(-50.06773, -14.37742);
+    expected = new L.LatLng(-50.06773, -14.37742);
     geocode('S50.06773 W14.37742');
     geocode('S50.06773, W14.37742');
     geocode('50.06773S 14.37742W');
@@ -63,7 +63,7 @@ describe('LatLng', () => {
   });
 
   it('geocodes lat/lon pairs using N/E with degrees/mins', () => {
-    expected = L.latLng(50.06773333333334, 14.377416666666667);
+    expected = new L.LatLng(50.06773333333334, 14.377416666666667);
     geocode('N 50° 04.064 E 014° 22.645');
     geocode("N 50° 04.064' E 014° 22.645");
     geocode("N 50° 04.064', E 014° 22.645'");
@@ -73,7 +73,7 @@ describe('LatLng', () => {
     geocode("50° 04.064' N, 014° 22.645' E");
   });
   it('geocodes lat/lon pairs using N/W with degrees/mins', () => {
-    expected = L.latLng(50.06773333333334, -14.377416666666667);
+    expected = new L.LatLng(50.06773333333334, -14.377416666666667);
     geocode('N 50° 04.064 W 014° 22.645');
     geocode("N 50° 04.064' W 014° 22.645");
     geocode("N 50° 04.064', W 014° 22.645'");
@@ -83,7 +83,7 @@ describe('LatLng', () => {
     geocode("50° 04.064' N, 014° 22.645' W");
   });
   it('geocodes lat/lon pairs using S/E with degrees/mins', () => {
-    expected = L.latLng(-50.06773333333334, 14.377416666666667);
+    expected = new L.LatLng(-50.06773333333334, 14.377416666666667);
     geocode('S 50° 04.064 E 014° 22.645');
     geocode("S 50° 04.064' E 014° 22.645");
     geocode("S 50° 04.064', E 014° 22.645'");
@@ -93,7 +93,7 @@ describe('LatLng', () => {
     geocode("50° 04.064' S, 014° 22.645' E");
   });
   it('geocodes lat/lon pairs using S/W with degrees/mins', () => {
-    expected = L.latLng(-50.06773333333334, -14.377416666666667);
+    expected = new L.LatLng(-50.06773333333334, -14.377416666666667);
     geocode('S 50° 04.064 W 014° 22.645');
     geocode("S 50° 04.064' W 014° 22.645");
     geocode("S 50° 04.064', W 014° 22.645'");
@@ -112,7 +112,7 @@ describe('LatLng', () => {
     geocode('50°4\'3.828"N 14°22\'38.712"E');
   });
   it('geocodes lat/lon pairs using N/W with degrees/mins/secs', () => {
-    expected = L.latLng(50.06773, -14.37742);
+    expected = new L.LatLng(50.06773, -14.37742);
     geocode('N 50° 4\' 03.828" W 14° 22\' 38.712"');
     geocode('N 50° 4\' 03.828", W 14° 22\' 38.712"');
     geocode('N 50° 4′ 03.828″, W 14° 22′ 38.712″');
@@ -121,7 +121,7 @@ describe('LatLng', () => {
     geocode('50°4\'3.828"N 14°22\'38.712"W');
   });
   it('geocodes lat/lon pairs using S/E with degrees/mins/secs', () => {
-    expected = L.latLng(-50.06773, 14.37742);
+    expected = new L.LatLng(-50.06773, 14.37742);
     geocode('S 50° 4\' 03.828" E 14° 22\' 38.712"');
     geocode('S 50° 4\' 03.828", E 14° 22\' 38.712"');
     geocode('S 50° 4′ 03.828″, E 14° 22′ 38.712″');
@@ -130,7 +130,7 @@ describe('LatLng', () => {
     geocode('50°4\'3.828"S 14°22\'38.712"E');
   });
   it('geocodes lat/lon pairs using S/W with degrees/mins/secs', () => {
-    expected = L.latLng(-50.06773, -14.37742);
+    expected = new L.LatLng(-50.06773, -14.37742);
     geocode('S 50° 4\' 03.828" W 14° 22\' 38.712"');
     geocode('S 50° 4\' 03.828", W 14° 22\' 38.712"');
     geocode('S 50° 4′ 03.828″, W 14° 22′ 38.712″');

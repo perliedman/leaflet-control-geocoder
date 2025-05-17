@@ -36,10 +36,10 @@ export class Google implements IGeocoder {
 
   private _parseResults(data: GoogleResponse) {
     return (data.results || [])?.map((loc): GeocodingResult => {
-      const center = L.latLng(loc.geometry.location);
-      const bbox = L.latLngBounds(
-        L.latLng(loc.geometry.viewport.northeast),
-        L.latLng(loc.geometry.viewport.southwest)
+      const center = new L.LatLng(loc.geometry.location.lat, loc.geometry.location.lng);
+      const bbox = new L.LatLngBounds(
+        new L.LatLng(loc.geometry.viewport.northeast.lat, loc.geometry.viewport.northeast.lng),
+        new L.LatLng(loc.geometry.viewport.southwest.lat, loc.geometry.viewport.southwest.lng)
       );
       return {
         name: loc.formatted_address,

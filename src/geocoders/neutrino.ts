@@ -33,8 +33,8 @@ export class Neutrino implements IGeocoder {
       return [];
     }
     data.geometry = data.locations[0];
-    const center = L.latLng(data.geometry['latitude'], data.geometry['longitude']);
-    const bbox = L.latLngBounds(center, center);
+    const center = new L.LatLng(data.geometry.latitude, data.geometry.longitude);
+    const bbox = new L.LatLngBounds(center, center);
     return [
       {
         name: data.geometry.address,
@@ -60,8 +60,8 @@ export class Neutrino implements IGeocoder {
     if (data.status.status !== 200 || !data.found) {
       return [];
     }
-    const center = L.latLng(location.lat, location.lng);
-    const bbox = L.latLngBounds(center, center);
+    const center = new L.LatLng(location.lat, location.lng);
+    const bbox = new L.LatLngBounds(center, center);
     return [
       {
         name: data.address,

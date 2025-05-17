@@ -68,10 +68,10 @@ export class HERE implements IGeocoder {
     const data = await getJSON<any>(url, params);
     return (data.response.view?.[0]?.result || []).map((result): GeocodingResult => {
       const loc = result.location;
-      const center = L.latLng(loc.displayPosition.latitude, loc.displayPosition.longitude);
-      const bbox = L.latLngBounds(
-        L.latLng(loc.mapView.topLeft.latitude, loc.mapView.topLeft.longitude),
-        L.latLng(loc.mapView.bottomRight.latitude, loc.mapView.bottomRight.longitude)
+      const center = new L.LatLng(loc.displayPosition.latitude, loc.displayPosition.longitude);
+      const bbox = new L.LatLngBounds(
+        new L.LatLng(loc.mapView.topLeft.latitude, loc.mapView.topLeft.longitude),
+        new L.LatLng(loc.mapView.bottomRight.latitude, loc.mapView.bottomRight.longitude)
       );
       return {
         name: loc.address.label,
@@ -127,18 +127,18 @@ export class HEREv2 implements IGeocoder {
   async getJSON(url: string, params: any): Promise<GeocodingResult[]> {
     const data = await getJSON<HEREv2Response>(url, params);
     return (data.items || []).map((item): GeocodingResult => {
-      const center = L.latLng(item.position.lat, item.position.lng);
+      const center = new L.LatLng(item.position.lat, item.position.lng);
       let bbox: L.LatLngBounds;
       if (item.mapView) {
-        bbox = L.latLngBounds(
-          L.latLng(item.mapView.south, item.mapView.west),
-          L.latLng(item.mapView.north, item.mapView.east)
+        bbox = new L.LatLngBounds(
+          new L.LatLng(item.mapView.south, item.mapView.west),
+          new L.LatLng(item.mapView.north, item.mapView.east)
         );
       } else {
         // Using only position when not provided
-        bbox = L.latLngBounds(
-          L.latLng(item.position.lat, item.position.lng),
-          L.latLng(item.position.lat, item.position.lng)
+        bbox = new L.LatLngBounds(
+          new L.LatLng(item.position.lat, item.position.lng),
+          new L.LatLng(item.position.lat, item.position.lng)
         );
       }
       return {

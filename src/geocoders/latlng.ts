@@ -22,7 +22,7 @@ export function parseLatLng(query: string): L.LatLng | undefined {
   // regex from https://github.com/openstreetmap/openstreetmap-website/blob/master/app/controllers/geocoder_controller.rb
   if ((match = query.match(/^([NS])\s*(\d{1,3}(?:\.\d*)?)\W*([EW])\s*(\d{1,3}(?:\.\d*)?)$/))) {
     // [NSEW] decimal degrees
-    return L.latLng(
+    return new L.LatLng(
       (/N/i.test(match[1]) ? 1 : -1) * +match[2],
       (/E/i.test(match[3]) ? 1 : -1) * +match[4]
     );
@@ -30,7 +30,7 @@ export function parseLatLng(query: string): L.LatLng | undefined {
     (match = query.match(/^(\d{1,3}(?:\.\d*)?)\s*([NS])\W*(\d{1,3}(?:\.\d*)?)\s*([EW])$/))
   ) {
     // decimal degrees [NSEW]
-    return L.latLng(
+    return new L.LatLng(
       (/N/i.test(match[2]) ? 1 : -1) * +match[1],
       (/E/i.test(match[4]) ? 1 : -1) * +match[3]
     );
@@ -40,7 +40,7 @@ export function parseLatLng(query: string): L.LatLng | undefined {
     ))
   ) {
     // [NSEW] degrees, decimal minutes
-    return L.latLng(
+    return new L.LatLng(
       (/N/i.test(match[1]) ? 1 : -1) * (+match[2] + +match[3] / 60),
       (/E/i.test(match[4]) ? 1 : -1) * (+match[5] + +match[6] / 60)
     );
@@ -50,7 +50,7 @@ export function parseLatLng(query: string): L.LatLng | undefined {
     ))
   ) {
     // degrees, decimal minutes [NSEW]
-    return L.latLng(
+    return new L.LatLng(
       (/N/i.test(match[3]) ? 1 : -1) * (+match[1] + +match[2] / 60),
       (/E/i.test(match[6]) ? 1 : -1) * (+match[4] + +match[5] / 60)
     );
@@ -60,7 +60,7 @@ export function parseLatLng(query: string): L.LatLng | undefined {
     ))
   ) {
     // [NSEW] degrees, minutes, decimal seconds
-    return L.latLng(
+    return new L.LatLng(
       (/N/i.test(match[1]) ? 1 : -1) * (+match[2] + +match[3] / 60 + +match[4] / 3600),
       (/E/i.test(match[5]) ? 1 : -1) * (+match[6] + +match[7] / 60 + +match[8] / 3600)
     );
@@ -70,12 +70,12 @@ export function parseLatLng(query: string): L.LatLng | undefined {
     ))
   ) {
     // degrees, minutes, decimal seconds [NSEW]
-    return L.latLng(
+    return new L.LatLng(
       (/N/i.test(match[4]) ? 1 : -1) * (+match[1] + +match[2] / 60 + +match[3] / 3600),
       (/E/i.test(match[8]) ? 1 : -1) * (+match[5] + +match[6] / 60 + +match[7] / 3600)
     );
   } else if ((match = query.match(/^\s*([+-]?\d+(?:\.\d*)?)\s*[\s,]\s*([+-]?\d+(?:\.\d*)?)\s*$/))) {
-    return L.latLng(+match[1], +match[2]);
+    return new L.LatLng(+match[1], +match[2]);
   }
 }
 

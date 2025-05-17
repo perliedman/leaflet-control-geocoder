@@ -29,7 +29,7 @@
     <div id="map"></div>
 
     <script>
-      const map = L.map('map').setView([0, 0], 2);
+      const map = new L.Map('map').setView([0, 0], 2);
 
       let geocoder = L.Control.Geocoder.nominatim();
       // parse /?geocoder=nominatim from URL
@@ -52,7 +52,7 @@
         control.setQuery('Earth');
       }, 12000);
 
-      L.tileLayer('https://tile.osm.org/{z}/{x}/{y}.png', {
+      new L.TileLayer('https://tile.osm.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
       }).addTo(map);
 
@@ -69,7 +69,7 @@
               .setPopupContent(r.html || r.name)
               .openPopup();
           } else {
-            marker = L.marker(r.center).bindPopup(r.name).addTo(map).openPopup();
+            marker = new L.Marker(r.center).bindPopup(r.name).addTo(map).openPopup();
           }
         });
       });

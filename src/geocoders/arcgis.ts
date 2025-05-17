@@ -32,10 +32,10 @@ export class ArcGis implements IGeocoder {
       params
     );
     return data.candidates.map((loc): GeocodingResult => {
-      const center = L.latLng(loc.location.y, loc.location.x);
-      const bbox = L.latLngBounds(
-        L.latLng(loc.extent.ymax, loc.extent.xmax),
-        L.latLng(loc.extent.ymin, loc.extent.xmin)
+      const center = new L.LatLng(loc.location.y, loc.location.x);
+      const bbox = new L.LatLngBounds(
+        new L.LatLng(loc.extent.ymax, loc.extent.xmax),
+        new L.LatLng(loc.extent.ymin, loc.extent.xmin)
       );
       return {
         name: loc.address,
@@ -59,8 +59,8 @@ export class ArcGis implements IGeocoder {
     if (!data || data.error) {
       return [];
     }
-    const center = L.latLng(data.location.y, data.location.x);
-    const bbox = L.latLngBounds(center, center);
+    const center = new L.LatLng(data.location.y, data.location.x);
+    const bbox = new L.LatLngBounds(center, center);
     return [
       {
         name: data.address.Match_addr,

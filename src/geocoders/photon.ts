@@ -60,12 +60,12 @@ export class Photon implements IGeocoder {
   _parseResults(data: GeoJSON.FeatureCollection<GeoJSON.Point>): GeocodingResult[] {
     return (data.features || []).map((f): GeocodingResult => {
       const c = f.geometry.coordinates;
-      const center = L.latLng(c[1], c[0]);
+      const center = new L.LatLng(c[1], c[0]);
       const extent = f.properties?.extent;
 
       const bbox = extent
-        ? L.latLngBounds([extent[1], extent[0]], [extent[3], extent[2]])
-        : L.latLngBounds(center, center);
+        ? new L.LatLngBounds([extent[1], extent[0]], [extent[3], extent[2]])
+        : new L.LatLngBounds(center, center);
 
       return {
         name: this._decodeFeatureName(f),

@@ -41,11 +41,11 @@ export class AzureMaps implements IGeocoder {
     return (data.results || []).map(
       (result): GeocodingResult => ({
         name: result.address.freeformAddress,
-        bbox: L.latLngBounds(
+        bbox: new L.LatLngBounds(
           [result.viewport.topLeftPoint.lat, result.viewport.topLeftPoint.lon],
           [result.viewport.btmRightPoint.lat, result.viewport.btmRightPoint.lon]
         ),
-        center: L.latLng(result.position.lat, result.position.lon)
+        center: new L.LatLng(result.position.lat, result.position.lon)
       })
     );
   }
@@ -66,11 +66,11 @@ export class AzureMaps implements IGeocoder {
     return (data.addresses || []).map(
       (address): GeocodingResult => ({
         name: address.address.freeformAddress,
-        bbox: L.latLngBounds(
+        bbox: new L.LatLngBounds(
           [address.viewport.topLeftPoint.lat, address.viewport.topLeftPoint.lon],
           [address.viewport.btmRightPoint.lat, address.viewport.btmRightPoint.lon]
         ),
-        center: L.latLng(location.lat, location.lng)
+        center: new L.LatLng(location.lat, location.lng)
       })
     );
   }

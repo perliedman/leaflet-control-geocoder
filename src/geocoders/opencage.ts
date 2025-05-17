@@ -40,14 +40,14 @@ export class OpenCage implements IGeocoder {
 
   private _parseResults(data): GeocodingResult[] {
     return (data.results || []).map((loc): GeocodingResult => {
-      const center = L.latLng(loc.geometry);
+      const center = new L.LatLng(loc.geometry.lat, loc.geometry.lng);
       const bbox =
         loc.annotations && loc.annotations.bounds
-          ? L.latLngBounds(
-              L.latLng(loc.annotations.bounds.northeast),
-              L.latLng(loc.annotations.bounds.southwest)
+          ? new L.LatLngBounds(
+              new L.LatLng(loc.annotations.bounds.northeast.lat, loc.annotations.bounds.northeast.lng),
+              new L.LatLng(loc.annotations.bounds.southwest.lat, loc.annotations.bounds.southwest.lng)
             )
-          : L.latLngBounds(center, center);
+          : new L.LatLngBounds(center, center);
 
       return {
         name: loc.formatted,
