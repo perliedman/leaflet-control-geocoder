@@ -1,0 +1,27 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`L.Control.Geocoder.Bing > geocodes Microsoft Way, Redmond 1`] = `
+[
+  [
+    [
+      {
+        "bbox": {
+          "_northEast": {
+            "lat": 47.643983179153814,
+            "lng": -122.12206713944467,
+          },
+          "_southWest": {
+            "lat": 47.63625774401246,
+            "lng": -122.13735364288299,
+          },
+        },
+        "center": {
+          "lat": 47.64012046158314,
+          "lng": -122.12971039116383,
+        },
+        "name": "1 Microsoft Way, Redmond, WA 98052",
+      },
+    ],
+  ],
+]
+`;
