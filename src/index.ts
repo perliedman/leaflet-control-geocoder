@@ -11,11 +11,11 @@ import { GeocoderControl as Geocoder, geocoder } from './control';
 import * as geocoders from './geocoders/index';
 import './style.css';
 
-L.Util.extend(Geocoder, geocoders);
+Object.assign(Geocoder, geocoders);
 export default Geocoder;
 export { Geocoder, geocoder, geocoders };
 
-L.Util.extend(L.Control, {
+Object.assign(L.Control, {
   Geocoder: Geocoder,
   geocoder: geocoder
 });

@@ -108,7 +108,7 @@ export const mapzen = pelias;
 export class Openrouteservice extends Pelias {
   constructor(options?: Partial<PeliasOptions>) {
     super(
-      L.Util.extend(
+      Object.assign(
         {
           serviceUrl: 'https://api.openrouteservice.org/geocode'
         },

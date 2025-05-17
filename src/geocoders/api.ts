@@ -90,7 +90,7 @@ export function geocodingParams(
   options: GeocoderOptions,
   params: Record<string, unknown>
 ): Record<string, unknown> {
-  return L.Util.extend(params, options.geocodingQueryParams);
+  return Object.assign(params, options.geocodingQueryParams);
 }
 
 /**
@@ -100,5 +100,5 @@ export function reverseParams(
   options: GeocoderOptions,
   params: Record<string, unknown>
 ): Record<string, unknown> {
-  return L.Util.extend(params, options.reverseQueryParams);
+  return Object.assign(params, options.reverseQueryParams);
 }
