@@ -85,7 +85,7 @@
     "vitest": "^2.1.8"
   },
   "peerDependencies": {
-    "leaflet": "^1.6.0"
+    "leaflet": "^1.6.0 || ^2.0.0"
   },
   "optionalDependencies": {
     "open-location-code": "^1.0.3"
