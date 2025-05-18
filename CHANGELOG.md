@@ -1,3 +1,25 @@
+## 3.2.0 (2025-05-18)
+
+This version provides **compatibility with [Leaflet 2.0.0-alpha](https://github.com/Leaflet/Leaflet/releases/tag/v2.0.0-alpha)**.
+
+- photon: Substantially improve Photon results with map-derived parameters. (#339) ([66e361e](https://github.com/perliedman/leaflet-control-geocoder/commit/66e361e)), closes [#339](https://github.com/perliedman/leaflet-control-geocoder/issues/339)
+- photon: photon.komoot.io ([0a543d3](https://github.com/perliedman/leaflet-control-geocoder/commit/0a543d3)), closes [#356](https://github.com/perliedman/leaflet-control-geocoder/issues/356)
+- opencage: Add raw `properties` to result #358 (#359) ([8943dc4](https://github.com/perliedman/leaflet-control-geocoder/commit/8943dc4)), closes [#358](https://github.com/perliedman/leaflet-control-geocoder/issues/358) [#359](https://github.com/perliedman/leaflet-control-geocoder/issues/359)
+- Add interface GeocodingContext ([d697fa0](https://github.com/perliedman/leaflet-control-geocoder/commit/d697fa0) [4eb5e16](https://github.com/perliedman/leaflet-control-geocoder/commit/4eb5e16))), closes [#339](https://github.com/perliedman/leaflet-control-geocoder/issues/339)
+- refactoring for Leaflet 2.0: Remove use of factory methods ([9ccd125](https://github.com/perliedman/leaflet-control-geocoder/commit/9ccd125))
+- refactoring for Leaflet 2.0: Replace Util.extend with ES6 Object.assign ([0395890](https://github.com/perliedman/leaflet-control-geocoder/commit/0395890))
+- refactoring: Drop type casts related to L.DomUtil.create ([0ea1413](https://github.com/perliedman/leaflet-control-geocoder/commit/0ea1413))
+- refactoring: Use Array.map and Array.forEach ([44628b1](https://github.com/perliedman/leaflet-control-geocoder/commit/44628b1))
+- refactoring: Use Element.classList ([02f47ef](https://github.com/perliedman/leaflet-control-geocoder/commit/02f47ef))
+- refactoring: Use KeyboardEvent.key ([e3efe9e](https://github.com/perliedman/leaflet-control-geocoder/commit/e3efe9e))
+- testing: nominatim htmTemplate ([e92025d](https://github.com/perliedman/leaflet-control-geocoder/commit/e92025d)), closes [#357](https://github.com/perliedman/leaflet-control-geocoder/issues/357)
+- testing: Add bing.spec.ts ([aa94575](https://github.com/perliedman/leaflet-control-geocoder/commit/aa94575))
+- testing: Add mapquest.spec.ts ([d60a95b](https://github.com/perliedman/leaflet-control-geocoder/commit/d60a95b))
+- testing: Add opencage.spec.ts ([ee9402f](https://github.com/perliedman/leaflet-control-geocoder/commit/ee9402f))
+- README: add BAN Geocoder provider (France address API) (#360) ([6d006cb](https://github.com/perliedman/leaflet-control-geocoder/commit/6d006cb)), closes [#360](https://github.com/perliedman/leaflet-control-geocoder/issues/360)
+- package: specify leaflet 2.0.0 compatibility ([d8cfcfa](https://github.com/perliedman/leaflet-control-geocoder/commit/d8cfcfa))
+- package: update devDependencies ([bdb9435](https://github.com/perliedman/leaflet-control-geocoder/commit/bdb9435))
+
 ## 3.1.0 (2024-12-21)
 
 - **Implement Azure Maps Geocoder** (#351) ([bf04a88](https://github.com/perliedman/leaflet-control-geocoder/commit/bf04a88)), closes [#351](https://github.com/perliedman/leaflet-control-geocoder/issues/351)
