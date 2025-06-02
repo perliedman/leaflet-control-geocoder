@@ -25,7 +25,7 @@ export class OpenCage implements IGeocoder {
     return this._parseResults(data);
   }
 
-  suggest(query: string): Promise<GeocodingResult[]> {
+  async suggest(query: string): Promise<GeocodingResult[]> {
     return this.geocode(query);
   }
 

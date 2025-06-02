@@ -39,7 +39,7 @@ export class What3Words implements IGeocoder {
     ];
   }
 
-  suggest(query: string): Promise<GeocodingResult[]> {
+  async suggest(query: string): Promise<GeocodingResult[]> {
     return this.geocode(query);
   }
 
