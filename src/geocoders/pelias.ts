@@ -22,7 +22,7 @@ export class Pelias implements IGeocoder {
       text: query
     });
     const data = await getJSON<any>(this.options.serviceUrl + '/search', params);
-    return this._parseResults(data, 'bbox');
+    return this._parseResults(data);
   }
 
   async suggest(query: string): Promise<GeocodingResult[]> {
@@ -31,7 +31,7 @@ export class Pelias implements IGeocoder {
       text: query
     });
     const data = await getJSON<any>(this.options.serviceUrl + '/autocomplete', params);
-    return this._parseResults(data, 'bbox');
+    return this._parseResults(data);
   }
 
   async reverse(location: L.LatLngLiteral, scale: number): Promise<GeocodingResult[]> {
@@ -41,42 +41,25 @@ export class Pelias implements IGeocoder {
       'point.lon': location.lng
     });
     const data = await getJSON<any>(this.options.serviceUrl + '/reverse', params);
-    return this._parseResults(data, 'bounds');
+    return this._parseResults(data);
   }
 
-  _parseResults(data, bboxname): GeocodingResult[] {
-    const results: GeocodingResult[] = [];
-    new L.GeoJSON(data, {
-      pointToLayer(feature, latlng) {
-        return new L.CircleMarker(latlng, {radius: 10});
-      },
-      onEachFeature(feature, layer: any) {
-        const result = {} as GeocodingResult;
-        let bbox;
-        let center;
+  _parseResults(data: GeoJSON.FeatureCollection<GeoJSON.Point>): GeocodingResult[] {
+    return (data.features || []).map((f): GeocodingResult => {
+      const c = f.geometry.coordinates;
+      const center = new L.LatLng(c[1], c[0]);
 
-        if (layer.getBounds) {
-          bbox = layer.getBounds();
-          center = bbox.getCenter();
-        } else if (layer.feature.bbox) {
-          center = layer.getLatLng();
-          bbox = new L.LatLngBounds(
-            L.GeoJSON.coordsToLatLng(layer.feature.bbox.slice(0, 2)),
-            L.GeoJSON.coordsToLatLng(layer.feature.bbox.slice(2, 4))
-          );
-        } else {
-          center = layer.getLatLng();
-          bbox = new L.LatLngBounds(center, center);
-        }
+      const bbox = (Array.isArray(f.bbox) && f.bbox.length === 4)
+        ? new L.LatLngBounds([f.bbox[1], f.bbox[0]], [f.bbox[3], f.bbox[2]])
+        : new L.LatLngBounds(center, center);
 
-        result.name = layer.feature.properties.label;
-        result.center = center;
-        result[bboxname] = bbox;
-        result.properties = layer.feature.properties;
-        results.push(result);
-      }
+      return {
+        name: f.properties!.label,
+        center,
+        bbox,
+        properties: f.properties
+      };
     });
-    return results;
   }
 }
 
