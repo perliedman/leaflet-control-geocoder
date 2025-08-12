@@ -74,15 +74,15 @@
     "url": "https://github.com/perliedman/leaflet-control-geocoder/issues"
   },
   "devDependencies": {
-    "@types/leaflet": "^1.9.17",
+    "@types/leaflet": "^1.9.20",
     "conventional-changelog-cli": "^5.0.0",
-    "happy-dom": "^17.4.7",
+    "happy-dom": "^18.0.1",
     "leaflet": "^1.9.4",
-    "prettier": "^3.5.3",
-    "typedoc": "^0.28.4",
-    "typescript": "^5.8.3",
-    "vite": "^6.3.5",
-    "vitest": "^3.1.3"
+    "prettier": "^3.6.2",
+    "typedoc": "^0.28.10",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.2",
+    "vitest": "^3.2.4"
   },
   "peerDependencies": {
     "leaflet": "^1.6.0 || ^2.0.0"
