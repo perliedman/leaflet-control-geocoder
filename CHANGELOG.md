@@ -1,3 +1,8 @@
+## 3.2.1 (2025-08-12)
+
+- pelias: update Pelias provider (#365) ([e11217b](https://github.com/perliedman/leaflet-control-geocoder/commit/e11217b)), closes [#365](https://github.com/perliedman/leaflet-control-geocoder/issues/365)
+- package: update devDependencies ([0d67b84](https://github.com/perliedman/leaflet-control-geocoder/commit/0d67b84) [08cdf60](https://github.com/perliedman/leaflet-control-geocoder/commit/08cdf60))
+
 ## 3.2.0 (2025-05-18)
 
 This version provides **compatibility with [Leaflet 2.0.0-alpha](https://github.com/Leaflet/Leaflet/releases/tag/v2.0.0-alpha)**.
