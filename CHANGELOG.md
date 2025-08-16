@@ -1,3 +1,11 @@
+## 3.3.0 (2025-08-16)
+
+This version provides **compatibility with [Leaflet 2.0.0-alpha1](https://github.com/Leaflet/Leaflet/releases/tag/v2.0.0-alpha1)**.
+
+- Add index.html for `npm run dev` ([cf6ee51](https://github.com/perliedman/leaflet-control-geocoder/commit/cf6ee51))
+- Fix EventedControl inheritance ([7498d39](https://github.com/perliedman/leaflet-control-geocoder/commit/7498d39))
+- Replace DomEvent.addListener with DomEvent.on ([4ccccf7](https://github.com/perliedman/leaflet-control-geocoder/commit/4ccccf7))
+
 ## 3.2.1 (2025-08-12)
 
 - pelias: update Pelias provider (#365) ([e11217b](https://github.com/perliedman/leaflet-control-geocoder/commit/e11217b)), closes [#365](https://github.com/perliedman/leaflet-control-geocoder/issues/365)
