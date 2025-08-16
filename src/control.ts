@@ -105,8 +105,12 @@ class EventedControl {
  * @internal
  */
 interface EventedControl extends L.Control, L.Evented {}
-Object.assign(EventedControl.prototype, L.Control.prototype);
-Object.assign(EventedControl.prototype, L.Evented.prototype);
+Object.getOwnPropertyNames(L.Control.prototype).forEach(
+  k => (EventedControl.prototype[k] = L.Control.prototype[k])
+);
+Object.getOwnPropertyNames(L.Evented.prototype).forEach(
+  k => (EventedControl.prototype[k] = L.Evented.prototype[k])
+);
 
 /**
  * This is the geocoder control. It works like any other [Leaflet control](https://leafletjs.com/reference.html#control), and is added to the map.
