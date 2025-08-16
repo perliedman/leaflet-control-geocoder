@@ -199,11 +199,11 @@ export class GeocoderControl extends EventedControl {
     );
     L.DomEvent.disableClickPropagation(this._alts);
 
-    L.DomEvent.addListener(input, 'keydown', this._keydown, this);
+    L.DomEvent.on(input, 'keydown', this._keydown, this);
     if (this.options.geocoder?.suggest) {
-      L.DomEvent.addListener(input, 'input', this._change, this);
+      L.DomEvent.on(input, 'input', this._change, this);
     }
-    L.DomEvent.addListener(input, 'blur', () => {
+    L.DomEvent.on(input, 'blur', () => {
       if (this.options.collapsed && !this._preventBlurCollapse) {
         this._collapse();
       }
@@ -212,13 +212,13 @@ export class GeocoderControl extends EventedControl {
 
     if (this.options.collapsed) {
       if (this.options.expand === 'click') {
-        L.DomEvent.addListener(container, 'click', (e: Event) => {
+        L.DomEvent.on(container, 'click', (e: Event) => {
           if ((e as MouseEvent).button === 0 && (e as MouseEvent).detail !== 2) {
             this._toggle();
           }
         });
       } else if (this.options.expand === 'touch') {
-        L.DomEvent.addListener(
+        L.DomEvent.on(
           container,
           L.Browser.touch ? 'touchstart mousedown' : 'mousedown',
           (e: Event) => {
@@ -229,16 +229,16 @@ export class GeocoderControl extends EventedControl {
           this
         );
       } else {
-        L.DomEvent.addListener(container, 'mouseover', this._expand, this);
-        L.DomEvent.addListener(container, 'mouseout', this._collapse, this);
+        L.DomEvent.on(container, 'mouseover', this._expand, this);
+        L.DomEvent.on(container, 'mouseout', this._collapse, this);
         this._map.on('movestart', this._collapse, this);
       }
     } else {
       this._expand();
       if (L.Browser.touch) {
-        L.DomEvent.addListener(container, 'touchstart', () => this._geocode());
+        L.DomEvent.on(container, 'touchstart', () => this._geocode());
       } else {
-        L.DomEvent.addListener(container, 'click', () => this._geocode());
+        L.DomEvent.on(container, 'click', () => this._geocode());
       }
     }
 
@@ -403,7 +403,7 @@ export class GeocoderControl extends EventedControl {
     // Use mousedown and not click, since click will fire _after_ blur,
     // causing the control to have collapsed and removed the items
     // before the click can fire.
-    L.DomEvent.addListener(li, 'mousedown touchstart', mouseDownHandler, this);
+    L.DomEvent.on(li, 'mousedown touchstart', mouseDownHandler, this);
 
     return li;
   }
