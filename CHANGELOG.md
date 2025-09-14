@@ -1,3 +1,8 @@
+## 3.3.1 (2025-09-14)
+
+- package: fix main and module entrypoints ([7646763](https://github.com/perliedman/leaflet-control-geocoder/commit/7646763))
+- demo: use preferred tile.openstreetmap.org URL ([0a40fbb](https://github.com/perliedman/leaflet-control-geocoder/commit/0a40fbb))
+
 ## 3.3.0 (2025-08-16)
 
 This version provides **compatibility with [Leaflet 2.0.0-alpha1](https://github.com/Leaflet/Leaflet/releases/tag/v2.0.0-alpha1)**.
