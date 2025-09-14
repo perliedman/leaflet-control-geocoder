@@ -36,6 +36,7 @@ The plugin can easily be extended to support other providers. Current extensions
 
 - [Leaflet Control Geocoder Demo](https://www.liedman.net/leaflet-control-geocoder/) hosted on liedman.net
 - See [demo/](https://github.com/perliedman/leaflet-control-geocoder/tree/master/demo)
+- See [demo-unpkg/](https://github.com/perliedman/leaflet-control-geocoder/tree/master/demo-unpkg) using the [unpkg.com](https://unpkg.com/) content delivery network
 - See [demo-rollup/](https://github.com/perliedman/leaflet-control-geocoder/tree/master/demo-rollup) using the [rollup.js](https://rollupjs.org/) bundler
 - See [demo-webpack/](https://github.com/perliedman/leaflet-control-geocoder/tree/master/demo-rollup) using the [webpack](https://webpack.js.org/) bundler
 

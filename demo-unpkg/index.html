@@ -3,25 +3,33 @@
   <head>
     <title>Leaflet Control Geocoder</title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "leaflet": "https://unpkg.com/leaflet@2.0.0-alpha.1/dist/leaflet.js",
+          "leaflet-control-geocoder": "https://unpkg.com/leaflet-control-geocoder@latest/dist/Control.Geocoder.modern.js"
+        }
+      }
+    </script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@2.0.0-alpha.1/dist/leaflet.css" />
     <link
       rel="stylesheet"
-      href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css"
+      href="https://unpkg.com/leaflet-control-geocoder@latest/dist/Control.Geocoder.css"
     />
   </head>
   <body>
     <div id="map" style="width: 600px; height: 400px"></div>
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
-    <script>
-      const map = new L.Map('map').setView([0, 0], 2);
-      new L.TileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    <script type="module">
+      import { Map, TileLayer } from 'leaflet';
+      import { Geocoder } from 'leaflet-control-geocoder';
+      const map = new Map('map').setView([0, 0], 2);
+      new TileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution:
           '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       }).addTo(map);
 
-      new L.Control.Geocoder({
-        geocoder: new L.Control.Geocoder.Nominatim()
+      new Geocoder({
+        geocoder: new Geocoder.Nominatim()
       }).addTo(map);
     </script>
   </body>
