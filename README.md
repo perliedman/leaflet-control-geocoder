@@ -52,8 +52,9 @@ Add the control to a map instance:
 
 ```javascript
 const map = new L.Map('map').setView([0, 0], 2);
-new L.TileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-  attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
+new L.TileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution:
+    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 new L.Control.Geocoder().addTo(map);
 ```
@@ -71,7 +72,7 @@ For example:
 var geocoder = L.Control.geocoder({
   defaultMarkGeocode: false
 })
-  .on('markgeocode', function(e) {
+  .on('markgeocode', function (e) {
     var bbox = e.geocode.bbox;
     var poly = new L.Polygon([
       bbox.getSouthEast(),

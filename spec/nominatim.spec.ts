@@ -12,7 +12,8 @@ describe('L.Control.Geocoder.Nominatim', () => {
       [
         {
           place_id: 199282228,
-          licence: 'Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright',
+          licence:
+            'Data © OpenStreetMap contributors, ODbL 1.0. https://www.openstreetmap.org/copyright',
           osm_type: 'relation',
           osm_id: 8182617,
           boundingbox: ['47.2583715', '47.2808566', '11.3811871', '11.418183'],
@@ -64,7 +65,8 @@ describe('L.Control.Geocoder.Nominatim', () => {
       [
         {
           place_id: 199282228,
-          licence: 'Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright',
+          licence:
+            'Data © OpenStreetMap contributors, ODbL 1.0. https://www.openstreetmap.org/copyright',
           osm_type: 'relation',
           osm_id: 8182617,
           boundingbox: ['47.2583715', '47.2808566', '11.3811871', '11.418183'],
@@ -99,7 +101,8 @@ describe('L.Control.Geocoder.Nominatim', () => {
       'https://nominatim.openstreetmap.org/reverse?lat=47.3&lon=11.3&zoom=9&addressdetails=1&format=json',
       {
         place_id: 197718025,
-        licence: 'Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright',
+        licence:
+          'Data © OpenStreetMap contributors, ODbL 1.0. https://www.openstreetmap.org/copyright',
         osm_type: 'relation',
         osm_id: 78251,
         lat: '47.2065094',

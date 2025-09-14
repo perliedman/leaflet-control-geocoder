@@ -52,8 +52,9 @@
         control.setQuery('Earth');
       }, 12000);
 
-      new L.TileLayer('https://tile.osm.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
+      new L.TileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       }).addTo(map);
 
       let marker;
