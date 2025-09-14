@@ -4,8 +4,8 @@
   "description": "Extendable geocoder with builtin support for OpenStreetMap Nominatim, Bing, Google, Mapbox, MapQuest, What3Words, Photon, Pelias, HERE, Neutrino, Plus codes",
   "type": "module",
   "source": "src/index.ts",
-  "main": "dist/Control.Geocoder.umd.js",
-  "module": "dist/Control.Geocoder.js",
+  "main": "dist/Control.Geocoder.js",
+  "module": "dist/Control.Geocoder.modern.js",
   "exports": {
     ".": {
       "import": {
@@ -14,7 +14,7 @@
       },
       "require": {
         "types": "./dist/index.d.ts",
-        "default": "./dist/Control.Geocoder.cjs"
+        "default": "./dist/Control.Geocoder.js"
       }
     },
     "./dist/Control.Geocoder.css": "./dist/Control.Geocoder.css",
