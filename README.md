@@ -27,6 +27,8 @@ The plugin supports many different data providers:
 - [ArcGIS](https://developers.arcgis.com/features/geocoding/)
 - [Azure Maps Geocoding](https://www.microsoft.com/en-us/maps/azure/location-services/geocoding)
 
+Multiple data providers can be combined by using the AggregatingGeocoder.
+
 The plugin can easily be extended to support other providers. Current extensions:
 
 - [DAWA Geocoder](https://github.com/kjoller/leaflet-control-geocoder-dawa/tree/new) - support for Danish Address Web API by [Niels Kjøller Hansen](https://github.com/kjoller)
