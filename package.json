@@ -83,7 +83,7 @@
     "typedoc": "^0.28.10",
     "typescript": "^5.9.2",
     "vite": "^7.1.2",
-    "vitest": "^3.2.4"
+    "vitest": "^4.1.10"
   },
   "peerDependencies": {
     "leaflet": "^1.6.0 || ^2.0.0"
