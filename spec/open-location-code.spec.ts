@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vite-plus/test';
 // import './vendor/openlocationcode';
 import * as OpenLocationCode from './vendor/openlocationcode';
 import { OpenLocationCode as Geocoder } from '../src/geocoders/open-location-code';

@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 import { mockFetchRequest } from './mockFetchRequest';
 import { Bing } from '../src/geocoders/bing';
 import { GeocodingResult } from '../src/geocoders/api';
@@ -11,7 +11,7 @@ describe('L.Control.Geocoder.Bing', () => {
       'https://dev.virtualearth.net/REST/v1/Locations/?query=Microsoft+Way%2C+Redmond&key=0123xyz',
       {
         authenticationResultCode: 'ValidCredentials',
-        brandLogoUri: 'http:\/\/dev.virtualearth.net\/Branding\/logo_powered_by.png',
+        brandLogoUri: 'http://dev.virtualearth.net/Branding/logo_powered_by.png',
         copyright:
           'Copyright © 2011 Microsoft and its suppliers. All rights reserved. This API cannot be accessed and the content and any results may not be used, reproduced or transmitted in any manner without express written permission from Microsoft Corporation.',
         resourceSets: [
@@ -19,7 +19,7 @@ describe('L.Control.Geocoder.Bing', () => {
             estimatedTotal: 1,
             resources: [
               {
-                __type: 'Location:http:\/\/schemas.microsoft.com\/search\/local\/ws\/rest\/v1',
+                __type: 'Location:http://schemas.microsoft.com/search/local/ws/rest/v1',
                 bbox: [
                   47.636257744012461, -122.13735364288299, 47.643983179153814, -122.12206713944467
                 ],

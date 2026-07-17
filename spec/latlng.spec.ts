@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vite-plus/test';
 import * as L from 'leaflet';
 import { LatLng } from '../src/geocoders/latlng';
 import { IGeocoder } from '../src/geocoders/api';

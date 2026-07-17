@@ -23,16 +23,16 @@
   },
   "types": "dist/index.d.ts",
   "scripts": {
-    "prepare": "npm run build",
-    "dev": "vite",
-    "build": "vite build && tsc --target ES2020 --declaration --emitDeclarationOnly --skipLibCheck --outDir dist/ src/index.ts",
+    "prepare": "vp config && npm run build",
+    "dev": "vp dev",
+    "build": "vp build && tsc --target ES2020 --declaration --emitDeclarationOnly --skipLibCheck --outDir dist/ src/index.ts",
     "build:demo": "npm run build:demo-esbuild && npm run build:demo-rollup && npm run build:demo-webpack",
     "build:demo-esbuild": "cd demo-esbuild && npm install && npm run build",
     "build:demo-rollup": "cd demo-rollup && npm install && npm run build",
     "build:demo-webpack": "cd demo-rollup && npm install && npm run build",
     "changelog": "conventional-changelog --infile CHANGELOG.md --same-file --output-unreleased",
     "doc": "typedoc --excludePrivate --exclude node_modules/** --out docs/ src/",
-    "test": "vitest run --dom"
+    "test": "vp test run --dom"
   },
   "repository": {
     "type": "git",
@@ -79,11 +79,10 @@
     "conventional-changelog-cli": "^5.0.0",
     "happy-dom": "^18.0.1",
     "leaflet": "^1.9.4",
-    "prettier": "^3.6.2",
     "typedoc": "^0.28.10",
     "typescript": "^5.9.2",
-    "vite": "^7.1.2",
-    "vitest": "^4.1.10"
+    "vite": "npm:@voidzero-dev/vite-plus-core@0.2.4",
+    "vite-plus": "0.2.4"
   },
   "peerDependencies": {
     "leaflet": "^1.6.0 || ^2.0.0"
@@ -91,5 +90,7 @@
   "optionalDependencies": {
     "open-location-code": "^1.0.3"
   },
-  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+  "resolutions": {
+    "vite": "npm:@voidzero-dev/vite-plus-core@0.2.4"
+  }
 }

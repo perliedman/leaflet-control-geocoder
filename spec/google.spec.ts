@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 import { mockFetchRequest } from './mockFetchRequest';
 import { Google, GoogleResponse } from '../src/geocoders/google';
 import { GeocodingResult } from '../src/geocoders/api';

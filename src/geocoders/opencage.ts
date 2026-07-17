@@ -44,8 +44,14 @@ export class OpenCage implements IGeocoder {
       const bbox =
         loc.annotations && loc.annotations.bounds
           ? new L.LatLngBounds(
-              new L.LatLng(loc.annotations.bounds.northeast.lat, loc.annotations.bounds.northeast.lng),
-              new L.LatLng(loc.annotations.bounds.southwest.lat, loc.annotations.bounds.southwest.lng)
+              new L.LatLng(
+                loc.annotations.bounds.northeast.lat,
+                loc.annotations.bounds.northeast.lng
+              ),
+              new L.LatLng(
+                loc.annotations.bounds.southwest.lat,
+                loc.annotations.bounds.southwest.lng
+              )
             )
           : new L.LatLngBounds(center, center);
 

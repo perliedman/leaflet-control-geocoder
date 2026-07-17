@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 import { mockFetchRequest } from './mockFetchRequest';
 import { Openrouteservice, PeliasResponse } from '../src/geocoders/pelias';
 
@@ -15,7 +15,7 @@ describe('L.Control.Geocoder.Openrouteservice', () => {
           attribution: 'openrouteservice.org | OpenStreetMap contributors | Geocoding by Pelias',
           query: {
             size: 10,
-            lang:  {
+            lang: {
               name: 'English',
               iso6391: 'en',
               iso6393: 'eng',
@@ -56,10 +56,7 @@ describe('L.Control.Geocoder.Openrouteservice', () => {
               continent: 'Europe',
               continent_gid: 'whosonfirst:continent:102191581',
               label: 'Innsbruck, TR, Austria',
-              category: [
-                'admin:admin2',
-                'admin'
-              ],
+              category: ['admin:admin2', 'admin'],
               addendum: {
                 concordances: {
                   'dbp:id': 'Innsbruck',

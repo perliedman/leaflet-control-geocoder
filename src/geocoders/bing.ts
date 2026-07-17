@@ -46,7 +46,7 @@ export class Bing implements IGeocoder {
       return {
         name: resource.name,
         bbox: new L.LatLngBounds([bbox[0], bbox[1]], [bbox[2], bbox[3]]),
-        center: new L.LatLng(...resource.point.coordinates as [number,number])
+        center: new L.LatLng(...(resource.point.coordinates as [number, number]))
       };
     });
   }

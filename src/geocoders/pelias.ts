@@ -210,7 +210,7 @@ interface Scoring {
 }
 
 interface Addendum {
-  addendum?: Record<string, Object>;
+  addendum?: Record<string, object>;
 }
 
 interface Properties extends Identity, Labels, Scoring, Address, Hierarchy, Addendum {}
@@ -236,8 +236,8 @@ interface Query {
     iso6391: string;
     iso6393: string;
     via: string;
-    defaulted: boolean
-  }
+    defaulted: boolean;
+  };
   text?: string;
   parser?: string;
   parsed_text?: Record<string, string>;

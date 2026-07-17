@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 import { mockFetchRequest } from './mockFetchRequest';
 import { HERE, HEREv2Response } from '../src/geocoders/here';
 import { HEREv2 } from '../src/geocoders/here';
