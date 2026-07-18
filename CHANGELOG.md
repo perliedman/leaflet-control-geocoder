@@ -1,3 +1,13 @@
+## 4.0.0 (2026-07-18)
+
+- Migrate to Vite+ ([7e1f484](https://github.com/perliedman/leaflet-control-geocoder/commit/7e1f484))
+- Revert "package: leaflet 2.0.0 compatibility" ([d8f8c8a](https://github.com/perliedman/leaflet-control-geocoder/commit/d8f8c8a))
+- Nominatim: cache responses ([a481158](https://github.com/perliedman/leaflet-control-geocoder/commit/a481158))
+- Nominatim: limit requests to one per second ([5bb5635](https://github.com/perliedman/leaflet-control-geocoder/commit/5bb5635))
+- Nominatim: rate limit the public service only ([017d566](https://github.com/perliedman/leaflet-control-geocoder/commit/017d566))
+- Nominatim: reject suggest() per usage policy ([68bfbf6](https://github.com/perliedman/leaflet-control-geocoder/commit/68bfbf6))
+- Nominatim: test that identical queries are cached ([fef1ab8](https://github.com/perliedman/leaflet-control-geocoder/commit/fef1ab8))
+
 ## 3.3.1 (2025-09-14)
 
 - package: fix main and module entrypoints ([7646763](https://github.com/perliedman/leaflet-control-geocoder/commit/7646763))
