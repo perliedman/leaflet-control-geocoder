@@ -102,8 +102,30 @@ export class Nominatim implements IGeocoder {
    */
   private _lastRequestStart: Promise<number> = Promise.resolve(0);
 
+  /**
+   * Previous responses, by request URL and parameters.
+   */
+  private _cache = new Map<string, Promise<any>>();
+
   constructor(options?: Partial<NominatimOptions>) {
     L.Util.setOptions(this, options || {});
+  }
+
+  /**
+   * Requests `endpoint`, reusing the response of an identical earlier request if there is one.
+   * The usage policy asks to "enable caching of requests", and repeating identical queries may
+   * result in blocking. Failed requests are not cached, so they can be retried.
+   */
+  private _getJSON<T>(endpoint: string, params: Record<string, unknown>): Promise<T> {
+    const url = this.options.serviceUrl + endpoint;
+    const key = url + JSON.stringify(params);
+    let response = this._cache.get(key);
+    if (!response) {
+      response = this._rateLimit().then(() => getJSON<T>(url, params));
+      response.catch(() => this._cache.delete(key));
+      this._cache.set(key, response);
+    }
+    return response;
   }
 
   /**
@@ -130,8 +152,7 @@ export class Nominatim implements IGeocoder {
       format: 'json',
       addressdetails: 1
     });
-    await this._rateLimit();
-    const data = await getJSON<NominatimResult[]>(this.options.serviceUrl + 'search', params);
+    const data = await this._getJSON<NominatimResult[]>('search', params);
     return data.map((item): GeocodingResult => {
       const bbox = item.boundingbox;
       return {
@@ -168,8 +189,7 @@ export class Nominatim implements IGeocoder {
       addressdetails: 1,
       format: 'json'
     });
-    await this._rateLimit();
-    const data = await getJSON<NominatimResult>(this.options.serviceUrl + 'reverse', params);
+    const data = await this._getJSON<NominatimResult>('reverse', params);
     if (!data?.lat || !data?.lon) {
       return [];
     }
