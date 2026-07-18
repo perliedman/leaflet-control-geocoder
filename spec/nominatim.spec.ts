@@ -14,6 +14,36 @@ describe('L.Control.Geocoder.Nominatim', () => {
     );
   });
 
+  it('sends a single request for repeated identical queries', async () => {
+    // a fresh geocoder, as the cache is per instance
+    const geocoder = new Nominatim();
+    // mockFetchRequest asserts that fetch is called exactly once
+    const [first, second] = await mockFetchRequest(
+      'https://nominatim.openstreetmap.org/search?q=graz&limit=5&format=json&addressdetails=1',
+      [
+        {
+          place_id: 258691884,
+          licence:
+            'Data © OpenStreetMap contributors, ODbL 1.0. https://www.openstreetmap.org/copyright',
+          osm_type: 'relation',
+          osm_id: 45341,
+          boundingbox: ['46.9987601', '47.1394862', '15.349939', '15.5470191'],
+          lat: '47.0708678',
+          lon: '15.4382786',
+          display_name: 'Graz, Styria, Austria',
+          address: {
+            city: 'Graz',
+            state: 'Styria',
+            country: 'Austria',
+            country_code: 'at'
+          }
+        }
+      ] satisfies NominatimResponse,
+      async () => [await geocoder.geocode('graz'), await geocoder.geocode('graz')]
+    );
+    expect(second).toEqual(first);
+  });
+
   it('geocodes Innsbruck', async () => {
     const result = await mockFetchRequest(
       'https://nominatim.openstreetmap.org/search?q=innsbruck&limit=5&format=json&addressdetails=1',
