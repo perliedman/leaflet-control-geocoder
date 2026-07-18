@@ -1,6 +1,11 @@
 import * as L from 'leaflet';
 import { Nominatim } from './geocoders/index';
-import { IGeocoder, GeocodingResult, GeocodingContext } from './geocoders/api';
+import {
+  IGeocoder,
+  GeocodingResult,
+  GeocodingContext,
+  SuggestUnsupportedError
+} from './geocoders/api';
 
 export interface GeocoderControlOptions extends L.ControlOptions {
   /**
@@ -144,6 +149,7 @@ export class GeocoderControl extends EventedControl {
   private _results: any;
   private _selection: any;
   private _suggestTimeout: any;
+  private _suggestUnsupported = false;
 
   /**
    * Instantiates a geocoder control (to be invoked using `new`)
@@ -317,9 +323,22 @@ export class GeocoderControl extends EventedControl {
     this.fire(suggest ? 'startsuggest' : 'startgeocode', event);
 
     const context: GeocodingContext = { map: this._map };
-    const results = suggest
-      ? await this.options.geocoder!.suggest!(value, context)
-      : await this.options.geocoder!.geocode(value, context);
+    let results: GeocodingResult[];
+    if (suggest) {
+      try {
+        results = await this.options.geocoder!.suggest!(value, context);
+      } catch (e) {
+        if (e instanceof SuggestUnsupportedError) {
+          // the geocoder's service forbids auto-complete — stop asking
+          this._suggestUnsupported = true;
+          L.DomEvent.off(this._input, 'input', this._change, this);
+          return;
+        }
+        throw e;
+      }
+    } else {
+      results = await this.options.geocoder!.geocode(value, context);
+    }
 
     if (requestCount === this._requestCount) {
       const event: FinishGeocodeEvent = { input: value, results };
@@ -454,6 +473,9 @@ export class GeocoderControl extends EventedControl {
   }
 
   private _change() {
+    if (this._suggestUnsupported) {
+      return;
+    }
     const v = this._input.value;
     if (v !== this._lastGeocode) {
       clearTimeout(this._suggestTimeout);

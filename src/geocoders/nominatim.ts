@@ -1,6 +1,13 @@
 import * as L from 'leaflet';
 import { template, getJSON } from '../util';
-import { IGeocoder, GeocoderOptions, geocodingParams, GeocodingResult, reverseParams } from './api';
+import {
+  IGeocoder,
+  GeocoderOptions,
+  geocodingParams,
+  GeocodingResult,
+  reverseParams,
+  SuggestUnsupportedError
+} from './api';
 
 export type NominatimResponse = NominatimResult[];
 
@@ -106,6 +113,21 @@ export class Nominatim implements IGeocoder {
         properties: item
       };
     });
+  }
+
+  /**
+   * Auto-complete is explicitly forbidden by the Nominatim usage policy, which states:
+   * "Auto-complete search — This is not yet supported by Nominatim and you must not
+   * implement such a service on the client side using the API."
+   *
+   * @see https://operations.osmfoundation.org/policies/nominatim/
+   * @throws {SuggestUnsupportedError} always
+   */
+  async suggest(_query: string): Promise<GeocodingResult[]> {
+    throw new SuggestUnsupportedError(
+      'Nominatim forbids auto-complete search: "you must not implement such a service on ' +
+        'the client side using the API". See https://operations.osmfoundation.org/policies/nominatim/'
+    );
   }
 
   async reverse(location: L.LatLngLiteral, scale: number) {

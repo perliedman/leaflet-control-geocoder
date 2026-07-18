@@ -41,6 +41,18 @@ export interface GeocodingResult {
 }
 
 /**
+ * Thrown by {@link IGeocoder.suggest} when the backing geocoding service does not
+ * permit auto-complete style queries. The control catches this and stops issuing
+ * suggestion requests for the remainder of its lifetime.
+ */
+export class SuggestUnsupportedError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'SuggestUnsupportedError';
+  }
+}
+
+/**
  * An interface implemented to respond to geocoding queries
  */
 export interface IGeocoder {
@@ -54,6 +66,10 @@ export interface IGeocoder {
    * Performs a geocoding query suggestion (this happens while typing) and returns the results as promise
    * @param query the query
    * @param context the context for the query
+   *
+   * A geocoder whose backing service forbids auto-complete may implement this method
+   * and throw {@link SuggestUnsupportedError}, in which case the control silently
+   * disables suggestions instead of querying on every keystroke.
    */
   suggest?(query: string, context?: GeocodingContext): Promise<GeocodingResult[]>;
   /**

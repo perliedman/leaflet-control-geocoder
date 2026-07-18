@@ -1,10 +1,18 @@
 import { afterEach, describe, expect, it, vi } from 'vite-plus/test';
 import { mockFetchRequest } from './mockFetchRequest';
 import { Nominatim, NominatimResponse } from '../src/geocoders/nominatim';
+import { SuggestUnsupportedError } from '../src/geocoders/api';
 
 describe('L.Control.Geocoder.Nominatim', () => {
   afterEach(() => vi.clearAllMocks());
   const geocoder = new Nominatim();
+
+  it('refuses to suggest, per the Nominatim usage policy', async () => {
+    await expect(geocoder.suggest('innsbruck')).rejects.toThrow(SuggestUnsupportedError);
+    await expect(geocoder.suggest('innsbruck')).rejects.toThrow(
+      /must not implement such a service/
+    );
+  });
 
   it('geocodes Innsbruck', async () => {
     const result = await mockFetchRequest(
