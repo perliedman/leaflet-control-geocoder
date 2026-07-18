@@ -14,6 +14,18 @@ describe('L.Control.Geocoder.Nominatim', () => {
     );
   });
 
+  it('does not rate limit an own installation', async () => {
+    globalThis.fetch = vi.fn(() =>
+      Promise.resolve({ ok: true, json: () => Promise.resolve([]) })
+    ) as any;
+    const geocoder = new Nominatim({ serviceUrl: 'https://nominatim.example.com/' });
+    const start = Date.now();
+    await geocoder.geocode('graz');
+    await geocoder.geocode('innsbruck');
+    expect(fetch).toBeCalledTimes(2);
+    expect(Date.now() - start).toBeLessThan(1000);
+  });
+
   it('sends a single request for repeated identical queries', async () => {
     // a fresh geocoder, as the cache is per instance
     const geocoder = new Nominatim();

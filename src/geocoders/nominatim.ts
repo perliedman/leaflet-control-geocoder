@@ -64,6 +64,13 @@ export interface NominatimOptions extends GeocoderOptions {
 const MIN_REQUEST_INTERVAL = 1000;
 
 /**
+ * The public service the usage policy applies to, and the default {@link NominatimOptions.serviceUrl}.
+ * Own installations are not rate limited.
+ * @internal
+ */
+const PUBLIC_SERVICE_URL = 'https://nominatim.openstreetmap.org/';
+
+/**
  * Implementation of the [Nominatim](https://wiki.openstreetmap.org/wiki/Nominatim) geocoder.
  *
  * This is the default geocoding service used by the control, unless otherwise specified in the options.
@@ -72,7 +79,7 @@ const MIN_REQUEST_INTERVAL = 1000;
  */
 export class Nominatim implements IGeocoder {
   options: NominatimOptions = {
-    serviceUrl: 'https://nominatim.openstreetmap.org/',
+    serviceUrl: PUBLIC_SERVICE_URL,
     htmlTemplate(r: NominatimResult) {
       const address = r.address;
       let className: string;
@@ -132,8 +139,16 @@ export class Nominatim implements IGeocoder {
    * Resolves once the next request may be sent, that is at least
    * {@link MIN_REQUEST_INTERVAL} after the previous one was started. Callers are queued in
    * the order they call this, and are delayed rather than dropped.
+   *
+   * Resolves immediately for own installations, as the usage policy only governs
+   * {@link PUBLIC_SERVICE_URL}. Hosts are compared, so that a differing path or trailing
+   * slash still counts as the public service.
    */
   private _rateLimit(): Promise<unknown> {
+    const { hostname } = new URL(this.options.serviceUrl);
+    if (hostname !== new URL(PUBLIC_SERVICE_URL).hostname) {
+      return Promise.resolve();
+    }
     const scheduled = this._lastRequestStart.then(async last => {
       const wait = MIN_REQUEST_INTERVAL - (Date.now() - last);
       if (wait > 0) {
