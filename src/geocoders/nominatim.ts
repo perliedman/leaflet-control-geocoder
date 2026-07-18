@@ -57,6 +57,13 @@ export interface NominatimOptions extends GeocoderOptions {
 }
 
 /**
+ * The [Nominatim usage policy](https://operations.osmfoundation.org/policies/nominatim/) permits
+ * "an absolute maximum of 1 request per second".
+ * @internal
+ */
+const MIN_REQUEST_INTERVAL = 1000;
+
+/**
  * Implementation of the [Nominatim](https://wiki.openstreetmap.org/wiki/Nominatim) geocoder.
  *
  * This is the default geocoding service used by the control, unless otherwise specified in the options.
@@ -90,8 +97,30 @@ export class Nominatim implements IGeocoder {
     }
   };
 
+  /**
+   * Start time of the most recent request, as a promise chain, used to space requests apart.
+   */
+  private _lastRequestStart: Promise<number> = Promise.resolve(0);
+
   constructor(options?: Partial<NominatimOptions>) {
     L.Util.setOptions(this, options || {});
+  }
+
+  /**
+   * Resolves once the next request may be sent, that is at least
+   * {@link MIN_REQUEST_INTERVAL} after the previous one was started. Callers are queued in
+   * the order they call this, and are delayed rather than dropped.
+   */
+  private _rateLimit(): Promise<unknown> {
+    const scheduled = this._lastRequestStart.then(async last => {
+      const wait = MIN_REQUEST_INTERVAL - (Date.now() - last);
+      if (wait > 0) {
+        await new Promise(resolve => setTimeout(resolve, wait));
+      }
+      return Date.now();
+    });
+    this._lastRequestStart = scheduled;
+    return scheduled;
   }
 
   async geocode(query: string) {
@@ -101,6 +130,7 @@ export class Nominatim implements IGeocoder {
       format: 'json',
       addressdetails: 1
     });
+    await this._rateLimit();
     const data = await getJSON<NominatimResult[]>(this.options.serviceUrl + 'search', params);
     return data.map((item): GeocodingResult => {
       const bbox = item.boundingbox;
@@ -138,6 +168,7 @@ export class Nominatim implements IGeocoder {
       addressdetails: 1,
       format: 'json'
     });
+    await this._rateLimit();
     const data = await getJSON<NominatimResult>(this.options.serviceUrl + 'reverse', params);
     if (!data?.lat || !data?.lon) {
       return [];
