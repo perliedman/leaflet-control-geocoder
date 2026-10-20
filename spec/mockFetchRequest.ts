@@ -3,9 +3,10 @@ import { expect, vi } from 'vite-plus/test';
 export async function mockFetchRequest<T>(
   url: string,
   response: unknown,
-  trigger: () => T
+  trigger: () => T,
+  extraHeaders?: Record<string, string>
 ): Promise<T> {
-  const headers = { Accept: 'application/json' };
+  const headers = { Accept: 'application/json', ...extraHeaders };
   global.fetch = vi.fn(() =>
     Promise.resolve({
       ok: true,
