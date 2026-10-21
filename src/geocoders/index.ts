@@ -11,6 +11,7 @@ export * from './neutrino';
 export * from './nominatim';
 export * from './open-location-code';
 export * from './opencage';
+export * from './opengeocoding';
 export * from './pelias';
 export * from './photon';
 export * from './what3words';

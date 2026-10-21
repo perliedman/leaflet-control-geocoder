@@ -51,8 +51,12 @@ export function htmlEscape(string?: string): string {
 /**
  * @internal
  */
-export function getJSON<T>(url: string, params: Record<string, unknown>): Promise<T> {
-  const headers = { Accept: 'application/json' };
+export function getJSON<T>(
+  url: string,
+  params: Record<string, unknown>,
+  extraHeaders?: Record<string, string>
+): Promise<T> {
+  const headers = { Accept: 'application/json', ...extraHeaders };
   const request = new URL(url);
   Object.entries(params).forEach(([key, value]) => {
     (Array.isArray(value) ? value : [value]).forEach(v => {

@@ -26,6 +26,7 @@ The plugin supports many different data providers:
 - [Plus codes](https://plus.codes/) (formerly OpenLocationCode) (requires [open-location-code](https://www.npmjs.com/package/open-location-code))
 - [ArcGIS](https://developers.arcgis.com/features/geocoding/)
 - [Azure Maps Geocoding](https://www.microsoft.com/en-us/maps/azure/location-services/geocoding)
+- [OpenGeocoding](https://opengeocoding.com/)
 
 The plugin can easily be extended to support other providers. Current extensions:
 
