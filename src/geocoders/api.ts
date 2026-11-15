@@ -53,6 +53,16 @@ export class SuggestUnsupportedError extends Error {
 }
 
 /**
+ * Thrown by the built-in geocoders when the server responds with an HTTP error status
+ */
+export class HttpError extends Error {
+  constructor(public readonly response: Response) {
+    super(`HTTP ${response.status} ${response.statusText} for ${response.url}`);
+    this.name = 'HttpError';
+  }
+}
+
+/**
  * An interface implemented to respond to geocoding queries
  */
 export interface IGeocoder {

@@ -1,3 +1,5 @@
+import { HttpError } from './geocoders/api';
+
 // Adapted from handlebars.js
 // https://github.com/wycats/handlebars.js/
 /**
@@ -51,15 +53,25 @@ export function htmlEscape(string?: string): string {
 /**
  * @internal
  */
-export function getJSON<T>(url: string, params: Record<string, unknown>): Promise<T> {
+export async function getJSON<T>(
+  url: string,
+  params: Record<string, unknown>,
+  signal?: AbortSignal
+): Promise<T> {
   const headers = { Accept: 'application/json' };
   const request = new URL(url);
   Object.entries(params).forEach(([key, value]) => {
     (Array.isArray(value) ? value : [value]).forEach(v => {
-      request.searchParams.append(key, v);
+      if (v !== undefined && v !== null) {
+        request.searchParams.append(key, String(v));
+      }
     });
   });
-  return fetch(request.toString(), { headers }).then(response => response.json());
+  const response = await fetch(request.toString(), signal ? { headers, signal } : { headers });
+  if (!response.ok) {
+    throw new HttpError(response);
+  }
+  return response.json();
 }
 
 /**
