@@ -58,9 +58,12 @@ describe(`GeocoderControl (Leaflet ${L.version})`, () => {
     const el = control.getContainer()!;
     expect(el.classList).toContain('leaflet-control-geocoder');
     expect(container.querySelector('.leaflet-top.leaflet-right')!.contains(el)).toBe(true);
+    expect(el.localName).toBe('search');
     const input = el.querySelector('input')!;
     expect(input.type).toBe('search');
     expect(input.placeholder).toBe('Search...');
+    expect(input.enterKeyHint).toBe('search');
+    expect(input.labels![0].textContent).toBe('Search for a location');
 
     control.remove();
     expect(container.contains(el)).toBe(false);

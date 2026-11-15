@@ -33,6 +33,10 @@ export interface GeocoderControlOptions extends L.ControlOptions {
    */
   iconLabel: string;
   /**
+   * Accessibility label for the text input used by screen readers
+   */
+  inputLabel: string;
+  /**
    * Object to perform the actual geocoding queries
    */
   geocoder?: IGeocoder;
@@ -145,6 +149,7 @@ export class GeocoderControl extends EventedControl {
     placeholder: 'Search...',
     errorMessage: 'Nothing found.',
     iconLabel: 'Initiate a new search',
+    inputLabel: 'Search for a location',
     query: '',
     queryMinLength: 1,
     suggestMinLength: 3,
@@ -154,7 +159,7 @@ export class GeocoderControl extends EventedControl {
 
   private _alts: HTMLUListElement;
   /** @internal */
-  declare _container: HTMLDivElement;
+  declare _container: HTMLElement;
   private _errorElement: HTMLDivElement;
   private _geocodeMarker: L.Marker;
   private _input: HTMLInputElement;
@@ -194,7 +199,9 @@ export class GeocoderControl extends EventedControl {
    */
   onAdd(map: L.Map) {
     const className = 'leaflet-control-geocoder';
-    const container = L.DomUtil.create('div', className + ' leaflet-bar');
+    const id = className + '-' + L.Util.stamp(this);
+    // <search> landmark: no need for role="search"
+    const container = L.DomUtil.create('search', className + ' leaflet-bar');
     const icon = L.DomUtil.create('button', className + '-icon', container);
     const form = L.DomUtil.create('div', className + '-form', container);
 
@@ -205,8 +212,17 @@ export class GeocoderControl extends EventedControl {
     icon.type = 'button';
     icon.setAttribute('aria-label', this.options.iconLabel);
 
+    const label = L.DomUtil.create('label', className + '-visually-hidden', form);
+    label.htmlFor = id + '-input';
+    label.textContent = this.options.inputLabel;
+
     const input = (this._input = L.DomUtil.create('input', '', form));
+    input.id = id + '-input';
     input.type = 'search';
+    input.enterKeyHint = 'search';
+    input.autocapitalize = 'none';
+    input.spellcheck = false;
+    input.setAttribute('autocorrect', 'off');
     input.value = this.options.query;
     input.placeholder = this.options.placeholder;
     L.DomEvent.disableClickPropagation(input);
