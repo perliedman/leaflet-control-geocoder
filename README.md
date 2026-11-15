@@ -88,6 +88,20 @@ var geocoder = L.Control.geocoder({
 
 This will add a polygon representing the result's boundingbox when a result is selected.
 
+The colors can be changed via CSS custom properties, for example for a dark control:
+
+```css
+.leaflet-control-geocoder {
+  color-scheme: dark;
+  --leaflet-control-geocoder-background: #222;
+  --leaflet-control-geocoder-color: #eee;
+  --leaflet-control-geocoder-muted-color: #aaa;
+  --leaflet-control-geocoder-error-color: #ccc;
+  --leaflet-control-geocoder-border-color: #555;
+  --leaflet-control-geocoder-hover-background: #333;
+}
+```
+
 # API
 
 - latest → https://www.liedman.net/leaflet-control-geocoder/docs/

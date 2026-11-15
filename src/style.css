@@ -1,12 +1,23 @@
 .leaflet-control-geocoder {
+  /* custom properties for theming */
+  --leaflet-control-geocoder-background: white;
+  --leaflet-control-geocoder-color: black;
+  --leaflet-control-geocoder-muted-color: #666;
+  --leaflet-control-geocoder-error-color: #444;
+  --leaflet-control-geocoder-border-color: #ccc;
+  --leaflet-control-geocoder-hover-background: #f5f5f5;
+
+  /* white like Leaflet's controls, also on pages with color-scheme: dark */
+  color-scheme: light;
   border-radius: 4px;
-  background: white;
-  min-width: 26px;
-  min-height: 26px;
+  background: var(--leaflet-control-geocoder-background);
+  color: var(--leaflet-control-geocoder-color);
+  min-inline-size: 26px;
+  min-block-size: 26px;
 
   .leaflet-touch & {
-    min-width: 30px;
-    min-height: 30px;
+    min-inline-size: 30px;
+    min-block-size: 30px;
   }
 }
 
@@ -17,8 +28,8 @@
   height: 26px;
   padding: 0;
   border: none;
-  background-color: white;
-  color: black;
+  background-color: var(--leaflet-control-geocoder-background);
+  color: var(--leaflet-control-geocoder-color);
   cursor: pointer;
   vertical-align: middle;
 
@@ -63,23 +74,27 @@
   }
 
   input {
-    font-size: 120%;
+    font: inherit;
+    /* at least 16px, so that iOS doesn't zoom in on focus */
+    font-size: max(1rem, 1em);
+    color: inherit;
     border: 0;
     background-color: transparent;
-    width: 246px;
+    /* rem: grows with the user's text size */
+    inline-size: 15.5rem;
   }
 }
 
 .leaflet-control-geocoder-error {
-  margin-top: 8px;
-  margin-left: 8px;
+  margin-block-start: 8px;
+  margin-inline-start: 8px;
   display: block;
-  color: #444;
+  color: var(--leaflet-control-geocoder-error-color);
 }
 
 .leaflet-control-geocoder-alternatives {
   display: block;
-  width: 272px;
+  inline-size: 17rem;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -88,16 +103,18 @@
     white-space: nowrap;
     display: block;
     overflow: hidden;
-    padding: 5px 8px;
+    padding-block: 5px;
+    padding-inline: 8px;
+    text-align: start;
     text-overflow: ellipsis;
     cursor: pointer;
 
     &:not(:last-child) {
-      border-bottom: 1px solid #ccc;
+      border-block-end: 1px solid var(--leaflet-control-geocoder-border-color);
     }
 
     &:hover {
-      background-color: #f5f5f5;
+      background-color: var(--leaflet-control-geocoder-hover-background);
     }
   }
 }
@@ -107,7 +124,7 @@
 }
 
 .leaflet-control-geocoder-selected {
-  background-color: #f5f5f5;
+  background-color: var(--leaflet-control-geocoder-hover-background);
   /* not by color alone: visible with low contrast and in forced colors mode */
   outline: 2px solid currentColor;
   outline-offset: -2px;
@@ -118,7 +135,7 @@
 }
 
 .leaflet-control-geocoder-address-context {
-  color: #666;
+  color: var(--leaflet-control-geocoder-muted-color);
 }
 
 /* hidden visually, but read by screen readers */
