@@ -1,3 +1,52 @@
+## 42.0.0 (2026-11-16)
+
+This version provides **compatibility with [Leaflet 2.0.0-beta.4](https://github.com/Leaflet/Leaflet/releases/tag/v2.0.0-beta.4)** while staying compatible with Leaflet 1.9, and modernizes the control's accessibility, input handling and styling.
+
+### Breaking changes
+
+- The search icon and the throbber are drawn by a `::before` mask in `currentColor` instead of a `background-image`. If you replaced the icon via `background-image`, hide the mask with `.leaflet-control-geocoder-icon::before { display: none }` ([7ea66b8](https://github.com/perliedman/leaflet-control-geocoder/commit/7ea66b8))
+- Results are `<li><span>` instead of `<li><a>`, and the control is a `<search>` element instead of a `<div>`. Update custom CSS targeting `.leaflet-control-geocoder-alternatives a` or `div.leaflet-control-geocoder` ([82f5948](https://github.com/perliedman/leaflet-control-geocoder/commit/82f5948)) ([2a04fd7](https://github.com/perliedman/leaflet-control-geocoder/commit/2a04fd7))
+- The `errorMessage` option is inserted as text, not as HTML ([396082f](https://github.com/perliedman/leaflet-control-geocoder/commit/396082f))
+- Result HTML (`htmlTemplate`) is sanitized by the [Sanitizer API](https://developer.mozilla.org/docs/Web/API/HTML_Sanitizer_API) where supported, which removes e.g. `style` attributes and event handlers ([c68f4ca](https://github.com/perliedman/leaflet-control-geocoder/commit/c68f4ca))
+- The marker popup content is an element instead of a string ([c68f4ca](https://github.com/perliedman/leaflet-control-geocoder/commit/c68f4ca))
+- The built-in geocoders reject with the new `HttpError` on HTTP error responses ([8b43075](https://github.com/perliedman/leaflet-control-geocoder/commit/8b43075))
+- Only the icon button toggles the control (or geocodes with `collapsed: false`), not any press inside the control ([236028b](https://github.com/perliedman/leaflet-control-geocoder/commit/236028b))
+- The input uses `font: inherit` with at least 16px, and the input and result widths are in `rem` ([b6a328a](https://github.com/perliedman/leaflet-control-geocoder/commit/b6a328a))
+
+### Features
+
+- Leaflet 2.0 compatibility: replace the removed `L.Browser.touch`, typings compatible with Leaflet 2's bundled types; peer dependency `leaflet: ^1.6.0 || ^2.0.0-beta.4` ([40dd51a](https://github.com/perliedman/leaflet-control-geocoder/commit/40dd51a)) ([faef65d](https://github.com/perliedman/leaflet-control-geocoder/commit/faef65d))
+- Abort superseded requests via `AbortController`; `GeocodingContext.signal` is passed to `fetch` by the built-in geocoders ([96f0ec3](https://github.com/perliedman/leaflet-control-geocoder/commit/96f0ec3)) ([c83e9c7](https://github.com/perliedman/leaflet-control-geocoder/commit/c83e9c7))
+- New `errorgeocode` and `errorsuggest` events ([96f0ec3](https://github.com/perliedman/leaflet-control-geocoder/commit/96f0ec3))
+- Accessibility:
+  - ARIA combobox pattern: `role=combobox` input with `aria-expanded` and `aria-activedescendant`, `role=listbox` results ([82f5948](https://github.com/perliedman/leaflet-control-geocoder/commit/82f5948))
+  - label for the input (new `inputLabel` option), `<search>` landmark ([2a04fd7](https://github.com/perliedman/leaflet-control-geocoder/commit/2a04fd7))
+  - focus management: expanding focuses the input, collapsing returns the focus to the icon ([82f5948](https://github.com/perliedman/leaflet-control-geocoder/commit/82f5948))
+  - "Nothing found" is announced via a `role=status` live region ([396082f](https://github.com/perliedman/leaflet-control-geocoder/commit/396082f))
+  - keep the focus ring; mark the selected result with an outline, also in forced colors mode ([ec5ff44](https://github.com/perliedman/leaflet-control-geocoder/commit/ec5ff44))
+  - throbber animation slowed down for `prefers-reduced-motion` ([7ea66b8](https://github.com/perliedman/leaflet-control-geocoder/commit/7ea66b8))
+- Theming via `--leaflet-control-geocoder-*` CSS custom properties, `color-scheme: light` ([b6a328a](https://github.com/perliedman/leaflet-control-geocoder/commit/b6a328a))
+- Mobile keyboards: `enterkeyhint=search`, no autocorrect/autocapitalize/spellcheck ([2a04fd7](https://github.com/perliedman/leaflet-control-geocoder/commit/2a04fd7))
+- Right-to-left layouts via CSS logical properties ([b6a328a](https://github.com/perliedman/leaflet-control-geocoder/commit/b6a328a))
+
+### Fixes
+
+- The throbber kept spinning when geocoding failed; the error message is shown now ([96f0ec3](https://github.com/perliedman/leaflet-control-geocoder/commit/96f0ec3))
+- With `collapsed: false`, clicking the icon with a mouse did not geocode, and clicking into the input did ([236028b](https://github.com/perliedman/leaflet-control-geocoder/commit/236028b))
+- With Leaflet 2, pressing into the input collapsed the control ([236028b](https://github.com/perliedman/leaflet-control-geocoder/commit/236028b))
+- The icon could not be toggled with the keyboard in the `touch` and `hover` expand modes ([236028b](https://github.com/perliedman/leaflet-control-geocoder/commit/236028b))
+- Enter while composing with an IME (Japanese, Chinese, Korean) started a search ([6554269](https://github.com/perliedman/leaflet-control-geocoder/commit/6554269))
+- Unset options such as API keys were sent as `key=undefined` ([8b43075](https://github.com/perliedman/leaflet-control-geocoder/commit/8b43075))
+- Photon: suggestions dropped the map location bias ([c83e9c7](https://github.com/perliedman/leaflet-control-geocoder/commit/c83e9c7))
+- Result HTML was re-serialized together with the result icon via `innerHTML +=` ([c68f4ca](https://github.com/perliedman/leaflet-control-geocoder/commit/c68f4ca))
+
+### Development
+
+- Run the tests against Leaflet 1.9 and 2.0, new specs for the control; `npm run typecheck` against both Leaflet versions ([44d0208](https://github.com/perliedman/leaflet-control-geocoder/commit/44d0208))
+- Replace `conventional-changelog-cli` with a dependency-free `npm run changelog` script ([84908eb](https://github.com/perliedman/leaflet-control-geocoder/commit/84908eb)) ([67b840f](https://github.com/perliedman/leaflet-control-geocoder/commit/67b840f))
+- Use CSS nesting (flattened in the build) ([6e44b2b](https://github.com/perliedman/leaflet-control-geocoder/commit/6e44b2b))
+- Update `@types/leaflet` 1.9.22 ([f46b90b](https://github.com/perliedman/leaflet-control-geocoder/commit/f46b90b)), `typedoc` 0.28.20 ([5d48a82](https://github.com/perliedman/leaflet-control-geocoder/commit/5d48a82)), `happy-dom` 21.0.4 ([59bb2e6](https://github.com/perliedman/leaflet-control-geocoder/commit/59bb2e6)), `typescript` 6.0.3 ([850d768](https://github.com/perliedman/leaflet-control-geocoder/commit/850d768)), `vite-plus` 1.6.0 ([172120e](https://github.com/perliedman/leaflet-control-geocoder/commit/172120e))
+
 ## 4.0.0 (2026-07-18)
 
 - Migrate to Vite+ ([7e1f484](https://github.com/perliedman/leaflet-control-geocoder/commit/7e1f484))
