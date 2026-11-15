@@ -40,12 +40,12 @@ export class Photon implements IGeocoder {
     if (zoom) {
       params.zoom = zoom;
     }
-    const data = await getJSON<any>(this.options.serviceUrl, params);
+    const data = await getJSON<any>(this.options.serviceUrl, params, context?.signal);
     return this._parseResults(data);
   }
 
-  suggest(query: string): Promise<GeocodingResult[]> {
-    return this.geocode(query);
+  suggest(query: string, context?: GeocodingContext): Promise<GeocodingResult[]> {
+    return this.geocode(query, context);
   }
 
   async reverse(latLng: L.LatLngLiteral, scale: number): Promise<GeocodingResult[]> {

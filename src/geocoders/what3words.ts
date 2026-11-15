@@ -1,6 +1,13 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import { IGeocoder, GeocoderOptions, geocodingParams, GeocodingResult, reverseParams } from './api';
+import {
+  IGeocoder,
+  GeocoderOptions,
+  geocodingParams,
+  GeocodingResult,
+  reverseParams,
+  GeocodingContext
+} from './api';
 
 export interface What3WordsOptions extends GeocoderOptions {}
 
@@ -16,14 +23,15 @@ export class What3Words implements IGeocoder {
     L.Util.setOptions(this, options);
   }
 
-  async geocode(query: string): Promise<GeocodingResult[]> {
+  async geocode(query: string, context?: GeocodingContext): Promise<GeocodingResult[]> {
     const data = await getJSON<any>(
       this.options.serviceUrl + 'forward',
       geocodingParams(this.options, {
         key: this.options.apiKey,
         //get three words and make a dot based string
         addr: query.split(/\s+/).join('.')
-      })
+      }),
+      context?.signal
     );
     if (!data.geometry) {
       return [];
@@ -39,8 +47,8 @@ export class What3Words implements IGeocoder {
     ];
   }
 
-  suggest(query: string): Promise<GeocodingResult[]> {
-    return this.geocode(query);
+  suggest(query: string, context?: GeocodingContext): Promise<GeocodingResult[]> {
+    return this.geocode(query, context);
   }
 
   async reverse(location: L.LatLngLiteral, scale: number): Promise<GeocodingResult[]> {

@@ -1,6 +1,13 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import { IGeocoder, GeocoderOptions, geocodingParams, GeocodingResult, reverseParams } from './api';
+import {
+  IGeocoder,
+  GeocoderOptions,
+  geocodingParams,
+  GeocodingResult,
+  reverseParams,
+  GeocodingContext
+} from './api';
 
 export interface MapQuestOptions extends GeocoderOptions {}
 
@@ -23,14 +30,14 @@ export class MapQuest implements IGeocoder {
     return parts.filter(s => !!s).join(', ');
   }
 
-  async geocode(query: string): Promise<GeocodingResult[]> {
+  async geocode(query: string, context?: GeocodingContext): Promise<GeocodingResult[]> {
     const params = geocodingParams(this.options, {
       key: this.options.apiKey,
       location: query,
       limit: 5,
       outFormat: 'json'
     });
-    const data = await getJSON<any>(this.options.serviceUrl + '/address', params);
+    const data = await getJSON<any>(this.options.serviceUrl + '/address', params, context?.signal);
     return this._parseResults(data);
   }
 

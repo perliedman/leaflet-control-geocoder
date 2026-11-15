@@ -1,6 +1,13 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import { IGeocoder, GeocoderOptions, geocodingParams, GeocodingResult, reverseParams } from './api';
+import {
+  IGeocoder,
+  GeocoderOptions,
+  geocodingParams,
+  GeocodingResult,
+  reverseParams,
+  GeocodingContext
+} from './api';
 
 /**
  * Implementation of the [Google Geocoding API](https://developers.google.com/maps/documentation/geocoding/)
@@ -16,12 +23,12 @@ export class Google implements IGeocoder {
     L.Util.setOptions(this, options);
   }
 
-  async geocode(query: string): Promise<GeocodingResult[]> {
+  async geocode(query: string, context?: GeocodingContext): Promise<GeocodingResult[]> {
     const params = geocodingParams(this.options, {
       key: this.options.apiKey,
       address: query
     });
-    const data = await getJSON<GoogleResponse>(this.options.serviceUrl, params);
+    const data = await getJSON<GoogleResponse>(this.options.serviceUrl, params, context?.signal);
     return this._parseResults(data);
   }
 

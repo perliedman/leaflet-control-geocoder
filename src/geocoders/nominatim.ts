@@ -6,7 +6,8 @@ import {
   geocodingParams,
   GeocodingResult,
   reverseParams,
-  SuggestUnsupportedError
+  SuggestUnsupportedError,
+  GeocodingContext
 } from './api';
 
 export type NominatimResponse = NominatimResult[];
@@ -160,7 +161,9 @@ export class Nominatim implements IGeocoder {
     return scheduled;
   }
 
-  async geocode(query: string) {
+  async geocode(query: string, context?: GeocodingContext) {
+    // requests are cached and shared, so they are not aborted with context.signal
+    context?.signal?.throwIfAborted();
     const params = geocodingParams(this.options, {
       q: query,
       limit: 5,

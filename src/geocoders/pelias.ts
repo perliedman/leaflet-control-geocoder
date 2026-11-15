@@ -1,6 +1,13 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import { IGeocoder, GeocoderOptions, geocodingParams, GeocodingResult, reverseParams } from './api';
+import {
+  IGeocoder,
+  GeocoderOptions,
+  geocodingParams,
+  GeocodingResult,
+  reverseParams,
+  GeocodingContext
+} from './api';
 
 export interface PeliasOptions extends GeocoderOptions {}
 
@@ -16,21 +23,25 @@ export class Pelias implements IGeocoder {
     L.Util.setOptions(this, options);
   }
 
-  async geocode(query: string): Promise<GeocodingResult[]> {
+  async geocode(query: string, context?: GeocodingContext): Promise<GeocodingResult[]> {
     const params = geocodingParams(this.options, {
       api_key: this.options.apiKey,
       text: query
     });
-    const data = await getJSON<any>(this.options.serviceUrl + '/search', params);
+    const data = await getJSON<any>(this.options.serviceUrl + '/search', params, context?.signal);
     return this._parseResults(data);
   }
 
-  async suggest(query: string): Promise<GeocodingResult[]> {
+  async suggest(query: string, context?: GeocodingContext): Promise<GeocodingResult[]> {
     const params = geocodingParams(this.options, {
       api_key: this.options.apiKey,
       text: query
     });
-    const data = await getJSON<any>(this.options.serviceUrl + '/autocomplete', params);
+    const data = await getJSON<any>(
+      this.options.serviceUrl + '/autocomplete',
+      params,
+      context?.signal
+    );
     return this._parseResults(data);
   }
 

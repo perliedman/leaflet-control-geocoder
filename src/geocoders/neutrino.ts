@@ -1,6 +1,13 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import { IGeocoder, GeocoderOptions, geocodingParams, GeocodingResult, reverseParams } from './api';
+import {
+  IGeocoder,
+  GeocoderOptions,
+  geocodingParams,
+  GeocodingResult,
+  reverseParams,
+  GeocodingContext
+} from './api';
 
 export interface NeutrinoOptions extends GeocoderOptions {
   userId: string;
@@ -21,14 +28,18 @@ export class Neutrino implements IGeocoder {
   }
 
   // https://www.neutrinoapi.com/api/geocode-address/
-  async geocode(query: string): Promise<GeocodingResult[]> {
+  async geocode(query: string, context?: GeocodingContext): Promise<GeocodingResult[]> {
     const params = geocodingParams(this.options, {
       apiKey: this.options.apiKey,
       userId: this.options.userId,
       //get three words and make a dot based string
       address: query.split(/\s+/).join('.')
     });
-    const data = await getJSON<any>(this.options.serviceUrl + 'geocode-address', params);
+    const data = await getJSON<any>(
+      this.options.serviceUrl + 'geocode-address',
+      params,
+      context?.signal
+    );
     if (!data.locations) {
       return [];
     }
@@ -44,8 +55,8 @@ export class Neutrino implements IGeocoder {
     ];
   }
 
-  suggest(query: string): Promise<GeocodingResult[]> {
-    return this.geocode(query);
+  suggest(query: string, context?: GeocodingContext): Promise<GeocodingResult[]> {
+    return this.geocode(query, context);
   }
 
   // https://www.neutrinoapi.com/api/geocode-reverse/

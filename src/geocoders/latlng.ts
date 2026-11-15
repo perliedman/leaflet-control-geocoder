@@ -1,5 +1,5 @@
 import * as L from 'leaflet';
-import { IGeocoder, GeocodingResult } from './api';
+import { IGeocoder, GeocodingResult, GeocodingContext } from './api';
 
 export interface LatLngOptions {
   /**
@@ -92,7 +92,7 @@ export class LatLng implements IGeocoder {
     L.Util.setOptions(this, options);
   }
 
-  async geocode(query: string) {
+  async geocode(query: string, context?: GeocodingContext) {
     const center = parseLatLng(query);
     if (center) {
       const results: GeocodingResult[] = [
@@ -104,7 +104,7 @@ export class LatLng implements IGeocoder {
       ];
       return results;
     } else if (this.options.next) {
-      return this.options.next.geocode(query);
+      return this.options.next.geocode(query, context);
     } else {
       return [];
     }

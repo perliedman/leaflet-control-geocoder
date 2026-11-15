@@ -1,6 +1,13 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import { IGeocoder, GeocoderOptions, geocodingParams, GeocodingResult, reverseParams } from './api';
+import {
+  IGeocoder,
+  GeocoderOptions,
+  geocodingParams,
+  GeocodingResult,
+  reverseParams,
+  GeocodingContext
+} from './api';
 
 export interface MapboxOptions extends GeocoderOptions {}
 
@@ -34,7 +41,7 @@ export class Mapbox implements IGeocoder {
     return properties;
   }
 
-  async geocode(query: string): Promise<GeocodingResult[]> {
+  async geocode(query: string, context?: GeocodingContext): Promise<GeocodingResult[]> {
     const url = this.options.serviceUrl + encodeURIComponent(query) + '.json';
     const params: any = geocodingParams(this.options, {
       access_token: this.options.apiKey
@@ -46,12 +53,12 @@ export class Mapbox implements IGeocoder {
     ) {
       params.proximity = params.proximity.lng + ',' + params.proximity.lat;
     }
-    const data = await getJSON<MapboxResponse>(url, params);
+    const data = await getJSON<MapboxResponse>(url, params, context?.signal);
     return this._parseResults(data);
   }
 
-  suggest(query: string): Promise<GeocodingResult[]> {
-    return this.geocode(query);
+  suggest(query: string, context?: GeocodingContext): Promise<GeocodingResult[]> {
+    return this.geocode(query, context);
   }
 
   async reverse(location: L.LatLngLiteral, scale: number): Promise<GeocodingResult[]> {

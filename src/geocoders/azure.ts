@@ -1,6 +1,6 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import { GeocodingResult, IGeocoder } from './api';
+import { GeocodingResult, IGeocoder, GeocodingContext } from './api';
 
 export interface AzureMapsOptions {
   apiKey: string; // Azure Maps API Key
@@ -29,14 +29,14 @@ export class AzureMaps implements IGeocoder {
    * {@inheritdoc}
    * https://learn.microsoft.com/en-us/rest/api/maps/search/get-search-address?view=rest-maps-1.0&tabs=HTTP
    */
-  async geocode(query: string): Promise<GeocodingResult[]> {
+  async geocode(query: string, context?: GeocodingContext): Promise<GeocodingResult[]> {
     const params = {
       'api-version': '1.0',
       query,
       'subscription-key': this.options.apiKey
     };
     const url = this.options.serviceUrl + '/address/json';
-    const data = await getJSON<AzureMapsResponse>(url, params);
+    const data = await getJSON<AzureMapsResponse>(url, params, context?.signal);
 
     return (data.results || []).map((result): GeocodingResult => ({
       name: result.address.freeformAddress,

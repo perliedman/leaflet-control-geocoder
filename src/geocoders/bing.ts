@@ -1,6 +1,13 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import { GeocoderOptions, geocodingParams, GeocodingResult, IGeocoder, reverseParams } from './api';
+import {
+  GeocoderOptions,
+  geocodingParams,
+  GeocodingResult,
+  IGeocoder,
+  reverseParams,
+  GeocodingContext
+} from './api';
 
 export interface BingOptions extends GeocoderOptions {}
 
@@ -20,12 +27,12 @@ export class Bing implements IGeocoder {
     L.Util.setOptions(this, options);
   }
 
-  async geocode(query: string): Promise<GeocodingResult[]> {
+  async geocode(query: string, context?: GeocodingContext): Promise<GeocodingResult[]> {
     const params = geocodingParams(this.options, {
       query: query,
       key: this.options.apiKey
     });
-    const data = await getJSON<any>(this.options.serviceUrl, params);
+    const data = await getJSON<any>(this.options.serviceUrl, params, context?.signal);
     return this._parseResults(data);
   }
 

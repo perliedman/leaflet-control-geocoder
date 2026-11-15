@@ -8,6 +8,10 @@ export interface GeocodingContext {
    * The map instance
    */
   map: L.Map;
+  /**
+   * Aborted when the request is superseded (e.g. the user kept typing); pass it on to `fetch`
+   */
+  signal?: AbortSignal;
 }
 
 /**

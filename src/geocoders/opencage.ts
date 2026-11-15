@@ -1,6 +1,13 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import { IGeocoder, GeocoderOptions, geocodingParams, GeocodingResult, reverseParams } from './api';
+import {
+  IGeocoder,
+  GeocoderOptions,
+  geocodingParams,
+  GeocodingResult,
+  reverseParams,
+  GeocodingContext
+} from './api';
 
 export interface OpenCageOptions extends GeocoderOptions {}
 
@@ -16,17 +23,17 @@ export class OpenCage implements IGeocoder {
     L.Util.setOptions(this, options);
   }
 
-  async geocode(query: string): Promise<GeocodingResult[]> {
+  async geocode(query: string, context?: GeocodingContext): Promise<GeocodingResult[]> {
     const params = geocodingParams(this.options, {
       key: this.options.apiKey,
       q: query
     });
-    const data = await getJSON<any>(this.options.serviceUrl, params);
+    const data = await getJSON<any>(this.options.serviceUrl, params, context?.signal);
     return this._parseResults(data);
   }
 
-  suggest(query: string): Promise<GeocodingResult[]> {
-    return this.geocode(query);
+  suggest(query: string, context?: GeocodingContext): Promise<GeocodingResult[]> {
+    return this.geocode(query, context);
   }
 
   async reverse(location: L.LatLngLiteral, scale: number): Promise<GeocodingResult[]> {

@@ -1,6 +1,13 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import { IGeocoder, GeocoderOptions, geocodingParams, GeocodingResult, reverseParams } from './api';
+import {
+  IGeocoder,
+  GeocoderOptions,
+  geocodingParams,
+  GeocodingResult,
+  reverseParams,
+  GeocodingContext
+} from './api';
 
 export interface ArcGisOptions extends GeocoderOptions {}
 
@@ -17,7 +24,7 @@ export class ArcGis implements IGeocoder {
     L.Util.setOptions(this, options);
   }
 
-  async geocode(query: string): Promise<GeocodingResult[]> {
+  async geocode(query: string, context?: GeocodingContext): Promise<GeocodingResult[]> {
     const params = geocodingParams(this.options, {
       token: this.options.apiKey,
       SingleLine: query,
@@ -29,7 +36,8 @@ export class ArcGis implements IGeocoder {
 
     const data = await getJSON<ArcGisResponse>(
       this.options.serviceUrl + '/findAddressCandidates',
-      params
+      params,
+      context?.signal
     );
     return data.candidates.map((loc): GeocodingResult => {
       const center = new L.LatLng(loc.location.y, loc.location.x);
@@ -45,8 +53,8 @@ export class ArcGis implements IGeocoder {
     });
   }
 
-  suggest(query: string): Promise<GeocodingResult[]> {
-    return this.geocode(query);
+  suggest(query: string, context?: GeocodingContext): Promise<GeocodingResult[]> {
+    return this.geocode(query, context);
   }
 
   async reverse(location: L.LatLngLiteral, scale: number): Promise<GeocodingResult[]> {

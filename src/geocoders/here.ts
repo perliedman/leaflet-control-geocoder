@@ -1,6 +1,13 @@
 import * as L from 'leaflet';
 import { getJSON } from '../util';
-import { IGeocoder, GeocoderOptions, geocodingParams, GeocodingResult, reverseParams } from './api';
+import {
+  IGeocoder,
+  GeocoderOptions,
+  geocodingParams,
+  GeocodingResult,
+  reverseParams,
+  GeocodingContext
+} from './api';
 
 export interface HereOptions extends GeocoderOptions {
   /**
@@ -35,7 +42,7 @@ export class HERE implements IGeocoder {
     if (options?.apiKey) throw Error('apiKey is not supported, use app_id/app_code instead!');
   }
 
-  geocode(query: string): Promise<GeocodingResult[]> {
+  geocode(query: string, context?: GeocodingContext): Promise<GeocodingResult[]> {
     const params = geocodingParams(this.options, {
       searchtext: query,
       gen: 9,
@@ -44,7 +51,7 @@ export class HERE implements IGeocoder {
       jsonattributes: 1,
       maxresults: this.options.maxResults
     });
-    return this.getJSON(this.options.serviceUrl + 'geocode.json', params);
+    return this.getJSON(this.options.serviceUrl + 'geocode.json', params, context?.signal);
   }
 
   reverse(location: L.LatLngLiteral, scale: number): Promise<GeocodingResult[]> {
@@ -64,8 +71,8 @@ export class HERE implements IGeocoder {
     return this.getJSON(this.options.serviceUrl + 'reversegeocode.json', params);
   }
 
-  async getJSON(url: string, params: any): Promise<GeocodingResult[]> {
-    const data = await getJSON<any>(url, params);
+  async getJSON(url: string, params: any, signal?: AbortSignal): Promise<GeocodingResult[]> {
+    const data = await getJSON<any>(url, params, signal);
     return (data?.response?.view?.[0]?.result || []).map((result): GeocodingResult => {
       const loc = result.location;
       const center = new L.LatLng(loc.displayPosition.latitude, loc.displayPosition.longitude);
@@ -99,7 +106,7 @@ export class HEREv2 implements IGeocoder {
     L.Util.setOptions(this, options);
   }
 
-  geocode(query: string): Promise<GeocodingResult[]> {
+  geocode(query: string, context?: GeocodingContext): Promise<GeocodingResult[]> {
     const params = geocodingParams(this.options, {
       q: query,
       apiKey: this.options.apiKey,
@@ -112,7 +119,7 @@ export class HEREv2 implements IGeocoder {
       );
     }
 
-    return this.getJSON(this.options.serviceUrl + '/discover', params);
+    return this.getJSON(this.options.serviceUrl + '/discover', params, context?.signal);
   }
 
   reverse(location: L.LatLngLiteral, scale: number): Promise<GeocodingResult[]> {
@@ -124,8 +131,8 @@ export class HEREv2 implements IGeocoder {
     return this.getJSON(this.options.serviceUrl + '/revgeocode', params);
   }
 
-  async getJSON(url: string, params: any): Promise<GeocodingResult[]> {
-    const data = await getJSON<HEREv2Response>(url, params);
+  async getJSON(url: string, params: any, signal?: AbortSignal): Promise<GeocodingResult[]> {
+    const data = await getJSON<HEREv2Response>(url, params, signal);
     return (data.items || []).map((item): GeocodingResult => {
       const center = new L.LatLng(item.position.lat, item.position.lng);
       let bbox: L.LatLngBounds;
