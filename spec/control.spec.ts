@@ -256,4 +256,16 @@ describe(`GeocoderControl (Leaflet ${L.version})`, () => {
     control.remove();
     expect(signal!.aborted).toBe(true);
   });
+
+  it('ignores Enter while composing with an IME', () => {
+    const geocoder = fakeGeocoder([innsbruck]);
+    const control = new GeocoderControl({ geocoder }).addTo(map);
+    const input = control.getContainer()!.querySelector('input')!;
+    control.setQuery('インスブルック');
+    input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', isComposing: true }));
+    input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', keyCode: 229 }));
+    expect(geocoder.geocode).not.toHaveBeenCalled();
+    pressEnter(input);
+    expect(geocoder.geocode).toHaveBeenCalledOnce();
+  });
 });

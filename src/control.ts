@@ -484,6 +484,10 @@ export class GeocoderControl extends EventedControl {
         select(1);
         break;
       case 'Enter':
+        // IME: Enter confirms the composition (keyCode 229 for Safari, WebKit bug 165004)
+        if (e.isComposing || e.keyCode === 229) {
+          return;
+        }
         if (this._selection) {
           const index = parseInt(this._selection.getAttribute('data-result-index'), 10);
           this._geocodeResultSelected(this._results[index]);
