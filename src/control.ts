@@ -238,7 +238,8 @@ export class GeocoderControl extends EventedControl {
     L.DomEvent.disableClickPropagation(input);
 
     this._errorElement = L.DomUtil.create('div', className + '-form-no-error', container);
-    this._errorElement.innerHTML = this.options.errorMessage;
+    // live region: always rendered, announced when its text changes
+    this._errorElement.setAttribute('role', 'status');
 
     this._alts = L.DomUtil.create(
       'ul',
@@ -336,6 +337,7 @@ export class GeocoderControl extends EventedControl {
     } else {
       this._container.classList.add('leaflet-control-geocoder-options-error');
       this._errorElement.classList.add('leaflet-control-geocoder-error');
+      this._errorElement.textContent = this.options.errorMessage;
     }
   }
 
@@ -456,6 +458,7 @@ export class GeocoderControl extends EventedControl {
     this._setSelection(null);
     this._input.setAttribute('aria-expanded', 'false');
     this._errorElement.classList.remove('leaflet-control-geocoder-error');
+    this._errorElement.textContent = '';
     this._container.classList.remove('leaflet-control-geocoder-options-open');
     this._container.classList.remove('leaflet-control-geocoder-options-error');
   }

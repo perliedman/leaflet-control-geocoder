@@ -198,6 +198,11 @@ describe(`GeocoderControl (Leaflet ${L.version})`, () => {
     pressEnter(el.querySelector('input')!);
     await vi.waitFor(() => expect(finish).toHaveBeenCalled());
     expect(el.classList).toContain('leaflet-control-geocoder-options-error');
+    const status = el.querySelector('[role="status"]')!;
+    expect(status.textContent).toBe('Nothing found.');
+    control.setQuery('somewhere');
+    pressEnter(el.querySelector('input')!);
+    expect(status.isConnected && status.textContent).toBe('');
   });
 
   it('fires errorgeocode and stops the throbber when geocoding fails', async () => {
