@@ -271,4 +271,47 @@ describe(`GeocoderControl (Leaflet ${L.version})`, () => {
     pressEnter(input);
     expect(geocoder.geocode).toHaveBeenCalledOnce();
   });
+
+  it('implements the ARIA combobox pattern', async () => {
+    const control = new GeocoderControl({ geocoder: fakeGeocoder([innsbruck, vienna]) }).addTo(map);
+    const el = control.getContainer()!;
+    const icon = el.querySelector('button')!;
+    const input = el.querySelector('input')!;
+    const listbox = el.querySelector('ul')!;
+    expect(input.getAttribute('role')).toBe('combobox');
+    expect(input.getAttribute('aria-controls')).toBe(listbox.id);
+    expect(input.getAttribute('aria-expanded')).toBe('false');
+    expect(listbox.getAttribute('role')).toBe('listbox');
+    expect(listbox.getAttribute('aria-labelledby')).toBe(input.labels![0].id);
+    expect(icon.getAttribute('aria-expanded')).toBe('false');
+    expect(document.getElementById(icon.getAttribute('aria-controls')!)!.contains(input)).toBe(
+      true
+    );
+
+    icon.dispatchEvent(new MouseEvent('click', { detail: 0 }));
+    expect(icon.getAttribute('aria-expanded')).toBe('true');
+    expect(document.activeElement).toBe(input);
+
+    control.setQuery('Austria');
+    pressEnter(input);
+    await vi.waitFor(() => expect(input.getAttribute('aria-expanded')).toBe('true'));
+    const options = el.querySelectorAll('[role="option"]');
+    expect(options).toHaveLength(2);
+    expect(input.hasAttribute('aria-activedescendant')).toBe(false);
+
+    input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
+    expect(input.getAttribute('aria-activedescendant')).toBe(options[0].id);
+    expect(options[0].getAttribute('aria-selected')).toBe('true');
+    // wraps around
+    input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp' }));
+    expect(input.getAttribute('aria-activedescendant')).toBe(options[1].id);
+    expect(options[0].getAttribute('aria-selected')).toBe('false');
+
+    // Escape collapses and returns the focus to the icon
+    input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+    expect(input.getAttribute('aria-expanded')).toBe('false');
+    expect(input.hasAttribute('aria-activedescendant')).toBe(false);
+    expect(icon.getAttribute('aria-expanded')).toBe('false');
+    expect(document.activeElement).toBe(icon);
+  });
 });

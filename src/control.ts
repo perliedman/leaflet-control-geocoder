@@ -158,6 +158,7 @@ export class GeocoderControl extends EventedControl {
   };
 
   private _alts: HTMLUListElement;
+  private _icon: HTMLButtonElement;
   /** @internal */
   declare _container: HTMLElement;
   private _errorElement: HTMLDivElement;
@@ -168,7 +169,7 @@ export class GeocoderControl extends EventedControl {
   declare _map: L.Map;
   private _abortController?: AbortController;
   private _results: any;
-  private _selection: any;
+  private _selection: HTMLLIElement | null = null;
   private _suggestTimeout: any;
   private _suggestUnsupported = false;
 
@@ -204,16 +205,20 @@ export class GeocoderControl extends EventedControl {
     const container = L.DomUtil.create('search', className + ' leaflet-bar');
     const icon = L.DomUtil.create('button', className + '-icon', container);
     const form = L.DomUtil.create('div', className + '-form', container);
+    form.id = id + '-form';
 
     this._map = map;
     this._container = container;
 
-    icon.innerHTML = '&nbsp;';
+    this._icon = icon;
     icon.type = 'button';
     icon.setAttribute('aria-label', this.options.iconLabel);
+    icon.setAttribute('aria-controls', form.id);
+    icon.setAttribute('aria-expanded', 'false');
 
     const label = L.DomUtil.create('label', className + '-visually-hidden', form);
     label.htmlFor = id + '-input';
+    label.id = id + '-label';
     label.textContent = this.options.inputLabel;
 
     const input = (this._input = L.DomUtil.create('input', '', form));
@@ -224,6 +229,11 @@ export class GeocoderControl extends EventedControl {
     input.spellcheck = false;
     input.setAttribute('autocorrect', 'off');
     input.value = this.options.query;
+    // combobox pattern, see https://www.w3.org/WAI/ARIA/apg/patterns/combobox/
+    input.setAttribute('role', 'combobox');
+    input.setAttribute('aria-autocomplete', 'list');
+    input.setAttribute('aria-controls', id + '-listbox');
+    input.setAttribute('aria-expanded', 'false');
     input.placeholder = this.options.placeholder;
     L.DomEvent.disableClickPropagation(input);
 
@@ -235,6 +245,9 @@ export class GeocoderControl extends EventedControl {
       className + '-alternatives leaflet-control-geocoder-alternatives-minimized',
       container
     );
+    this._alts.id = id + '-listbox';
+    this._alts.setAttribute('role', 'listbox');
+    this._alts.setAttribute('aria-labelledby', label.id);
     L.DomEvent.disableClickPropagation(this._alts);
 
     L.DomEvent.on(input, 'keydown', this._keydown, this);
@@ -242,7 +255,7 @@ export class GeocoderControl extends EventedControl {
       L.DomEvent.on(input, 'input', this._change, this);
     }
     input.addEventListener('blur', () => {
-      if (this.options.collapsed) {
+      if (this.options.collapsed && this._isExpanded()) {
         this._collapse();
       }
     });
@@ -315,11 +328,11 @@ export class GeocoderControl extends EventedControl {
     if (!suggest && this.options.showUniqueResult && results.length === 1) {
       this._geocodeResultSelected(results[0]);
     } else if (results.length > 0) {
-      this._alts.innerHTML = '';
       this._results = results;
+      this._alts.replaceChildren(...results.map((result, i) => this._createAlt(result, i)));
       this._alts.classList.remove('leaflet-control-geocoder-alternatives-minimized');
       this._container.classList.add('leaflet-control-geocoder-options-open');
-      this._results.forEach((result, i) => this._alts.appendChild(this._createAlt(result, i)));
+      this._input.setAttribute('aria-expanded', 'true');
     } else {
       this._container.classList.add('leaflet-control-geocoder-options-error');
       this._errorElement.classList.add('leaflet-control-geocoder-error');
@@ -407,8 +420,12 @@ export class GeocoderControl extends EventedControl {
     this.fire('markgeocode', event);
   }
 
+  private _isExpanded() {
+    return this._container.classList.contains('leaflet-control-geocoder-expanded');
+  }
+
   private _toggle() {
-    if (this._container.classList.contains('leaflet-control-geocoder-expanded')) {
+    if (this._isExpanded()) {
       this._collapse();
     } else {
       this._expand();
@@ -417,23 +434,27 @@ export class GeocoderControl extends EventedControl {
 
   private _expand() {
     this._container.classList.add('leaflet-control-geocoder-expanded');
+    this._icon.setAttribute('aria-expanded', 'true');
+    this._input.focus();
     this._input.select();
     this.fire('expand');
   }
 
   private _collapse() {
     this._container.classList.remove('leaflet-control-geocoder-expanded');
-    this._alts.classList.add('leaflet-control-geocoder-alternatives-minimized');
-    this._errorElement.classList.remove('leaflet-control-geocoder-error');
-    this._container.classList.remove('leaflet-control-geocoder-options-open');
-    this._container.classList.remove('leaflet-control-geocoder-options-error');
-    this._input.blur(); // mobile: keyboard shouldn't stay expanded
+    this._icon.setAttribute('aria-expanded', 'false');
+    this._clearResults();
+    if (document.activeElement === this._input) {
+      // the input gets hidden: return the focus to the icon (also hides the mobile keyboard)
+      this._icon.focus();
+    }
     this.fire('collapse');
   }
 
   private _clearResults() {
     this._alts.classList.add('leaflet-control-geocoder-alternatives-minimized');
-    this._selection = null;
+    this._setSelection(null);
+    this._input.setAttribute('aria-expanded', 'false');
     this._errorElement.classList.remove('leaflet-control-geocoder-error');
     this._container.classList.remove('leaflet-control-geocoder-options-open');
     this._container.classList.remove('leaflet-control-geocoder-options-error');
@@ -441,7 +462,7 @@ export class GeocoderControl extends EventedControl {
 
   private _createAlt(result: GeocodingResult, index: number) {
     const li = L.DomUtil.create('li', ''),
-      a = L.DomUtil.create('a', '', li),
+      a = L.DomUtil.create('span', '', li),
       icon = this.options.showResultIcons && result.icon ? L.DomUtil.create('img', '', a) : null,
       text = result.html ? undefined : document.createTextNode(result.name);
 
@@ -449,6 +470,9 @@ export class GeocoderControl extends EventedControl {
       icon.src = result.icon!;
     }
 
+    li.id = this._alts.id + '-' + index;
+    li.setAttribute('role', 'option');
+    li.setAttribute('aria-selected', 'false');
     li.setAttribute('data-result-index', String(index));
 
     if (result.html) {
@@ -472,17 +496,12 @@ export class GeocoderControl extends EventedControl {
 
   private _keydown(e: KeyboardEvent) {
     const select = (dir: number) => {
-      if (this._selection) {
-        this._selection.classList.remove('leaflet-control-geocoder-selected');
-        this._selection = this._selection[dir > 0 ? 'nextSibling' : 'previousSibling'];
+      if (this._alts.classList.contains('leaflet-control-geocoder-alternatives-minimized')) {
+        return;
       }
-      if (!this._selection) {
-        this._selection = this._alts[dir > 0 ? 'firstChild' : 'lastChild'];
-      }
-
-      if (this._selection) {
-        this._selection.classList.add('leaflet-control-geocoder-selected');
-      }
+      const next = (this._selection?.[dir > 0 ? 'nextElementSibling' : 'previousElementSibling'] ??
+        this._alts[dir > 0 ? 'firstElementChild' : 'lastElementChild']) as HTMLLIElement | null;
+      this._setSelection(next);
     };
 
     switch (e.key) {
@@ -505,7 +524,7 @@ export class GeocoderControl extends EventedControl {
           return;
         }
         if (this._selection) {
-          const index = parseInt(this._selection.getAttribute('data-result-index'), 10);
+          const index = parseInt(this._selection.getAttribute('data-result-index')!, 10);
           this._geocodeResultSelected(this._results[index]);
           this._clearResults();
         } else {
@@ -517,6 +536,22 @@ export class GeocoderControl extends EventedControl {
     }
 
     L.DomEvent.preventDefault(e);
+  }
+
+  private _setSelection(li: HTMLLIElement | null) {
+    if (this._selection) {
+      this._selection.classList.remove('leaflet-control-geocoder-selected');
+      this._selection.setAttribute('aria-selected', 'false');
+    }
+    this._selection = li;
+    if (li) {
+      li.classList.add('leaflet-control-geocoder-selected');
+      li.setAttribute('aria-selected', 'true');
+      li.scrollIntoView({ block: 'nearest' });
+      this._input.setAttribute('aria-activedescendant', li.id);
+    } else {
+      this._input.removeAttribute('aria-activedescendant');
+    }
   }
 
   private _change() {
