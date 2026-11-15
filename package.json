@@ -79,7 +79,7 @@
     "conventional-changelog-cli": "^5.0.0",
     "happy-dom": "^20.10.6",
     "leaflet": "^1.9.4",
-    "typedoc": "^0.28.10",
+    "typedoc": "^0.28.20",
     "typescript": "^5.9.2",
     "vite": "npm:@voidzero-dev/vite-plus-core@0.2.4",
     "vite-plus": "0.2.4"
