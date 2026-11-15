@@ -96,7 +96,10 @@ describe(`GeocoderControl (Leaflet ${L.version})`, () => {
     pressEnter(input);
     await vi.waitFor(() => expect(mark).toHaveBeenCalled());
 
-    expect(geocoder.geocode).toHaveBeenCalledWith('Innsbruck', { map });
+    expect(geocoder.geocode).toHaveBeenCalledWith('Innsbruck', {
+      map,
+      signal: expect.any(AbortSignal)
+    });
     expect(start.mock.calls[0][0]).toMatchObject({ input: 'Innsbruck' });
     expect(finish.mock.calls[0][0]).toMatchObject({ input: 'Innsbruck', results: [innsbruck] });
     expect(mark.mock.calls[0][0]).toMatchObject({ geocode: innsbruck });
@@ -141,5 +144,65 @@ describe(`GeocoderControl (Leaflet ${L.version})`, () => {
     pressEnter(el.querySelector('input')!);
     await vi.waitFor(() => expect(finish).toHaveBeenCalled());
     expect(el.classList).toContain('leaflet-control-geocoder-options-error');
+  });
+
+  it('fires errorgeocode and stops the throbber when geocoding fails', async () => {
+    const error = new Error('network down');
+    const geocoder: IGeocoder = { geocode: vi.fn(async () => Promise.reject(error)) };
+    const control = new GeocoderControl({ geocoder }).addTo(map);
+    const el = control.getContainer()!;
+    const onError = vi.fn();
+    control.on('errorgeocode', onError);
+    control.setQuery('Innsbruck');
+    pressEnter(el.querySelector('input')!);
+    await vi.waitFor(() => expect(onError).toHaveBeenCalled());
+    expect(onError.mock.calls[0][0]).toMatchObject({ input: 'Innsbruck', error });
+    expect(el.classList).not.toContain('leaflet-control-geocoder-throbber');
+    expect(el.classList).toContain('leaflet-control-geocoder-options-error');
+  });
+
+  it('aborts a superseded request', async () => {
+    const signals: AbortSignal[] = [];
+    const geocoder: IGeocoder = {
+      geocode: vi.fn(
+        (query, context) =>
+          new Promise<GeocodingResult[]>((resolve, reject) => {
+            signals.push(context!.signal!);
+            context!.signal!.addEventListener('abort', () => reject(context!.signal!.reason));
+            if (query === 'Vienna') resolve([vienna]);
+          })
+      )
+    };
+    const control = new GeocoderControl({ geocoder }).addTo(map);
+    const input = control.getContainer()!.querySelector('input')!;
+    const mark = vi.fn();
+    const onError = vi.fn();
+    control.on('markgeocode', mark).on('errorgeocode', onError);
+
+    control.setQuery('Innsbruck');
+    pressEnter(input);
+    control.setQuery('Vienna');
+    pressEnter(input);
+    await vi.waitFor(() => expect(mark).toHaveBeenCalledOnce());
+
+    expect(signals[0].aborted).toBe(true);
+    expect(signals[1].aborted).toBe(false);
+    expect(mark.mock.calls[0][0]).toMatchObject({ geocode: vienna });
+    expect(onError).not.toHaveBeenCalled();
+  });
+
+  it('aborts a pending request when removed from the map', () => {
+    let signal: AbortSignal | undefined;
+    const geocoder: IGeocoder = {
+      geocode: vi.fn((_query, context) => {
+        signal = context!.signal;
+        return new Promise<GeocodingResult[]>(() => {});
+      })
+    };
+    const control = new GeocoderControl({ geocoder }).addTo(map);
+    control.setQuery('Innsbruck');
+    pressEnter(control.getContainer()!.querySelector('input')!);
+    control.remove();
+    expect(signal!.aborted).toBe(true);
   });
 });

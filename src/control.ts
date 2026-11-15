@@ -88,6 +88,14 @@ export type StartGeocodeEventHandlerFn = (event: StartGeocodeEvent) => void;
 export type FinishGeocodeEvent = { input: string; results: GeocodingResult[] };
 export type FinishGeocodeEventHandlerFn = (event: FinishGeocodeEvent) => void;
 
+/**
+ * Event is fired when {@link IGeocoder.geocode} (or {@link IGeocoder.suggest}) fails,
+ * e.g. due to a network error or an HTTP error status (`HttpError`).
+ * The event data contains the query string as `input` and the `error`.
+ */
+export type ErrorGeocodeEvent = { input: string; error: unknown };
+export type ErrorGeocodeEventHandlerFn = (event: ErrorGeocodeEvent) => void;
+
 declare module 'leaflet' {
   interface Evented {
     on(type: 'markgeocode', fn: MarkGeocodeEventHandlerFn, context?: any): this;
@@ -95,6 +103,8 @@ declare module 'leaflet' {
     on(type: 'startsuggest', fn: StartGeocodeEventHandlerFn, context?: any): this;
     on(type: 'finishsuggest', fn: FinishGeocodeEventHandlerFn, context?: any): this;
     on(type: 'finishgeocode', fn: FinishGeocodeEventHandlerFn, context?: any): this;
+    on(type: 'errorsuggest', fn: ErrorGeocodeEventHandlerFn, context?: any): this;
+    on(type: 'errorgeocode', fn: ErrorGeocodeEventHandlerFn, context?: any): this;
   }
 }
 
@@ -159,7 +169,7 @@ export class GeocoderControl extends EventedControl {
   /** @internal */
   declare _map: L.Map;
   private _preventBlurCollapse: boolean;
-  private _requestCount = 0;
+  private _abortController?: AbortController;
   private _results: any;
   private _selection: any;
   private _suggestTimeout: any;
@@ -278,6 +288,15 @@ export class GeocoderControl extends EventedControl {
   }
 
   /**
+   * Aborts a pending request when the control is removed from the map
+   * @see https://leafletjs.com/reference.html#control-onremove
+   */
+  onRemove(_map: L.Map) {
+    clearTimeout(this._suggestTimeout);
+    this._abortController?.abort();
+  }
+
+  /**
    * Sets the query string on the text input
    * @param string the query string
    */
@@ -328,7 +347,11 @@ export class GeocoderControl extends EventedControl {
       return;
     }
 
-    const requestCount = ++this._requestCount;
+    // abort the previous, now superseded request
+    this._abortController?.abort();
+    const abortController = (this._abortController = new AbortController());
+    const { signal } = abortController;
+
     this._lastGeocode = value;
     if (!suggest) {
       this._clearResults();
@@ -337,25 +360,36 @@ export class GeocoderControl extends EventedControl {
     const event: StartGeocodeEvent = { input: value };
     this.fire(suggest ? 'startsuggest' : 'startgeocode', event);
 
-    const context: GeocodingContext = { map: this._map };
+    const context: GeocodingContext = { map: this._map, signal };
     let results: GeocodingResult[];
-    if (suggest) {
-      try {
-        results = await this.options.geocoder!.suggest!(value, context);
-      } catch (e) {
-        if (e instanceof SuggestUnsupportedError) {
-          // the geocoder's service forbids auto-complete — stop asking
-          this._suggestUnsupported = true;
-          L.DomEvent.off(this._input, 'input', this._change, this);
-          return;
-        }
-        throw e;
+    try {
+      results = suggest
+        ? await this.options.geocoder!.suggest!(value, context)
+        : await this.options.geocoder!.geocode(value, context);
+    } catch (error) {
+      if (signal.aborted) {
+        return; // superseded by a newer request
       }
-    } else {
-      results = await this.options.geocoder!.geocode(value, context);
+      this.removeThrobberClass();
+      if (error instanceof SuggestUnsupportedError) {
+        // the geocoder's service forbids auto-complete — stop asking
+        this._suggestUnsupported = true;
+        L.DomEvent.off(this._input, 'input', this._change, this);
+        return;
+      }
+      const event: ErrorGeocodeEvent = { input: value, error };
+      this.fire(suggest ? 'errorsuggest' : 'errorgeocode', event);
+      if (!suggest) {
+        this._geocodeResult([], suggest);
+      }
+      return;
+    } finally {
+      if (this._abortController === abortController) {
+        this._abortController = undefined;
+      }
     }
 
-    if (requestCount === this._requestCount) {
+    if (!signal.aborted) {
       const event: FinishGeocodeEvent = { input: value, results };
       this.fire(suggest ? 'finishsuggest' : 'finishgeocode', event);
       this._geocodeResult(results, suggest);
