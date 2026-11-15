@@ -45,10 +45,6 @@
     border: 0;
     background-color: transparent;
     width: 246px;
-
-    &:focus {
-      outline: none;
-    }
   }
 }
 
@@ -90,6 +86,13 @@
 
 .leaflet-control-geocoder-selected {
   background-color: #f5f5f5;
+  /* not by color alone: visible with low contrast and in forced colors mode */
+  outline: 2px solid currentColor;
+  outline-offset: -2px;
+
+  @media (forced-colors: active) {
+    outline-color: Highlight;
+  }
 }
 
 .leaflet-control-geocoder-address-context {
