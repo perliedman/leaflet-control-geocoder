@@ -56,8 +56,8 @@ describe('L.Control.Geocoder.Photon', () => {
 
     const feature: GeocodingResult = result[0];
     expect(feature.name).toBe('Innsbruck, Innsbruck, Tyrol, Austria');
-    expect(feature.center).toStrictEqual({ lat: 47.2654296, lng: 11.3927685 });
-    expect(feature.bbox).toStrictEqual({
+    expect(feature.center).toEqual({ lat: 47.2654296, lng: 11.3927685 });
+    expect(feature.bbox).toEqual({
       _northEast: { lat: 47.2808566, lng: 11.4181209 },
       _southWest: { lat: 47.2583715, lng: 11.3811871 }
     });

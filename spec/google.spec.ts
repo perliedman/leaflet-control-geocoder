@@ -73,8 +73,8 @@ describe('L.Control.Geocoder.Google', () => {
 
     const feature: GeocodingResult = result[0];
     expect(feature.name).toBe('Innsbruck, Austria');
-    expect(feature.center).toStrictEqual({ lat: 47.2692124, lng: 11.4041024 });
-    expect(feature.bbox).toStrictEqual({
+    expect(feature.center).toEqual({ lat: 47.2692124, lng: 11.4041024 });
+    expect(feature.bbox).toEqual({
       _northEast: { lat: 47.3599301, lng: 11.45593 },
       _southWest: { lat: 47.21098000000001, lng: 11.3016499 }
     });

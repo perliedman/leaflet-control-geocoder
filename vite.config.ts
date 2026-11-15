@@ -24,6 +24,17 @@ export default defineConfig({
       }
     }
   },
+  test: {
+    snapshotSerializers: ['./spec/leafletSerializer.ts'],
+    projects: [
+      { extends: true, test: { name: 'leaflet1', environment: 'happy-dom' } },
+      {
+        extends: true,
+        resolve: { alias: { leaflet: 'leaflet2' } },
+        test: { name: 'leaflet2', environment: 'happy-dom' }
+      }
+    ]
+  },
   staged: {
     '*': 'vp check --fix'
   },

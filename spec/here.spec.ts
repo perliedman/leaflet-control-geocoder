@@ -79,8 +79,8 @@ describe('L.Control.Geocoder.HERE', () => {
 
     const feature: GeocodingResult = result[0];
     expect(feature.name).toBe('Innsbruck, Tirol, Österreich');
-    expect(feature.center).toStrictEqual({ lat: 47.268, lng: 11.3913 });
-    expect(feature.bbox).toStrictEqual({
+    expect(feature.center).toEqual({ lat: 47.268, lng: 11.3913 });
+    expect(feature.bbox).toEqual({
       _northEast: { lat: 47.35922, lng: 11.45587 },
       _southWest: { lat: 47.21082, lng: 11.30194 }
     });
@@ -170,7 +170,7 @@ describe('L.Control.Geocoder.HEREv2', () => {
     expect(feature.name).toBe(
       'Salumeria Italiana, 151 Richmond St, Boston, MA 02109, United States'
     );
-    expect(feature.center).toStrictEqual({ lat: 42.36355, lng: -71.05439 });
+    expect(feature.center).toEqual({ lat: 42.36355, lng: -71.05439 });
     expect([[result]]).toMatchSnapshot();
   });
 });

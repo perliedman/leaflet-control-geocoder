@@ -80,8 +80,8 @@ describe('L.Control.Geocoder.Openrouteservice', () => {
 
     const feature = result[0];
     expect(feature.name).toBe('Innsbruck, TR, Austria');
-    expect(feature.center).toStrictEqual({ lat: 47.272308, lng: 11.407851 });
-    expect(feature.bbox).toStrictEqual({
+    expect(feature.center).toEqual({ lat: 47.272308, lng: 11.407851 });
+    expect(feature.bbox).toEqual({
       _southWest: { lat: 47.2470573997, lng: 11.3218091258 },
       _northEast: { lat: 47.29398, lng: 11.452584553 }
     });

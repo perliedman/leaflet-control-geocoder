@@ -20,6 +20,7 @@ jobs:
           node-version: 22.x
       - run: npm ci
       - run: npm run build
+      - run: npm run typecheck
       - run: npm run test
       - run: npm run doc
       - name: Deploy TypeDoc

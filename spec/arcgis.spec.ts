@@ -30,8 +30,8 @@ describe('L.Control.Geocoder.ArcGis', () => {
 
     const feature = result[0];
     expect(feature.name).toBe('Innsbruck, Innsbruck-Stadt, Tirol');
-    expect(feature.center).toStrictEqual({ lat: 47.26800000000003, lng: 11.391300000000058 });
-    expect(feature.bbox).toStrictEqual({
+    expect(feature.center).toEqual({ lat: 47.26800000000003, lng: 11.391300000000058 });
+    expect(feature.bbox).toEqual({
       _northEast: { lat: 47.34400000000003, lng: 11.467300000000058 },
       _southWest: { lat: 47.19200000000003, lng: 11.315300000000057 }
     });

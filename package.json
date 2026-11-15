@@ -32,7 +32,8 @@
     "build:demo-webpack": "cd demo-rollup && npm install && npm run build",
     "changelog": "conventional-changelog --infile CHANGELOG.md --output-unreleased",
     "doc": "typedoc --excludePrivate --exclude node_modules/** --out docs/ src/",
-    "test": "vp test run --dom"
+    "test": "vp test run --dom",
+    "typecheck": "tsc --noEmit -p . && tsc --noEmit -p tsconfig.leaflet2.json"
   },
   "repository": {
     "type": "git",
@@ -79,6 +80,7 @@
     "conventional-changelog": "^8.1.3",
     "happy-dom": "^21.0.4",
     "leaflet": "^1.9.4",
+    "leaflet2": "npm:leaflet@^2.0.0-beta.4",
     "typedoc": "^0.28.20",
     "typescript": "^6.0.3",
     "vite": "npm:@voidzero-dev/vite-plus-core@1.6.0",

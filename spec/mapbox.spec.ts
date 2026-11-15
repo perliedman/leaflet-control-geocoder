@@ -68,8 +68,8 @@ describe('L.Control.Geocoder.Mapbox', () => {
 
     const feature = result[0];
     expect(feature.name).toBe('825 Milwaukee Ave, Deerfield, Illinois 60015, United States');
-    expect(feature.center).toStrictEqual({ lat: 42.166602, lng: -87.921434 });
-    expect(feature.bbox).toStrictEqual({
+    expect(feature.center).toEqual({ lat: 42.166602, lng: -87.921434 });
+    expect(feature.bbox).toEqual({
       _northEast: { lat: 42.166602, lng: -87.921434 },
       _southWest: { lat: 42.166602, lng: -87.921434 }
     });

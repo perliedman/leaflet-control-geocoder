@@ -71,8 +71,8 @@ describe('L.Control.Geocoder.AzureMaps', () => {
 
     const feature: GeocodingResult = result[0];
     expect(feature.name).toBe('15127 NE 24th St, Redmond, WA 980525544');
-    expect(feature.center).toStrictEqual({ lat: 47.6308, lng: -122.1385 });
-    expect(feature.bbox).toStrictEqual({
+    expect(feature.center).toEqual({ lat: 47.6308, lng: -122.1385 });
+    expect(feature.bbox).toEqual({
       _northEast: { lat: 47.6317, lng: -122.13717 },
       _southWest: { lat: 47.6299, lng: -122.13983 }
     });

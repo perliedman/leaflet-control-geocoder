@@ -67,7 +67,7 @@ describe('L.Control.Geocoder.Bing', () => {
 
     const feature: GeocodingResult = result[0];
     expect(feature.name).toBe('1 Microsoft Way, Redmond, WA 98052');
-    expect(feature.center).toStrictEqual({ lat: 47.64012046158314, lng: -122.12971039116383 });
+    expect(feature.center).toEqual({ lat: 47.64012046158314, lng: -122.12971039116383 });
     expect([[result]]).toMatchSnapshot();
   });
 });
