@@ -1,0 +1,31 @@
+# Publishes a release to the npm staging queue via trusted publishing (OIDC, no token).
+# A maintainer then approves it on npmjs.com ("Staged Packages") or via `npm stage approve <id>` (2FA).
+# https://docs.npmjs.com/staged-publishing
+# https://docs.npmjs.com/trusted-publishers/
+
+name: Publish
+
+on:
+  push:
+    tags: ['[0-9]+.[0-9]+.[0-9]+*']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write # OIDC for trusted publishing, also creates provenance
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+          package-manager-cache: false # never use caching in release builds
+      - run: npm install --global npm@latest # npm stage requires npm >= 11.15.0
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm stage publish

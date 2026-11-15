@@ -37,7 +37,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/perliedman/leaflet-control-geocoder.git"
+    "url": "git+https://github.com/perliedman/leaflet-control-geocoder.git"
   },
   "files": [
     "LICENCE",
