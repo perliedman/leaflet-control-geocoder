@@ -66,20 +66,56 @@ describe(`GeocoderControl (Leaflet ${L.version})`, () => {
     expect(container.contains(el)).toBe(false);
   });
 
-  it('expands and collapses on mousedown', () => {
+  it('expands and collapses on pointerdown on the icon', () => {
     const control = new GeocoderControl({ geocoder: fakeGeocoder([]) }).addTo(map);
     const el = control.getContainer()!;
+    const icon = el.querySelector('button')!;
     const expand = vi.fn();
     const collapse = vi.fn();
     control.on('expand', expand).on('collapse', collapse);
 
-    el.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+    icon.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true, button: 0 }));
     expect(el.classList).toContain('leaflet-control-geocoder-expanded');
     expect(expand).toHaveBeenCalledOnce();
 
-    el.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+    // pressing into the input must not collapse
+    el.querySelector('input')!.dispatchEvent(
+      new PointerEvent('pointerdown', { bubbles: true, button: 0 })
+    );
+    el.querySelector('input')!.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+    expect(el.classList).toContain('leaflet-control-geocoder-expanded');
+
+    icon.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true, button: 0 }));
     expect(el.classList).not.toContain('leaflet-control-geocoder-expanded');
     expect(collapse).toHaveBeenCalledOnce();
+  });
+
+  it('toggles on keyboard activation of the icon in every expand mode', () => {
+    for (const expand of ['touch', 'click', 'hover'] as const) {
+      const control = new GeocoderControl({ geocoder: fakeGeocoder([]), expand }).addTo(map);
+      const el = control.getContainer()!;
+      el.querySelector('button')!.dispatchEvent(new MouseEvent('click', { detail: 0 }));
+      expect(el.classList).toContain('leaflet-control-geocoder-expanded');
+      control.remove();
+    }
+  });
+
+  it('toggles on click with expand: click', () => {
+    const control = new GeocoderControl({ geocoder: fakeGeocoder([]), expand: 'click' }).addTo(map);
+    const el = control.getContainer()!;
+    el.querySelector('button')!.dispatchEvent(new MouseEvent('click', { detail: 1 }));
+    expect(el.classList).toContain('leaflet-control-geocoder-expanded');
+  });
+
+  it('geocodes on icon click when not collapsed', async () => {
+    const geocoder = fakeGeocoder([innsbruck]);
+    const control = new GeocoderControl({ geocoder, collapsed: false }).addTo(map);
+    const el = control.getContainer()!;
+    control.setQuery('Innsbruck');
+    el.querySelector('input')!.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    expect(geocoder.geocode).not.toHaveBeenCalled();
+    el.querySelector('button')!.dispatchEvent(new MouseEvent('click', { detail: 1 }));
+    expect(geocoder.geocode).toHaveBeenCalledOnce();
   });
 
   it('geocodes a unique result and marks it on the map', async () => {
@@ -132,6 +168,21 @@ describe(`GeocoderControl (Leaflet ${L.version})`, () => {
     input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
     pressEnter(input);
     expect(mark).toHaveBeenCalledOnce();
+    expect(mark.mock.calls[0][0]).toMatchObject({ geocode: vienna });
+  });
+
+  it('selects a result on click', async () => {
+    const control = new GeocoderControl({ geocoder: fakeGeocoder([innsbruck, vienna]) }).addTo(map);
+    const mark = vi.fn();
+    control.on('markgeocode', mark);
+    const el = control.getContainer()!;
+    control.setQuery('Austria');
+    pressEnter(el.querySelector('input')!);
+    await vi.waitFor(() => expect(el.querySelectorAll('li')).toHaveLength(2));
+    const mousedown = new MouseEvent('mousedown', { bubbles: true, cancelable: true });
+    el.querySelectorAll('li')[1].dispatchEvent(mousedown);
+    expect(mousedown.defaultPrevented).toBe(true); // input keeps the focus
+    el.querySelectorAll('li')[1].dispatchEvent(new MouseEvent('click', { bubbles: true }));
     expect(mark.mock.calls[0][0]).toMatchObject({ geocode: vienna });
   });
 

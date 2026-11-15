@@ -125,13 +125,6 @@ class EventedControl {
  */
 interface EventedControl extends L.Control, Omit<L.Evented, 'options'> {}
 
-/**
- * Same detection as `L.Browser.touch` in Leaflet 1.x (`L.Browser` was removed in Leaflet 2.0)
- * @internal
- */
-function supportsTouch(): boolean {
-  return 'ontouchstart' in window || !!window.TouchEvent || !!window.PointerEvent;
-}
 Object.getOwnPropertyNames(L.Control.prototype).forEach(
   k => (EventedControl.prototype[k] = L.Control.prototype[k])
 );
@@ -168,7 +161,6 @@ export class GeocoderControl extends EventedControl {
   private _lastGeocode: string;
   /** @internal */
   declare _map: L.Map;
-  private _preventBlurCollapse: boolean;
   private _abortController?: AbortController;
   private _results: any;
   private _selection: any;
@@ -202,7 +194,6 @@ export class GeocoderControl extends EventedControl {
    */
   onAdd(map: L.Map) {
     const className = 'leaflet-control-geocoder';
-    const touch = supportsTouch();
     const container = L.DomUtil.create('div', className + ' leaflet-bar');
     const icon = L.DomUtil.create('button', className + '-icon', container);
     const form = L.DomUtil.create('div', className + '-form', container);
@@ -234,43 +225,42 @@ export class GeocoderControl extends EventedControl {
     if (this.options.geocoder?.suggest) {
       L.DomEvent.on(input, 'input', this._change, this);
     }
-    L.DomEvent.on(input, 'blur', () => {
-      if (this.options.collapsed && !this._preventBlurCollapse) {
+    input.addEventListener('blur', () => {
+      if (this.options.collapsed) {
         this._collapse();
       }
-      this._preventBlurCollapse = false;
     });
 
+    // keep the focus in the input when pressing the icon or a result
+    icon.addEventListener('mousedown', e => e.preventDefault());
+    this._alts.addEventListener('mousedown', e => e.preventDefault());
+
     if (this.options.collapsed) {
-      if (this.options.expand === 'click') {
-        L.DomEvent.on(container, 'click', (e: Event) => {
-          if ((e as MouseEvent).button === 0 && (e as MouseEvent).detail !== 2) {
+      if (this.options.expand === 'touch') {
+        // toggle on press, without waiting for the click
+        icon.addEventListener('pointerdown', e => {
+          if (e.button === 0) {
             this._toggle();
           }
         });
-      } else if (this.options.expand === 'touch') {
-        L.DomEvent.on(
-          container,
-          touch ? 'touchstart mousedown' : 'mousedown',
-          (e: Event) => {
-            this._toggle();
-            e.preventDefault(); // mobile: clicking focuses the icon, so UI expands and immediately collapses
-            e.stopPropagation();
-          },
-          this
-        );
-      } else {
-        L.DomEvent.on(container, 'mouseover', this._expand, this);
-        L.DomEvent.on(container, 'mouseout', this._collapse, this);
+      } else if (this.options.expand === 'hover') {
+        container.addEventListener('pointerenter', () => this._expand());
+        container.addEventListener('pointerleave', e => {
+          if (e.pointerType === 'mouse') {
+            this._collapse();
+          }
+        });
         this._map.on('movestart', this._collapse, this);
       }
+      icon.addEventListener('click', e => {
+        // keyboard activation (detail 0) works in every mode
+        if (e.detail === 0 || (this.options.expand === 'click' && e.detail === 1)) {
+          this._toggle();
+        }
+      });
     } else {
       this._expand();
-      if (touch) {
-        L.DomEvent.on(container, 'touchstart', () => this._geocode());
-      } else {
-        L.DomEvent.on(container, 'click', () => this._geocode());
-      }
+      icon.addEventListener('click', () => this._geocode());
     }
 
     if (this.options.defaultMarkGeocode) {
@@ -437,24 +427,7 @@ export class GeocoderControl extends EventedControl {
     const li = L.DomUtil.create('li', ''),
       a = L.DomUtil.create('a', '', li),
       icon = this.options.showResultIcons && result.icon ? L.DomUtil.create('img', '', a) : null,
-      text = result.html ? undefined : document.createTextNode(result.name),
-      mouseDownHandler = (e: Event) => {
-        // In some browsers, a click will fire on the map if the control is
-        // collapsed directly after mousedown. To work around this, we
-        // wait until the click is completed, and _then_ collapse the
-        // control. Messy, but this is the workaround I could come up with
-        // for #142.
-        this._preventBlurCollapse = true;
-        L.DomEvent.stop(e);
-        this._geocodeResultSelected(result);
-        L.DomEvent.on(li, 'click touchend', () => {
-          if (this.options.collapsed) {
-            this._collapse();
-          } else {
-            this._clearResults();
-          }
-        });
-      };
+      text = result.html ? undefined : document.createTextNode(result.name);
 
     if (icon) {
       icon.src = result.icon!;
@@ -468,10 +441,15 @@ export class GeocoderControl extends EventedControl {
       a.appendChild(text);
     }
 
-    // Use mousedown and not click, since click will fire _after_ blur,
-    // causing the control to have collapsed and removed the items
-    // before the click can fire.
-    L.DomEvent.on(li, 'mousedown touchstart', mouseDownHandler, this);
+    // select on click: the mousedown is prevented, so the input keeps the focus (see onAdd)
+    li.addEventListener('click', () => {
+      this._geocodeResultSelected(result);
+      if (this.options.collapsed) {
+        this._collapse();
+      } else {
+        this._clearResults();
+      }
+    });
 
     return li;
   }
