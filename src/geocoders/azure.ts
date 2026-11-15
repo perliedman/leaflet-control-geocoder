@@ -13,7 +13,7 @@ export interface AzureMapsOptions {
  * https://learn.microsoft.com/en-us/rest/api/maps/search?view=rest-maps-1.0
  */
 export class AzureMaps implements IGeocoder {
-  private options: AzureMapsOptions = {
+  options: AzureMapsOptions = {
     apiKey: '',
     serviceUrl: 'https://atlas.microsoft.com/search'
   };

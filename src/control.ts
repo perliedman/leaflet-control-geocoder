@@ -9,6 +9,10 @@ import {
 
 export interface GeocoderControlOptions extends L.ControlOptions {
   /**
+   * The position of the control (one of the map corners)
+   */
+  position: NonNullable<L.ControlOptions['position']>;
+  /**
    * Collapse control unless hovered/clicked
    */
   collapsed: boolean;
@@ -109,7 +113,15 @@ class EventedControl {
 /**
  * @internal
  */
-interface EventedControl extends L.Control, L.Evented {}
+interface EventedControl extends L.Control, Omit<L.Evented, 'options'> {}
+
+/**
+ * Same detection as `L.Browser.touch` in Leaflet 1.x (`L.Browser` was removed in Leaflet 2.0)
+ * @internal
+ */
+function supportsTouch(): boolean {
+  return 'ontouchstart' in window || !!window.TouchEvent || !!window.PointerEvent;
+}
 Object.getOwnPropertyNames(L.Control.prototype).forEach(
   k => (EventedControl.prototype[k] = L.Control.prototype[k])
 );
@@ -138,12 +150,14 @@ export class GeocoderControl extends EventedControl {
   };
 
   private _alts: HTMLUListElement;
-  private _container: HTMLDivElement;
+  /** @internal */
+  declare _container: HTMLDivElement;
   private _errorElement: HTMLDivElement;
   private _geocodeMarker: L.Marker;
   private _input: HTMLInputElement;
   private _lastGeocode: string;
-  private _map: L.Map;
+  /** @internal */
+  declare _map: L.Map;
   private _preventBlurCollapse: boolean;
   private _requestCount = 0;
   private _results: any;
@@ -178,6 +192,7 @@ export class GeocoderControl extends EventedControl {
    */
   onAdd(map: L.Map) {
     const className = 'leaflet-control-geocoder';
+    const touch = supportsTouch();
     const container = L.DomUtil.create('div', className + ' leaflet-bar');
     const icon = L.DomUtil.create('button', className + '-icon', container);
     const form = L.DomUtil.create('div', className + '-form', container);
@@ -226,7 +241,7 @@ export class GeocoderControl extends EventedControl {
       } else if (this.options.expand === 'touch') {
         L.DomEvent.on(
           container,
-          L.Browser.touch ? 'touchstart mousedown' : 'mousedown',
+          touch ? 'touchstart mousedown' : 'mousedown',
           (e: Event) => {
             this._toggle();
             e.preventDefault(); // mobile: clicking focuses the icon, so UI expands and immediately collapses
@@ -241,7 +256,7 @@ export class GeocoderControl extends EventedControl {
       }
     } else {
       this._expand();
-      if (L.Browser.touch) {
+      if (touch) {
         L.DomEvent.on(container, 'touchstart', () => this._geocode());
       } else {
         L.DomEvent.on(container, 'click', () => this._geocode());
