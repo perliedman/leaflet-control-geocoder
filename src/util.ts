@@ -75,6 +75,19 @@ export async function getJSON<T>(
 }
 
 /**
+ * Sets the HTML content of an element, sanitized by the Sanitizer API's `setHTML()` where
+ * supported (removes scripts, event handlers and other XSS-unsafe markup), via `innerHTML` otherwise
+ * @internal
+ */
+export function setSafeHTML(element: Element, html: string): void {
+  if ('setHTML' in element) {
+    (element as Element & { setHTML(html: string): void }).setHTML(html);
+  } else {
+    (element as Element).innerHTML = html;
+  }
+}
+
+/**
  * @internal
  */
 export function template(str: string, data: Record<string, any>): string {

@@ -1,5 +1,6 @@
 import * as L from 'leaflet';
 import { Nominatim } from './geocoders/index';
+import { setSafeHTML } from './util';
 import {
   IGeocoder,
   GeocodingResult,
@@ -354,8 +355,14 @@ export class GeocoderControl extends EventedControl {
       this._map.removeLayer(this._geocodeMarker);
     }
 
+    const content = document.createElement('div');
+    if (result.html) {
+      setSafeHTML(content, result.html);
+    } else {
+      content.textContent = result.name;
+    }
     this._geocodeMarker = new L.Marker(result.center)
-      .bindPopup(result.html || result.name)
+      .bindPopup(content)
       .addTo(this._map)
       .openPopup();
 
@@ -479,7 +486,9 @@ export class GeocoderControl extends EventedControl {
     li.setAttribute('data-result-index', String(index));
 
     if (result.html) {
-      a.innerHTML = a.innerHTML + result.html;
+      const html = document.createElement('span');
+      setSafeHTML(html, result.html);
+      a.appendChild(html);
     } else if (text) {
       a.appendChild(text);
     }

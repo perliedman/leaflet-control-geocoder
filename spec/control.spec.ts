@@ -149,7 +149,7 @@ describe(`GeocoderControl (Leaflet ${L.version})`, () => {
     });
     expect(markers).toHaveLength(1);
     expect(markers[0].getLatLng().equals(innsbruck.center)).toBe(true);
-    expect(markers[0].getPopup()!.getContent()).toBe('Innsbruck');
+    expect((markers[0].getPopup()!.getContent() as HTMLElement).textContent).toBe('Innsbruck');
     expect(fitBounds).toHaveBeenCalledWith(innsbruck.bbox);
   });
 
@@ -318,5 +318,27 @@ describe(`GeocoderControl (Leaflet ${L.version})`, () => {
     expect(input.hasAttribute('aria-activedescendant')).toBe(false);
     expect(icon.getAttribute('aria-expanded')).toBe('false');
     expect(document.activeElement).toBe(icon);
+  });
+
+  it('inserts result HTML via setHTML() where supported', async () => {
+    const setHTML = vi.fn(function (this: Element, html: string) {
+      this.innerHTML = html.replace(/ onerror="[^"]*"/, '');
+    });
+    (Element.prototype as any).setHTML = setHTML;
+    try {
+      const html = '<b>Innsbruck</b><img src="x" onerror="alert(1)">';
+      const control = new GeocoderControl({
+        geocoder: fakeGeocoder([{ ...innsbruck, html }, vienna])
+      }).addTo(map);
+      const el = control.getContainer()!;
+      control.setQuery('Austria');
+      pressEnter(el.querySelector('input')!);
+      await vi.waitFor(() => expect(el.querySelectorAll('li')).toHaveLength(2));
+      expect(setHTML).toHaveBeenCalledWith(html);
+      expect(el.querySelector('li b')!.textContent).toBe('Innsbruck');
+      expect(el.querySelector('li img')!.hasAttribute('onerror')).toBe(false);
+    } finally {
+      delete (Element.prototype as any).setHTML;
+    }
   });
 });
