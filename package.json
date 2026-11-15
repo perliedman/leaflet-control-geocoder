@@ -81,8 +81,8 @@
     "leaflet": "^1.9.4",
     "typedoc": "^0.28.20",
     "typescript": "^6.0.3",
-    "vite": "npm:@voidzero-dev/vite-plus-core@0.2.4",
-    "vite-plus": "0.2.4"
+    "vite": "npm:@voidzero-dev/vite-plus-core@1.6.0",
+    "vite-plus": "1.6.0"
   },
   "peerDependencies": {
     "leaflet": "^1.6.0"
@@ -91,6 +91,6 @@
     "open-location-code": "^1.0.3"
   },
   "resolutions": {
-    "vite": "npm:@voidzero-dev/vite-plus-core@0.2.4"
+    "vite": "npm:@voidzero-dev/vite-plus-core@1.6.0"
   }
 }
